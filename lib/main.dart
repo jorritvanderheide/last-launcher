@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/app.dart';
+import 'package:last_launcher/features/app_drawer/app_list_state.dart';
+import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/settings/settings_state.dart';
+import 'package:last_launcher/shared/data/app_channel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const LastLauncherApp());
-}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
 
-class LastLauncherApp extends StatelessWidget {
-  const LastLauncherApp({super.key});
+  const appChannel = AppChannel();
+  final homeState = HomeState(prefs);
+  final appListState = AppListState(appChannel);
+  final settingsState = SettingsState(prefs);
+  await appListState.loadApps();
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Last Launcher',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Scaffold(body: Center(child: Text('Last Launcher'))),
-    );
-  }
+  runApp(
+    LastLauncherApp(
+      appChannel: appChannel,
+      homeState: homeState,
+      appListState: appListState,
+      settingsState: settingsState,
+    ),
+  );
 }
