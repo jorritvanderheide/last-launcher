@@ -42,6 +42,7 @@ class _LauncherShellState extends State<LauncherShell>
   double _animTo = 0;
 
   // Pointer tracking (bypasses gesture arena).
+  int? _activePointer;
   Offset? _pointerStart;
   DateTime? _pointerStartTime;
   bool _isDraggingSheet = false;
@@ -94,6 +95,8 @@ class _LauncherShellState extends State<LauncherShell>
   }
 
   void _onPointerDown(PointerDownEvent event) {
+    if (_activePointer != null) return; // ignore second finger
+    _activePointer = event.pointer;
     _animController.stop();
     _pointerStart = event.position;
     _pointerStartTime = DateTime.now();
@@ -101,6 +104,7 @@ class _LauncherShellState extends State<LauncherShell>
   }
 
   void _onPointerMove(PointerMoveEvent event) {
+    if (event.pointer != _activePointer) return;
     final start = _pointerStart;
     if (start == null) return;
 
@@ -126,10 +130,10 @@ class _LauncherShellState extends State<LauncherShell>
   }
 
   void _onPointerUp(PointerUpEvent event) {
+    if (event.pointer != _activePointer) return;
     final start = _pointerStart;
     final startTime = _pointerStartTime;
-    _pointerStart = null;
-    _pointerStartTime = null;
+    _resetPointer();
 
     if (_isDraggingSheet) {
       _isDraggingSheet = false;
@@ -144,23 +148,35 @@ class _LauncherShellState extends State<LauncherShell>
       return;
     }
 
+    // Resume interrupted animation if sheet is partially open.
+    if (_sheetFraction > 0.01 && _sheetFraction < _maxSheetFraction - 0.01) {
+      _animateTo(_sheetIsOpen ? _maxSheetFraction : 0);
+      return;
+    }
+
     // Handle quick swipe down for quick settings.
     if (start == null || startTime == null || _drawerOpen) return;
     final dy = event.position.dy - start.dy;
     final dx = (event.position.dx - start.dx).abs();
-    final elapsed = DateTime.now().difference(startTime);
-    if (elapsed.inMilliseconds == 0 || dy.abs() < dx.abs()) return;
-    final velocityY = dy / (elapsed.inMilliseconds / 1000);
+    final elapsedMicros = DateTime.now().difference(startTime).inMicroseconds;
+    if (elapsedMicros < 1000 || dy.abs() < dx.abs()) return;
+    final velocityY = dy / (elapsedMicros / 1000000);
     if (velocityY > _swipeVelocityThreshold) {
       widget.appChannel.expandQuickSettings();
     }
   }
 
   void _onPointerCancel(PointerCancelEvent event) {
+    if (event.pointer != _activePointer) return;
     if (_isDraggingSheet) {
       _isDraggingSheet = false;
       _closeDrawer();
     }
+    _resetPointer();
+  }
+
+  void _resetPointer() {
+    _activePointer = null;
     _pointerStart = null;
     _pointerStartTime = null;
   }

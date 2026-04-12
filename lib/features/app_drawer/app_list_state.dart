@@ -64,8 +64,13 @@ class AppListState extends ChangeNotifier {
     }
     _lastChangeWasFilter = false;
     _rebuildLowercaseLabels();
+    _allApps.sort(
+      (a, b) => _lowercaseLabels[a.packageName]!.compareTo(
+        _lowercaseLabels[b.packageName]!,
+      ),
+    );
+    _applyFilter();
     _saveCustomLabels();
-    notifyListeners();
   }
 
   String displayLabel(AppInfo app) {

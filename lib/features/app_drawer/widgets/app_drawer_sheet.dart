@@ -34,7 +34,7 @@ class AppDrawerSheet extends StatefulWidget {
 class _AppDrawerSheetState extends State<AppDrawerSheet> {
   final _focusNode = FocusNode();
   final _scrollController = ScrollController();
-  bool _wasOpen = false;
+  final _textController = TextEditingController();
 
   bool get _searchOnly => widget.settingsState.searchOnly;
   bool get _autoKeyboard => _searchOnly || widget.settingsState.autoKeyboard;
@@ -43,34 +43,37 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   @override
   void initState() {
     super.initState();
-    if (_autoLaunch) {
-      widget.appListState.addListener(_onFilterChanged);
-    }
+    widget.appListState.addListener(_onFilterChanged);
     _scrollController.addListener(_onScroll);
   }
 
   @override
   void didUpdateWidget(AppDrawerSheet oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.isOpen && !_wasOpen) {
+    if (widget.isOpen && !oldWidget.isOpen) {
+      // Drawer just opened.
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
+      widget.isAtTop.value = true;
       if (_autoKeyboard) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _focusNode.requestFocus();
         });
       }
-    } else if (!widget.isOpen && _wasOpen) {
+    } else if (!widget.isOpen && oldWidget.isOpen) {
+      // Drawer just closed.
       _focusNode.unfocus();
+      _textController.clear();
     }
-    _wasOpen = widget.isOpen;
   }
 
   @override
   void dispose() {
-    if (_autoLaunch) {
-      widget.appListState.removeListener(_onFilterChanged);
-    }
+    widget.appListState.removeListener(_onFilterChanged);
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
+    _textController.dispose();
     _focusNode.dispose();
     super.dispose();
   }
@@ -80,6 +83,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   }
 
   void _onFilterChanged() {
+    if (!_autoLaunch) return;
     final state = widget.appListState;
     if (state.lastChangeWasFilter &&
         state.query.isNotEmpty &&
@@ -122,6 +126,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
             const SliverToBoxAdapter(child: SizedBox(height: 8)),
             SliverToBoxAdapter(
               child: AppSearchField(
+                controller: _textController,
                 focusNode: _focusNode,
                 onChanged: widget.appListState.filter,
                 onSubmit: _onSubmit,

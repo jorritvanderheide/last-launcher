@@ -4,6 +4,7 @@ import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/screens/reorder_screen.dart';
 import 'package:last_launcher/features/home/widgets/pinned_app_label.dart';
 import 'package:last_launcher/shared/data/models.dart';
+import 'package:last_launcher/shared/widgets/rename_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -16,6 +17,17 @@ class HomeScreen extends StatelessWidget {
   final HomeState homeState;
   final AppListState appListState;
   final void Function(String packageName) onLaunch;
+
+  Future<void> _rename(BuildContext context, PinnedApp app) async {
+    final newLabel = await showRenameDialog(
+      context: context,
+      currentLabel: app.displayLabel,
+    );
+    if (newLabel != null) {
+      await homeState.renameApp(app.packageName, newLabel);
+      appListState.setCustomLabel(app.packageName, newLabel);
+    }
+  }
 
   void _showPinnedAppOptions(BuildContext context, PinnedApp app) {
     showModalBottomSheet<void>(
@@ -50,9 +62,9 @@ class HomeScreen extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.edit),
                 title: const Text('Rename'),
-                onTap: () {
+                onTap: () async {
                   Navigator.pop(context);
-                  _showRenameDialog(context, app);
+                  await _rename(context, app);
                 },
               ),
               ListTile(
@@ -65,44 +77,6 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
-        );
-      },
-    );
-  }
-
-  void _showRenameDialog(BuildContext context, PinnedApp app) {
-    final controller = TextEditingController(text: app.displayLabel);
-    showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Rename'),
-          content: TextField(
-            controller: controller,
-            autofocus: true,
-            decoration: const InputDecoration(hintText: 'App name'),
-            onSubmitted: (_) {
-              final newLabel = controller.text.trim();
-              homeState.renameApp(app.packageName, newLabel);
-              appListState.setCustomLabel(app.packageName, newLabel);
-              Navigator.pop(context);
-            },
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                final newLabel = controller.text.trim();
-                homeState.renameApp(app.packageName, newLabel);
-                appListState.setCustomLabel(app.packageName, newLabel);
-                Navigator.pop(context);
-              },
-              child: const Text('Save'),
-            ),
-          ],
         );
       },
     );
