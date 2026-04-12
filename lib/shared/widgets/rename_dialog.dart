@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
-import 'package:last_launcher/features/home/home_state.dart';
 
 Future<void> renameApp({
   required BuildContext context,
@@ -8,7 +7,6 @@ Future<void> renameApp({
   required String currentLabel,
   required String originalLabel,
   required AppListState appListState,
-  required HomeState homeState,
 }) async {
   final newLabel = await showRenameDialog(
     context: context,
@@ -17,7 +15,6 @@ Future<void> renameApp({
   );
   if (newLabel != null) {
     appListState.setCustomLabel(packageName, newLabel);
-    await homeState.renameApp(packageName, newLabel);
   }
 }
 
@@ -28,10 +25,8 @@ Future<String?> showRenameDialog({
 }) {
   return showDialog<String>(
     context: context,
-    builder: (context) => _RenameDialog(
-      currentLabel: currentLabel,
-      originalLabel: originalLabel,
-    ),
+    builder: (context) =>
+        _RenameDialog(currentLabel: currentLabel, originalLabel: originalLabel),
   );
 }
 

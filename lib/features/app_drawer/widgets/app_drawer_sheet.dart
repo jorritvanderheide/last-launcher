@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
+import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_options_dialog.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_search_field.dart';
 import 'package:last_launcher/features/home/home_state.dart';
@@ -80,7 +81,9 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
     widget.isAtTop.value = _scrollController.offset <= 0;
     if (_scrollController.offset > 0 && _focusNode.hasFocus) {
       _focusNode.unfocus();
-    } else if (_scrollController.offset <= 0 && !_focusNode.hasFocus && _autoKeyboard) {
+    } else if (_scrollController.offset <= 0 &&
+        !_focusNode.hasFocus &&
+        _autoKeyboard) {
       _focusNode.requestFocus();
     }
   }
@@ -134,7 +137,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                   onSubmit: _onSubmit,
                 ),
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 8)),
+              const SliverToBoxAdapter(child: SizedBox(height: 32)),
               if (_searchOnly)
                 SliverFillRemaining(
                   child: GestureDetector(
@@ -148,7 +151,8 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                 )
               else
                 SliverFillRemaining(
-                  child: ListenableBuilder(
+                  child: FadeOverflow(
+                    child: ListenableBuilder(
                     listenable: widget.appListState,
                     builder: (context, _) {
                       final apps = widget.appListState.filteredApps;
@@ -157,7 +161,10 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                       ).bottom;
                       return ListView.builder(
                         controller: _scrollController,
-                        padding: EdgeInsets.only(bottom: keyboardHeight),
+                        padding: EdgeInsets.only(
+                        top: 8,
+                        bottom: keyboardHeight + 32,
+                      ),
                         itemCount: apps.length,
                         itemBuilder: (context, index) {
                           final app = apps[index];
@@ -169,6 +176,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                         },
                       );
                     },
+                  ),
                   ),
                 ),
             ],

@@ -8,9 +8,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppListState extends ChangeNotifier {
   AppListState(this._channel, this._prefs) {
     _loadCustomLabels();
+    _loadHiddenApps();
   }
 
   static const _labelsKey = 'custom_labels';
+  static const _hiddenKey = 'hidden_apps';
 
   final AppChannel _channel;
   final SharedPreferences _prefs;
@@ -19,10 +21,16 @@ class AppListState extends ChangeNotifier {
   String _query = '';
   bool _loading = false;
   final Map<String, String> _customLabels = {};
+  final Set<String> _hiddenApps = {};
 
   List<AppInfo> get filteredApps => _filteredApps;
   String get query => _query;
   bool get hasSingleResult => _filteredApps.length == 1;
+
+  List<AppInfo> get hiddenApps =>
+      _allApps.where((a) => _hiddenApps.contains(a.packageName)).toList();
+
+  bool isHidden(String packageName) => _hiddenApps.contains(packageName);
 
   Future<void> loadApps() async {
     if (_loading) return;
@@ -57,8 +65,24 @@ class AppListState extends ChangeNotifier {
     _saveCustomLabels();
   }
 
+  void hideApp(String packageName) {
+    _hiddenApps.add(packageName);
+    _applyFilter();
+    _saveHiddenApps();
+  }
+
+  void unhideApp(String packageName) {
+    _hiddenApps.remove(packageName);
+    _applyFilter();
+    _saveHiddenApps();
+  }
+
+  String displayLabelFor(String packageName, String fallback) {
+    return _customLabels[packageName] ?? fallback;
+  }
+
   String displayLabel(AppInfo app) {
-    return _customLabels[app.packageName] ?? app.label;
+    return displayLabelFor(app.packageName, app.label);
   }
 
   void _sortApps() {
@@ -85,12 +109,29 @@ class AppListState extends ChangeNotifier {
     await _prefs.setString(_labelsKey, jsonEncode(_customLabels));
   }
 
+  void _loadHiddenApps() {
+    final json = _prefs.getString(_hiddenKey);
+    if (json == null) return;
+    try {
+      final list = jsonDecode(json) as List<dynamic>;
+      _hiddenApps.addAll(list.cast<String>());
+    } on FormatException {
+      debugPrint('Corrupt hidden apps JSON, resetting');
+      _prefs.remove(_hiddenKey);
+    }
+  }
+
+  Future<void> _saveHiddenApps() async {
+    await _prefs.setString(_hiddenKey, jsonEncode(_hiddenApps.toList()));
+  }
+
   void _applyFilter() {
+    final visible = _allApps.where((a) => !_hiddenApps.contains(a.packageName));
     if (_query.isEmpty) {
-      _filteredApps = _allApps;
+      _filteredApps = visible.toList();
     } else {
       final lower = _query.toLowerCase();
-      _filteredApps = _allApps.where((app) {
+      _filteredApps = visible.where((app) {
         return displayLabel(app).toLowerCase().contains(lower) ||
             app.label.toLowerCase().contains(lower);
       }).toList();

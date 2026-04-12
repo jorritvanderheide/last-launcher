@@ -8,40 +8,20 @@ class AppInfo {
 }
 
 class PinnedApp {
-  const PinnedApp({
-    required this.packageName,
-    required this.label,
-    this.customLabel,
-  });
+  const PinnedApp({required this.packageName, required this.label});
 
   factory PinnedApp.fromJson(Map<String, dynamic> json) {
     return PinnedApp(
       packageName: json['packageName'] as String,
       label: json['label'] as String,
-      customLabel: json['customLabel'] as String?,
     );
   }
 
   final String packageName;
   final String label;
-  final String? customLabel;
-
-  String get displayLabel => customLabel ?? label;
-
-  PinnedApp copyWith({String? label, String? Function()? customLabel}) {
-    return PinnedApp(
-      packageName: packageName,
-      label: label ?? this.label,
-      customLabel: customLabel != null ? customLabel() : this.customLabel,
-    );
-  }
 
   Map<String, dynamic> toJson() {
-    return {
-      'packageName': packageName,
-      'label': label,
-      'customLabel': customLabel,
-    };
+    return {'packageName': packageName, 'label': label};
   }
 
   static List<PinnedApp> decodeList(String json) {

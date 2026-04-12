@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/screens/reorder_screen.dart';
-import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/data/models.dart';
+import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/widgets/rename_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,6 +18,10 @@ class HomeScreen extends StatelessWidget {
   final AppListState appListState;
   final void Function(String packageName) onLaunch;
 
+  String _label(PinnedApp app) {
+    return appListState.displayLabelFor(app.packageName, app.label);
+  }
+
   void _showPinnedAppOptions(BuildContext context, PinnedApp app) {
     showModalBottomSheet<void>(
       context: context,
@@ -29,7 +33,7 @@ class HomeScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  app.displayLabel,
+                  _label(app),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -40,8 +44,10 @@ class HomeScreen extends StatelessWidget {
                   Navigator.pop(context);
                   Navigator.of(context).push(
                     PageRouteBuilder<void>(
-                      pageBuilder: (_, _, _) =>
-                          ReorderScreen(homeState: homeState),
+                      pageBuilder: (_, _, _) => ReorderScreen(
+                        homeState: homeState,
+                        appListState: appListState,
+                      ),
                       transitionDuration: Duration.zero,
                       reverseTransitionDuration: Duration.zero,
                     ),
@@ -56,10 +62,9 @@ class HomeScreen extends StatelessWidget {
                   await renameApp(
                     context: context,
                     packageName: app.packageName,
-                    currentLabel: app.displayLabel,
+                    currentLabel: _label(app),
                     originalLabel: app.label,
                     appListState: appListState,
-                    homeState: homeState,
                   );
                 },
               ),
@@ -90,7 +95,7 @@ class HomeScreen extends StatelessWidget {
             return Align(
               alignment: Alignment.centerLeft,
               child: ListenableBuilder(
-                listenable: homeState,
+                listenable: Listenable.merge([homeState, appListState]),
                 builder: (context, _) {
                   final apps = homeState.pinnedApps;
                   if (apps.isEmpty) {
@@ -113,7 +118,7 @@ class HomeScreen extends StatelessWidget {
                     children: apps
                         .map(
                           (app) => AppLabel(
-                            label: app.displayLabel,
+                            label: _label(app),
                             onTap: () => onLaunch(app.packageName),
                             onLongPress: () =>
                                 _showPinnedAppOptions(context, app),

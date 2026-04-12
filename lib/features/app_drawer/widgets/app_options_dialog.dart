@@ -9,7 +9,8 @@ Future<void> showAppOptionsDialog({
   required AppInfo app,
   required AppListState appListState,
   required HomeState homeState,
-  required VoidCallback onCloseDrawer,
+  VoidCallback? onCloseDrawer,
+  bool isHiddenContext = false,
 }) {
   final isPinned = homeState.isPinned(app.packageName);
 
@@ -38,7 +39,6 @@ Future<void> showAppOptionsDialog({
                   currentLabel: appListState.displayLabel(app),
                   originalLabel: app.label,
                   appListState: appListState,
-                  homeState: homeState,
                 );
               },
             ),
@@ -66,8 +66,26 @@ Future<void> showAppOptionsDialog({
                           ),
                         );
                         Navigator.pop(context);
-                        onCloseDrawer();
+                        onCloseDrawer?.call();
                       },
+              ),
+            if (isHiddenContext)
+              ListTile(
+                leading: const Icon(Icons.visibility),
+                title: const Text('Unhide'),
+                onTap: () {
+                  appListState.unhideApp(app.packageName);
+                  Navigator.pop(context);
+                },
+              )
+            else
+              ListTile(
+                leading: const Icon(Icons.visibility_off),
+                title: const Text('Hide'),
+                onTap: () {
+                  appListState.hideApp(app.packageName);
+                  Navigator.pop(context);
+                },
               ),
           ],
         ),

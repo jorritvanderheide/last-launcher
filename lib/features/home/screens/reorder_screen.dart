@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
 
 class ReorderScreen extends StatelessWidget {
-  const ReorderScreen({required this.homeState, super.key});
+  const ReorderScreen({
+    required this.homeState,
+    required this.appListState,
+    super.key,
+  });
 
   final HomeState homeState;
+  final AppListState appListState;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +25,7 @@ class ReorderScreen extends StatelessWidget {
           children: [
             Center(
               child: ListenableBuilder(
-                listenable: homeState,
+                listenable: Listenable.merge([homeState, appListState]),
                 builder: (context, _) {
                   final apps = homeState.pinnedApps;
                   return ReorderableListView.builder(
@@ -43,7 +49,10 @@ class ReorderScreen extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  app.displayLabel,
+                                  appListState.displayLabelFor(
+                                    app.packageName,
+                                    app.label,
+                                  ),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: textStyle,

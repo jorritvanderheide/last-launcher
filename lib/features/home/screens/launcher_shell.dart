@@ -209,8 +209,11 @@ class _LauncherShellState extends State<LauncherShell>
               onLongPress: () {
                 Navigator.of(context).push(
                   PageRouteBuilder<void>(
-                    pageBuilder: (_, _, _) =>
-                        SettingsScreen(settingsState: widget.settingsState),
+                    pageBuilder: (_, _, _) => SettingsScreen(
+                      settingsState: widget.settingsState,
+                      appListState: widget.appListState,
+                      homeState: widget.homeState,
+                    ),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),

@@ -67,14 +67,4 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
     await _save();
   }
-
-  Future<void> renameApp(String packageName, String customLabel) async {
-    final index = _pinnedApps.indexWhere((a) => a.packageName == packageName);
-    if (index == -1) return;
-    _pinnedApps[index] = _pinnedApps[index].copyWith(
-      customLabel: () => customLabel.isEmpty ? null : customLabel,
-    );
-    notifyListeners();
-    await _save();
-  }
 }

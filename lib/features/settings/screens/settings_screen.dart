@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/features/app_drawer/app_list_state.dart';
+import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({required this.settingsState, super.key});
+  const SettingsScreen({
+    required this.settingsState,
+    required this.appListState,
+    required this.homeState,
+    super.key,
+  });
 
   final SettingsState settingsState;
+  final AppListState appListState;
+  final HomeState homeState;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +39,30 @@ class SettingsScreen extends StatelessWidget {
                 onChanged: settingsState.themeMode == ThemeMode.light
                     ? null
                     : settingsState.setAmoled,
+              ),
+              const _SectionHeader(title: 'Apps'),
+              ListenableBuilder(
+                listenable: appListState,
+                builder: (context, _) {
+                  final count = appListState.hiddenApps.length;
+                  return ListTile(
+                    leading: const Icon(Icons.visibility_off),
+                    title: const Text('Hidden apps'),
+                    subtitle: Text(count == 0 ? 'None' : '$count hidden'),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder<void>(
+                          pageBuilder: (_, _, _) => HiddenAppsScreen(
+                            appListState: appListState,
+                            homeState: homeState,
+                          ),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
               const _SectionHeader(title: 'Search'),
               SwitchListTile(

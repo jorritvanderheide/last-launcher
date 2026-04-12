@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/shared/widgets/app_label.dart';
 
 class AppSearchField extends StatelessWidget {
   const AppSearchField({
@@ -16,24 +17,45 @@ class AppSearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: TextField(
-        controller: controller,
-        focusNode: focusNode,
-        onChanged: onChanged,
-        onSubmitted: (_) => onSubmit(),
-        textInputAction: TextInputAction.go,
-        decoration: const InputDecoration(
-          hintText: 'Search apps',
-          prefixIcon: Icon(Icons.search),
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-            borderSide: BorderSide.none,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: AppLabel.verticalPadding,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: controller,
+            focusNode: focusNode,
+            onChanged: onChanged,
+            onSubmitted: (_) => onSubmit(),
+            cursorWidth: 0,
+            textInputAction: TextInputAction.go,
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontSize: AppLabel.fontSize),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.zero,
+              isDense: true,
+            ),
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 16),
-        ),
+          ValueListenableBuilder<TextEditingValue>(
+            valueListenable: controller,
+            builder: (context, value, _) {
+              if (value.text.isNotEmpty) return const SizedBox.shrink();
+              return Container(
+                width: 32,
+                height: 2,
+                color: colorScheme.onSurface,
+              );
+            },
+          ),
+        ],
       ),
     );
   }
