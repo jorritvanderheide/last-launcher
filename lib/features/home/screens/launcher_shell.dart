@@ -34,7 +34,6 @@ class _LauncherShellState extends State<LauncherShell>
   // Current sheet height as a fraction of screen height (0..._maxSheetFraction).
   double _sheetFraction = 0;
   bool get _drawerOpen => _sheetFraction > 0.01;
-  bool _sheetIsOpen = false; // explicit flag for keyboard triggering
 
   // Animation for snap open/close.
   late final AnimationController _animController;
@@ -54,15 +53,16 @@ class _LauncherShellState extends State<LauncherShell>
   @override
   void initState() {
     super.initState();
-    _animController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    )..addListener(() {
-        final t = Curves.easeOut.transform(_animController.value);
-        setState(() {
-          _sheetFraction = _animFrom + (_animTo - _animFrom) * t;
+    _animController =
+        AnimationController(
+          vsync: this,
+          duration: const Duration(milliseconds: 300),
+        )..addListener(() {
+          final t = Curves.easeOut.transform(_animController.value);
+          setState(() {
+            _sheetFraction = _animFrom + (_animTo - _animFrom) * t;
+          });
         });
-      });
   }
 
   @override
@@ -79,12 +79,10 @@ class _LauncherShellState extends State<LauncherShell>
   }
 
   void _openDrawer() {
-    _sheetIsOpen = true;
     _animateTo(_maxSheetFraction);
   }
 
   void _closeDrawer() {
-    _sheetIsOpen = false;
     _animateTo(0);
     widget.appListState.clearFilter();
   }
@@ -150,7 +148,7 @@ class _LauncherShellState extends State<LauncherShell>
 
     // Resume interrupted animation if sheet is partially open.
     if (_sheetFraction > 0.01 && _sheetFraction < _maxSheetFraction - 0.01) {
-      _animateTo(_sheetIsOpen ? _maxSheetFraction : 0);
+      _animateTo(_animTo > 0 ? _maxSheetFraction : 0);
       return;
     }
 
@@ -236,7 +234,7 @@ class _LauncherShellState extends State<LauncherShell>
                   appListState: widget.appListState,
                   homeState: widget.homeState,
                   settingsState: widget.settingsState,
-                  isOpen: _sheetIsOpen,
+                  isOpen: _animTo == _maxSheetFraction && !_isDraggingSheet,
                   isAtTop: _listIsAtTop,
                   onLaunch: _launchApp,
                   onCloseDrawer: _closeDrawer,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
-import 'package:last_launcher/features/app_drawer/widgets/app_list_tile.dart';
+import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_options_dialog.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_search_field.dart';
 import 'package:last_launcher/features/home/home_state.dart';
@@ -43,7 +43,6 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   @override
   void initState() {
     super.initState();
-    widget.appListState.addListener(_onFilterChanged);
     _scrollController.addListener(_onScroll);
   }
 
@@ -70,7 +69,6 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
 
   @override
   void dispose() {
-    widget.appListState.removeListener(_onFilterChanged);
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     _textController.dispose();
@@ -82,13 +80,12 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
     widget.isAtTop.value = _scrollController.offset <= 0;
   }
 
-  void _onFilterChanged() {
-    if (!_autoLaunch) return;
-    final state = widget.appListState;
-    if (state.lastChangeWasFilter &&
-        state.query.isNotEmpty &&
-        state.hasSingleResult) {
-      widget.onLaunch(state.filteredApps.first.packageName);
+  void _onSearchChanged(String query) {
+    widget.appListState.filter(query);
+    if (_autoLaunch &&
+        widget.appListState.query.isNotEmpty &&
+        widget.appListState.hasSingleResult) {
+      widget.onLaunch(widget.appListState.filteredApps.first.packageName);
     }
   }
 
@@ -121,55 +118,56 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
         child: Padding(
           padding: EdgeInsets.only(bottom: bottomPadding),
           child: CustomScrollView(
-          physics: const NeverScrollableScrollPhysics(),
-          slivers: [
-            const SliverToBoxAdapter(child: SizedBox(height: 8)),
-            SliverToBoxAdapter(
-              child: AppSearchField(
-                controller: _textController,
-                focusNode: _focusNode,
-                onChanged: widget.appListState.filter,
-                onSubmit: _onSubmit,
-              ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: 8)),
-            if (_searchOnly)
-              SliverFillRemaining(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onVerticalDragEnd: (details) {
-                    if (details.velocity.pixelsPerSecond.dy > 100) {
-                      widget.onCloseDrawer();
-                    }
-                  },
-                ),
-              )
-            else
-              SliverFillRemaining(
-                child: ListenableBuilder(
-                  listenable: widget.appListState,
-                  builder: (context, _) {
-                    final apps = widget.appListState.filteredApps;
-                    final keyboardHeight =
-                        MediaQuery.viewInsetsOf(context).bottom;
-                    return ListView.builder(
-                      controller: _scrollController,
-                      padding: EdgeInsets.only(bottom: keyboardHeight),
-                      itemCount: apps.length,
-                      itemBuilder: (context, index) {
-                        final app = apps[index];
-                        return AppListTile(
-                          label: widget.appListState.displayLabel(app),
-                          onTap: () => widget.onLaunch(app.packageName),
-                          onLongPress: () => _onLongPress(context, app),
-                        );
-                      },
-                    );
-                  },
+            physics: const NeverScrollableScrollPhysics(),
+            slivers: [
+              const SliverToBoxAdapter(child: SizedBox(height: 8)),
+              SliverToBoxAdapter(
+                child: AppSearchField(
+                  controller: _textController,
+                  focusNode: _focusNode,
+                  onChanged: _onSearchChanged,
+                  onSubmit: _onSubmit,
                 ),
               ),
-          ],
-        ),
+              const SliverToBoxAdapter(child: SizedBox(height: 8)),
+              if (_searchOnly)
+                SliverFillRemaining(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onVerticalDragEnd: (details) {
+                      if (details.velocity.pixelsPerSecond.dy > 100) {
+                        widget.onCloseDrawer();
+                      }
+                    },
+                  ),
+                )
+              else
+                SliverFillRemaining(
+                  child: ListenableBuilder(
+                    listenable: widget.appListState,
+                    builder: (context, _) {
+                      final apps = widget.appListState.filteredApps;
+                      final keyboardHeight = MediaQuery.viewInsetsOf(
+                        context,
+                      ).bottom;
+                      return ListView.builder(
+                        controller: _scrollController,
+                        padding: EdgeInsets.only(bottom: keyboardHeight),
+                        itemCount: apps.length,
+                        itemBuilder: (context, index) {
+                          final app = apps[index];
+                          return AppLabel(
+                            label: widget.appListState.displayLabel(app),
+                            onTap: () => widget.onLaunch(app.packageName),
+                            onLongPress: () => _onLongPress(context, app),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

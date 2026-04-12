@@ -7,14 +7,11 @@ class AppInfo {
   final String label;
 }
 
-const _sentinel = Object();
-
 class PinnedApp {
   const PinnedApp({
     required this.packageName,
     required this.label,
     this.customLabel,
-    required this.sortOrder,
   });
 
   factory PinnedApp.fromJson(Map<String, dynamic> json) {
@@ -22,30 +19,20 @@ class PinnedApp {
       packageName: json['packageName'] as String,
       label: json['label'] as String,
       customLabel: json['customLabel'] as String?,
-      sortOrder: json['sortOrder'] as int,
     );
   }
 
   final String packageName;
   final String label;
   final String? customLabel;
-  final int sortOrder;
 
   String get displayLabel => customLabel ?? label;
 
-  PinnedApp copyWith({
-    String? packageName,
-    String? label,
-    Object? customLabel = _sentinel,
-    int? sortOrder,
-  }) {
+  PinnedApp copyWith({String? label, String? Function()? customLabel}) {
     return PinnedApp(
-      packageName: packageName ?? this.packageName,
+      packageName: packageName,
       label: label ?? this.label,
-      customLabel: customLabel == _sentinel
-          ? this.customLabel
-          : customLabel as String?,
-      sortOrder: sortOrder ?? this.sortOrder,
+      customLabel: customLabel != null ? customLabel() : this.customLabel,
     );
   }
 
@@ -54,7 +41,6 @@ class PinnedApp {
       'packageName': packageName,
       'label': label,
       'customLabel': customLabel,
-      'sortOrder': sortOrder,
     };
   }
 

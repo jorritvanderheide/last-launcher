@@ -1,4 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/features/app_drawer/app_list_state.dart';
+import 'package:last_launcher/features/home/home_state.dart';
+
+Future<void> renameApp({
+  required BuildContext context,
+  required String packageName,
+  required String currentLabel,
+  required AppListState appListState,
+  required HomeState homeState,
+}) async {
+  final newLabel = await showRenameDialog(
+    context: context,
+    currentLabel: currentLabel,
+  );
+  if (newLabel != null) {
+    appListState.setCustomLabel(packageName, newLabel);
+    await homeState.renameApp(packageName, newLabel);
+  }
+}
 
 Future<String?> showRenameDialog({
   required BuildContext context,
@@ -53,10 +72,7 @@ class _RenameDialogState extends State<_RenameDialog> {
           onPressed: () => Navigator.pop(context),
           child: const Text('Cancel'),
         ),
-        TextButton(
-          onPressed: _submit,
-          child: const Text('Save'),
-        ),
+        TextButton(onPressed: _submit, child: const Text('Save')),
       ],
     );
   }

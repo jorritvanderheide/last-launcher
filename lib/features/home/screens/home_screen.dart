@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/screens/reorder_screen.dart';
-import 'package:last_launcher/features/home/widgets/pinned_app_label.dart';
+import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/shared/widgets/rename_dialog.dart';
 
@@ -17,17 +17,6 @@ class HomeScreen extends StatelessWidget {
   final HomeState homeState;
   final AppListState appListState;
   final void Function(String packageName) onLaunch;
-
-  Future<void> _rename(BuildContext context, PinnedApp app) async {
-    final newLabel = await showRenameDialog(
-      context: context,
-      currentLabel: app.displayLabel,
-    );
-    if (newLabel != null) {
-      await homeState.renameApp(app.packageName, newLabel);
-      appListState.setCustomLabel(app.packageName, newLabel);
-    }
-  }
 
   void _showPinnedAppOptions(BuildContext context, PinnedApp app) {
     showModalBottomSheet<void>(
@@ -64,7 +53,13 @@ class HomeScreen extends StatelessWidget {
                 title: const Text('Rename'),
                 onTap: () async {
                   Navigator.pop(context);
-                  await _rename(context, app);
+                  await renameApp(
+                    context: context,
+                    packageName: app.packageName,
+                    currentLabel: app.displayLabel,
+                    appListState: appListState,
+                    homeState: homeState,
+                  );
                 },
               ),
               ListTile(
@@ -90,9 +85,7 @@ class HomeScreen extends StatelessWidget {
         maintainBottomViewPadding: true,
         child: LayoutBuilder(
           builder: (context, constraints) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              homeState.updateMaxApps(constraints.maxHeight);
-            });
+            homeState.updateMaxApps(constraints.maxHeight);
             return Align(
               alignment: Alignment.centerLeft,
               child: ListenableBuilder(
@@ -118,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: apps
                         .map(
-                          (app) => PinnedAppLabel(
+                          (app) => AppLabel(
                             label: app.displayLabel,
                             onTap: () => onLaunch(app.packageName),
                             onLongPress: () =>

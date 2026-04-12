@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PinnedAppLabel extends StatelessWidget {
-  const PinnedAppLabel({
+class AppLabel extends StatelessWidget {
+  const AppLabel({
     required this.label,
     required this.onTap,
     required this.onLongPress,

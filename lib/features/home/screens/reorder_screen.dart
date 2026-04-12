@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/home/home_state.dart';
-import 'package:last_launcher/features/home/widgets/pinned_app_label.dart';
+import 'package:last_launcher/shared/widgets/app_label.dart';
 
 class ReorderScreen extends StatelessWidget {
   const ReorderScreen({required this.homeState, super.key});
@@ -11,7 +11,7 @@ class ReorderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final textStyle = Theme.of(
       context,
-    ).textTheme.titleLarge?.copyWith(fontSize: PinnedAppLabel.fontSize);
+    ).textTheme.titleLarge?.copyWith(fontSize: AppLabel.fontSize);
 
     return Scaffold(
       body: SafeArea(
@@ -37,7 +37,7 @@ class ReorderScreen extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 20,
-                            vertical: PinnedAppLabel.verticalPadding,
+                            vertical: AppLabel.verticalPadding,
                           ),
                           child: Row(
                             children: [

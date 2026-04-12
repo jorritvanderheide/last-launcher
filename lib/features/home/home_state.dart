@@ -21,7 +21,6 @@ class HomeState extends ChangeNotifier {
     if (json == null) return;
     try {
       _pinnedApps = PinnedApp.decodeList(json);
-      _pinnedApps.sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
     } on FormatException {
       debugPrint('Corrupt pinned apps JSON, resetting');
       _prefs.remove(_key);
@@ -47,8 +46,7 @@ class HomeState extends ChangeNotifier {
 
   Future<void> addApp(PinnedApp app) async {
     if (isPinned(app.packageName) || isFull) return;
-    final nextOrder = _pinnedApps.isEmpty ? 0 : _pinnedApps.last.sortOrder + 1;
-    _pinnedApps.add(app.copyWith(sortOrder: nextOrder));
+    _pinnedApps.add(app);
     notifyListeners();
     await _save();
   }
@@ -66,10 +64,6 @@ class HomeState extends ChangeNotifier {
     final app = _pinnedApps.removeAt(oldIndex);
     _pinnedApps.insert(newIndex, app);
 
-    for (var i = 0; i < _pinnedApps.length; i++) {
-      _pinnedApps[i] = _pinnedApps[i].copyWith(sortOrder: i);
-    }
-
     notifyListeners();
     await _save();
   }
@@ -78,7 +72,7 @@ class HomeState extends ChangeNotifier {
     final index = _pinnedApps.indexWhere((a) => a.packageName == packageName);
     if (index == -1) return;
     _pinnedApps[index] = _pinnedApps[index].copyWith(
-      customLabel: customLabel.isEmpty ? null : customLabel,
+      customLabel: () => customLabel.isEmpty ? null : customLabel,
     );
     notifyListeners();
     await _save();

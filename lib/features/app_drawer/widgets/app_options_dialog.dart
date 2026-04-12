@@ -4,22 +4,6 @@ import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/shared/widgets/rename_dialog.dart';
 
-Future<void> _rename(
-  BuildContext context,
-  AppInfo app,
-  AppListState appListState,
-  HomeState homeState,
-) async {
-  final newLabel = await showRenameDialog(
-    context: context,
-    currentLabel: appListState.displayLabel(app),
-  );
-  if (newLabel != null) {
-    appListState.setCustomLabel(app.packageName, newLabel);
-    await homeState.renameApp(app.packageName, newLabel);
-  }
-}
-
 Future<void> showAppOptionsDialog({
   required BuildContext context,
   required AppInfo app,
@@ -48,7 +32,13 @@ Future<void> showAppOptionsDialog({
               title: const Text('Rename'),
               onTap: () async {
                 Navigator.pop(context);
-                await _rename(context, app, appListState, homeState);
+                await renameApp(
+                  context: context,
+                  packageName: app.packageName,
+                  currentLabel: appListState.displayLabel(app),
+                  appListState: appListState,
+                  homeState: homeState,
+                );
               },
             ),
             if (isPinned)
@@ -72,7 +62,6 @@ Future<void> showAppOptionsDialog({
                           PinnedApp(
                             packageName: app.packageName,
                             label: app.label,
-                            sortOrder: 0,
                           ),
                         );
                         Navigator.pop(context);
