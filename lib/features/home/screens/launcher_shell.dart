@@ -9,7 +9,6 @@ import 'package:last_launcher/shared/data/app_channel.dart';
 
 const _maxSheetFraction = 0.9;
 const _dragStartThreshold = 20.0; // px vertical before sheet starts moving
-const _snapOpenThreshold = 0.15; // fraction — above this, snap open on release
 const _swipeVelocityThreshold = 300.0; // px/s for swipe-down quick settings
 
 class LauncherShell extends StatefulWidget {
@@ -35,6 +34,7 @@ class _LauncherShellState extends State<LauncherShell>
   // Current sheet height as a fraction of screen height (0..._maxSheetFraction).
   double _sheetFraction = 0;
   bool get _drawerOpen => _sheetFraction > 0.01;
+  bool _sheetIsOpen = false; // explicit flag for keyboard triggering
 
   // Animation for snap open/close.
   late final AnimationController _animController;
@@ -77,7 +77,13 @@ class _LauncherShellState extends State<LauncherShell>
     _animController.forward(from: 0);
   }
 
+  void _openDrawer() {
+    _sheetIsOpen = true;
+    _animateTo(_maxSheetFraction);
+  }
+
   void _closeDrawer() {
+    _sheetIsOpen = false;
     _animateTo(0);
     widget.appListState.clearFilter();
   }
@@ -128,7 +134,7 @@ class _LauncherShellState extends State<LauncherShell>
     if (_isDraggingSheet) {
       _isDraggingSheet = false;
       if (_sheetFraction > _dragStartFraction + 0.05) {
-        _animateTo(_maxSheetFraction);
+        _openDrawer();
       } else if (_sheetFraction < _dragStartFraction - 0.05) {
         _closeDrawer();
       } else {
@@ -162,7 +168,6 @@ class _LauncherShellState extends State<LauncherShell>
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.sizeOf(context).height;
-    final keyboardHeight = MediaQuery.viewInsetsOf(context).bottom;
     final sheetHeight = screenHeight * _sheetFraction;
 
     return PopScope(
@@ -203,7 +208,7 @@ class _LauncherShellState extends State<LauncherShell>
             Positioned(
               left: 0,
               right: 0,
-              bottom: keyboardHeight,
+              bottom: 0,
               height: sheetHeight,
               child: Listener(
                 behavior: HitTestBehavior.translucent,
@@ -215,7 +220,7 @@ class _LauncherShellState extends State<LauncherShell>
                   appListState: widget.appListState,
                   homeState: widget.homeState,
                   settingsState: widget.settingsState,
-                  isOpen: _sheetFraction > _snapOpenThreshold,
+                  isOpen: _sheetIsOpen,
                   isAtTop: _listIsAtTop,
                   onLaunch: _launchApp,
                   onCloseDrawer: _closeDrawer,

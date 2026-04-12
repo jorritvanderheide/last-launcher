@@ -113,6 +113,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
+        maintainBottomViewPadding: true,
         child: LayoutBuilder(
           builder: (context, constraints) {
             WidgetsBinding.instance.addPostFrameCallback((_) {

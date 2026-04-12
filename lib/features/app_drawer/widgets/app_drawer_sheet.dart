@@ -108,23 +108,28 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
+    final bottomPadding = MediaQuery.paddingOf(context).bottom;
+
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       child: Material(
         color: colorScheme.surface,
-        child: Column(
-          children: [
-            const Flexible(child: SizedBox(height: 8)),
-            Flexible(
+        child: Padding(
+          padding: EdgeInsets.only(bottom: bottomPadding),
+          child: CustomScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          slivers: [
+            const SliverToBoxAdapter(child: SizedBox(height: 8)),
+            SliverToBoxAdapter(
               child: AppSearchField(
                 focusNode: _focusNode,
                 onChanged: widget.appListState.filter,
                 onSubmit: _onSubmit,
               ),
             ),
-            const Flexible(child: SizedBox(height: 8)),
+            const SliverToBoxAdapter(child: SizedBox(height: 8)),
             if (_searchOnly)
-              Expanded(
+              SliverFillRemaining(
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onVerticalDragEnd: (details) {
@@ -135,14 +140,16 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                 ),
               )
             else
-              Expanded(
+              SliverFillRemaining(
                 child: ListenableBuilder(
                   listenable: widget.appListState,
                   builder: (context, _) {
                     final apps = widget.appListState.filteredApps;
+                    final keyboardHeight =
+                        MediaQuery.viewInsetsOf(context).bottom;
                     return ListView.builder(
                       controller: _scrollController,
-                      padding: EdgeInsets.zero,
+                      padding: EdgeInsets.only(bottom: keyboardHeight),
                       itemCount: apps.length,
                       itemBuilder: (context, index) {
                         final app = apps[index];
@@ -157,6 +164,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                 ),
               ),
           ],
+        ),
         ),
       ),
     );
