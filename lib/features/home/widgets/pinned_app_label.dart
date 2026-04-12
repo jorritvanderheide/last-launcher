@@ -12,17 +12,31 @@ class PinnedAppLabel extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback onLongPress;
 
+  static const fontSize = 28.0;
+  static const verticalPadding = 9.0;
+  static const itemHeight = fontSize + 2 * verticalPadding;
+
+  static int maxAppsFor(double availableHeight) {
+    return (availableHeight / itemHeight).floor().clamp(1, 10);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: InkWell(
-        onTap: onTap,
-        onLongPress: onLongPress,
-        borderRadius: BorderRadius.circular(8),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-          child: Text(label, style: Theme.of(context).textTheme.titleLarge),
+    return InkWell(
+      onTap: onTap,
+      onLongPress: onLongPress,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: verticalPadding,
+        ),
+        child: Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontSize: fontSize),
         ),
       ),
     );

@@ -24,6 +24,8 @@ class AppListState extends ChangeNotifier {
   List<AppInfo> get filteredApps => _filteredApps;
   String get query => _query;
   bool get hasSingleResult => _filteredApps.length == 1;
+  bool get lastChangeWasFilter => _lastChangeWasFilter;
+  bool _lastChangeWasFilter = false;
 
   Future<void> loadApps() async {
     if (_loading) return;
@@ -44,6 +46,7 @@ class AppListState extends ChangeNotifier {
 
   void filter(String query) {
     _query = query;
+    _lastChangeWasFilter = true;
     _applyFilter();
   }
 
@@ -58,6 +61,7 @@ class AppListState extends ChangeNotifier {
     } else {
       _customLabels[packageName] = label;
     }
+    _lastChangeWasFilter = false;
     _rebuildLowercaseLabels();
     _saveCustomLabels();
     notifyListeners();

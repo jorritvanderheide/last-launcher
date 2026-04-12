@@ -50,19 +50,22 @@ Future<void> showAppOptionsDialog({
               )
             else
               ListTile(
+                enabled: !homeState.isFull,
                 leading: const Icon(Icons.add_circle_outline),
                 title: const Text('Add to home'),
-                onTap: () {
-                  homeState.addApp(
-                    PinnedApp(
-                      packageName: app.packageName,
-                      label: app.label,
-                      sortOrder: 0,
-                    ),
-                  );
-                  Navigator.pop(context);
-                  onCloseDrawer();
-                },
+                onTap: homeState.isFull
+                    ? null
+                    : () {
+                        homeState.addApp(
+                          PinnedApp(
+                            packageName: app.packageName,
+                            label: app.label,
+                            sortOrder: 0,
+                          ),
+                        );
+                        Navigator.pop(context);
+                        onCloseDrawer();
+                      },
               ),
           ],
         ),
@@ -114,5 +117,5 @@ Future<void> _showRenameDialog({
         ],
       );
     },
-  ).then((_) => controller.dispose());
+  );
 }

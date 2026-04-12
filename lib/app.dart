@@ -44,6 +44,20 @@ class _LastLauncherAppState extends State<LastLauncherApp>
     }
   }
 
+  ThemeData _buildDarkTheme(bool amoled) {
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: Colors.deepPurple,
+      brightness: Brightness.dark,
+    );
+    return ThemeData(
+      colorScheme: amoled
+          ? colorScheme.copyWith(surface: Colors.black, onSurface: Colors.white)
+          : colorScheme,
+      scaffoldBackgroundColor: amoled ? Colors.black : null,
+      useMaterial3: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
@@ -56,13 +70,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          darkTheme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.deepPurple,
-              brightness: Brightness.dark,
-            ),
-            useMaterial3: true,
-          ),
+          darkTheme: _buildDarkTheme(widget.settingsState.amoled),
           home: LauncherShell(
             appChannel: widget.appChannel,
             homeState: widget.homeState,

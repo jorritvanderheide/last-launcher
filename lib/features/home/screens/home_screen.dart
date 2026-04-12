@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/home/screens/reorder_screen.dart';
 import 'package:last_launcher/features/home/widgets/pinned_app_label.dart';
 import 'package:last_launcher/shared/data/models.dart';
 
@@ -30,6 +31,18 @@ class HomeScreen extends StatelessWidget {
                   app.displayLabel,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.swap_vert),
+                title: const Text('Reorder apps'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => ReorderScreen(homeState: homeState),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.edit),
@@ -89,48 +102,54 @@ class HomeScreen extends StatelessWidget {
           ],
         );
       },
-    ).then((_) => controller.dispose());
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: ListenableBuilder(
-              listenable: homeState,
-              builder: (context, _) {
-                final apps = homeState.pinnedApps;
-                if (apps.isEmpty) {
-                  return Text(
-                    'Swipe up to search apps\nLong press for settings',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withAlpha(100),
-                    ),
-                  );
-                }
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: apps
-                      .map(
-                        (app) => PinnedAppLabel(
-                          label: app.displayLabel,
-                          onTap: () => onLaunch(app.packageName),
-                          onLongPress: () =>
-                              _showPinnedAppOptions(context, app),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            homeState.updateMaxApps(constraints.maxHeight);
+            return Align(
+              alignment: Alignment.centerLeft,
+              child: ListenableBuilder(
+                listenable: homeState,
+                builder: (context, _) {
+                  final apps = homeState.pinnedApps;
+                  if (apps.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Text(
+                        'Swipe up to search apps\n'
+                        'Long press for settings',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSurface.withAlpha(100),
                         ),
-                      )
-                      .toList(),
-                );
-              },
-            ),
-          ),
+                      ),
+                    );
+                  }
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: apps
+                        .map(
+                          (app) => PinnedAppLabel(
+                            label: app.displayLabel,
+                            onTap: () => onLaunch(app.packageName),
+                            onLongPress: () =>
+                                _showPinnedAppOptions(context, app),
+                          ),
+                        )
+                        .toList(),
+                  );
+                },
+              ),
+            );
+          },
         ),
       ),
     );

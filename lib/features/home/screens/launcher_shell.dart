@@ -51,20 +51,28 @@ class _LauncherShellState extends State<LauncherShell> {
 
   Route<void> _slideUpRoute() {
     return PageRouteBuilder<void>(
-      opaque: false,
-      transitionDuration: const Duration(milliseconds: 200),
-      reverseTransitionDuration: const Duration(milliseconds: 150),
+      opaque: true,
+      transitionDuration: const Duration(milliseconds: 300),
+      reverseTransitionDuration: Duration.zero,
       pageBuilder: (context, animation, secondaryAnimation) {
         return AppDrawerScreen(
           appListState: widget.appListState,
           homeState: widget.homeState,
+          settingsState: widget.settingsState,
           onLaunch: _launchApp,
           onCloseDrawer: _closeDrawer,
-          routeAnimation: animation,
         );
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(opacity: animation, child: child);
+        final offset =
+            Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero).animate(
+              CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeOut,
+                reverseCurve: Curves.easeIn,
+              ),
+            );
+        return SlideTransition(position: offset, child: child);
       },
     );
   }

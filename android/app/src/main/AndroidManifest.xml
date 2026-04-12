@@ -2,7 +2,7 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
     <application
-        android:label="last_launcher"
+        android:label="Last Launcher"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

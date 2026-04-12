@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:last_launcher/features/home/widgets/pinned_app_label.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,8 +35,17 @@ class HomeState extends ChangeNotifier {
     return _pinnedApps.any((a) => a.packageName == packageName);
   }
 
+  int _maxPinnedApps = 10;
+
+  int get maxPinnedApps => _maxPinnedApps;
+  bool get isFull => _pinnedApps.length >= _maxPinnedApps;
+
+  void updateMaxApps(double availableHeight) {
+    _maxPinnedApps = PinnedAppLabel.maxAppsFor(availableHeight);
+  }
+
   Future<void> addApp(PinnedApp app) async {
-    if (isPinned(app.packageName)) return;
+    if (isPinned(app.packageName) || isFull) return;
     final nextOrder = _pinnedApps.isEmpty ? 0 : _pinnedApps.last.sortOrder + 1;
     _pinnedApps.add(app.copyWith(sortOrder: nextOrder));
     notifyListeners();
@@ -44,6 +54,21 @@ class HomeState extends ChangeNotifier {
 
   Future<void> removeApp(String packageName) async {
     _pinnedApps.removeWhere((a) => a.packageName == packageName);
+    notifyListeners();
+    await _save();
+  }
+
+  Future<void> reorderApps(int oldIndex, int newIndex) async {
+    if (newIndex > oldIndex) newIndex--;
+    if (oldIndex == newIndex) return;
+
+    final app = _pinnedApps.removeAt(oldIndex);
+    _pinnedApps.insert(newIndex, app);
+
+    for (var i = 0; i < _pinnedApps.length; i++) {
+      _pinnedApps[i] = _pinnedApps[i].copyWith(sortOrder: i);
+    }
+
     notifyListeners();
     await _save();
   }
