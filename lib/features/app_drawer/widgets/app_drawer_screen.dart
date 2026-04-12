@@ -14,6 +14,7 @@ class AppDrawerScreen extends StatefulWidget {
     required this.homeState,
     required this.onLaunch,
     required this.onCloseDrawer,
+    required this.routeAnimation,
     super.key,
   });
 
@@ -21,6 +22,7 @@ class AppDrawerScreen extends StatefulWidget {
   final HomeState homeState;
   final void Function(String packageName) onLaunch;
   final VoidCallback onCloseDrawer;
+  final Animation<double> routeAnimation;
 
   @override
   State<AppDrawerScreen> createState() => _AppDrawerScreenState();
@@ -29,14 +31,23 @@ class AppDrawerScreen extends StatefulWidget {
 class _AppDrawerScreenState extends State<AppDrawerScreen> {
   final _focusNode = FocusNode();
   final _scrollController = ScrollController();
+  bool _wasAtTop = true;
 
   @override
   void initState() {
     super.initState();
-    // Autofocus after the route transition completes
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    void onTransitionEnd(AnimationStatus status) {
+      if (status == AnimationStatus.completed) {
+        _focusNode.requestFocus();
+        widget.routeAnimation.removeStatusListener(onTransitionEnd);
+      }
+    }
+
+    if (widget.routeAnimation.isCompleted) {
       _focusNode.requestFocus();
-    });
+    } else {
+      widget.routeAnimation.addStatusListener(onTransitionEnd);
+    }
   }
 
   @override
@@ -54,6 +65,10 @@ class _AppDrawerScreenState extends State<AppDrawerScreen> {
   }
 
   bool _onScrollNotification(ScrollNotification notification) {
+    if (notification is ScrollStartNotification) {
+      _wasAtTop = notification.metrics.pixels == 0;
+    }
+
     if (notification is ScrollUpdateNotification) {
       final delta = notification.scrollDelta ?? 0;
       final offset = notification.metrics.pixels;
@@ -66,7 +81,7 @@ class _AppDrawerScreenState extends State<AppDrawerScreen> {
     }
 
     if (notification is OverscrollNotification) {
-      if (notification.overscroll < -10) {
+      if (notification.overscroll < -10 && _wasAtTop) {
         widget.onCloseDrawer();
       }
     }
@@ -88,8 +103,17 @@ class _AppDrawerScreenState extends State<AppDrawerScreen> {
   Widget build(BuildContext context) {
     final surface = Theme.of(context).colorScheme.surface;
 
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+    return AnimatedBuilder(
+      animation: widget.routeAnimation,
+      builder: (context, child) {
+        final settled = widget.routeAnimation.isCompleted;
+        return BackdropFilter(
+          filter: settled
+              ? ImageFilter.blur(sigmaX: 30, sigmaY: 30)
+              : ImageFilter.blur(),
+          child: child!,
+        );
+      },
       child: Scaffold(
         backgroundColor: surface.withAlpha(220),
         body: SafeArea(

@@ -15,7 +15,8 @@ class AppListState extends ChangeNotifier {
   final AppChannel _channel;
   final SharedPreferences _prefs;
   List<AppInfo> _allApps = [];
-  List<AppInfo> _filteredApps = [];
+  List<AppInfo> _filteredApps = const [];
+  Map<String, String> _lowercaseLabels = {};
   String _query = '';
   bool _loading = false;
   final Map<String, String> _customLabels = {};
@@ -29,10 +30,11 @@ class AppListState extends ChangeNotifier {
     _loading = true;
     try {
       _allApps = await _channel.getInstalledApps();
+      _rebuildLowercaseLabels();
       _allApps.sort(
-        (a, b) => displayLabel(
-          a,
-        ).toLowerCase().compareTo(displayLabel(b).toLowerCase()),
+        (a, b) => _lowercaseLabels[a.packageName]!.compareTo(
+          _lowercaseLabels[b.packageName]!,
+        ),
       );
       _applyFilter();
     } finally {
@@ -56,12 +58,20 @@ class AppListState extends ChangeNotifier {
     } else {
       _customLabels[packageName] = label;
     }
+    _rebuildLowercaseLabels();
     _saveCustomLabels();
     notifyListeners();
   }
 
   String displayLabel(AppInfo app) {
     return _customLabels[app.packageName] ?? app.label;
+  }
+
+  void _rebuildLowercaseLabels() {
+    _lowercaseLabels = {
+      for (final app in _allApps)
+        app.packageName: displayLabel(app).toLowerCase(),
+    };
   }
 
   void _loadCustomLabels() {
@@ -82,12 +92,11 @@ class AppListState extends ChangeNotifier {
 
   void _applyFilter() {
     if (_query.isEmpty) {
-      _filteredApps = List.of(_allApps);
+      _filteredApps = _allApps;
     } else {
       final lower = _query.toLowerCase();
       _filteredApps = _allApps.where((app) {
-        final label = displayLabel(app).toLowerCase();
-        return label.contains(lower);
+        return _lowercaseLabels[app.packageName]!.contains(lower);
       }).toList();
     }
     notifyListeners();

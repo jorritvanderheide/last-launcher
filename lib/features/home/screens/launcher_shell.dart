@@ -60,6 +60,7 @@ class _LauncherShellState extends State<LauncherShell> {
           homeState: widget.homeState,
           onLaunch: _launchApp,
           onCloseDrawer: _closeDrawer,
+          routeAnimation: animation,
         );
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {

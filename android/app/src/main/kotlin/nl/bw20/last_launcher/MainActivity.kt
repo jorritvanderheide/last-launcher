@@ -49,7 +49,6 @@ class MainActivity : FlutterActivity() {
                     "label" to resolveInfo.loadLabel(packageManager).toString(),
                 )
             }
-            .sortedBy { it["label"]?.lowercase() }
     }
 
     @Suppress("WrongConstant")
