@@ -36,6 +36,7 @@ Future<void> showAppOptionsDialog({
                   context: context,
                   packageName: app.packageName,
                   currentLabel: appListState.displayLabel(app),
+                  originalLabel: app.label,
                   appListState: appListState,
                   homeState: homeState,
                 );

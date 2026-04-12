@@ -78,6 +78,11 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
 
   void _onScroll() {
     widget.isAtTop.value = _scrollController.offset <= 0;
+    if (_scrollController.offset > 0 && _focusNode.hasFocus) {
+      _focusNode.unfocus();
+    } else if (_scrollController.offset <= 0 && !_focusNode.hasFocus && _autoKeyboard) {
+      _focusNode.requestFocus();
+    }
   }
 
   void _onSearchChanged(String query) {

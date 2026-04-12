@@ -113,8 +113,13 @@ class _LauncherShellState extends State<LauncherShell>
       // Not yet dragging — check if this qualifies as a vertical drag.
       if (dy.abs() < _dragStartThreshold || dx > dy.abs()) return;
 
-      // When drawer is open, only allow downward drag to close from top of list.
-      if (_drawerOpen && dy < 0 && !_listIsAtTop.value) return;
+      // Only drag the sheet when it can actually move:
+      // - Upward drag: only when sheet is not fully open
+      // - Downward drag: only when at top of list
+      if (_drawerOpen) {
+        if (dy > 0) return;
+        if (dy < 0 && !_listIsAtTop.value) return;
+      }
 
       _isDraggingSheet = true;
       _dragStartFraction = _sheetFraction;

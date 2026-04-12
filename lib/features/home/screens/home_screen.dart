@@ -57,6 +57,7 @@ class HomeScreen extends StatelessWidget {
                     context: context,
                     packageName: app.packageName,
                     currentLabel: app.displayLabel,
+                    originalLabel: app.label,
                     appListState: appListState,
                     homeState: homeState,
                   );

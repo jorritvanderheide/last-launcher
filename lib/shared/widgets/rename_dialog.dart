@@ -6,12 +6,14 @@ Future<void> renameApp({
   required BuildContext context,
   required String packageName,
   required String currentLabel,
+  required String originalLabel,
   required AppListState appListState,
   required HomeState homeState,
 }) async {
   final newLabel = await showRenameDialog(
     context: context,
     currentLabel: currentLabel,
+    originalLabel: originalLabel,
   );
   if (newLabel != null) {
     appListState.setCustomLabel(packageName, newLabel);
@@ -22,17 +24,25 @@ Future<void> renameApp({
 Future<String?> showRenameDialog({
   required BuildContext context,
   required String currentLabel,
+  required String originalLabel,
 }) {
   return showDialog<String>(
     context: context,
-    builder: (context) => _RenameDialog(currentLabel: currentLabel),
+    builder: (context) => _RenameDialog(
+      currentLabel: currentLabel,
+      originalLabel: originalLabel,
+    ),
   );
 }
 
 class _RenameDialog extends StatefulWidget {
-  const _RenameDialog({required this.currentLabel});
+  const _RenameDialog({
+    required this.currentLabel,
+    required this.originalLabel,
+  });
 
   final String currentLabel;
+  final String originalLabel;
 
   @override
   State<_RenameDialog> createState() => _RenameDialogState();
@@ -64,7 +74,8 @@ class _RenameDialogState extends State<_RenameDialog> {
       content: TextField(
         controller: _controller,
         autofocus: true,
-        decoration: const InputDecoration(hintText: 'App name'),
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(hintText: widget.originalLabel),
         onSubmitted: (_) => _submit(),
       ),
       actions: [

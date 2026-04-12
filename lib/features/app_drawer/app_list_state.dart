@@ -91,7 +91,8 @@ class AppListState extends ChangeNotifier {
     } else {
       final lower = _query.toLowerCase();
       _filteredApps = _allApps.where((app) {
-        return displayLabel(app).toLowerCase().contains(lower);
+        return displayLabel(app).toLowerCase().contains(lower) ||
+            app.label.toLowerCase().contains(lower);
       }).toList();
     }
     notifyListeners();
