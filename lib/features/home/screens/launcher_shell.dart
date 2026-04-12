@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_drawer_screen.dart';
@@ -9,7 +7,8 @@ import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 
-const _velocityThreshold = 100.0;
+const _swipeVelocityThreshold = 300.0; // px/s
+const _swipeDistanceThreshold = 40.0; // px minimum drag distance
 
 class LauncherShell extends StatefulWidget {
   const LauncherShell({
@@ -32,6 +31,10 @@ class LauncherShell extends StatefulWidget {
 class _LauncherShellState extends State<LauncherShell> {
   bool _drawerOpen = false;
 
+  // Pointer tracking for swipe detection (bypasses gesture arena).
+  Offset? _pointerStart;
+  DateTime? _pointerStartTime;
+
   void _openDrawer() {
     if (_drawerOpen) return;
     _drawerOpen = true;
@@ -53,7 +56,7 @@ class _LauncherShellState extends State<LauncherShell> {
     return PageRouteBuilder<void>(
       opaque: true,
       transitionDuration: const Duration(milliseconds: 300),
-      reverseTransitionDuration: Duration.zero,
+      reverseTransitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (context, animation, secondaryAnimation) {
         return AppDrawerScreen(
           appListState: widget.appListState,
@@ -77,16 +80,36 @@ class _LauncherShellState extends State<LauncherShell> {
     );
   }
 
-  void _onPanEnd(DragEndDetails details) {
-    final velocity = details.velocity.pixelsPerSecond;
-    if (max(velocity.dx.abs(), velocity.dy.abs()) < _velocityThreshold) return;
+  void _onPointerDown(PointerDownEvent event) {
+    _pointerStart = event.position;
+    _pointerStartTime = DateTime.now();
+  }
 
-    if (velocity.dy.abs() > velocity.dx.abs()) {
-      if (velocity.dy < 0 && !_drawerOpen) {
-        _openDrawer();
-      } else if (velocity.dy > 0 && !_drawerOpen) {
-        widget.appChannel.expandQuickSettings();
-      }
+  void _onPointerUp(PointerUpEvent event) {
+    final start = _pointerStart;
+    final startTime = _pointerStartTime;
+    _pointerStart = null;
+    _pointerStartTime = null;
+
+    if (start == null || startTime == null || _drawerOpen) return;
+
+    final delta = event.position - start;
+    final dy = delta.dy;
+    final dx = delta.dx;
+    final elapsed = DateTime.now().difference(startTime);
+    if (elapsed.inMilliseconds == 0) return;
+
+    // Must be primarily vertical.
+    if (dy.abs() < dx.abs()) return;
+    // Must exceed minimum distance.
+    if (dy.abs() < _swipeDistanceThreshold) return;
+
+    final velocityY = dy / (elapsed.inMilliseconds / 1000);
+
+    if (velocityY < -_swipeVelocityThreshold) {
+      _openDrawer();
+    } else if (velocityY > _swipeVelocityThreshold) {
+      widget.appChannel.expandQuickSettings();
     }
   }
 
@@ -99,21 +122,27 @@ class _LauncherShellState extends State<LauncherShell> {
           _closeDrawer();
         }
       },
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onPanEnd: _onPanEnd,
-        onLongPress: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (_) =>
-                  SettingsScreen(settingsState: widget.settingsState),
-            ),
-          );
-        },
-        child: HomeScreen(
-          homeState: widget.homeState,
-          appListState: widget.appListState,
-          onLaunch: _launchApp,
+      child: Listener(
+        behavior: HitTestBehavior.translucent,
+        onPointerDown: _onPointerDown,
+        onPointerUp: _onPointerUp,
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onLongPress: () {
+            Navigator.of(context).push(
+              PageRouteBuilder<void>(
+                pageBuilder: (_, _, _) =>
+                    SettingsScreen(settingsState: widget.settingsState),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ),
+            );
+          },
+          child: HomeScreen(
+            homeState: widget.homeState,
+            appListState: widget.appListState,
+            onLaunch: _launchApp,
+          ),
         ),
       ),
     );

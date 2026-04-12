@@ -38,8 +38,11 @@ class HomeScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => ReorderScreen(homeState: homeState),
+                    PageRouteBuilder<void>(
+                      pageBuilder: (_, _, _) =>
+                          ReorderScreen(homeState: homeState),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
                     ),
                   );
                 },

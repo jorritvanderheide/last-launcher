@@ -8,8 +8,8 @@ class AppListTile extends StatelessWidget {
     super.key,
   });
 
-  static const fontSize = 26.0;
-  static const _verticalPadding = 8.0;
+  static const fontSize = 28.0;
+  static const _verticalPadding = 9.0;
 
   final String label;
   final VoidCallback onTap;

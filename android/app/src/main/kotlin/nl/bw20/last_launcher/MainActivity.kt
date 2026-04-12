@@ -68,6 +68,8 @@ class MainActivity : FlutterActivity() {
         if (intent != null) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
+            @Suppress("DEPRECATION")
+            overridePendingTransition(0, 0)
         }
     }
 }

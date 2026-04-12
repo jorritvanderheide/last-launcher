@@ -14,49 +14,57 @@ class ReorderScreen extends StatelessWidget {
     ).textTheme.titleLarge?.copyWith(fontSize: PinnedAppLabel.fontSize);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Reorder apps')),
       body: SafeArea(
-        child: ListenableBuilder(
-          listenable: homeState,
-          builder: (context, _) {
-            final apps = homeState.pinnedApps;
-            return ReorderableListView.builder(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              buildDefaultDragHandles: false,
-              onReorder: homeState.reorderApps,
-              itemCount: apps.length,
-              itemBuilder: (context, index) {
-                final app = apps[index];
-                return Padding(
-                  key: ValueKey(app.packageName),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: PinnedAppLabel.verticalPadding,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          app.displayLabel,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: textStyle,
-                        ),
-                      ),
-                      ReorderableDragStartListener(
+        child: Stack(
+          children: [
+            Center(
+              child: ListenableBuilder(
+                listenable: homeState,
+                builder: (context, _) {
+                  final apps = homeState.pinnedApps;
+                  return ReorderableListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    buildDefaultDragHandles: false,
+                    proxyDecorator: (child, _, _) => child,
+                    onReorder: homeState.reorderApps,
+                    itemCount: apps.length,
+                    itemBuilder: (context, index) {
+                      final app = apps[index];
+                      return ReorderableDragStartListener(
+                        key: ValueKey(app.packageName),
                         index: index,
-                        child: const Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Icon(Icons.drag_handle),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: PinnedAppLabel.verticalPadding,
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  app.displayLabel,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textStyle,
+                                ),
+                              ),
+                              const Icon(Icons.drag_handle),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-          },
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+            Positioned(
+              top: 8,
+              left: 4,
+              child: BackButton(onPressed: () => Navigator.pop(context)),
+            ),
+          ],
         ),
       ),
     );

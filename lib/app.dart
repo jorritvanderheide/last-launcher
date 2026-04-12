@@ -1,9 +1,54 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/screens/launcher_shell.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
+
+const _seedColor = Colors.deepPurple;
+
+ThemeData _buildTheme(
+  ColorScheme? dynamicScheme,
+  Brightness brightness, {
+  bool amoled = false,
+}) {
+  var colorScheme =
+      dynamicScheme?.harmonized() ??
+      ColorScheme.fromSeed(seedColor: _seedColor, brightness: brightness);
+  if (amoled && brightness == Brightness.dark) {
+    colorScheme = colorScheme.copyWith(
+      surface: Colors.black,
+      surfaceDim: Colors.black,
+      surfaceContainerLowest: Colors.black,
+      surfaceContainerLow: const Color(0xFF0A0A0A),
+      surfaceContainer: const Color(0xFF121212),
+      surfaceContainerHigh: const Color(0xFF1A1A1A),
+      surfaceContainerHighest: const Color(0xFF222222),
+    );
+  }
+  return ThemeData(
+    colorScheme: colorScheme,
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      elevation: 0,
+      backgroundColor: colorScheme.inverseSurface,
+      contentTextStyle: TextStyle(color: colorScheme.onInverseSurface),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+    ),
+    dialogTheme: DialogThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+    ),
+  );
+}
 
 class LastLauncherApp extends StatefulWidget {
   const LastLauncherApp({
@@ -44,39 +89,32 @@ class _LastLauncherAppState extends State<LastLauncherApp>
     }
   }
 
-  ThemeData _buildDarkTheme(bool amoled) {
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: Colors.deepPurple,
-      brightness: Brightness.dark,
-    );
-    return ThemeData(
-      colorScheme: amoled
-          ? colorScheme.copyWith(surface: Colors.black, onSurface: Colors.white)
-          : colorScheme,
-      scaffoldBackgroundColor: amoled ? Colors.black : null,
-      useMaterial3: true,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
       listenable: widget.settingsState,
       builder: (context, _) {
-        return MaterialApp(
-          title: 'Last Launcher',
-          themeMode: widget.settingsState.themeMode,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          darkTheme: _buildDarkTheme(widget.settingsState.amoled),
-          home: LauncherShell(
-            appChannel: widget.appChannel,
-            homeState: widget.homeState,
-            appListState: widget.appListState,
-            settingsState: widget.settingsState,
-          ),
+        final amoled = widget.settingsState.amoled;
+
+        return DynamicColorBuilder(
+          builder: (lightDynamic, darkDynamic) {
+            return MaterialApp(
+              title: 'Last Launcher',
+              themeMode: widget.settingsState.themeMode,
+              theme: _buildTheme(lightDynamic, Brightness.light),
+              darkTheme: _buildTheme(
+                darkDynamic,
+                Brightness.dark,
+                amoled: amoled,
+              ),
+              home: LauncherShell(
+                appChannel: widget.appChannel,
+                homeState: widget.homeState,
+                appListState: widget.appListState,
+                settingsState: widget.settingsState,
+              ),
+            );
+          },
         );
       },
     );
