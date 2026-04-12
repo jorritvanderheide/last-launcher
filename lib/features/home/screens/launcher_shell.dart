@@ -5,6 +5,7 @@ import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_drawer_screen.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/screens/home_screen.dart';
+import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 
@@ -34,13 +35,12 @@ class _LauncherShellState extends State<LauncherShell> {
   void _openDrawer() {
     if (_drawerOpen) return;
     _drawerOpen = true;
-    Navigator.of(context).push(_slideUpRoute()).then((_) {
-      _drawerOpen = false;
-    });
+    Navigator.of(context).push(_slideUpRoute());
   }
 
   void _closeDrawer() {
     if (!_drawerOpen) return;
+    _drawerOpen = false;
     Navigator.of(context).pop();
   }
 
@@ -63,10 +63,7 @@ class _LauncherShellState extends State<LauncherShell> {
         );
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
+        return FadeTransition(opacity: animation, child: child);
       },
     );
   }
@@ -94,11 +91,19 @@ class _LauncherShellState extends State<LauncherShell> {
         }
       },
       child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onPanEnd: _onPanEnd,
+        onLongPress: () {
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) =>
+                  SettingsScreen(settingsState: widget.settingsState),
+            ),
+          );
+        },
         child: HomeScreen(
-          appChannel: widget.appChannel,
           homeState: widget.homeState,
-          settingsState: widget.settingsState,
+          appListState: widget.appListState,
           onLaunch: _launchApp,
         ),
       ),

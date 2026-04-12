@@ -66,7 +66,7 @@ class _AppDrawerScreenState extends State<AppDrawerScreen> {
     }
 
     if (notification is OverscrollNotification) {
-      if (notification.overscroll < 0) {
+      if (notification.overscroll < -10) {
         widget.onCloseDrawer();
       }
     }

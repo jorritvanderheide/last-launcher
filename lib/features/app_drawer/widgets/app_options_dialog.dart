@@ -114,5 +114,5 @@ Future<void> _showRenameDialog({
         ],
       );
     },
-  );
+  ).then((_) => controller.dispose());
 }

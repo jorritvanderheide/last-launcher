@@ -7,6 +7,8 @@ class AppInfo {
   final String label;
 }
 
+const _sentinel = Object();
+
 class PinnedApp {
   const PinnedApp({
     required this.packageName,
@@ -34,13 +36,15 @@ class PinnedApp {
   PinnedApp copyWith({
     String? packageName,
     String? label,
-    String? customLabel,
+    Object? customLabel = _sentinel,
     int? sortOrder,
   }) {
     return PinnedApp(
       packageName: packageName ?? this.packageName,
       label: label ?? this.label,
-      customLabel: customLabel ?? this.customLabel,
+      customLabel: customLabel == _sentinel
+          ? this.customLabel
+          : customLabel as String?,
       sortOrder: sortOrder ?? this.sortOrder,
     );
   }

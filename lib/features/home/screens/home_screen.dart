@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/widgets/pinned_app_label.dart';
-import 'package:last_launcher/features/settings/screens/settings_screen.dart';
-import 'package:last_launcher/features/settings/settings_state.dart';
-import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/data/models.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
-    required this.appChannel,
     required this.homeState,
-    required this.settingsState,
+    required this.appListState,
     required this.onLaunch,
     super.key,
   });
 
-  final AppChannel appChannel;
   final HomeState homeState;
-  final SettingsState settingsState;
+  final AppListState appListState;
   final void Function(String packageName) onLaunch;
 
   void _showPinnedAppOptions(BuildContext context, PinnedApp app) {
@@ -70,7 +66,9 @@ class HomeScreen extends StatelessWidget {
             autofocus: true,
             decoration: const InputDecoration(hintText: 'App name'),
             onSubmitted: (_) {
-              homeState.renameApp(app.packageName, controller.text.trim());
+              final newLabel = controller.text.trim();
+              homeState.renameApp(app.packageName, newLabel);
+              appListState.setCustomLabel(app.packageName, newLabel);
               Navigator.pop(context);
             },
           ),
@@ -81,7 +79,9 @@ class HomeScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                homeState.renameApp(app.packageName, controller.text.trim());
+                final newLabel = controller.text.trim();
+                homeState.renameApp(app.packageName, newLabel);
+                appListState.setCustomLabel(app.packageName, newLabel);
                 Navigator.pop(context);
               },
               child: const Text('Save'),
@@ -89,57 +89,46 @@ class HomeScreen extends StatelessWidget {
           ],
         );
       },
-    );
+    ).then((_) => controller.dispose());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onLongPress: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (_) => SettingsScreen(settingsState: settingsState),
-            ),
-          );
-        },
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: ListenableBuilder(
-                listenable: homeState,
-                builder: (context, _) {
-                  final apps = homeState.pinnedApps;
-                  if (apps.isEmpty) {
-                    return Text(
-                      'Swipe up to search apps\nLong press for settings',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onSurface
-                            .withAlpha(100),
-                      ),
-                    );
-                  }
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: apps
-                        .map(
-                          (app) => PinnedAppLabel(
-                            label: app.displayLabel,
-                            onTap: () => onLaunch(app.packageName),
-                            onLongPress: () =>
-                                _showPinnedAppOptions(context, app),
-                          ),
-                        )
-                        .toList(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: ListenableBuilder(
+              listenable: homeState,
+              builder: (context, _) {
+                final apps = homeState.pinnedApps;
+                if (apps.isEmpty) {
+                  return Text(
+                    'Swipe up to search apps\nLong press for settings',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurface.withAlpha(100),
+                    ),
                   );
-                },
-              ),
+                }
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: apps
+                      .map(
+                        (app) => PinnedAppLabel(
+                          label: app.displayLabel,
+                          onTap: () => onLaunch(app.packageName),
+                          onLongPress: () =>
+                              _showPinnedAppOptions(context, app),
+                        ),
+                      )
+                      .toList(),
+                );
+              },
             ),
           ),
         ),

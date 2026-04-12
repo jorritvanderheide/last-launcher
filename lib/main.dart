@@ -12,7 +12,7 @@ void main() async {
 
   const appChannel = AppChannel();
   final homeState = HomeState(prefs);
-  final appListState = AppListState(appChannel);
+  final appListState = AppListState(appChannel, prefs);
   final settingsState = SettingsState(prefs);
   await appListState.loadApps();
 

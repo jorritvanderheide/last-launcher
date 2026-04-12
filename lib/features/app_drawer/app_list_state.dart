@@ -1,14 +1,23 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/data/models.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppListState extends ChangeNotifier {
-  AppListState(this._channel);
+  AppListState(this._channel, this._prefs) {
+    _loadCustomLabels();
+  }
+
+  static const _labelsKey = 'custom_labels';
 
   final AppChannel _channel;
+  final SharedPreferences _prefs;
   List<AppInfo> _allApps = [];
   List<AppInfo> _filteredApps = [];
   String _query = '';
+  bool _loading = false;
   final Map<String, String> _customLabels = {};
 
   List<AppInfo> get filteredApps => _filteredApps;
@@ -16,8 +25,19 @@ class AppListState extends ChangeNotifier {
   bool get hasSingleResult => _filteredApps.length == 1;
 
   Future<void> loadApps() async {
-    _allApps = await _channel.getInstalledApps();
-    _applyFilter();
+    if (_loading) return;
+    _loading = true;
+    try {
+      _allApps = await _channel.getInstalledApps();
+      _allApps.sort(
+        (a, b) => displayLabel(
+          a,
+        ).toLowerCase().compareTo(displayLabel(b).toLowerCase()),
+      );
+      _applyFilter();
+    } finally {
+      _loading = false;
+    }
   }
 
   void filter(String query) {
@@ -36,11 +56,28 @@ class AppListState extends ChangeNotifier {
     } else {
       _customLabels[packageName] = label;
     }
+    _saveCustomLabels();
     notifyListeners();
   }
 
   String displayLabel(AppInfo app) {
     return _customLabels[app.packageName] ?? app.label;
+  }
+
+  void _loadCustomLabels() {
+    final json = _prefs.getString(_labelsKey);
+    if (json == null) return;
+    try {
+      final map = jsonDecode(json) as Map<String, dynamic>;
+      _customLabels.addAll(map.cast<String, String>());
+    } on FormatException {
+      debugPrint('Corrupt custom labels JSON, resetting');
+      _prefs.remove(_labelsKey);
+    }
+  }
+
+  Future<void> _saveCustomLabels() async {
+    await _prefs.setString(_labelsKey, jsonEncode(_customLabels));
   }
 
   void _applyFilter() {

@@ -16,9 +16,13 @@ class HomeState extends ChangeNotifier {
 
   void _load() {
     final json = _prefs.getString(_key);
-    if (json != null) {
+    if (json == null) return;
+    try {
       _pinnedApps = PinnedApp.decodeList(json);
       _pinnedApps.sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
+    } on FormatException {
+      debugPrint('Corrupt pinned apps JSON, resetting');
+      _prefs.remove(_key);
     }
   }
 
