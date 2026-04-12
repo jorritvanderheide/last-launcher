@@ -16,7 +16,7 @@ Future<void> showAppOptionsDialog({
 
   return showModalBottomSheet<void>(
     context: context,
-    builder: (context) {
+    builder: (sheetContext) {
       return SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -25,14 +25,14 @@ Future<void> showAppOptionsDialog({
               padding: const EdgeInsets.all(16),
               child: Text(
                 appListState.displayLabel(app),
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(sheetContext).textTheme.titleMedium,
               ),
             ),
             ListTile(
               leading: const Icon(Icons.edit),
               title: const Text('Rename'),
               onTap: () async {
-                Navigator.pop(context);
+                Navigator.pop(sheetContext);
                 await renameApp(
                   context: context,
                   packageName: app.packageName,
@@ -48,7 +48,7 @@ Future<void> showAppOptionsDialog({
                 title: const Text('Remove from home'),
                 onTap: () {
                   homeState.removeApp(app.packageName);
-                  Navigator.pop(context);
+                  Navigator.pop(sheetContext);
                 },
               )
             else
@@ -65,7 +65,7 @@ Future<void> showAppOptionsDialog({
                             label: app.label,
                           ),
                         );
-                        Navigator.pop(context);
+                        Navigator.pop(sheetContext);
                         onCloseDrawer?.call();
                       },
               ),
@@ -75,7 +75,7 @@ Future<void> showAppOptionsDialog({
                 title: const Text('Unhide'),
                 onTap: () {
                   appListState.unhideApp(app.packageName);
-                  Navigator.pop(context);
+                  Navigator.pop(sheetContext);
                 },
               )
             else
@@ -84,7 +84,7 @@ Future<void> showAppOptionsDialog({
                 title: const Text('Hide'),
                 onTap: () {
                   appListState.hideApp(app.packageName);
-                  Navigator.pop(context);
+                  Navigator.pop(sheetContext);
                 },
               ),
           ],

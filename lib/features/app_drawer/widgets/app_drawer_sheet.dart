@@ -78,6 +78,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   }
 
   void _onScroll() {
+    if (!_scrollController.hasClients) return;
     widget.isAtTop.value = _scrollController.offset <= 0;
     if (_scrollController.offset > 0 && _focusNode.hasFocus) {
       _focusNode.unfocus();
@@ -153,30 +154,30 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                 SliverFillRemaining(
                   child: FadeOverflow(
                     child: ListenableBuilder(
-                    listenable: widget.appListState,
-                    builder: (context, _) {
-                      final apps = widget.appListState.filteredApps;
-                      final keyboardHeight = MediaQuery.viewInsetsOf(
-                        context,
-                      ).bottom;
-                      return ListView.builder(
-                        controller: _scrollController,
-                        padding: EdgeInsets.only(
-                        top: 8,
-                        bottom: keyboardHeight + 32,
-                      ),
-                        itemCount: apps.length,
-                        itemBuilder: (context, index) {
-                          final app = apps[index];
-                          return AppLabel(
-                            label: widget.appListState.displayLabel(app),
-                            onTap: () => widget.onLaunch(app.packageName),
-                            onLongPress: () => _onLongPress(context, app),
-                          );
-                        },
-                      );
-                    },
-                  ),
+                      listenable: widget.appListState,
+                      builder: (context, _) {
+                        final apps = widget.appListState.filteredApps;
+                        final keyboardHeight = MediaQuery.viewInsetsOf(
+                          context,
+                        ).bottom;
+                        return ListView.builder(
+                          controller: _scrollController,
+                          padding: EdgeInsets.only(
+                            top: 8,
+                            bottom: keyboardHeight + 32,
+                          ),
+                          itemCount: apps.length,
+                          itemBuilder: (context, index) {
+                            final app = apps[index];
+                            return AppLabel(
+                              label: widget.appListState.displayLabel(app),
+                              onTap: () => widget.onLaunch(app.packageName),
+                              onLongPress: () => _onLongPress(context, app),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
             ],

@@ -4,6 +4,7 @@ import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/screens/launcher_shell.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
+import 'package:last_launcher/features/tasks/task_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 
 const _seedColor = Colors.deepPurple;
@@ -56,6 +57,7 @@ class LastLauncherApp extends StatefulWidget {
     required this.homeState,
     required this.appListState,
     required this.settingsState,
+    required this.taskState,
     super.key,
   });
 
@@ -63,6 +65,7 @@ class LastLauncherApp extends StatefulWidget {
   final HomeState homeState;
   final AppListState appListState;
   final SettingsState settingsState;
+  final TaskState taskState;
 
   @override
   State<LastLauncherApp> createState() => _LastLauncherAppState();
@@ -112,6 +115,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
                 homeState: widget.homeState,
                 appListState: widget.appListState,
                 settingsState: widget.settingsState,
+                taskState: widget.taskState,
               ),
             );
           },

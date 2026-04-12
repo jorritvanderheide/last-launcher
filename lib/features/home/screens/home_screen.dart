@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
+import 'package:last_launcher/features/app_drawer/widgets/app_options_dialog.dart';
 import 'package:last_launcher/features/home/home_state.dart';
-import 'package:last_launcher/features/home/screens/reorder_screen.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
-import 'package:last_launcher/shared/widgets/rename_dialog.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
@@ -17,71 +16,6 @@ class HomeScreen extends StatelessWidget {
   final HomeState homeState;
   final AppListState appListState;
   final void Function(String packageName) onLaunch;
-
-  String _label(PinnedApp app) {
-    return appListState.displayLabelFor(app.packageName, app.label);
-  }
-
-  void _showPinnedAppOptions(BuildContext context, PinnedApp app) {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (context) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  _label(app),
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.swap_vert),
-                title: const Text('Reorder apps'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(
-                    PageRouteBuilder<void>(
-                      pageBuilder: (_, _, _) => ReorderScreen(
-                        homeState: homeState,
-                        appListState: appListState,
-                      ),
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.edit),
-                title: const Text('Rename'),
-                onTap: () async {
-                  Navigator.pop(context);
-                  await renameApp(
-                    context: context,
-                    packageName: app.packageName,
-                    currentLabel: _label(app),
-                    originalLabel: app.label,
-                    appListState: appListState,
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.remove_circle_outline),
-                title: const Text('Remove from home'),
-                onTap: () {
-                  homeState.removeApp(app.packageName);
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +52,20 @@ class HomeScreen extends StatelessWidget {
                     children: apps
                         .map(
                           (app) => AppLabel(
-                            label: _label(app),
+                            label: appListState.displayLabelFor(
+                              app.packageName,
+                              app.label,
+                            ),
                             onTap: () => onLaunch(app.packageName),
-                            onLongPress: () =>
-                                _showPinnedAppOptions(context, app),
+                            onLongPress: () => showAppOptionsDialog(
+                              context: context,
+                              app: AppInfo(
+                                packageName: app.packageName,
+                                label: app.label,
+                              ),
+                              appListState: appListState,
+                              homeState: homeState,
+                            ),
                           ),
                         )
                         .toList(),

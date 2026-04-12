@@ -17,7 +17,6 @@ class SettingsState extends ChangeNotifier {
   bool _autoKeyboard = true;
   bool _searchOnly = false;
   bool _autoLaunch = false;
-
   ThemeMode get themeMode => _themeMode;
   bool get amoled => _amoled;
   bool get autoKeyboard => _autoKeyboard;

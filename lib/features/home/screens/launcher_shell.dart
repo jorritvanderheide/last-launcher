@@ -3,13 +3,17 @@ import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_drawer_sheet.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/screens/home_screen.dart';
+import 'package:last_launcher/features/home/screens/reorder_screen.dart';
 import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
+import 'package:last_launcher/features/tasks/screens/task_screen.dart';
+import 'package:last_launcher/features/tasks/task_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 
 const _maxSheetFraction = 0.9;
-const _dragStartThreshold = 20.0; // px vertical before sheet starts moving
-const _swipeVelocityThreshold = 300.0; // px/s for swipe-down quick settings
+const _dragStartThreshold = 20.0;
+const _swipeVelocityThreshold = 300.0;
+const _pageAnimDuration = Duration(milliseconds: 100);
 
 class LauncherShell extends StatefulWidget {
   const LauncherShell({
@@ -17,6 +21,7 @@ class LauncherShell extends StatefulWidget {
     required this.homeState,
     required this.appListState,
     required this.settingsState,
+    required this.taskState,
     super.key,
   });
 
@@ -24,27 +29,34 @@ class LauncherShell extends StatefulWidget {
   final HomeState homeState;
   final AppListState appListState;
   final SettingsState settingsState;
+  final TaskState taskState;
 
   @override
   State<LauncherShell> createState() => _LauncherShellState();
 }
 
 class _LauncherShellState extends State<LauncherShell>
-    with SingleTickerProviderStateMixin {
-  // Current sheet height as a fraction of screen height (0..._maxSheetFraction).
+    with TickerProviderStateMixin {
+  // Sheet (vertical drawer).
   double _sheetFraction = 0;
   bool get _drawerOpen => _sheetFraction > 0.01;
+  late final AnimationController _sheetAnim;
+  double _sheetAnimFrom = 0;
+  double _sheetAnimTo = 0;
 
-  // Animation for snap open/close.
-  late final AnimationController _animController;
-  double _animFrom = 0;
-  double _animTo = 0;
+  // Page (horizontal: 0 = tasks, 1 = home).
+  double _pageFraction = 1;
+  bool get _onHomePage => _pageFraction > 0.5;
+  late final AnimationController _pageAnim;
+  double _pageAnimFrom = 1;
+  double _pageAnimTo = 1;
 
-  // Pointer tracking (bypasses gesture arena).
+  // Pointer tracking.
   int? _activePointer;
   Offset? _pointerStart;
   DateTime? _pointerStartTime;
   bool _isDraggingSheet = false;
+  bool _isDraggingPage = false;
   double _dragStartFraction = 0;
 
   // Whether the app list is scrolled to the top.
@@ -53,52 +65,75 @@ class _LauncherShellState extends State<LauncherShell>
   @override
   void initState() {
     super.initState();
-    _animController =
+    _sheetAnim =
         AnimationController(
           vsync: this,
-          duration: const Duration(milliseconds: 300),
+          duration: Duration.zero,
         )..addListener(() {
-          final t = Curves.easeOut.transform(_animController.value);
+          final t = Curves.easeOut.transform(_sheetAnim.value);
           setState(() {
-            _sheetFraction = _animFrom + (_animTo - _animFrom) * t;
+            _sheetFraction =
+                _sheetAnimFrom + (_sheetAnimTo - _sheetAnimFrom) * t;
+          });
+        });
+    _pageAnim =
+        AnimationController(
+          vsync: this,
+          duration: _pageAnimDuration,
+        )..addListener(() {
+          final t = Curves.easeOut.transform(_pageAnim.value);
+          setState(() {
+            _pageFraction = _pageAnimFrom + (_pageAnimTo - _pageAnimFrom) * t;
           });
         });
   }
 
   @override
   void dispose() {
-    _animController.dispose();
+    _sheetAnim.dispose();
+    _pageAnim.dispose();
     _listIsAtTop.dispose();
     super.dispose();
   }
 
-  void _animateTo(double target) {
-    _animFrom = _sheetFraction;
-    _animTo = target;
-    _animController.forward(from: 0);
-  }
+  // --- Sheet animation ---
 
-  void _openDrawer() {
-    _animateTo(_maxSheetFraction);
+  void _animateSheetTo(double target) {
+    _sheetAnimFrom = _sheetFraction;
+    _sheetAnimTo = target;
+    _sheetAnim.forward(from: 0);
   }
 
   void _closeDrawer() {
-    _animateTo(0);
+    _animateSheetTo(0);
     widget.appListState.clearFilter();
   }
+
+  // --- Page animation ---
+
+  void _animatePageTo(double target) {
+    _pageAnimFrom = _pageFraction;
+    _pageAnimTo = target;
+    _pageAnim.forward(from: 0);
+  }
+
 
   void _launchApp(String packageName) {
     widget.appChannel.launchApp(packageName);
     _closeDrawer();
   }
 
+  // --- Pointer handling ---
+
   void _onPointerDown(PointerDownEvent event) {
-    if (_activePointer != null) return; // ignore second finger
+    if (_activePointer != null) return;
     _activePointer = event.pointer;
-    _animController.stop();
+    _sheetAnim.stop();
+    _pageAnim.stop();
     _pointerStart = event.position;
     _pointerStartTime = DateTime.now();
     _isDraggingSheet = false;
+    _isDraggingPage = false;
   }
 
   void _onPointerMove(PointerMoveEvent event) {
@@ -107,29 +142,48 @@ class _LauncherShellState extends State<LauncherShell>
     if (start == null) return;
 
     final dy = start.dy - event.position.dy; // positive = upward
-    final dx = (event.position.dx - start.dx).abs();
+    final dx = start.dx - event.position.dx; // positive = left
+    final absDx = dx.abs();
+    final absDy = dy.abs();
 
-    if (!_isDraggingSheet) {
-      // Not yet dragging — check if this qualifies as a vertical drag.
-      if (dy.abs() < _dragStartThreshold || dx > dy.abs()) return;
+    if (!_isDraggingSheet && !_isDraggingPage) {
+      if (absDx < _dragStartThreshold && absDy < _dragStartThreshold) return;
 
-      // Only drag the sheet when it can actually move:
-      // - Upward drag: only when sheet is not fully open
-      // - Downward drag: only when at top of list
-      if (_drawerOpen) {
-        if (dy > 0) return;
-        if (dy < 0 && !_listIsAtTop.value) return;
+      if (absDx > absDy && !_drawerOpen) {
+        // Horizontal drag — page navigation.
+        _isDraggingPage = true;
+        _dragStartFraction = _pageFraction;
+      } else if (absDy > absDx) {
+        // Vertical drag — sheet.
+        // Only drag the sheet when on home page and it can actually move.
+        if (!_onHomePage) return;
+        if (_drawerOpen) {
+          if (dy > 0) return;
+          if (dy < 0 && !_listIsAtTop.value) return;
+        }
+        _isDraggingSheet = true;
+        _dragStartFraction = _sheetFraction;
+      } else {
+        return;
       }
-
-      _isDraggingSheet = true;
-      _dragStartFraction = _sheetFraction;
     }
 
-    final screenHeight = MediaQuery.sizeOf(context).height;
-    final threshold = dy >= 0 ? _dragStartThreshold : -_dragStartThreshold;
-    final delta = (dy - threshold) / screenHeight;
-    final fraction = (_dragStartFraction + delta).clamp(0.0, _maxSheetFraction);
-    setState(() => _sheetFraction = fraction);
+    if (_isDraggingPage) {
+      final screenWidth = MediaQuery.sizeOf(context).width;
+      final threshold = dx >= 0 ? _dragStartThreshold : -_dragStartThreshold;
+      final delta = (dx - threshold) / screenWidth;
+      final fraction = (_dragStartFraction + delta).clamp(0.0, 1.0);
+      setState(() => _pageFraction = fraction);
+    } else if (_isDraggingSheet) {
+      final screenHeight = MediaQuery.sizeOf(context).height;
+      final threshold = dy >= 0 ? _dragStartThreshold : -_dragStartThreshold;
+      final delta = (dy - threshold) / screenHeight;
+      final fraction = (_dragStartFraction + delta).clamp(
+        0.0,
+        _maxSheetFraction,
+      );
+      setState(() => _sheetFraction = fraction);
+    }
   }
 
   void _onPointerUp(PointerUpEvent event) {
@@ -138,27 +192,46 @@ class _LauncherShellState extends State<LauncherShell>
     final startTime = _pointerStartTime;
     _resetPointer();
 
-    if (_isDraggingSheet) {
-      _isDraggingSheet = false;
-      if (_sheetFraction > _dragStartFraction + 0.05) {
-        _openDrawer();
-      } else if (_sheetFraction < _dragStartFraction - 0.05) {
-        _closeDrawer();
+    if (_isDraggingPage) {
+      _isDraggingPage = false;
+      final vx = _velocity(start?.dx, event.position.dx, startTime);
+      if (_pageFraction < _dragStartFraction - 0.05 ||
+          vx < -_swipeVelocityThreshold) {
+        _animatePageTo(0); // snap to tasks
+      } else if (_pageFraction > _dragStartFraction + 0.05 ||
+          vx > _swipeVelocityThreshold) {
+        _animatePageTo(1); // snap to home
       } else {
-        // Didn't move enough — return to where it started.
-        _animateTo(_dragStartFraction);
+        _animatePageTo(_dragStartFraction);
       }
       return;
     }
 
-    // Resume interrupted animation if sheet is partially open.
+    if (_isDraggingSheet) {
+      _isDraggingSheet = false;
+      final vy = _velocity(start?.dy, event.position.dy, startTime);
+      if (_sheetFraction > _dragStartFraction + 0.05 ||
+          vy > _swipeVelocityThreshold) {
+        _animateSheetTo(_maxSheetFraction);
+      } else if (_sheetFraction < _dragStartFraction - 0.05 ||
+          vy < -_swipeVelocityThreshold) {
+        _closeDrawer();
+      } else {
+        _animateSheetTo(_dragStartFraction);
+      }
+      return;
+    }
+
+    // Resume interrupted sheet animation.
     if (_sheetFraction > 0.01 && _sheetFraction < _maxSheetFraction - 0.01) {
-      _animateTo(_animTo > 0 ? _maxSheetFraction : 0);
+      _animateSheetTo(_sheetAnimTo > 0 ? _maxSheetFraction : 0);
       return;
     }
 
     // Handle quick swipe down for quick settings.
-    if (start == null || startTime == null || _drawerOpen) return;
+    if (start == null || startTime == null || _drawerOpen || !_onHomePage) {
+      return;
+    }
     final dy = event.position.dy - start.dy;
     final dx = (event.position.dx - start.dx).abs();
     final elapsedMicros = DateTime.now().difference(startTime).inMicroseconds;
@@ -175,7 +248,19 @@ class _LauncherShellState extends State<LauncherShell>
       _isDraggingSheet = false;
       _closeDrawer();
     }
+    if (_isDraggingPage) {
+      _isDraggingPage = false;
+      _animatePageTo(_dragStartFraction > 0.5 ? 1 : 0);
+    }
     _resetPointer();
+  }
+
+  /// Single-axis velocity in px/s (positive = start→end direction).
+  double _velocity(double? startV, double endV, DateTime? startTime) {
+    if (startV == null || startTime == null) return 0;
+    final micros = DateTime.now().difference(startTime).inMicroseconds;
+    if (micros < 1000) return 0;
+    return (startV - endV) / (micros / 1000000);
   }
 
   void _resetPointer() {
@@ -186,70 +271,138 @@ class _LauncherShellState extends State<LauncherShell>
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
     final screenHeight = MediaQuery.sizeOf(context).height;
     final sheetHeight = screenHeight * _sheetFraction;
+    final pageOffset = -_pageFraction * screenWidth;
 
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
-        if (!didPop && _drawerOpen) {
+        if (didPop) return;
+        if (_drawerOpen) {
           _closeDrawer();
+        } else if (!_onHomePage) {
+          _animatePageTo(1);
         }
       },
-      child: Stack(
-        children: [
-          Listener(
-            behavior: HitTestBehavior.translucent,
-            onPointerDown: _onPointerDown,
-            onPointerMove: _onPointerMove,
-            onPointerUp: _onPointerUp,
-            onPointerCancel: _onPointerCancel,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onLongPress: () {
-                Navigator.of(context).push(
-                  PageRouteBuilder<void>(
-                    pageBuilder: (_, _, _) => SettingsScreen(
-                      settingsState: widget.settingsState,
-                      appListState: widget.appListState,
-                      homeState: widget.homeState,
+      child: Listener(
+        behavior: HitTestBehavior.translucent,
+        onPointerDown: _onPointerDown,
+        onPointerMove: _onPointerMove,
+        onPointerUp: _onPointerUp,
+        onPointerCancel: _onPointerCancel,
+        child: SizedBox.expand(
+          child: Stack(
+            children: [
+              // Pages: [Tasks, Home] sliding horizontally.
+              Positioned(
+                left: pageOffset,
+                top: 0,
+                bottom: 0,
+                width: screenWidth * 2,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: screenWidth,
+                      height: screenHeight,
+                      child: TaskScreen(taskState: widget.taskState),
                     ),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              },
-              child: HomeScreen(
-                homeState: widget.homeState,
-                appListState: widget.appListState,
-                onLaunch: _launchApp,
-              ),
-            ),
-          ),
-          if (sheetHeight > 0)
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: sheetHeight,
-              child: Listener(
-                behavior: HitTestBehavior.translucent,
-                onPointerDown: _onPointerDown,
-                onPointerMove: _onPointerMove,
-                onPointerUp: _onPointerUp,
-                onPointerCancel: _onPointerCancel,
-                child: AppDrawerSheet(
-                  appListState: widget.appListState,
-                  homeState: widget.homeState,
-                  settingsState: widget.settingsState,
-                  isOpen: _animTo == _maxSheetFraction && !_isDraggingSheet,
-                  isAtTop: _listIsAtTop,
-                  onLaunch: _launchApp,
-                  onCloseDrawer: _closeDrawer,
+                    SizedBox(
+                      width: screenWidth,
+                      height: screenHeight,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onLongPress: () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (sheetContext) {
+                              return SafeArea(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      ListTile(
+                                        leading: const Icon(Icons.swap_vert),
+                                        title: const Text('Reorder apps'),
+                                        onTap: () {
+                                          Navigator.pop(sheetContext);
+                                          Navigator.of(context).push(
+                                            PageRouteBuilder<void>(
+                                              pageBuilder: (_, _, _) =>
+                                                  ReorderScreen(
+                                                    homeState: widget.homeState,
+                                                    appListState:
+                                                        widget.appListState,
+                                                  ),
+                                              transitionDuration: Duration.zero,
+                                              reverseTransitionDuration:
+                                                  Duration.zero,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      ListTile(
+                                        leading: const Icon(Icons.settings),
+                                        title: const Text('Settings'),
+                                        onTap: () {
+                                          Navigator.pop(sheetContext);
+                                          Navigator.of(context).push(
+                                            PageRouteBuilder<void>(
+                                              pageBuilder: (_, _, _) =>
+                                                  SettingsScreen(
+                                                    settingsState:
+                                                        widget.settingsState,
+                                                    appListState:
+                                                        widget.appListState,
+                                                    homeState: widget.homeState,
+                                                  ),
+                                              transitionDuration: Duration.zero,
+                                              reverseTransitionDuration:
+                                                  Duration.zero,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: HomeScreen(
+                          homeState: widget.homeState,
+                          appListState: widget.appListState,
+                          onLaunch: _launchApp,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-        ],
+              // App drawer (only on home page).
+              if (sheetHeight > 0 && _onHomePage)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  height: sheetHeight,
+                  child: AppDrawerSheet(
+                    appListState: widget.appListState,
+                    homeState: widget.homeState,
+                    settingsState: widget.settingsState,
+                    isOpen:
+                        _sheetAnimTo == _maxSheetFraction && !_isDraggingSheet,
+                    isAtTop: _listIsAtTop,
+                    onLaunch: _launchApp,
+                    onCloseDrawer: _closeDrawer,
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

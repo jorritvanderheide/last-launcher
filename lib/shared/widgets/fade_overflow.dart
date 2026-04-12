@@ -10,6 +10,9 @@ class FadeOverflow extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShaderMask(
       shaderCallback: (bounds) {
+        final fadeSize = size.clamp(0.0, bounds.height / 2);
+        final topStop = bounds.height > 0 ? fadeSize / bounds.height : 0.0;
+        final bottomStop = 1.0 - topStop;
         return LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -19,7 +22,7 @@ class FadeOverflow extends StatelessWidget {
             Colors.white,
             Colors.transparent,
           ],
-          stops: [0.0, size / bounds.height, 1 - size / bounds.height, 1.0],
+          stops: [0.0, topStop, bottomStop, 1.0],
         ).createShader(bounds);
       },
       blendMode: BlendMode.dstIn,
