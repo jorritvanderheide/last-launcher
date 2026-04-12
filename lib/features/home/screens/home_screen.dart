@@ -111,7 +111,9 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            homeState.updateMaxApps(constraints.maxHeight);
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              homeState.updateMaxApps(constraints.maxHeight);
+            });
             return Align(
               alignment: Alignment.centerLeft,
               child: ListenableBuilder(

@@ -14,11 +14,6 @@ class PinnedAppLabel extends StatelessWidget {
 
   static const fontSize = 28.0;
   static const verticalPadding = 9.0;
-  static const itemHeight = fontSize + 2 * verticalPadding;
-
-  static int maxAppsFor(double availableHeight) {
-    return (availableHeight / itemHeight).floor().clamp(1, 10);
-  }
 
   @override
   Widget build(BuildContext context) {

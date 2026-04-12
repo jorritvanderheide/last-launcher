@@ -52,6 +52,7 @@ class AppListState extends ChangeNotifier {
 
   void clearFilter() {
     _query = '';
+    _lastChangeWasFilter = false;
     _applyFilter();
   }
 

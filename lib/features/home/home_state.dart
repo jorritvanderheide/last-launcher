@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:last_launcher/features/home/widgets/pinned_app_label.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +8,8 @@ class HomeState extends ChangeNotifier {
   }
 
   static const _key = 'pinned_apps';
+  // 28px font * 1.2 line height + 2 * 9px padding
+  static const _itemHeight = 28.0 * 1.2 + 2 * 9.0;
 
   final SharedPreferences _prefs;
   List<PinnedApp> _pinnedApps = [];
@@ -41,7 +42,7 @@ class HomeState extends ChangeNotifier {
   bool get isFull => _pinnedApps.length >= _maxPinnedApps;
 
   void updateMaxApps(double availableHeight) {
-    _maxPinnedApps = PinnedAppLabel.maxAppsFor(availableHeight);
+    _maxPinnedApps = (availableHeight / _itemHeight).floor().clamp(1, 10);
   }
 
   Future<void> addApp(PinnedApp app) async {
