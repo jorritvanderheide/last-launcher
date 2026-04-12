@@ -51,6 +51,7 @@ class _LauncherShellState extends State<LauncherShell> {
 
   Route<void> _slideUpRoute() {
     return PageRouteBuilder<void>(
+      opaque: false,
       transitionDuration: const Duration(milliseconds: 200),
       reverseTransitionDuration: const Duration(milliseconds: 150),
       pageBuilder: (context, animation, secondaryAnimation) {
@@ -62,14 +63,8 @@ class _LauncherShellState extends State<LauncherShell> {
         );
       },
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(0, 1),
-            end: Offset.zero,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeOut,
-          )),
+        return FadeTransition(
+          opacity: animation,
           child: child,
         );
       },

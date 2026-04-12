@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_list_tile.dart';
@@ -84,39 +86,45 @@ class _AppDrawerScreenState extends State<AppDrawerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            AppSearchField(
-              focusNode: _focusNode,
-              onChanged: widget.appListState.filter,
-              onSubmit: _onSubmit,
-            ),
-            Expanded(
-              child: ListenableBuilder(
-                listenable: widget.appListState,
-                builder: (context, _) {
-                  final apps = widget.appListState.filteredApps;
-                  return NotificationListener<ScrollNotification>(
-                    onNotification: _onScrollNotification,
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      itemCount: apps.length,
-                      itemBuilder: (context, index) {
-                        final app = apps[index];
-                        return AppListTile(
-                          label: widget.appListState.displayLabel(app),
-                          onTap: () => widget.onLaunch(app.packageName),
-                          onLongPress: () => _onLongPress(context, app),
-                        );
-                      },
-                    ),
-                  );
-                },
+    final surface = Theme.of(context).colorScheme.surface;
+
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+      child: Scaffold(
+        backgroundColor: surface.withAlpha(220),
+        body: SafeArea(
+          child: Column(
+            children: [
+              AppSearchField(
+                focusNode: _focusNode,
+                onChanged: widget.appListState.filter,
+                onSubmit: _onSubmit,
               ),
-            ),
-          ],
+              Expanded(
+                child: ListenableBuilder(
+                  listenable: widget.appListState,
+                  builder: (context, _) {
+                    final apps = widget.appListState.filteredApps;
+                    return NotificationListener<ScrollNotification>(
+                      onNotification: _onScrollNotification,
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: apps.length,
+                        itemBuilder: (context, index) {
+                          final app = apps[index];
+                          return AppListTile(
+                            label: widget.appListState.displayLabel(app),
+                            onTap: () => widget.onLaunch(app.packageName),
+                            onLongPress: () => _onLongPress(context, app),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
