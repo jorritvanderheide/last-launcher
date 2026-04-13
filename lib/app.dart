@@ -30,6 +30,12 @@ ThemeData _buildTheme(
   }
   return ThemeData(
     colorScheme: colorScheme,
+    floatingActionButtonTheme: amoled && brightness == Brightness.dark
+        ? FloatingActionButtonThemeData(
+            backgroundColor: Colors.black,
+            foregroundColor: colorScheme.onSurface,
+          )
+        : null,
     snackBarTheme: SnackBarThemeData(
       behavior: SnackBarBehavior.floating,
       elevation: 0,

@@ -39,6 +39,14 @@ class TaskState extends ChangeNotifier {
     _save();
   }
 
+  void toggleTask(String id) {
+    final index = _tasks.indexWhere((t) => t.id == id);
+    if (index == -1) return;
+    _tasks[index] = _tasks[index].copyWith(done: !_tasks[index].done);
+    notifyListeners();
+    _save();
+  }
+
   void removeTask(String id) {
     _tasks.removeWhere((t) => t.id == id);
     notifyListeners();

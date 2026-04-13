@@ -19,67 +19,62 @@ class TaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      floatingActionButton: FloatingActionButton.large(
+        onPressed: () => _addTask(context),
+        child: const Icon(Icons.add),
+      ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: ListenableBuilder(
-                listenable: taskState,
-                builder: (context, _) {
-                  final tasks = taskState.tasks;
-                  if (tasks.isEmpty) {
-                    return Center(
-                      child: Text(
-                        'No tasks',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.onSurface.withAlpha(100),
+        child: ListenableBuilder(
+          listenable: taskState,
+          builder: (context, _) {
+            final tasks = taskState.tasks;
+            if (tasks.isEmpty) {
+              return Center(
+                child: Text(
+                  'No tasks',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.onSurface.withAlpha(100),
+                  ),
+                ),
+              );
+            }
+            return FadeOverflow(
+              child: ListView.builder(
+                padding: const EdgeInsets.only(top: 32, bottom: 80),
+                itemCount: tasks.length,
+                itemBuilder: (context, index) {
+                  final task = tasks[index];
+                  final style = Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontSize: AppLabel.fontSize,
+                    decoration: task.done ? TextDecoration.lineThrough : null,
+                    decorationThickness: task.done ? 2 : null,
+                  );
+                  return Dismissible(
+                    key: ValueKey(task.id),
+                    direction: DismissDirection.startToEnd,
+                    onDismissed: (_) => taskState.removeTask(task.id),
+                    child: InkWell(
+                      onTap: () => taskState.toggleTask(task.id),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: AppLabel.verticalPadding,
+                        ),
+                        child: Text(
+                          task.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: style,
                         ),
                       ),
-                    );
-                  }
-                  return FadeOverflow(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.only(top: 32, bottom: 32),
-                      itemCount: tasks.length,
-                      itemBuilder: (context, index) {
-                        final task = tasks[index];
-                        return AppLabel(
-                          key: ValueKey(task.id),
-                          label: task.title,
-                          onTap: () => taskState.removeTask(task.id),
-                          onLongPress: () {},
-                        );
-                      },
                     ),
                   );
                 },
               ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: GestureDetector(
-                onTap: () => _addTask(context),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 48,
-                    top: AppLabel.verticalPadding,
-                    bottom: AppLabel.verticalPadding + 8,
-                  ),
-                  child: Text(
-                    '＋',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: AppLabel.fontSize,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

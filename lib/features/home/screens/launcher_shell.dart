@@ -3,7 +3,6 @@ import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_drawer_sheet.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/screens/home_screen.dart';
-import 'package:last_launcher/features/home/screens/reorder_screen.dart';
 import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/tasks/screens/task_screen.dart';
@@ -157,12 +156,21 @@ class _LauncherShellState extends State<LauncherShell>
         // Vertical drag — sheet.
         // Only drag the sheet when on home page and it can actually move.
         if (!_onHomePage) return;
-        if (_drawerOpen) {
+        if (dy > 0 && !_drawerOpen) {
+          // Upward drag with drawer closed — open sheet.
+          _isDraggingSheet = true;
+          _dragStartFraction = _sheetFraction;
+        } else if (_drawerOpen) {
           if (dy > 0) return;
           if (dy < 0 && !_listIsAtTop.value) return;
+          _isDraggingSheet = true;
+          _dragStartFraction = _sheetFraction;
+        } else {
+          // Downward drag with drawer closed — expand quick settings.
+          widget.appChannel.expandQuickSettings();
+          _resetPointer();
+          return;
         }
-        _isDraggingSheet = true;
-        _dragStartFraction = _sheetFraction;
       } else {
         return;
       }
@@ -228,18 +236,6 @@ class _LauncherShellState extends State<LauncherShell>
       return;
     }
 
-    // Handle quick swipe down for quick settings.
-    if (start == null || startTime == null || _drawerOpen || !_onHomePage) {
-      return;
-    }
-    final dy = event.position.dy - start.dy;
-    final dx = (event.position.dx - start.dx).abs();
-    final elapsedMicros = DateTime.now().difference(startTime).inMicroseconds;
-    if (elapsedMicros < 1000 || dy.abs() < dx.abs()) return;
-    final velocityY = dy / (elapsedMicros / 1000000);
-    if (velocityY > _swipeVelocityThreshold) {
-      widget.appChannel.expandQuickSettings();
-    }
   }
 
   void _onPointerCancel(PointerCancelEvent event) {
@@ -314,62 +310,16 @@ class _LauncherShellState extends State<LauncherShell>
                       child: GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onLongPress: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            builder: (sheetContext) {
-                              return SafeArea(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 16),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      ListTile(
-                                        leading: const Icon(Icons.swap_vert),
-                                        title: const Text('Reorder apps'),
-                                        onTap: () {
-                                          Navigator.pop(sheetContext);
-                                          Navigator.of(context).push(
-                                            PageRouteBuilder<void>(
-                                              pageBuilder: (_, _, _) =>
-                                                  ReorderScreen(
-                                                    homeState: widget.homeState,
-                                                    appListState:
-                                                        widget.appListState,
-                                                  ),
-                                              transitionDuration: Duration.zero,
-                                              reverseTransitionDuration:
-                                                  Duration.zero,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                      ListTile(
-                                        leading: const Icon(Icons.settings),
-                                        title: const Text('Settings'),
-                                        onTap: () {
-                                          Navigator.pop(sheetContext);
-                                          Navigator.of(context).push(
-                                            PageRouteBuilder<void>(
-                                              pageBuilder: (_, _, _) =>
-                                                  SettingsScreen(
-                                                    settingsState:
-                                                        widget.settingsState,
-                                                    appListState:
-                                                        widget.appListState,
-                                                    homeState: widget.homeState,
-                                                  ),
-                                              transitionDuration: Duration.zero,
-                                              reverseTransitionDuration:
-                                                  Duration.zero,
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
+                          Navigator.of(context).push(
+                            PageRouteBuilder<void>(
+                              pageBuilder: (_, _, _) => SettingsScreen(
+                                settingsState: widget.settingsState,
+                                appListState: widget.appListState,
+                                homeState: widget.homeState,
+                              ),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),
                           );
                         },
                         child: HomeScreen(

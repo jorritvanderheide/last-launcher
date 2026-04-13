@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/home/screens/reorder_screen.dart';
 import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 
@@ -41,6 +42,30 @@ class SettingsScreen extends StatelessWidget {
                     : settingsState.setAmoled,
               ),
               const _SectionHeader(title: 'Apps'),
+              ListenableBuilder(
+                listenable: homeState,
+                builder: (context, _) {
+                  if (homeState.pinnedApps.isEmpty) {
+                    return const SizedBox.shrink();
+                  }
+                  return ListTile(
+                    leading: const Icon(Icons.swap_vert),
+                    title: const Text('Reorder apps'),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder<void>(
+                          pageBuilder: (_, _, _) => ReorderScreen(
+                            homeState: homeState,
+                            appListState: appListState,
+                          ),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
               ListenableBuilder(
                 listenable: appListState,
                 builder: (context, _) {
