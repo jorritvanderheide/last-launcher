@@ -15,7 +15,8 @@ class Task {
   final String title;
   final bool done;
 
-  Task copyWith({bool? done}) => Task(id: id, title: title, done: done ?? this.done);
+  Task copyWith({String? title, bool? done}) =>
+      Task(id: id, title: title ?? this.title, done: done ?? this.done);
 
   Map<String, dynamic> toJson() => {'id': id, 'title': title, 'done': done};
 

@@ -4,13 +4,17 @@ class AppLabel extends StatelessWidget {
   const AppLabel({
     required this.label,
     required this.onTap,
-    required this.onLongPress,
+    this.onLongPress,
+    this.textDecoration,
+    this.decorationThickness,
     super.key,
   });
 
   final String label;
   final VoidCallback onTap;
-  final VoidCallback onLongPress;
+  final VoidCallback? onLongPress;
+  final TextDecoration? textDecoration;
+  final double? decorationThickness;
 
   static const fontSize = 28.0;
   static const verticalPadding = 9.0;
@@ -29,9 +33,11 @@ class AppLabel extends StatelessWidget {
           label,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontSize: fontSize),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontSize: fontSize,
+            decoration: textDecoration,
+            decorationThickness: decorationThickness,
+          ),
         ),
       ),
     );

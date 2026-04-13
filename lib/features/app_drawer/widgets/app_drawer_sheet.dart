@@ -89,6 +89,16 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
     }
   }
 
+  void _onOverscroll(OverscrollNotification notification) {
+    if (notification.overscroll > 0 && _focusNode.hasFocus) {
+      _focusNode.unfocus();
+    } else if (notification.overscroll < 0 &&
+        !_focusNode.hasFocus &&
+        _autoKeyboard) {
+      _focusNode.requestFocus();
+    }
+  }
+
   void _onSearchChanged(String query) {
     widget.appListState.filter(query);
     if (_autoLaunch &&
@@ -152,20 +162,23 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                 )
               else
                 SliverFillRemaining(
-                  child: FadeOverflow(
-                    child: ListenableBuilder(
-                      listenable: widget.appListState,
-                      builder: (context, _) {
-                        final apps = widget.appListState.filteredApps;
-                        final keyboardHeight = MediaQuery.viewInsetsOf(
-                          context,
-                        ).bottom;
-                        return ListView.builder(
-                          controller: _scrollController,
-                          padding: EdgeInsets.only(
-                            top: 8,
-                            bottom: keyboardHeight + 32,
-                          ),
+                  child: NotificationListener<OverscrollNotification>(
+                    onNotification: (notification) {
+                      _onOverscroll(notification);
+                      return false;
+                    },
+                    child: FadeOverflow(
+                      child: ListenableBuilder(
+                        listenable: widget.appListState,
+                        builder: (context, _) {
+                          final apps = widget.appListState.filteredApps;
+                          return ListView.builder(
+                            controller: _scrollController,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            padding: const EdgeInsets.only(
+                              top: 8,
+                              bottom: 32,
+                            ),
                           itemCount: apps.length,
                           itemBuilder: (context, index) {
                             final app = apps[index];
@@ -175,8 +188,9 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                               onLongPress: () => _onLongPress(context, app),
                             );
                           },
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),

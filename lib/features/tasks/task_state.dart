@@ -34,7 +34,7 @@ class TaskState extends ChangeNotifier {
       id: DateTime.now().microsecondsSinceEpoch.toString(),
       title: title,
     );
-    _tasks.add(task);
+    _tasks.insert(0, task);
     notifyListeners();
     _save();
   }
@@ -43,6 +43,14 @@ class TaskState extends ChangeNotifier {
     final index = _tasks.indexWhere((t) => t.id == id);
     if (index == -1) return;
     _tasks[index] = _tasks[index].copyWith(done: !_tasks[index].done);
+    notifyListeners();
+    _save();
+  }
+
+  void renameTask(String id, String title) {
+    final index = _tasks.indexWhere((t) => t.id == id);
+    if (index == -1) return;
+    _tasks[index] = _tasks[index].copyWith(title: title);
     notifyListeners();
     _save();
   }

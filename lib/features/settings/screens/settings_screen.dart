@@ -89,6 +89,13 @@ class SettingsScreen extends StatelessWidget {
                   );
                 },
               ),
+              const _SectionHeader(title: 'Tasks'),
+              SwitchListTile(
+                title: const Text('Task screen'),
+                subtitle: const Text('Swipe right from home to view tasks'),
+                value: settingsState.tasksEnabled,
+                onChanged: settingsState.setTasksEnabled,
+              ),
               const _SectionHeader(title: 'Search'),
               SwitchListTile(
                 title: const Text('Search-only mode'),

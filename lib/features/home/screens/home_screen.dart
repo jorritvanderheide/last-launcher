@@ -10,12 +10,14 @@ class HomeScreen extends StatelessWidget {
     required this.homeState,
     required this.appListState,
     required this.onLaunch,
+    required this.tasksEnabled,
     super.key,
   });
 
   final HomeState homeState;
   final AppListState appListState;
   final void Function(String packageName) onLaunch;
+  final bool tasksEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class HomeScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         'Swipe up to search apps\n'
+                        '${tasksEnabled ? 'Swipe right for tasks\n' : ''}'
                         'Long press for settings',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Theme.of(

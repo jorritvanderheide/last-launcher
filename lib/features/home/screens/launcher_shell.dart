@@ -61,6 +61,9 @@ class _LauncherShellState extends State<LauncherShell>
   // Whether the app list is scrolled to the top.
   final _listIsAtTop = ValueNotifier<bool>(true);
 
+  // Whether a task reorder drag is in progress.
+  final _isReorderingTasks = ValueNotifier<bool>(false);
+
   @override
   void initState() {
     super.initState();
@@ -92,6 +95,7 @@ class _LauncherShellState extends State<LauncherShell>
     _sheetAnim.dispose();
     _pageAnim.dispose();
     _listIsAtTop.dispose();
+    _isReorderingTasks.dispose();
     super.dispose();
   }
 
@@ -148,8 +152,14 @@ class _LauncherShellState extends State<LauncherShell>
     if (!_isDraggingSheet && !_isDraggingPage) {
       if (absDx < _dragStartThreshold && absDy < _dragStartThreshold) return;
 
-      if (absDx > absDy && !_drawerOpen) {
+      if (absDx > absDy && !_drawerOpen &&
+          widget.settingsState.tasksEnabled &&
+          !_isReorderingTasks.value) {
         // Horizontal drag — page navigation.
+        // Don't start if already at the edge in the drag direction.
+        final wouldGoLeft = dx > 0;
+        if (wouldGoLeft && _pageFraction >= 1) return;
+        if (!wouldGoLeft && _pageFraction <= 0) return;
         _isDraggingPage = true;
         _dragStartFraction = _pageFraction;
       } else if (absDy > absDx) {
@@ -302,7 +312,12 @@ class _LauncherShellState extends State<LauncherShell>
                     SizedBox(
                       width: screenWidth,
                       height: screenHeight,
-                      child: TaskScreen(taskState: widget.taskState),
+                      child: TaskScreen(
+                        taskState: widget.taskState,
+                        settingsState: widget.settingsState,
+                        isVisible: !_onHomePage,
+                        isReordering: _isReorderingTasks,
+                      ),
                     ),
                     SizedBox(
                       width: screenWidth,
@@ -326,6 +341,8 @@ class _LauncherShellState extends State<LauncherShell>
                           homeState: widget.homeState,
                           appListState: widget.appListState,
                           onLaunch: _launchApp,
+                          tasksEnabled:
+                              widget.settingsState.tasksEnabled,
                         ),
                       ),
                     ),
