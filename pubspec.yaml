@@ -7,10 +7,10 @@ environment:
   sdk: ^3.11.0
 
 dependencies:
-  dynamic_color: ^1.8.1
   flutter:
     sdk: flutter
   shared_preferences: ^2.5.0
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:

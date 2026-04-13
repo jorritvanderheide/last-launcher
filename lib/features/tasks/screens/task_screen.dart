@@ -4,6 +4,7 @@ import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/tasks/task.dart';
 import 'package:last_launcher/features/tasks/task_state.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
+import 'package:last_launcher/shared/widgets/action_row.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 import 'package:last_launcher/shared/widgets/rename_dialog.dart';
 
@@ -14,6 +15,7 @@ class TaskScreen extends StatefulWidget {
     required this.isVisible,
     required this.onReorderStart,
     required this.onReorderEnd,
+    this.scrollLocked = false,
     super.key,
   });
 
@@ -22,17 +24,25 @@ class TaskScreen extends StatefulWidget {
   final bool isVisible;
   final VoidCallback onReorderStart;
   final VoidCallback onReorderEnd;
+  final bool scrollLocked;
 
   @override
-  State<TaskScreen> createState() => _TaskScreenState();
+  State<TaskScreen> createState() => TaskScreenState();
 }
 
-class _TaskScreenState extends State<TaskScreen> {
+class TaskScreenState extends State<TaskScreen> {
   final _controller = TextEditingController();
   final _focusNode = FocusNode();
   final _scrollController = ScrollController();
   double _cumulativeOverscroll = 0;
-  bool get _autoKeyboard => widget.settingsState.autoKeyboard;
+
+  bool dismissActions() {
+    if (_activeTaskId == null) return false;
+    setState(() => _activeTaskId = null);
+    return true;
+  }
+  String? _activeTaskId;
+  bool get _autoKeyboard => widget.settingsState.autoKeyboardTasks;
 
   @override
   void initState() {
@@ -50,6 +60,10 @@ class _TaskScreenState extends State<TaskScreen> {
     } else if (!widget.isVisible && oldWidget.isVisible) {
       _focusNode.unfocus();
       _controller.clear();
+      _activeTaskId = null;
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
     }
   }
 
@@ -64,6 +78,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
+    if (_activeTaskId != null) setState(() => _activeTaskId = null);
     if (_scrollController.offset > 20 && _focusNode.hasFocus) {
       _focusNode.unfocus();
     } else if (_scrollController.offset <= 0 &&
@@ -78,10 +93,10 @@ class _TaskScreenState extends State<TaskScreen> {
     if (_cumulativeOverscroll > 20 && _focusNode.hasFocus) {
       _focusNode.unfocus();
       _cumulativeOverscroll = 0;
-    } else if (_cumulativeOverscroll < -20 &&
-        !_focusNode.hasFocus &&
-        _autoKeyboard) {
-      _focusNode.requestFocus();
+    } else if (_cumulativeOverscroll < -20) {
+      if (!_focusNode.hasFocus && _autoKeyboard) {
+        _focusNode.requestFocus();
+      }
       _cumulativeOverscroll = 0;
     }
   }
@@ -113,61 +128,34 @@ class _TaskScreenState extends State<TaskScreen> {
     }
   }
 
-  void _showTaskOptions(BuildContext context, Task task) {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (sheetContext) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  task.title,
-                  style: Theme.of(sheetContext).textTheme.titleMedium,
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.edit),
-                title: const Text('Rename'),
-                onTap: () async {
-                  Navigator.pop(sheetContext);
-                  final result = await showRenameDialog(
-                    context: context,
-                    currentLabel: task.title,
-                    originalLabel: task.title,
-                  );
-                  if (result != null &&
-                      result.isNotEmpty &&
-                      result != task.title) {
-                    widget.taskState.renameTask(task.id, result);
-                  }
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  task.done ? Icons.undo : Icons.check,
-                ),
-                title: Text(task.done ? 'Mark incomplete' : 'Complete'),
-                onTap: () {
-                  Navigator.pop(sheetContext);
-                  _completeTask(task);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.delete_outline),
-                title: const Text('Remove'),
-                onTap: () {
-                  Navigator.pop(sheetContext);
-                  widget.taskState.removeTask(task.id);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  List<ActionItem> _taskActions(BuildContext context, Task task) {
+    return [
+      ActionItem(
+        icon: task.done ? Icons.undo : Icons.check,
+        label: task.done ? 'Undo' : 'Done',
+        onTap: () => _completeTask(task),
+      ),
+      if (!task.done)
+        ActionItem(
+          icon: Icons.edit,
+          label: 'Rename',
+          onTap: () async {
+            final result = await showRenameDialog(
+              context: context,
+              currentLabel: task.title,
+              originalLabel: task.title,
+            );
+            if (result != null && result.isNotEmpty && result != task.title) {
+              widget.taskState.renameTask(task.id, result);
+            }
+          },
+        ),
+      ActionItem(
+        icon: Icons.delete_outline,
+        label: 'Remove',
+        onTap: () => widget.taskState.removeTask(task.id),
+      ),
+    ];
   }
 
 
@@ -180,12 +168,10 @@ class _TaskScreenState extends State<TaskScreen> {
           .where((t) => t.title.toLowerCase().contains(lower))
           .toList();
     }
-    if (widget.settingsState.completedToBottom) {
-      result = [
-        ...result.where((t) => !t.done),
-        ...result.where((t) => t.done),
-      ];
-    }
+    result = [
+      ...result.where((t) => !t.done),
+      ...result.where((t) => t.done),
+    ];
     return result;
   }
 
@@ -193,13 +179,10 @@ class _TaskScreenState extends State<TaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-        body: SafeArea(
-        child: Column(
+        body: Column(
           children: [
             SizedBox(
-              height: (MediaQuery.sizeOf(context).height * 0.1 -
-                      MediaQuery.paddingOf(context).top +
-                      4)
+              height: (MediaQuery.sizeOf(context).height * 0.1 + 8)
                   .clamp(0, double.infinity),
             ),
             AppSearchField(
@@ -224,7 +207,9 @@ class _TaskScreenState extends State<TaskScreen> {
                     child: FadeOverflow(
                       child: ReorderableListView.builder(
                         scrollController: _scrollController,
-                        physics: const AlwaysScrollableScrollPhysics(),
+                        physics: widget.scrollLocked
+                            ? const NeverScrollableScrollPhysics()
+                            : const AlwaysScrollableScrollPhysics(),
                         padding: const EdgeInsets.only(top: 32, bottom: 80),
                         buildDefaultDragHandles: false,
                         proxyDecorator: dragProxyDecorator,
@@ -248,42 +233,64 @@ class _TaskScreenState extends State<TaskScreen> {
                         itemCount: tasks.length,
                         itemBuilder: (context, index) {
                           final task = tasks[index];
-                          return _SwipeToDismiss(
+                          final isFirstDone = task.done &&
+                              (index == 0 || !tasks[index - 1].done);
+                          if (_activeTaskId == task.id) {
+                            return Padding(
+                              key: ValueKey(task.id),
+                              padding: EdgeInsets.only(
+                                top: isFirstDone ? 24 : 0,
+                              ),
+                              child: ActionRow(
+                                label: task.title,
+                                actions: _taskActions(context, task),
+                                onClose: () =>
+                                    setState(() => _activeTaskId = null),
+                                textDecoration: task.done
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                                decorationThickness: task.done ? 1.5 : null,
+                                opacity: task.done ? 0.4 : 1.0,
+                              ),
+                            );
+                          }
+                          return Padding(
                             key: ValueKey(task.id),
+                            padding: EdgeInsets.only(
+                              top: isFirstDone ? 24 : 0,
+                            ),
+                            child: _SwipeToDismiss(
                             onDismissed: () =>
                                 widget.taskState.removeTask(task.id),
                             child: AppLabel(
                               label: task.title,
                               onTap: () => _completeTask(task),
-                              onLongPress: () =>
-                                  _showTaskOptions(context, task),
+                              onLongPress: () => setState(() =>
+                                  _activeTaskId = _activeTaskId == task.id
+                                      ? null
+                                      : task.id),
                               opacity: task.done ? 0.4 : 1.0,
-                                textDecoration: task.done
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                                decorationThickness:
-                                    task.done ? 1.5 : null,
-                                trailing:
-                                    ReorderableDelayedDragStartListener(
-                                  index: index,
-                                  child: GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        left: 12,
-                                        right: 20,
-                                      ),
-                                      child: Icon(
-                                        Icons.drag_handle,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurface
-                                            .withAlpha(60),
-                                      ),
+                              textDecoration: task.done
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                              decorationThickness:
+                                  task.done ? 1.5 : null,
+                              trailing:
+                                  ReorderableDelayedDragStartListener(
+                                index: index,
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 12,
+                                      right: 20,
                                     ),
+                                    child: const SizedBox(width: 24),
                                   ),
                                 ),
                               ),
+                            ),
+                          ),
                           );
                         },
                       ),
@@ -294,7 +301,6 @@ class _TaskScreenState extends State<TaskScreen> {
             ),
           ],
         ),
-      ),
     );
   }
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
-import 'package:last_launcher/features/app_drawer/widgets/app_options_dialog.dart';
+import 'package:last_launcher/shared/widgets/action_row.dart';
+import 'package:last_launcher/shared/widgets/rename_dialog.dart';
 import 'package:last_launcher/shared/widgets/search_field.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
@@ -36,6 +37,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   final _focusNode = FocusNode();
   final _scrollController = ScrollController();
   final _textController = TextEditingController();
+  String? _activeAppPackage;
 
   bool get _searchOnly => widget.settingsState.searchOnly;
   bool get _autoKeyboard => _searchOnly || widget.settingsState.autoKeyboard;
@@ -65,6 +67,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
       // Drawer just closed.
       _focusNode.unfocus();
       _textController.clear();
+      _activeAppPackage = null;
     }
   }
 
@@ -79,8 +82,9 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
+    if (_activeAppPackage != null) setState(() => _activeAppPackage = null);
     widget.isAtTop.value = _scrollController.offset <= 0;
-    if (_scrollController.offset > 0 && _focusNode.hasFocus) {
+    if (_scrollController.offset > 20 && _focusNode.hasFocus) {
       _focusNode.unfocus();
     } else if (_scrollController.offset <= 0 &&
         !_focusNode.hasFocus &&
@@ -90,12 +94,9 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   }
 
   void _onOverscroll(OverscrollNotification notification) {
+    // Only hide keyboard on downward overscroll (scrolling past bottom).
     if (notification.overscroll > 0 && _focusNode.hasFocus) {
       _focusNode.unfocus();
-    } else if (notification.overscroll < 0 &&
-        !_focusNode.hasFocus &&
-        _autoKeyboard) {
-      _focusNode.requestFocus();
     }
   }
 
@@ -116,29 +117,62 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
     }
   }
 
-  void _onLongPress(BuildContext context, AppInfo app) {
-    showAppOptionsDialog(
-      context: context,
-      app: app,
-      appListState: widget.appListState,
-      homeState: widget.homeState,
-      onCloseDrawer: widget.onCloseDrawer,
-    );
+  List<ActionItem> _appActions(BuildContext context, AppInfo app) {
+    final isPinned = widget.homeState.isPinned(app.packageName);
+    return [
+      ActionItem(
+        icon: Icons.edit,
+        label: 'Rename',
+        onTap: () async {
+          final newLabel = await showRenameDialog(
+            context: context,
+            currentLabel: widget.appListState.displayLabel(app),
+            originalLabel: app.label,
+          );
+          if (newLabel != null) {
+            widget.appListState.setCustomLabel(app.packageName, newLabel);
+          }
+        },
+      ),
+      if (isPinned)
+        ActionItem(
+          icon: Icons.remove_circle_outline,
+          label: 'Unpin',
+          onTap: () => widget.homeState.removeApp(app.packageName),
+        )
+      else
+        ActionItem(
+          icon: Icons.add_circle_outline,
+          label: widget.homeState.isFull ? 'Full' : 'Pin',
+          onTap: widget.homeState.isFull
+              ? () {}
+              : () {
+                  widget.homeState.addApp(
+                    PinnedApp(
+                      packageName: app.packageName,
+                      label: app.label,
+                    ),
+                  );
+                  widget.onCloseDrawer();
+                },
+        ),
+      ActionItem(
+        icon: Icons.visibility_off,
+        label: 'Hide',
+        onTap: () => widget.appListState.hideApp(app.packageName),
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    final bottomPadding = MediaQuery.paddingOf(context).bottom;
-
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
       child: Material(
         color: colorScheme.surface,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: bottomPadding),
-          child: CustomScrollView(
+        child: CustomScrollView(
             physics: const NeverScrollableScrollPhysics(),
             slivers: [
               const SliverToBoxAdapter(child: SizedBox(height: 8)),
@@ -184,10 +218,25 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                           itemCount: apps.length,
                           itemBuilder: (context, index) {
                             final app = apps[index];
+                            if (_activeAppPackage == app.packageName) {
+                              return ActionRow(
+                                key: ValueKey(app.packageName),
+                                label: widget.appListState
+                                    .displayLabel(app),
+                                actions: _appActions(context, app),
+                                onClose: () => setState(
+                                    () => _activeAppPackage = null),
+                              );
+                            }
                             return AppLabel(
+                              key: ValueKey(app.packageName),
                               label: widget.appListState.displayLabel(app),
                               onTap: () => widget.onLaunch(app.packageName),
-                              onLongPress: () => _onLongPress(context, app),
+                              onLongPress: () => setState(() =>
+                                  _activeAppPackage =
+                                      _activeAppPackage == app.packageName
+                                          ? null
+                                          : app.packageName),
                             );
                           },
                           );
@@ -199,7 +248,6 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
             ],
           ),
         ),
-      ),
     );
   }
 }

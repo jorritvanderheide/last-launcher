@@ -36,6 +36,9 @@ class LauncherShell extends StatefulWidget {
 
 class _LauncherShellState extends State<LauncherShell>
     with TickerProviderStateMixin, WidgetsBindingObserver {
+  final _homeKey = GlobalKey<HomeScreenState>();
+  final _taskKey = GlobalKey<TaskScreenState>();
+
   // Sheet (vertical drawer).
   double _sheetFraction = 0;
   bool get _drawerOpen => _sheetFraction > 0.01;
@@ -57,11 +60,12 @@ class _LauncherShellState extends State<LauncherShell>
   bool _isDraggingSheet = false;
   bool _isDraggingPage = false;
   double _dragStartFraction = 0;
+  bool _listWasAtTopOnDown = true;
 
   // Whether the app list is scrolled to the top.
   final _listIsAtTop = ValueNotifier<bool>(true);
 
-  // Whether a reorder drag is in progress.
+  // Whether a reorder drag or list scroll is in progress.
   bool _isReorderingTasks = false;
   bool _isReorderingHome = false;
 
@@ -160,6 +164,7 @@ class _LauncherShellState extends State<LauncherShell>
     _pointerStartTime = DateTime.now();
     _isDraggingSheet = false;
     _isDraggingPage = false;
+    _listWasAtTopOnDown = _listIsAtTop.value;
   }
 
   void _onPointerMove(PointerMoveEvent event) {
@@ -195,7 +200,7 @@ class _LauncherShellState extends State<LauncherShell>
           _dragStartFraction = _sheetFraction;
         } else if (_drawerOpen) {
           if (dy > 0) return;
-          if (dy < 0 && !_listIsAtTop.value) return;
+          if (dy < 0 && !_listWasAtTopOnDown) return;
           _isDraggingSheet = true;
           _dragStartFraction = _sheetFraction;
         } else {
@@ -309,6 +314,8 @@ class _LauncherShellState extends State<LauncherShell>
       canPop: false,
       onPopInvokedWithResult: (didPop, _) {
         if (didPop) return;
+        if (_homeKey.currentState?.dismissActions() ?? false) return;
+        if (_taskKey.currentState?.dismissActions() ?? false) return;
         if (_drawerOpen) {
           _closeDrawer();
         } else if (!_onHomePage) {
@@ -336,6 +343,7 @@ class _LauncherShellState extends State<LauncherShell>
                       width: screenWidth,
                       height: screenHeight,
                       child: TaskScreen(
+                        key: _taskKey,
                         taskState: widget.taskState,
                         settingsState: widget.settingsState,
                         isVisible: !_onHomePage,
@@ -343,6 +351,7 @@ class _LauncherShellState extends State<LauncherShell>
                             _isReorderingTasks = true,
                         onReorderEnd: () =>
                             _isReorderingTasks = false,
+                        scrollLocked: _isDraggingPage,
                       ),
                     ),
                     SizedBox(
@@ -365,6 +374,7 @@ class _LauncherShellState extends State<LauncherShell>
                           );
                         },
                         child: HomeScreen(
+                          key: _homeKey,
                           homeState: widget.homeState,
                           appListState: widget.appListState,
                           settingsState: widget.settingsState,
@@ -373,6 +383,7 @@ class _LauncherShellState extends State<LauncherShell>
                               _isReorderingHome = true,
                           onReorderEnd: () =>
                               _isReorderingHome = false,
+                          isActive: _onHomePage && !_drawerOpen,
                         ),
                       ),
                     ),

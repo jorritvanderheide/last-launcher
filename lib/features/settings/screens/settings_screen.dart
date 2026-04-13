@@ -4,6 +4,10 @@ import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
+import 'package:last_launcher/shared/widgets/fade_overflow.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+const _store = String.fromEnvironment('STORE', defaultValue: 'playstore');
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
@@ -28,7 +32,9 @@ class SettingsScreen extends StatelessWidget {
         builder: (context, _) {
           final searchOnly = settingsState.searchOnly;
 
-          return ListView(
+          return FadeOverflow(
+            child: ListView(
+            padding: EdgeInsets.zero,
             children: [
               const _SectionHeader(title: 'Appearance'),
               _ThemeListTile(
@@ -36,12 +42,10 @@ class SettingsScreen extends StatelessWidget {
                 onChanged: settingsState.setThemeMode,
               ),
               SwitchListTile(
-                title: const Text('AMOLED black'),
-                subtitle: const Text('True black background in dark mode'),
-                value: settingsState.amoled,
-                onChanged: settingsState.themeMode == ThemeMode.light
-                    ? null
-                    : settingsState.setAmoled,
+                title: const Text('Hide status bar'),
+                subtitle: const Text('Full screen mode'),
+                value: settingsState.hideStatusBar,
+                onChanged: settingsState.setHideStatusBar,
               ),
               SwitchListTile(
                 title: const Text('Home screen hints'),
@@ -55,7 +59,6 @@ class SettingsScreen extends StatelessWidget {
                 builder: (context, _) {
                   final count = appListState.hiddenApps.length;
                   return ListTile(
-                    leading: const Icon(Icons.visibility_off),
                     title: const Text('Hidden apps'),
                     subtitle: Text(count == 0 ? 'None' : '$count hidden'),
                     onTap: () {
@@ -74,6 +77,29 @@ class SettingsScreen extends StatelessWidget {
                   );
                 },
               ),
+              const _SectionHeader(title: 'Behavior'),
+              SwitchListTile(
+                title: const Text('Search-only mode'),
+                subtitle: const Text('Hide app list — type to launch'),
+                value: searchOnly,
+                onChanged: settingsState.setSearchOnly,
+              ),
+              SwitchListTile(
+                title: const Text('Auto-show keyboard'),
+                subtitle: const Text(
+                  'Show keyboard when opening app drawer',
+                ),
+                value: searchOnly || settingsState.autoKeyboard,
+                onChanged: searchOnly ? null : settingsState.setAutoKeyboard,
+              ),
+              SwitchListTile(
+                title: const Text('Auto-launch on match'),
+                subtitle: const Text(
+                  'Launch automatically when one app matches',
+                ),
+                value: searchOnly || settingsState.autoLaunch,
+                onChanged: searchOnly ? null : settingsState.setAutoLaunch,
+              ),
               const _SectionHeader(title: 'Tasks'),
               SwitchListTile(
                 title: const Text('Task screen'),
@@ -82,13 +108,13 @@ class SettingsScreen extends StatelessWidget {
                 onChanged: settingsState.setTasksEnabled,
               ),
               SwitchListTile(
-                title: const Text('Completed to bottom'),
+                title: const Text('Auto-show keyboard'),
                 subtitle: const Text(
-                  'Move completed tasks to the bottom of the list',
+                  'Show keyboard when opening task screen',
                 ),
-                value: settingsState.completedToBottom,
+                value: settingsState.autoKeyboardTasks,
                 onChanged: settingsState.tasksEnabled
-                    ? settingsState.setCompletedToBottom
+                    ? settingsState.setAutoKeyboardTasks
                     : null,
               ),
               SwitchListTile(
@@ -101,28 +127,37 @@ class SettingsScreen extends StatelessWidget {
                     ? settingsState.setRemoveOnComplete
                     : null,
               ),
-              const _SectionHeader(title: 'Search'),
-              SwitchListTile(
-                title: const Text('Search-only mode'),
-                subtitle: const Text('Hide app list — type to launch'),
-                value: searchOnly,
-                onChanged: settingsState.setSearchOnly,
-              ),
-              SwitchListTile(
-                title: const Text('Auto-show keyboard'),
-                subtitle: const Text('Open keyboard when app drawer appears'),
-                value: searchOnly || settingsState.autoKeyboard,
-                onChanged: searchOnly ? null : settingsState.setAutoKeyboard,
-              ),
-              SwitchListTile(
-                title: const Text('Auto-launch on match'),
-                subtitle: const Text(
-                  'Launch automatically when one app matches',
+              if (_store == 'fdroid') ...[
+                const _SectionHeader(title: 'Support'),
+                ListTile(
+                  leading: const Icon(Icons.favorite_outline),
+                  title: const Text('Donate'),
+                  subtitle: const Text('Support development on Liberapay'),
+                  onTap: () => launchUrl(
+                    Uri.parse('https://liberapay.com/BW20'),
+                    mode: LaunchMode.externalApplication,
+                  ),
                 ),
-                value: searchOnly || settingsState.autoLaunch,
-                onChanged: searchOnly ? null : settingsState.setAutoLaunch,
+              ],
+              const _SectionHeader(title: 'About'),
+              const ListTile(
+                title: Text('Version'),
+                subtitle: Text('1.0.0'),
+              ),
+              const ListTile(
+                title: Text('License'),
+                subtitle: Text('EUPL-1.2'),
+              ),
+              ListTile(
+                title: const Text('Open source licenses'),
+                onTap: () => showLicensePage(
+                  context: context,
+                  applicationName: 'Last Launcher',
+                  applicationVersion: '1.0.0',
+                ),
               ),
             ],
+          ),
           );
         },
       ),
