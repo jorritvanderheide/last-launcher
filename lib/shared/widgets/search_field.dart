@@ -5,14 +5,14 @@ class AppSearchField extends StatelessWidget {
   const AppSearchField({
     required this.controller,
     required this.focusNode,
-    required this.onChanged,
+    this.onChanged,
     required this.onSubmit,
     super.key,
   });
 
   final TextEditingController controller;
   final FocusNode focusNode;
-  final ValueChanged<String> onChanged;
+  final ValueChanged<String>? onChanged;
   final VoidCallback onSubmit;
 
   @override
@@ -48,11 +48,13 @@ class AppSearchField extends StatelessWidget {
           ValueListenableBuilder<TextEditingValue>(
             valueListenable: controller,
             builder: (context, value, _) {
-              if (value.text.isNotEmpty) return const SizedBox.shrink();
-              return Container(
-                width: 32,
-                height: 2,
-                color: colorScheme.onSurface,
+              return Opacity(
+                opacity: value.text.isEmpty ? 1 : 0,
+                child: Container(
+                  width: 32,
+                  height: 2,
+                  color: colorScheme.onSurface,
+                ),
               );
             },
           ),

@@ -1,22 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:last_launcher/features/app_drawer/app_list_state.dart';
-
-Future<void> renameApp({
-  required BuildContext context,
-  required String packageName,
-  required String currentLabel,
-  required String originalLabel,
-  required AppListState appListState,
-}) async {
-  final newLabel = await showRenameDialog(
-    context: context,
-    currentLabel: currentLabel,
-    originalLabel: originalLabel,
-  );
-  if (newLabel != null) {
-    appListState.setCustomLabel(packageName, newLabel);
-  }
-}
 
 Future<String?> showRenameDialog({
   required BuildContext context,

@@ -33,13 +33,14 @@ Future<void> showAppOptionsDialog({
               title: const Text('Rename'),
               onTap: () async {
                 Navigator.pop(sheetContext);
-                await renameApp(
+                final newLabel = await showRenameDialog(
                   context: context,
-                  packageName: app.packageName,
                   currentLabel: appListState.displayLabel(app),
                   originalLabel: app.label,
-                  appListState: appListState,
                 );
+                if (newLabel != null) {
+                  appListState.setCustomLabel(app.packageName, newLabel);
+                }
               },
             ),
             if (isPinned)
@@ -56,6 +57,9 @@ Future<void> showAppOptionsDialog({
                 enabled: !homeState.isFull,
                 leading: const Icon(Icons.add_circle_outline),
                 title: const Text('Add to home'),
+                subtitle: homeState.isFull
+                    ? const Text('Home screen is full')
+                    : null,
                 onTap: homeState.isFull
                     ? null
                     : () {

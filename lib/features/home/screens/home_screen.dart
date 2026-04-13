@@ -58,8 +58,7 @@ class HomeScreen extends StatelessWidget {
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     buildDefaultDragHandles: false,
-                    proxyDecorator: (child, _, _) =>
-                        Material(color: Colors.transparent, child: child),
+                    proxyDecorator: dragProxyDecorator,
                     onReorderStart: (_) => onReorderStart(),
                     onReorderEnd: (_) => onReorderEnd(),
                     onReorder: homeState.reorderApps,

@@ -3,7 +3,7 @@ import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_options_dialog.dart';
-import 'package:last_launcher/features/app_drawer/widgets/app_search_field.dart';
+import 'package:last_launcher/shared/widgets/search_field.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/data/models.dart';
@@ -111,6 +111,8 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   void _onSubmit() {
     if (widget.appListState.hasSingleResult) {
       widget.onLaunch(widget.appListState.filteredApps.first.packageName);
+    } else if (widget.appListState.filteredApps.isEmpty) {
+      widget.onCloseDrawer();
     }
   }
 

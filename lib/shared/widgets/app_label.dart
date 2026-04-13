@@ -8,6 +8,7 @@ class AppLabel extends StatelessWidget {
     this.textDecoration,
     this.decorationThickness,
     this.trailing,
+    this.opacity = 1.0,
     super.key,
   });
 
@@ -17,6 +18,7 @@ class AppLabel extends StatelessWidget {
   final TextDecoration? textDecoration;
   final double? decorationThickness;
   final Widget? trailing;
+  final double opacity;
 
   static const fontSize = 28.0;
   static const verticalPadding = 9.0;
@@ -42,23 +44,34 @@ class AppLabel extends StatelessWidget {
       ),
     );
 
+    final content = trailing == null
+        ? text
+        : IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(child: text),
+                SizedBox(
+                  height: double.infinity,
+                  child: trailing!,
+                ),
+              ],
+            ),
+          );
+
     return InkWell(
       onTap: onTap,
       onLongPress: onLongPress,
-      child: trailing == null
-          ? text
-          : IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(child: text),
-                  SizedBox(
-                    height: double.infinity,
-                    child: trailing!,
-                  ),
-                ],
-              ),
-            ),
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      child: opacity < 1.0 ? Opacity(opacity: opacity, child: content) : content,
     );
   }
+}
+
+Widget dragProxyDecorator(Widget child, int index, Animation<double> animation) {
+  return Material(
+    color: Colors.transparent,
+    child: Opacity(opacity: 0.6, child: child),
+  );
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:last_launcher/features/app_drawer/widgets/app_search_field.dart';
+import 'package:last_launcher/shared/widgets/search_field.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/tasks/task.dart';
 import 'package:last_launcher/features/tasks/task_state.dart';
@@ -32,8 +32,7 @@ class _TaskScreenState extends State<TaskScreen> {
   final _focusNode = FocusNode();
   final _scrollController = ScrollController();
   double _cumulativeOverscroll = 0;
-  bool get _autoKeyboard =>
-      widget.settingsState.searchOnly || widget.settingsState.autoKeyboard;
+  bool get _autoKeyboard => widget.settingsState.autoKeyboard;
 
   @override
   void initState() {
@@ -198,14 +197,14 @@ class _TaskScreenState extends State<TaskScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.sizeOf(context).height * 0.1 -
-                  MediaQuery.paddingOf(context).top +
-                  4,
+              height: (MediaQuery.sizeOf(context).height * 0.1 -
+                      MediaQuery.paddingOf(context).top +
+                      4)
+                  .clamp(0, double.infinity),
             ),
             AppSearchField(
               controller: _controller,
               focusNode: _focusNode,
-              onChanged: (_) {},
               onSubmit: _onSubmit,
             ),
             Expanded(
@@ -228,27 +227,37 @@ class _TaskScreenState extends State<TaskScreen> {
                         physics: const AlwaysScrollableScrollPhysics(),
                         padding: const EdgeInsets.only(top: 32, bottom: 80),
                         buildDefaultDragHandles: false,
-                        proxyDecorator: (child, _, _) =>
-                            Material(color: Colors.transparent, child: child),
+                        proxyDecorator: dragProxyDecorator,
                         onReorderStart: (_) =>
                             widget.onReorderStart(),
                         onReorderEnd: (_) =>
                             widget.onReorderEnd(),
-                        onReorder: widget.taskState.reorder,
+                        onReorder: (oldIndex, newIndex) {
+                          final allTasks = widget.taskState.tasks;
+                          final realOld = allTasks.indexWhere(
+                            (t) => t.id == tasks[oldIndex].id,
+                          );
+                          var realNew = newIndex < tasks.length
+                              ? allTasks.indexWhere(
+                                  (t) => t.id == tasks[newIndex].id,
+                                )
+                              : allTasks.length;
+                          if (realNew > realOld) realNew++;
+                          widget.taskState.reorder(realOld, realNew);
+                        },
                         itemCount: tasks.length,
                         itemBuilder: (context, index) {
                           final task = tasks[index];
-                          return Opacity(
+                          return _SwipeToDismiss(
                             key: ValueKey(task.id),
-                            opacity: task.done ? 0.4 : 1.0,
-                            child: _SwipeToDismiss(
-                              onDismissed: () =>
-                                  widget.taskState.removeTask(task.id),
-                              child: AppLabel(
-                                label: task.title,
-                                onTap: () => _completeTask(task),
-                                onLongPress: () =>
-                                    _showTaskOptions(context, task),
+                            onDismissed: () =>
+                                widget.taskState.removeTask(task.id),
+                            child: AppLabel(
+                              label: task.title,
+                              onTap: () => _completeTask(task),
+                              onLongPress: () =>
+                                  _showTaskOptions(context, task),
+                              opacity: task.done ? 0.4 : 1.0,
                                 textDecoration: task.done
                                     ? TextDecoration.lineThrough
                                     : null,
@@ -275,7 +284,6 @@ class _TaskScreenState extends State<TaskScreen> {
                                   ),
                                 ),
                               ),
-                            ),
                           );
                         },
                       ),
@@ -295,6 +303,7 @@ class _SwipeToDismiss extends StatefulWidget {
   const _SwipeToDismiss({
     required this.onDismissed,
     required this.child,
+    super.key,
   });
 
   final VoidCallback onDismissed;
@@ -304,15 +313,42 @@ class _SwipeToDismiss extends StatefulWidget {
   State<_SwipeToDismiss> createState() => _SwipeToDismissState();
 }
 
-class _SwipeToDismissState extends State<_SwipeToDismiss> {
+class _SwipeToDismissState extends State<_SwipeToDismiss>
+    with SingleTickerProviderStateMixin {
   Offset? _start;
   double _dx = 0;
+  double _snapFrom = 0;
   bool _tracking = false;
+  late final AnimationController _snapBack;
+
+  @override
+  void initState() {
+    super.initState();
+    _snapBack = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 150),
+    )..addListener(() {
+        final t = Curves.easeOut.transform(_snapBack.value);
+        setState(() => _dx = _snapFrom * (1 - t));
+      });
+  }
+
+  @override
+  void dispose() {
+    _snapBack.dispose();
+    super.dispose();
+  }
+
+  void _animateSnapBack() {
+    _snapFrom = _dx;
+    _snapBack.forward(from: 0);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Listener(
       onPointerDown: (e) {
+        _snapBack.stop();
         _start = e.position;
         _dx = 0;
         _tracking = false;
@@ -323,7 +359,6 @@ class _SwipeToDismissState extends State<_SwipeToDismiss> {
         final dx = e.position.dx - start.dx;
         final dy = (e.position.dy - start.dy).abs();
         if (!_tracking) {
-          // Only start tracking if clearly horizontal (2x ratio).
           if (dx.abs() < 20) return;
           if (dx.abs() > dy * 2 && dx > 0) {
             _tracking = true;
@@ -339,21 +374,24 @@ class _SwipeToDismissState extends State<_SwipeToDismiss> {
           final screenWidth = MediaQuery.sizeOf(context).width;
           if (_dx > screenWidth * 0.3) {
             widget.onDismissed();
+          } else {
+            _animateSnapBack();
           }
-          setState(() => _dx = 0);
         }
         _start = null;
         _tracking = false;
       },
       onPointerCancel: (_) {
-        if (_tracking) setState(() => _dx = 0);
+        if (_tracking) _animateSnapBack();
         _start = null;
         _tracking = false;
       },
       child: Transform.translate(
         offset: Offset(_dx, 0),
         child: Opacity(
-          opacity: _dx > 0 ? (1 - _dx / MediaQuery.sizeOf(context).width).clamp(0.3, 1.0) : 1.0,
+          opacity: _dx > 0
+              ? (1 - _dx / MediaQuery.sizeOf(context).width).clamp(0.3, 1.0)
+              : 1.0,
           child: widget.child,
         ),
       ),

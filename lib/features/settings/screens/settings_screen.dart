@@ -64,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
                           pageBuilder: (_, _, _) => HiddenAppsScreen(
                             appListState: appListState,
                             homeState: homeState,
-                            appChannel: appChannel,
+                            onLaunch: appChannel.launchApp,
                           ),
                           transitionDuration: Duration.zero,
                           reverseTransitionDuration: Duration.zero,
