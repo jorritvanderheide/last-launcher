@@ -1,0 +1,70 @@
+{
+  "@@locale": "nl",
+  "appTitle": "Last Launcher",
+
+  "settings": "Instellingen",
+  "sectionAppearance": "Uiterlijk",
+  "sectionApps": "Apps",
+  "sectionBehavior": "Gedrag",
+  "sectionTasks": "Taken",
+  "sectionSupport": "Ondersteuning",
+  "sectionAbout": "Over",
+
+  "themeTitle": "Thema",
+  "themeSystem": "Systeem",
+  "themeLight": "Licht",
+  "themeDark": "Donker",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "Volledig scherm",
+  "hideStatusBarSubtitle": "Statusbalk en navigatie verbergen",
+  "homeScreenHints": "Startschermtips",
+  "homeScreenHintsSubtitle": "Toon tips wanneer het startscherm leeg is",
+
+  "hiddenApps": "Verborgen apps",
+  "hiddenAppsNone": "Geen",
+  "hiddenAppsCount": "{count} verborgen",
+  "noHiddenApps": "Geen verborgen apps",
+
+  "searchOnlyMode": "Alleen zoeken",
+  "searchOnlyModeSubtitle": "Appnamen verbergen, zoeken om te starten",
+  "autoShowKeyboard": "Toetsenbord tonen",
+  "autoShowKeyboardAppsSubtitle": "Toetsenbord openen wanneer lade opent",
+  "autoShowKeyboardTasksSubtitle": "Toetsenbord openen wanneer taken opent",
+  "autoLaunchOnMatch": "Automatisch starten bij overeenkomst",
+  "autoLaunchOnMatchSubtitle": "Starten wanneer één app overeenkomt",
+
+  "taskScreen": "Takenscherm",
+  "taskScreenSubtitle": "Veeg naar rechts vanaf het startscherm om taken te bekijken",
+  "removeOnComplete": "Verwijderen bij voltooiing",
+  "removeOnCompleteSubtitle": "Taken verwijderen wanneer ze zijn afgerond",
+
+  "donate": "Doneren",
+  "donateSubtitle": "Ondersteun de ontwikkeling op Liberapay",
+  "version": "Versie",
+  "license": "Licentie",
+  "openSourceLicenses": "Opensourcelicenties",
+
+  "hintSwipeUp": "Veeg omhoog om te zoeken",
+  "hintSwipeRight": "Veeg naar rechts voor taken",
+  "hintLongPress": "Lang drukken voor instellingen",
+
+  "noResults": "Geen resultaten",
+  "returnToAddTask": "Typ om een taak toe te voegen",
+
+  "actionRename": "Hernoemen",
+  "actionUnpin": "Losmaken",
+  "actionPin": "Vastmaken",
+  "actionPinFull": "Vol",
+  "actionHide": "Verbergen",
+  "actionUnhide": "Zichtbaar maken",
+  "actionDone": "Klaar",
+  "actionUndo": "Ongedaan maken",
+  "actionRemove": "Verwijderen",
+
+  "renameDialogTitle": "Hernoemen",
+  "renameDialogCancel": "Annuleren",
+  "renameDialogSave": "Opslaan",
+
+  "homeScreenFull": "Startscherm is vol"
+}

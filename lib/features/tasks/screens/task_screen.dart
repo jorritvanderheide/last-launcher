@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/shared/widgets/search_field.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/tasks/task.dart';
@@ -129,16 +130,17 @@ class TaskScreenState extends State<TaskScreen> {
   }
 
   List<ActionItem> _taskActions(BuildContext context, Task task) {
+    final l10n = AppLocalizations.of(context)!;
     return [
       ActionItem(
         icon: task.done ? Icons.undo : Icons.check,
-        label: task.done ? 'Undo' : 'Done',
+        label: task.done ? l10n.actionUndo : l10n.actionDone,
         onTap: () => _completeTask(task),
       ),
       if (!task.done)
         ActionItem(
           icon: Icons.edit,
-          label: 'Rename',
+          label: l10n.actionRename,
           onTap: () async {
             final result = await showRenameDialog(
               context: context,
@@ -152,7 +154,7 @@ class TaskScreenState extends State<TaskScreen> {
         ),
       ActionItem(
         icon: Icons.delete_outline,
-        label: 'Remove',
+        label: l10n.actionRemove,
         onTap: () => widget.taskState.removeTask(task.id),
       ),
     ];
@@ -203,7 +205,7 @@ class TaskScreenState extends State<TaskScreen> {
                         top: 32 + AppLabel.verticalPadding,
                       ),
                       child: Text(
-                        'Return to add task',
+                        AppLocalizations.of(context)!.returnToAddTask,
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge

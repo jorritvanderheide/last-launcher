@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/screens/launcher_shell.dart';
@@ -159,6 +160,8 @@ class _LastLauncherAppState extends State<LastLauncherApp>
         );
         return MaterialApp(
           title: 'Last Launcher',
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           themeMode: widget.settingsState.themeMode,
           theme: _lightTheme,
           darkTheme: widget.settingsState.isExtra ? _extraTheme : _darkTheme,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/l10n/app_localizations.dart';
 
 Future<String?> showRenameDialog({
   required BuildContext context,
@@ -50,8 +51,9 @@ class _RenameDialogState extends State<_RenameDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AlertDialog(
-      title: const Text('Rename'),
+      title: Text(l10n.renameDialogTitle),
       content: TextField(
         controller: _controller,
         autofocus: true,
@@ -62,9 +64,9 @@ class _RenameDialogState extends State<_RenameDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
+          child: Text(l10n.renameDialogCancel),
         ),
-        TextButton(onPressed: _submit, child: const Text('Save')),
+        TextButton(onPressed: _submit, child: Text(l10n.renameDialogSave)),
       ],
     );
   }

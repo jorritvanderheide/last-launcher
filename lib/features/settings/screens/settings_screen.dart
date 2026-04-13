@@ -3,6 +3,7 @@ import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
+import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -25,8 +26,10 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: Text(l10n.settings)),
       body: ListenableBuilder(
         listenable: settingsState,
         builder: (context, _) {
@@ -36,31 +39,31 @@ class SettingsScreen extends StatelessWidget {
             child: ListView(
             padding: EdgeInsets.zero,
             children: [
-              const _SectionHeader(title: 'Appearance'),
+              _SectionHeader(title: l10n.sectionAppearance),
               _ThemeListTile(
                 themeValue: settingsState.themeValue,
                 onChanged: settingsState.setTheme,
               ),
               SwitchListTile(
-                title: const Text('Hide status bar'),
-                subtitle: const Text('Full screen mode'),
+                title: Text(l10n.hideStatusBar),
+                subtitle: Text(l10n.hideStatusBarSubtitle),
                 value: settingsState.hideStatusBar,
                 onChanged: settingsState.setHideStatusBar,
               ),
               SwitchListTile(
-                title: const Text('Home screen hints'),
-                subtitle: const Text('Show usage tips when no apps are pinned'),
+                title: Text(l10n.homeScreenHints),
+                subtitle: Text(l10n.homeScreenHintsSubtitle),
                 value: settingsState.showHints,
                 onChanged: settingsState.setShowHints,
               ),
-              const _SectionHeader(title: 'Apps'),
+              _SectionHeader(title: l10n.sectionApps),
               ListenableBuilder(
                 listenable: appListState,
                 builder: (context, _) {
                   final count = appListState.hiddenApps.length;
                   return ListTile(
-                    title: const Text('Hidden apps'),
-                    subtitle: Text(count == 0 ? 'None' : '$count hidden'),
+                    title: Text(l10n.hiddenApps),
+                    subtitle: Text(count == 0 ? l10n.hiddenAppsNone : l10n.hiddenAppsCount(count)),
                     onTap: () {
                       Navigator.of(context).push(
                         PageRouteBuilder<void>(
@@ -77,40 +80,40 @@ class SettingsScreen extends StatelessWidget {
                   );
                 },
               ),
-              const _SectionHeader(title: 'Behavior'),
+              _SectionHeader(title: l10n.sectionBehavior),
               SwitchListTile(
-                title: const Text('Search-only mode'),
-                subtitle: const Text('Hide app list — type to launch'),
+                title: Text(l10n.searchOnlyMode),
+                subtitle: Text(l10n.searchOnlyModeSubtitle),
                 value: searchOnly,
                 onChanged: settingsState.setSearchOnly,
               ),
               SwitchListTile(
-                title: const Text('Auto-show keyboard'),
-                subtitle: const Text(
-                  'Show keyboard when opening app drawer',
+                title: Text(l10n.autoShowKeyboard),
+                subtitle: Text(
+                  l10n.autoShowKeyboardAppsSubtitle,
                 ),
                 value: searchOnly || settingsState.autoKeyboard,
                 onChanged: searchOnly ? null : settingsState.setAutoKeyboard,
               ),
               SwitchListTile(
-                title: const Text('Auto-launch on match'),
-                subtitle: const Text(
-                  'Launch automatically when one app matches',
+                title: Text(l10n.autoLaunchOnMatch),
+                subtitle: Text(
+                  l10n.autoLaunchOnMatchSubtitle,
                 ),
                 value: searchOnly || settingsState.autoLaunch,
                 onChanged: searchOnly ? null : settingsState.setAutoLaunch,
               ),
-              const _SectionHeader(title: 'Tasks'),
+              _SectionHeader(title: l10n.sectionTasks),
               SwitchListTile(
-                title: const Text('Task screen'),
-                subtitle: const Text('Swipe right from home to view tasks'),
+                title: Text(l10n.taskScreen),
+                subtitle: Text(l10n.taskScreenSubtitle),
                 value: settingsState.tasksEnabled,
                 onChanged: settingsState.setTasksEnabled,
               ),
               SwitchListTile(
-                title: const Text('Auto-show keyboard'),
-                subtitle: const Text(
-                  'Show keyboard when opening task screen',
+                title: Text(l10n.autoShowKeyboard),
+                subtitle: Text(
+                  l10n.autoShowKeyboardTasksSubtitle,
                 ),
                 value: settingsState.autoKeyboardTasks,
                 onChanged: settingsState.tasksEnabled
@@ -118,9 +121,9 @@ class SettingsScreen extends StatelessWidget {
                     : null,
               ),
               SwitchListTile(
-                title: const Text('Remove on complete'),
-                subtitle: const Text(
-                  'Remove tasks when marked as done',
+                title: Text(l10n.removeOnComplete),
+                subtitle: Text(
+                  l10n.removeOnCompleteSubtitle,
                 ),
                 value: settingsState.removeOnComplete,
                 onChanged: settingsState.tasksEnabled
@@ -128,28 +131,28 @@ class SettingsScreen extends StatelessWidget {
                     : null,
               ),
               if (_store == 'fdroid') ...[
-                const _SectionHeader(title: 'Support'),
+                _SectionHeader(title: l10n.sectionSupport),
                 ListTile(
                   leading: const Icon(Icons.favorite_outline),
-                  title: const Text('Donate'),
-                  subtitle: const Text('Support development on Liberapay'),
+                  title: Text(l10n.donate),
+                  subtitle: Text(l10n.donateSubtitle),
                   onTap: () => launchUrl(
                     Uri.parse('https://liberapay.com/BW20'),
                     mode: LaunchMode.externalApplication,
                   ),
                 ),
               ],
-              const _SectionHeader(title: 'About'),
-              const ListTile(
-                title: Text('Version'),
-                subtitle: Text('1.0.0'),
-              ),
-              const ListTile(
-                title: Text('License'),
-                subtitle: Text('EUPL-1.2'),
+              _SectionHeader(title: l10n.sectionAbout),
+              ListTile(
+                title: Text(l10n.version),
+                subtitle: const Text('1.0.0'),
               ),
               ListTile(
-                title: const Text('Open source licenses'),
+                title: Text(l10n.license),
+                subtitle: const Text('EUPL-1.2'),
+              ),
+              ListTile(
+                title: Text(l10n.openSourceLicenses),
                 onTap: () => showLicensePage(
                   context: context,
                   applicationName: 'Last Launcher',
@@ -173,24 +176,27 @@ class _ThemeListTile extends StatelessWidget {
 
   static const _options = ['system', 'light', 'dark', 'extra'];
 
-  static String _label(String value) => switch (value) {
-    'system' => 'System',
-    'light' => 'Light',
-    'dark' => 'Dark',
-    'extra' => 'Extra',
-    _ => 'System',
-  };
+  static String _label(BuildContext context, String value) {
+    final l10n = AppLocalizations.of(context)!;
+    return switch (value) {
+      'system' => l10n.themeSystem,
+      'light' => l10n.themeLight,
+      'dark' => l10n.themeDark,
+      'extra' => l10n.themeExtra,
+      _ => l10n.themeSystem,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: const Text('Theme'),
-      subtitle: Text(_label(themeValue)),
+      title: Text(AppLocalizations.of(context)!.themeTitle),
+      subtitle: Text(_label(context, themeValue)),
       onTap: () async {
         final result = await showDialog<String>(
           context: context,
           builder: (context) => SimpleDialog(
-            title: const Text('Theme'),
+            title: Text(AppLocalizations.of(context)!.themeTitle),
             children: [
               RadioGroup<String>(
                 groupValue: themeValue,
@@ -201,7 +207,7 @@ class _ThemeListTile extends StatelessWidget {
                     for (final option in _options)
                       RadioListTile<String>(
                         value: option,
-                        title: Text(_label(option)),
+                        title: Text(_label(context, option)),
                       ),
                   ],
                 ),

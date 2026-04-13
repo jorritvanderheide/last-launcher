@@ -1,0 +1,75 @@
+{
+  "@@locale": "fi",
+  "appTitle": "Last Launcher",
+
+  "settings": "Asetukset",
+  "sectionAppearance": "Ulkoasu",
+  "sectionApps": "Sovellukset",
+  "sectionBehavior": "Toiminta",
+  "sectionTasks": "Tehtävät",
+  "sectionSupport": "Tuki",
+  "sectionAbout": "Tietoja",
+
+  "themeTitle": "Teema",
+  "themeSystem": "Järjestelmä",
+  "themeLight": "Vaalea",
+  "themeDark": "Tumma",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "Koko näyttö",
+  "hideStatusBarSubtitle": "Piilota tilarivi ja navigointi",
+  "homeScreenHints": "Aloitusnäytön vihjeet",
+  "homeScreenHintsSubtitle": "Näytä vinkit, kun aloitusnäyttö on tyhjä",
+
+  "hiddenApps": "Piilotetut sovellukset",
+  "hiddenAppsNone": "Ei mitään",
+  "hiddenAppsCount": "{count} piilotettu",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "Ei piilotettuja sovelluksia",
+
+  "searchOnlyMode": "Vain haku",
+  "searchOnlyModeSubtitle": "Piilota sovellusten nimet, käynnistä hakemalla",
+  "autoShowKeyboard": "Näytä näppäimistö",
+  "autoShowKeyboardAppsSubtitle": "Avaa näppäimistö, kun laatikko avautuu",
+  "autoShowKeyboardTasksSubtitle": "Avaa näppäimistö, kun tehtävät avautuvat",
+  "autoLaunchOnMatch": "Käynnistä automaattisesti",
+  "autoLaunchOnMatchSubtitle": "Käynnistä, kun yksi sovellus täsmää",
+
+  "taskScreen": "Tehtävänäkymä",
+  "taskScreenSubtitle": "Pyyhkäise oikealle nähdäksesi tehtävät",
+  "removeOnComplete": "Poista valmistuttua",
+  "removeOnCompleteSubtitle": "Poista tehtävät, kun ne merkitään valmiiksi",
+
+  "donate": "Lahjoita",
+  "donateSubtitle": "Tue kehitystä Liberapayssa",
+  "version": "Versio",
+  "license": "Lisenssi",
+  "openSourceLicenses": "Avoimen lähdekoodin lisenssit",
+
+  "hintSwipeUp": "Pyyhkäise ylös hakeaksesi",
+  "hintSwipeRight": "Pyyhkäise oikealle tehtäviin",
+  "hintLongPress": "Paina pitkään asetuksiin",
+
+  "noResults": "Ei tuloksia",
+  "returnToAddTask": "Kirjoita lisätäksesi tehtävän",
+
+  "actionRename": "Nimeä uudelleen",
+  "actionUnpin": "Irrota",
+  "actionPin": "Kiinnitä",
+  "actionPinFull": "Täynnä",
+  "actionHide": "Piilota",
+  "actionUnhide": "Näytä",
+  "actionDone": "Valmis",
+  "actionUndo": "Kumoa",
+  "actionRemove": "Poista",
+
+  "renameDialogTitle": "Nimeä uudelleen",
+  "renameDialogCancel": "Peruuta",
+  "renameDialogSave": "Tallenna",
+
+  "homeScreenFull": "Aloitusnäyttö on täynnä"
+}

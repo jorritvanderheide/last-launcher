@@ -1,0 +1,75 @@
+{
+  "@@locale": "zh",
+  "appTitle": "Last Launcher",
+
+  "settings": "设置",
+  "sectionAppearance": "外观",
+  "sectionApps": "应用",
+  "sectionBehavior": "行为",
+  "sectionTasks": "任务",
+  "sectionSupport": "支持",
+  "sectionAbout": "关于",
+
+  "themeTitle": "主题",
+  "themeSystem": "系统",
+  "themeLight": "浅色",
+  "themeDark": "深色",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "全屏",
+  "hideStatusBarSubtitle": "隐藏状态栏和导航栏",
+  "homeScreenHints": "主屏幕提示",
+  "homeScreenHintsSubtitle": "主屏幕为空时显示提示",
+
+  "hiddenApps": "隐藏的应用",
+  "hiddenAppsNone": "无",
+  "hiddenAppsCount": "已隐藏 {count} 个",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "没有隐藏的应用",
+
+  "searchOnlyMode": "仅搜索",
+  "searchOnlyModeSubtitle": "隐藏应用名称，搜索启动",
+  "autoShowKeyboard": "显示键盘",
+  "autoShowKeyboardAppsSubtitle": "打开抽屉时显示键盘",
+  "autoShowKeyboardTasksSubtitle": "打开任务时显示键盘",
+  "autoLaunchOnMatch": "匹配时自动启动",
+  "autoLaunchOnMatchSubtitle": "仅匹配一个应用时启动",
+
+  "taskScreen": "任务屏幕",
+  "taskScreenSubtitle": "从主屏幕向右滑动查看任务",
+  "removeOnComplete": "完成后移除",
+  "removeOnCompleteSubtitle": "标记完成后移除任务",
+
+  "donate": "捐赠",
+  "donateSubtitle": "在 Liberapay 上支持开发",
+  "version": "版本",
+  "license": "许可证",
+  "openSourceLicenses": "开源许可证",
+
+  "hintSwipeUp": "向上滑动搜索",
+  "hintSwipeRight": "向右滑动查看任务",
+  "hintLongPress": "长按打开设置",
+
+  "noResults": "无结果",
+  "returnToAddTask": "输入以添加任务",
+
+  "actionRename": "重命名",
+  "actionUnpin": "取消固定",
+  "actionPin": "固定",
+  "actionPinFull": "已满",
+  "actionHide": "隐藏",
+  "actionUnhide": "取消隐藏",
+  "actionDone": "完成",
+  "actionUndo": "撤销",
+  "actionRemove": "移除",
+
+  "renameDialogTitle": "重命名",
+  "renameDialogCancel": "取消",
+  "renameDialogSave": "保存",
+
+  "homeScreenFull": "主屏幕已满"
+}

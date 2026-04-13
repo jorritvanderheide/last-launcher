@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
@@ -118,11 +119,12 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   }
 
   List<ActionItem> _appActions(BuildContext context, AppInfo app) {
+    final l10n = AppLocalizations.of(context)!;
     final isPinned = widget.homeState.isPinned(app.packageName);
     return [
       ActionItem(
         icon: Icons.edit,
-        label: 'Rename',
+        label: l10n.actionRename,
         onTap: () async {
           final newLabel = await showRenameDialog(
             context: context,
@@ -137,13 +139,13 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
       if (isPinned)
         ActionItem(
           icon: Icons.remove_circle_outline,
-          label: 'Unpin',
+          label: l10n.actionUnpin,
           onTap: () => widget.homeState.removeApp(app.packageName),
         )
       else
         ActionItem(
           icon: Icons.add_circle_outline,
-          label: widget.homeState.isFull ? 'Full' : 'Pin',
+          label: widget.homeState.isFull ? l10n.actionPinFull : l10n.actionPin,
           onTap: widget.homeState.isFull
               ? () {}
               : () {
@@ -158,7 +160,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
         ),
       ActionItem(
         icon: Icons.visibility_off,
-        label: 'Hide',
+        label: l10n.actionHide,
         onTap: () => widget.appListState.hideApp(app.packageName),
       ),
     ];
@@ -216,7 +218,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                                 top: 8 + AppLabel.verticalPadding,
                               ),
                               child: Text(
-                                'No results',
+                                AppLocalizations.of(context)!.noResults,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleLarge

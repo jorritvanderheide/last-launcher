@@ -1,0 +1,75 @@
+{
+  "@@locale": "pl",
+  "appTitle": "Last Launcher",
+
+  "settings": "Ustawienia",
+  "sectionAppearance": "Wygląd",
+  "sectionApps": "Aplikacje",
+  "sectionBehavior": "Zachowanie",
+  "sectionTasks": "Zadania",
+  "sectionSupport": "Wsparcie",
+  "sectionAbout": "O aplikacji",
+
+  "themeTitle": "Motyw",
+  "themeSystem": "Systemowy",
+  "themeLight": "Jasny",
+  "themeDark": "Ciemny",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "Pełny ekran",
+  "hideStatusBarSubtitle": "Ukryj pasek stanu i nawigację",
+  "homeScreenHints": "Wskazówki ekranu głównego",
+  "homeScreenHintsSubtitle": "Pokaż wskazówki, gdy ekran główny jest pusty",
+
+  "hiddenApps": "Ukryte aplikacje",
+  "hiddenAppsNone": "Brak",
+  "hiddenAppsCount": "{count} ukrytych",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "Brak ukrytych aplikacji",
+
+  "searchOnlyMode": "Tylko wyszukiwanie",
+  "searchOnlyModeSubtitle": "Ukryj nazwy aplikacji, uruchamiaj przez wyszukiwanie",
+  "autoShowKeyboard": "Pokaż klawiaturę",
+  "autoShowKeyboardAppsSubtitle": "Otwórz klawiaturę przy otwarciu szuflady",
+  "autoShowKeyboardTasksSubtitle": "Otwórz klawiaturę przy otwarciu zadań",
+  "autoLaunchOnMatch": "Automatyczne uruchamianie",
+  "autoLaunchOnMatchSubtitle": "Uruchom, gdy pasuje jedna aplikacja",
+
+  "taskScreen": "Ekran zadań",
+  "taskScreenSubtitle": "Przesuń w prawo, aby zobaczyć zadania",
+  "removeOnComplete": "Usuń po ukończeniu",
+  "removeOnCompleteSubtitle": "Usuń zadania po oznaczeniu jako wykonane",
+
+  "donate": "Wspomóż",
+  "donateSubtitle": "Wesprzyj rozwój na Liberapay",
+  "version": "Wersja",
+  "license": "Licencja",
+  "openSourceLicenses": "Licencje open source",
+
+  "hintSwipeUp": "Przesuń w górę, aby szukać",
+  "hintSwipeRight": "Przesuń w prawo, aby zobaczyć zadania",
+  "hintLongPress": "Przytrzymaj, aby otworzyć ustawienia",
+
+  "noResults": "Brak wyników",
+  "returnToAddTask": "Wpisz, aby dodać zadanie",
+
+  "actionRename": "Zmień nazwę",
+  "actionUnpin": "Odepnij",
+  "actionPin": "Przypnij",
+  "actionPinFull": "Pełne",
+  "actionHide": "Ukryj",
+  "actionUnhide": "Pokaż",
+  "actionDone": "Gotowe",
+  "actionUndo": "Cofnij",
+  "actionRemove": "Usuń",
+
+  "renameDialogTitle": "Zmień nazwę",
+  "renameDialogCancel": "Anuluj",
+  "renameDialogSave": "Zapisz",
+
+  "homeScreenFull": "Ekran główny jest pełny"
+}

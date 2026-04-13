@@ -1,0 +1,75 @@
+{
+  "@@locale": "en",
+  "appTitle": "Last Launcher",
+
+  "settings": "Settings",
+  "sectionAppearance": "Appearance",
+  "sectionApps": "Apps",
+  "sectionBehavior": "Behavior",
+  "sectionTasks": "Tasks",
+  "sectionSupport": "Support",
+  "sectionAbout": "About",
+
+  "themeTitle": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "Fullscreen",
+  "hideStatusBarSubtitle": "Hide status bar and navigation",
+  "homeScreenHints": "Home screen hints",
+  "homeScreenHintsSubtitle": "Show tips when home screen is empty",
+
+  "hiddenApps": "Hidden apps",
+  "hiddenAppsNone": "None",
+  "hiddenAppsCount": "{count} hidden",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "No hidden apps",
+
+  "searchOnlyMode": "Search only",
+  "searchOnlyModeSubtitle": "Hide app names, search to launch",
+  "autoShowKeyboard": "Show keyboard",
+  "autoShowKeyboardAppsSubtitle": "Open keyboard when drawer opens",
+  "autoShowKeyboardTasksSubtitle": "Open keyboard when tasks open",
+  "autoLaunchOnMatch": "Auto-launch on match",
+  "autoLaunchOnMatchSubtitle": "Launch when one app matches",
+
+  "taskScreen": "Task screen",
+  "taskScreenSubtitle": "Swipe right from home to view tasks",
+  "removeOnComplete": "Remove on complete",
+  "removeOnCompleteSubtitle": "Remove tasks when marked as done",
+
+  "donate": "Donate",
+  "donateSubtitle": "Support development on Liberapay",
+  "version": "Version",
+  "license": "License",
+  "openSourceLicenses": "Open source licenses",
+
+  "hintSwipeUp": "Swipe up to search",
+  "hintSwipeRight": "Swipe right for tasks",
+  "hintLongPress": "Long press for settings",
+
+  "noResults": "No results",
+  "returnToAddTask": "Type to add task",
+
+  "actionRename": "Rename",
+  "actionUnpin": "Unpin",
+  "actionPin": "Pin",
+  "actionPinFull": "Full",
+  "actionHide": "Hide",
+  "actionUnhide": "Unhide",
+  "actionDone": "Done",
+  "actionUndo": "Undo",
+  "actionRemove": "Remove",
+
+  "renameDialogTitle": "Rename",
+  "renameDialogCancel": "Cancel",
+  "renameDialogSave": "Save",
+
+  "homeScreenFull": "Home screen is full"
+}

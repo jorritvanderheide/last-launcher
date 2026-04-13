@@ -1,0 +1,70 @@
+{
+  "@@locale": "es",
+  "appTitle": "Last Launcher",
+
+  "settings": "Ajustes",
+  "sectionAppearance": "Apariencia",
+  "sectionApps": "Aplicaciones",
+  "sectionBehavior": "Comportamiento",
+  "sectionTasks": "Tareas",
+  "sectionSupport": "Apoyo",
+  "sectionAbout": "Acerca de",
+
+  "themeTitle": "Tema",
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Oscuro",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "Pantalla completa",
+  "hideStatusBarSubtitle": "Ocultar barra de estado y navegación",
+  "homeScreenHints": "Consejos de pantalla de inicio",
+  "homeScreenHintsSubtitle": "Mostrar consejos cuando la pantalla de inicio está vacía",
+
+  "hiddenApps": "Aplicaciones ocultas",
+  "hiddenAppsNone": "Ninguna",
+  "hiddenAppsCount": "{count} ocultas",
+  "noHiddenApps": "No hay aplicaciones ocultas",
+
+  "searchOnlyMode": "Solo búsqueda",
+  "searchOnlyModeSubtitle": "Ocultar nombres de apps, buscar para abrir",
+  "autoShowKeyboard": "Mostrar teclado",
+  "autoShowKeyboardAppsSubtitle": "Abrir teclado cuando se abre el cajón",
+  "autoShowKeyboardTasksSubtitle": "Abrir teclado cuando se abren las tareas",
+  "autoLaunchOnMatch": "Abrir automáticamente al coincidir",
+  "autoLaunchOnMatchSubtitle": "Abrir cuando solo una app coincide",
+
+  "taskScreen": "Pantalla de tareas",
+  "taskScreenSubtitle": "Deslizar a la derecha desde el inicio para ver tareas",
+  "removeOnComplete": "Eliminar al completar",
+  "removeOnCompleteSubtitle": "Eliminar tareas cuando se marcan como hechas",
+
+  "donate": "Donar",
+  "donateSubtitle": "Apoyar el desarrollo en Liberapay",
+  "version": "Versión",
+  "license": "Licencia",
+  "openSourceLicenses": "Licencias de código abierto",
+
+  "hintSwipeUp": "Deslizar hacia arriba para buscar",
+  "hintSwipeRight": "Deslizar a la derecha para tareas",
+  "hintLongPress": "Mantener pulsado para ajustes",
+
+  "noResults": "Sin resultados",
+  "returnToAddTask": "Escribe para añadir tarea",
+
+  "actionRename": "Renombrar",
+  "actionUnpin": "Desanclar",
+  "actionPin": "Anclar",
+  "actionPinFull": "Lleno",
+  "actionHide": "Ocultar",
+  "actionUnhide": "Mostrar",
+  "actionDone": "Hecho",
+  "actionUndo": "Deshacer",
+  "actionRemove": "Eliminar",
+
+  "renameDialogTitle": "Renombrar",
+  "renameDialogCancel": "Cancelar",
+  "renameDialogSave": "Guardar",
+
+  "homeScreenFull": "La pantalla de inicio está llena"
+}

@@ -1,0 +1,75 @@
+{
+  "@@locale": "hi",
+  "appTitle": "Last Launcher",
+
+  "settings": "सेटिंग्स",
+  "sectionAppearance": "दिखावट",
+  "sectionApps": "ऐप्स",
+  "sectionBehavior": "व्यवहार",
+  "sectionTasks": "कार्य",
+  "sectionSupport": "सहायता",
+  "sectionAbout": "परिचय",
+
+  "themeTitle": "थीम",
+  "themeSystem": "सिस्टम",
+  "themeLight": "लाइट",
+  "themeDark": "डार्क",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "फ़ुलस्क्रीन",
+  "hideStatusBarSubtitle": "स्टेटस बार और नेविगेशन छुपाएँ",
+  "homeScreenHints": "होम स्क्रीन संकेत",
+  "homeScreenHintsSubtitle": "होम स्क्रीन खाली होने पर सुझाव दिखाएँ",
+
+  "hiddenApps": "छुपे हुए ऐप्स",
+  "hiddenAppsNone": "कोई नहीं",
+  "hiddenAppsCount": "{count} छुपे हुए",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "कोई छुपे हुए ऐप्स नहीं",
+
+  "searchOnlyMode": "केवल खोज",
+  "searchOnlyModeSubtitle": "ऐप के नाम छुपाएँ, खोजकर खोलें",
+  "autoShowKeyboard": "कीबोर्ड दिखाएँ",
+  "autoShowKeyboardAppsSubtitle": "ड्रॉअर खुलने पर कीबोर्ड खोलें",
+  "autoShowKeyboardTasksSubtitle": "कार्य खुलने पर कीबोर्ड खोलें",
+  "autoLaunchOnMatch": "मिलान पर ऑटो-लॉन्च",
+  "autoLaunchOnMatchSubtitle": "एक ऐप मिलने पर लॉन्च करें",
+
+  "taskScreen": "कार्य स्क्रीन",
+  "taskScreenSubtitle": "कार्य देखने के लिए होम से दाएँ स्वाइप करें",
+  "removeOnComplete": "पूरा होने पर हटाएँ",
+  "removeOnCompleteSubtitle": "पूर्ण होने पर कार्य हटाएँ",
+
+  "donate": "दान करें",
+  "donateSubtitle": "Liberapay पर विकास का समर्थन करें",
+  "version": "संस्करण",
+  "license": "लाइसेंस",
+  "openSourceLicenses": "ओपन सोर्स लाइसेंस",
+
+  "hintSwipeUp": "खोजने के लिए ऊपर स्वाइप करें",
+  "hintSwipeRight": "कार्यों के लिए दाएँ स्वाइप करें",
+  "hintLongPress": "सेटिंग्स के लिए लंबा दबाएँ",
+
+  "noResults": "कोई परिणाम नहीं",
+  "returnToAddTask": "कार्य जोड़ने के लिए टाइप करें",
+
+  "actionRename": "नाम बदलें",
+  "actionUnpin": "अनपिन",
+  "actionPin": "पिन",
+  "actionPinFull": "भरा हुआ",
+  "actionHide": "छुपाएँ",
+  "actionUnhide": "दिखाएँ",
+  "actionDone": "पूर्ण",
+  "actionUndo": "पूर्ववत",
+  "actionRemove": "हटाएँ",
+
+  "renameDialogTitle": "नाम बदलें",
+  "renameDialogCancel": "रद्द करें",
+  "renameDialogSave": "सहेजें",
+
+  "homeScreenFull": "होम स्क्रीन भर गई है"
+}

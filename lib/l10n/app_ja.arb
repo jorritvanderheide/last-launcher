@@ -1,0 +1,75 @@
+{
+  "@@locale": "ja",
+  "appTitle": "Last Launcher",
+
+  "settings": "設定",
+  "sectionAppearance": "外観",
+  "sectionApps": "アプリ",
+  "sectionBehavior": "動作",
+  "sectionTasks": "タスク",
+  "sectionSupport": "サポート",
+  "sectionAbout": "概要",
+
+  "themeTitle": "テーマ",
+  "themeSystem": "システム",
+  "themeLight": "ライト",
+  "themeDark": "ダーク",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "フルスクリーン",
+  "hideStatusBarSubtitle": "ステータスバーとナビゲーションを非表示",
+  "homeScreenHints": "ホーム画面のヒント",
+  "homeScreenHintsSubtitle": "ホーム画面が空のときヒントを表示",
+
+  "hiddenApps": "非表示のアプリ",
+  "hiddenAppsNone": "なし",
+  "hiddenAppsCount": "{count}件非表示",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "非表示のアプリはありません",
+
+  "searchOnlyMode": "検索のみ",
+  "searchOnlyModeSubtitle": "アプリ名を非表示にし、検索で起動",
+  "autoShowKeyboard": "キーボードを表示",
+  "autoShowKeyboardAppsSubtitle": "ドロワーを開いたときにキーボードを表示",
+  "autoShowKeyboardTasksSubtitle": "タスクを開いたときにキーボードを表示",
+  "autoLaunchOnMatch": "一致時に自動起動",
+  "autoLaunchOnMatchSubtitle": "一つのアプリが一致したら起動",
+
+  "taskScreen": "タスク画面",
+  "taskScreenSubtitle": "ホームから右にスワイプしてタスクを表示",
+  "removeOnComplete": "完了時に削除",
+  "removeOnCompleteSubtitle": "完了したタスクを削除",
+
+  "donate": "寄付",
+  "donateSubtitle": "Liberapayで開発を支援",
+  "version": "バージョン",
+  "license": "ライセンス",
+  "openSourceLicenses": "オープンソースライセンス",
+
+  "hintSwipeUp": "上にスワイプして検索",
+  "hintSwipeRight": "右にスワイプしてタスク",
+  "hintLongPress": "長押しで設定",
+
+  "noResults": "結果なし",
+  "returnToAddTask": "入力してタスクを追加",
+
+  "actionRename": "名前変更",
+  "actionUnpin": "ピン解除",
+  "actionPin": "ピン留め",
+  "actionPinFull": "満杯",
+  "actionHide": "非表示",
+  "actionUnhide": "再表示",
+  "actionDone": "完了",
+  "actionUndo": "元に戻す",
+  "actionRemove": "削除",
+
+  "renameDialogTitle": "名前変更",
+  "renameDialogCancel": "キャンセル",
+  "renameDialogSave": "保存",
+
+  "homeScreenFull": "ホーム画面がいっぱいです"
+}

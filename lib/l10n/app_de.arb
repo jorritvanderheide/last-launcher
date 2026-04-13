@@ -1,0 +1,70 @@
+{
+  "@@locale": "de",
+  "appTitle": "Last Launcher",
+
+  "settings": "Einstellungen",
+  "sectionAppearance": "Darstellung",
+  "sectionApps": "Apps",
+  "sectionBehavior": "Verhalten",
+  "sectionTasks": "Aufgaben",
+  "sectionSupport": "Unterstützung",
+  "sectionAbout": "Über",
+
+  "themeTitle": "Design",
+  "themeSystem": "System",
+  "themeLight": "Hell",
+  "themeDark": "Dunkel",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "Vollbild",
+  "hideStatusBarSubtitle": "Statusleiste und Navigation ausblenden",
+  "homeScreenHints": "Startbildschirm-Tipps",
+  "homeScreenHintsSubtitle": "Tipps anzeigen, wenn der Startbildschirm leer ist",
+
+  "hiddenApps": "Versteckte Apps",
+  "hiddenAppsNone": "Keine",
+  "hiddenAppsCount": "{count} versteckt",
+  "noHiddenApps": "Keine versteckten Apps",
+
+  "searchOnlyMode": "Nur Suche",
+  "searchOnlyModeSubtitle": "App-Namen ausblenden, zum Starten suchen",
+  "autoShowKeyboard": "Tastatur anzeigen",
+  "autoShowKeyboardAppsSubtitle": "Tastatur öffnen, wenn die Schublade geöffnet wird",
+  "autoShowKeyboardTasksSubtitle": "Tastatur öffnen, wenn Aufgaben geöffnet werden",
+  "autoLaunchOnMatch": "Automatisch starten bei Treffer",
+  "autoLaunchOnMatchSubtitle": "Starten, wenn eine App übereinstimmt",
+
+  "taskScreen": "Aufgabenbildschirm",
+  "taskScreenSubtitle": "Vom Startbildschirm nach rechts wischen, um Aufgaben anzuzeigen",
+  "removeOnComplete": "Bei Erledigung entfernen",
+  "removeOnCompleteSubtitle": "Aufgaben entfernen, wenn sie als erledigt markiert werden",
+
+  "donate": "Spenden",
+  "donateSubtitle": "Entwicklung auf Liberapay unterstützen",
+  "version": "Version",
+  "license": "Lizenz",
+  "openSourceLicenses": "Open-Source-Lizenzen",
+
+  "hintSwipeUp": "Nach oben wischen zum Suchen",
+  "hintSwipeRight": "Nach rechts wischen für Aufgaben",
+  "hintLongPress": "Lange drücken für Einstellungen",
+
+  "noResults": "Keine Ergebnisse",
+  "returnToAddTask": "Tippen, um Aufgabe hinzuzufügen",
+
+  "actionRename": "Umbenennen",
+  "actionUnpin": "Lösen",
+  "actionPin": "Anheften",
+  "actionPinFull": "Voll",
+  "actionHide": "Ausblenden",
+  "actionUnhide": "Einblenden",
+  "actionDone": "Fertig",
+  "actionUndo": "Rückgängig",
+  "actionRemove": "Entfernen",
+
+  "renameDialogTitle": "Umbenennen",
+  "renameDialogCancel": "Abbrechen",
+  "renameDialogSave": "Speichern",
+
+  "homeScreenFull": "Startbildschirm ist voll"
+}

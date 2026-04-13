@@ -1,0 +1,75 @@
+{
+  "@@locale": "cs",
+  "appTitle": "Last Launcher",
+
+  "settings": "Nastavení",
+  "sectionAppearance": "Vzhled",
+  "sectionApps": "Aplikace",
+  "sectionBehavior": "Chování",
+  "sectionTasks": "Úkoly",
+  "sectionSupport": "Podpora",
+  "sectionAbout": "O aplikaci",
+
+  "themeTitle": "Motiv",
+  "themeSystem": "Systém",
+  "themeLight": "Světlý",
+  "themeDark": "Tmavý",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "Celá obrazovka",
+  "hideStatusBarSubtitle": "Skrýt stavový řádek a navigaci",
+  "homeScreenHints": "Nápověda na domovské obrazovce",
+  "homeScreenHintsSubtitle": "Zobrazit tipy, když je domovská obrazovka prázdná",
+
+  "hiddenApps": "Skryté aplikace",
+  "hiddenAppsNone": "Žádné",
+  "hiddenAppsCount": "{count} skryto",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "Žádné skryté aplikace",
+
+  "searchOnlyMode": "Pouze hledání",
+  "searchOnlyModeSubtitle": "Skrýt názvy aplikací, spustit vyhledáváním",
+  "autoShowKeyboard": "Zobrazit klávesnici",
+  "autoShowKeyboardAppsSubtitle": "Otevřít klávesnici při otevření zásuvky",
+  "autoShowKeyboardTasksSubtitle": "Otevřít klávesnici při otevření úkolů",
+  "autoLaunchOnMatch": "Automatické spuštění při shodě",
+  "autoLaunchOnMatchSubtitle": "Spustit, když odpovídá jedna aplikace",
+
+  "taskScreen": "Obrazovka úkolů",
+  "taskScreenSubtitle": "Přejetím doprava zobrazíte úkoly",
+  "removeOnComplete": "Odstranit po dokončení",
+  "removeOnCompleteSubtitle": "Odstranit úkoly po označení jako hotové",
+
+  "donate": "Přispět",
+  "donateSubtitle": "Podpořte vývoj na Liberapay",
+  "version": "Verze",
+  "license": "Licence",
+  "openSourceLicenses": "Open source licence",
+
+  "hintSwipeUp": "Přejetím nahoru vyhledávejte",
+  "hintSwipeRight": "Přejetím doprava zobrazíte úkoly",
+  "hintLongPress": "Dlouhým stiskem otevřete nastavení",
+
+  "noResults": "Žádné výsledky",
+  "returnToAddTask": "Zadejte text pro přidání úkolu",
+
+  "actionRename": "Přejmenovat",
+  "actionUnpin": "Odepnout",
+  "actionPin": "Připnout",
+  "actionPinFull": "Plné",
+  "actionHide": "Skrýt",
+  "actionUnhide": "Zobrazit",
+  "actionDone": "Hotovo",
+  "actionUndo": "Zpět",
+  "actionRemove": "Odstranit",
+
+  "renameDialogTitle": "Přejmenovat",
+  "renameDialogCancel": "Zrušit",
+  "renameDialogSave": "Uložit",
+
+  "homeScreenFull": "Domovská obrazovka je plná"
+}

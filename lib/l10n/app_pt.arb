@@ -1,0 +1,75 @@
+{
+  "@@locale": "pt",
+  "appTitle": "Last Launcher",
+
+  "settings": "Configurações",
+  "sectionAppearance": "Aparência",
+  "sectionApps": "Apps",
+  "sectionBehavior": "Comportamento",
+  "sectionTasks": "Tarefas",
+  "sectionSupport": "Apoio",
+  "sectionAbout": "Sobre",
+
+  "themeTitle": "Tema",
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Escuro",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "Tela cheia",
+  "hideStatusBarSubtitle": "Ocultar barra de status e navegação",
+  "homeScreenHints": "Dicas da tela inicial",
+  "homeScreenHintsSubtitle": "Mostrar dicas quando a tela inicial estiver vazia",
+
+  "hiddenApps": "Apps ocultos",
+  "hiddenAppsNone": "Nenhum",
+  "hiddenAppsCount": "{count} ocultos",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "Nenhum app oculto",
+
+  "searchOnlyMode": "Apenas pesquisa",
+  "searchOnlyModeSubtitle": "Ocultar nomes de apps, pesquisar para abrir",
+  "autoShowKeyboard": "Mostrar teclado",
+  "autoShowKeyboardAppsSubtitle": "Abrir teclado ao abrir a gaveta",
+  "autoShowKeyboardTasksSubtitle": "Abrir teclado ao abrir tarefas",
+  "autoLaunchOnMatch": "Abrir ao encontrar",
+  "autoLaunchOnMatchSubtitle": "Abrir quando apenas um app corresponder",
+
+  "taskScreen": "Tela de tarefas",
+  "taskScreenSubtitle": "Deslize para a direita para ver tarefas",
+  "removeOnComplete": "Remover ao concluir",
+  "removeOnCompleteSubtitle": "Remover tarefas quando marcadas como concluídas",
+
+  "donate": "Doar",
+  "donateSubtitle": "Apoie o desenvolvimento no Liberapay",
+  "version": "Versão",
+  "license": "Licença",
+  "openSourceLicenses": "Licenças de código aberto",
+
+  "hintSwipeUp": "Deslize para cima para pesquisar",
+  "hintSwipeRight": "Deslize para a direita para tarefas",
+  "hintLongPress": "Pressione longo para configurações",
+
+  "noResults": "Sem resultados",
+  "returnToAddTask": "Digite para adicionar tarefa",
+
+  "actionRename": "Renomear",
+  "actionUnpin": "Desafixar",
+  "actionPin": "Fixar",
+  "actionPinFull": "Cheio",
+  "actionHide": "Ocultar",
+  "actionUnhide": "Mostrar",
+  "actionDone": "Concluído",
+  "actionUndo": "Desfazer",
+  "actionRemove": "Remover",
+
+  "renameDialogTitle": "Renomear",
+  "renameDialogCancel": "Cancelar",
+  "renameDialogSave": "Salvar",
+
+  "homeScreenFull": "A tela inicial está cheia"
+}

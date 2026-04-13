@@ -1,0 +1,70 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Last Launcher",
+
+  "settings": "Paramètres",
+  "sectionAppearance": "Apparence",
+  "sectionApps": "Applications",
+  "sectionBehavior": "Comportement",
+  "sectionTasks": "Tâches",
+  "sectionSupport": "Soutien",
+  "sectionAbout": "À propos",
+
+  "themeTitle": "Thème",
+  "themeSystem": "Système",
+  "themeLight": "Clair",
+  "themeDark": "Sombre",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "Plein écran",
+  "hideStatusBarSubtitle": "Masquer la barre d'état et la navigation",
+  "homeScreenHints": "Astuces de l'écran d'accueil",
+  "homeScreenHintsSubtitle": "Afficher des astuces quand l'écran d'accueil est vide",
+
+  "hiddenApps": "Applications masquées",
+  "hiddenAppsNone": "Aucune",
+  "hiddenAppsCount": "{count} masquées",
+  "noHiddenApps": "Aucune application masquée",
+
+  "searchOnlyMode": "Recherche uniquement",
+  "searchOnlyModeSubtitle": "Masquer les noms d'apps, rechercher pour lancer",
+  "autoShowKeyboard": "Afficher le clavier",
+  "autoShowKeyboardAppsSubtitle": "Ouvrir le clavier quand le tiroir s'ouvre",
+  "autoShowKeyboardTasksSubtitle": "Ouvrir le clavier quand les tâches s'ouvrent",
+  "autoLaunchOnMatch": "Lancement auto à la correspondance",
+  "autoLaunchOnMatchSubtitle": "Lancer quand une seule app correspond",
+
+  "taskScreen": "Écran des tâches",
+  "taskScreenSubtitle": "Glisser vers la droite depuis l'accueil pour voir les tâches",
+  "removeOnComplete": "Supprimer à l'achèvement",
+  "removeOnCompleteSubtitle": "Supprimer les tâches quand elles sont terminées",
+
+  "donate": "Faire un don",
+  "donateSubtitle": "Soutenir le développement sur Liberapay",
+  "version": "Version",
+  "license": "Licence",
+  "openSourceLicenses": "Licences open source",
+
+  "hintSwipeUp": "Glisser vers le haut pour rechercher",
+  "hintSwipeRight": "Glisser vers la droite pour les tâches",
+  "hintLongPress": "Appui long pour les paramètres",
+
+  "noResults": "Aucun résultat",
+  "returnToAddTask": "Saisir pour ajouter une tâche",
+
+  "actionRename": "Renommer",
+  "actionUnpin": "Désépingler",
+  "actionPin": "Épingler",
+  "actionPinFull": "Plein",
+  "actionHide": "Masquer",
+  "actionUnhide": "Afficher",
+  "actionDone": "Terminé",
+  "actionUndo": "Annuler",
+  "actionRemove": "Supprimer",
+
+  "renameDialogTitle": "Renommer",
+  "renameDialogCancel": "Annuler",
+  "renameDialogSave": "Enregistrer",
+
+  "homeScreenFull": "L'écran d'accueil est plein"
+}

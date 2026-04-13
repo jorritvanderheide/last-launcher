@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/shared/data/models.dart';
@@ -49,10 +50,11 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   List<ActionItem> _appActions(BuildContext context, PinnedApp app) {
+    final l10n = AppLocalizations.of(context)!;
     return [
       ActionItem(
         icon: Icons.edit,
-        label: 'Rename',
+        label: l10n.actionRename,
         onTap: () async {
           final newLabel = await showRenameDialog(
             context: context,
@@ -69,7 +71,7 @@ class HomeScreenState extends State<HomeScreen> {
       ),
       ActionItem(
         icon: Icons.remove_circle_outline,
-        label: 'Unpin',
+        label: l10n.actionUnpin,
         onTap: () => widget.homeState.removeApp(app.packageName),
       ),
     ];
@@ -95,12 +97,13 @@ class HomeScreenState extends State<HomeScreen> {
                 builder: (context, _) {
                   final apps = widget.homeState.pinnedApps;
                   if (apps.isEmpty && widget.settingsState.showHints) {
+                    final l10n = AppLocalizations.of(context)!;
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        'SWIPE UP TO SEARCH\n'
-                        '${widget.settingsState.tasksEnabled ? 'SWIPE RIGHT FOR TASKS\n' : ''}'
-                        'LONG PRESS FOR SETTINGS',
+                        '${l10n.hintSwipeUp}\n'
+                        '${widget.settingsState.tasksEnabled ? '${l10n.hintSwipeRight}\n' : ''}'
+                        '${l10n.hintLongPress}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontSize: 14,
                           letterSpacing: 1.5,

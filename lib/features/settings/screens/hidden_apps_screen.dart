@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/shared/data/models.dart';
@@ -27,10 +28,11 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
   String? _activeAppPackage;
 
   List<ActionItem> _appActions(BuildContext context, AppInfo app) {
+    final l10n = AppLocalizations.of(context)!;
     return [
       ActionItem(
         icon: Icons.edit,
-        label: 'Rename',
+        label: l10n.actionRename,
         onTap: () async {
           final newLabel = await showRenameDialog(
             context: context,
@@ -44,7 +46,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
       ),
       ActionItem(
         icon: Icons.visibility,
-        label: 'Unhide',
+        label: l10n.actionUnhide,
         onTap: () => widget.appListState.unhideApp(app.packageName),
       ),
     ];
@@ -54,7 +56,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hidden apps'),
+        title: Text(AppLocalizations.of(context)!.hiddenApps),
       ),
       body: ListenableBuilder(
           listenable: widget.appListState,
@@ -63,7 +65,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
             if (apps.isEmpty) {
               return Center(
                 child: Text(
-                  'No hidden apps',
+                  AppLocalizations.of(context)!.noHiddenApps,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: Theme.of(
                       context,

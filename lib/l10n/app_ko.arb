@@ -1,0 +1,75 @@
+{
+  "@@locale": "ko",
+  "appTitle": "Last Launcher",
+
+  "settings": "설정",
+  "sectionAppearance": "외관",
+  "sectionApps": "앱",
+  "sectionBehavior": "동작",
+  "sectionTasks": "할 일",
+  "sectionSupport": "지원",
+  "sectionAbout": "정보",
+
+  "themeTitle": "테마",
+  "themeSystem": "시스템",
+  "themeLight": "라이트",
+  "themeDark": "다크",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "전체 화면",
+  "hideStatusBarSubtitle": "상태 표시줄과 내비게이션 숨기기",
+  "homeScreenHints": "홈 화면 힌트",
+  "homeScreenHintsSubtitle": "홈 화면이 비어 있을 때 팁 표시",
+
+  "hiddenApps": "숨긴 앱",
+  "hiddenAppsNone": "없음",
+  "hiddenAppsCount": "{count}개 숨김",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "숨긴 앱 없음",
+
+  "searchOnlyMode": "검색 전용",
+  "searchOnlyModeSubtitle": "앱 이름을 숨기고 검색으로 실행",
+  "autoShowKeyboard": "키보드 표시",
+  "autoShowKeyboardAppsSubtitle": "서랍을 열 때 키보드 표시",
+  "autoShowKeyboardTasksSubtitle": "할 일을 열 때 키보드 표시",
+  "autoLaunchOnMatch": "일치 시 자동 실행",
+  "autoLaunchOnMatchSubtitle": "하나의 앱이 일치하면 실행",
+
+  "taskScreen": "할 일 화면",
+  "taskScreenSubtitle": "홈에서 오른쪽으로 스와이프하여 할 일 보기",
+  "removeOnComplete": "완료 시 제거",
+  "removeOnCompleteSubtitle": "완료된 할 일 제거",
+
+  "donate": "기부",
+  "donateSubtitle": "Liberapay에서 개발 지원",
+  "version": "버전",
+  "license": "라이선스",
+  "openSourceLicenses": "오픈소스 라이선스",
+
+  "hintSwipeUp": "위로 스와이프하여 검색",
+  "hintSwipeRight": "오른쪽으로 스와이프하여 할 일",
+  "hintLongPress": "길게 눌러 설정",
+
+  "noResults": "결과 없음",
+  "returnToAddTask": "입력하여 할 일 추가",
+
+  "actionRename": "이름 변경",
+  "actionUnpin": "고정 해제",
+  "actionPin": "고정",
+  "actionPinFull": "가득 참",
+  "actionHide": "숨기기",
+  "actionUnhide": "숨기기 해제",
+  "actionDone": "완료",
+  "actionUndo": "실행 취소",
+  "actionRemove": "제거",
+
+  "renameDialogTitle": "이름 변경",
+  "renameDialogCancel": "취소",
+  "renameDialogSave": "저장",
+
+  "homeScreenFull": "홈 화면이 가득 찼습니다"
+}

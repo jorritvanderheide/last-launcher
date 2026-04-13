@@ -1,0 +1,75 @@
+{
+  "@@locale": "sv",
+  "appTitle": "Last Launcher",
+
+  "settings": "Inställningar",
+  "sectionAppearance": "Utseende",
+  "sectionApps": "Appar",
+  "sectionBehavior": "Beteende",
+  "sectionTasks": "Uppgifter",
+  "sectionSupport": "Stöd",
+  "sectionAbout": "Om",
+
+  "themeTitle": "Tema",
+  "themeSystem": "System",
+  "themeLight": "Ljust",
+  "themeDark": "Mörkt",
+  "themeExtra": "Extra",
+
+  "hideStatusBar": "Helskärm",
+  "hideStatusBarSubtitle": "Dölj statusfält och navigering",
+  "homeScreenHints": "Tips på hemskärmen",
+  "homeScreenHintsSubtitle": "Visa tips när hemskärmen är tom",
+
+  "hiddenApps": "Dolda appar",
+  "hiddenAppsNone": "Inga",
+  "hiddenAppsCount": "{count} dolda",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "Inga dolda appar",
+
+  "searchOnlyMode": "Enbart sökning",
+  "searchOnlyModeSubtitle": "Dölj appnamn, sök för att starta",
+  "autoShowKeyboard": "Visa tangentbord",
+  "autoShowKeyboardAppsSubtitle": "Öppna tangentbordet när lådan öppnas",
+  "autoShowKeyboardTasksSubtitle": "Öppna tangentbordet när uppgifter öppnas",
+  "autoLaunchOnMatch": "Starta automatiskt vid träff",
+  "autoLaunchOnMatchSubtitle": "Starta när en app matchar",
+
+  "taskScreen": "Uppgiftsskärm",
+  "taskScreenSubtitle": "Svep höger från hemskärmen för uppgifter",
+  "removeOnComplete": "Ta bort vid slutförande",
+  "removeOnCompleteSubtitle": "Ta bort uppgifter när de markeras som klara",
+
+  "donate": "Donera",
+  "donateSubtitle": "Stöd utvecklingen på Liberapay",
+  "version": "Version",
+  "license": "Licens",
+  "openSourceLicenses": "Licenser för öppen källkod",
+
+  "hintSwipeUp": "Svep uppåt för att söka",
+  "hintSwipeRight": "Svep höger för uppgifter",
+  "hintLongPress": "Tryck länge för inställningar",
+
+  "noResults": "Inga resultat",
+  "returnToAddTask": "Skriv för att lägga till uppgift",
+
+  "actionRename": "Byt namn",
+  "actionUnpin": "Lossa",
+  "actionPin": "Fäst",
+  "actionPinFull": "Fullt",
+  "actionHide": "Dölj",
+  "actionUnhide": "Visa",
+  "actionDone": "Klar",
+  "actionUndo": "Ångra",
+  "actionRemove": "Ta bort",
+
+  "renameDialogTitle": "Byt namn",
+  "renameDialogCancel": "Avbryt",
+  "renameDialogSave": "Spara",
+
+  "homeScreenFull": "Hemskärmen är full"
+}
