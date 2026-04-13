@@ -98,11 +98,17 @@ class HomeScreenState extends State<HomeScreen> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        'Swipe up to search apps\n'
-                        '${widget.settingsState.tasksEnabled ? 'Swipe right for tasks\n' : ''}'
-                        'Long press for settings',
+                        'SWIPE UP TO SEARCH\n'
+                        '${widget.settingsState.tasksEnabled ? 'SWIPE RIGHT FOR TASKS\n' : ''}'
+                        'LONG PRESS FOR SETTINGS',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 20,
+                          fontSize: 14,
+                          letterSpacing: 1.5,
+                          shadows: [],
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withAlpha(140),
                         ),
                       ),
                     );

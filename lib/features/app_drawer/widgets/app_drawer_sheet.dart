@@ -169,7 +169,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return ClipRRect(
-      borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+      borderRadius: BorderRadius.zero,
       child: Material(
         color: colorScheme.surface,
         child: CustomScrollView(
@@ -208,6 +208,28 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                         listenable: widget.appListState,
                         builder: (context, _) {
                           final apps = widget.appListState.filteredApps;
+                          if (apps.isEmpty &&
+                              widget.appListState.query.isNotEmpty) {
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                left: 20,
+                                top: 8 + AppLabel.verticalPadding,
+                              ),
+                              child: Text(
+                                'No results',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.copyWith(
+                                      fontSize: AppLabel.fontSize,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withAlpha(80),
+                                    ),
+                              ),
+                            );
+                          }
                           return ListView.builder(
                             controller: _scrollController,
                             physics: const AlwaysScrollableScrollPhysics(),

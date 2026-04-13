@@ -6,60 +6,103 @@ import 'package:last_launcher/features/home/screens/launcher_shell.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/tasks/task_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
+import 'package:last_launcher/shared/widgets/scanline_overlay.dart';
 
 final _lightTheme = _buildTheme(Brightness.light);
 final _darkTheme = _buildTheme(Brightness.dark);
+final _extraTheme = _buildTheme(Brightness.dark, extra: true);
 
-ThemeData _buildTheme(Brightness brightness) {
+ThemeData _buildTheme(Brightness brightness, {bool extra = false}) {
   final isDark = brightness == Brightness.dark;
+  final textColor = isDark ? Colors.white : Colors.black;
+  final glowColor = isDark ? Colors.white : Colors.black;
+
   final colorScheme = ColorScheme(
     brightness: brightness,
-    primary: isDark ? Colors.white : Colors.black,
+    primary: textColor,
     onPrimary: isDark ? Colors.black : Colors.white,
-    secondary: isDark ? Colors.white : Colors.black,
+    secondary: textColor,
     onSecondary: isDark ? Colors.black : Colors.white,
     surface: isDark ? Colors.black : Colors.white,
-    onSurface: isDark ? Colors.white : Colors.black,
+    onSurface: textColor,
     error: Colors.red,
     onError: Colors.white,
-    inverseSurface: isDark ? Colors.white : Colors.black,
+    inverseSurface: textColor,
     onInverseSurface: isDark ? Colors.black : Colors.white,
     surfaceContainerLow: isDark ? const Color(0xFF0A0A0A) : const Color(0xFFF5F5F5),
     surfaceContainer: isDark ? const Color(0xFF121212) : const Color(0xFFEEEEEE),
     surfaceContainerHigh: isDark ? const Color(0xFF1A1A1A) : const Color(0xFFE0E0E0),
-    outline: isDark ? Colors.white24 : Colors.black26,
+    outline: isDark ? textColor.withAlpha(60) : Colors.black26,
+  );
+
+  final shadows = extra
+      ? [
+          Shadow(color: glowColor.withAlpha(120), blurRadius: 8),
+          Shadow(color: glowColor.withAlpha(70), blurRadius: 24),
+        ]
+      : <Shadow>[];
+
+  final applied = ThemeData(brightness: brightness).textTheme.apply(
+    fontFamily: extra ? 'JetBrainsMono' : null,
+    bodyColor: textColor,
+    displayColor: textColor,
+  );
+  final textTheme = applied.copyWith(
+    titleLarge: applied.titleLarge?.copyWith(shadows: shadows),
+    titleMedium: applied.titleMedium?.copyWith(shadows: shadows),
+    titleSmall: applied.titleSmall?.copyWith(shadows: shadows),
+    bodyLarge: applied.bodyLarge?.copyWith(shadows: shadows),
+    bodyMedium: applied.bodyMedium?.copyWith(shadows: shadows),
+    bodySmall: applied.bodySmall?.copyWith(shadows: shadows),
+    labelLarge: applied.labelLarge?.copyWith(shadows: shadows),
+    labelMedium: applied.labelMedium?.copyWith(shadows: shadows),
+    labelSmall: applied.labelSmall?.copyWith(shadows: shadows),
   );
 
   return ThemeData(
     colorScheme: colorScheme,
+    textTheme: textTheme,
     scaffoldBackgroundColor: colorScheme.surface,
     appBarTheme: AppBarTheme(
       scrolledUnderElevation: 0,
       backgroundColor: colorScheme.surface,
-      foregroundColor: colorScheme.onSurface,
+      foregroundColor: textColor,
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: colorScheme.surface,
-      foregroundColor: colorScheme.onSurface,
+      foregroundColor: textColor,
     ),
     snackBarTheme: SnackBarThemeData(
       behavior: SnackBarBehavior.floating,
       elevation: 0,
       backgroundColor: colorScheme.inverseSurface,
       contentTextStyle: TextStyle(color: colorScheme.onInverseSurface),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: const RoundedRectangleBorder(),
     ),
     bottomSheetTheme: const BottomSheetThemeData(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
+      shape: RoundedRectangleBorder(),
     ),
-    dialogTheme: DialogThemeData(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+    dialogTheme: const DialogThemeData(
+      shape: RoundedRectangleBorder(),
     ),
-    inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+    inputDecorationTheme: const InputDecorationTheme(
+      border: OutlineInputBorder(borderRadius: BorderRadius.zero),
+      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.zero),
     ),
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        return states.contains(WidgetState.selected)
+            ? textColor
+            : colorScheme.outline;
+      }),
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        return states.contains(WidgetState.selected)
+            ? textColor.withAlpha(60)
+            : colorScheme.surface;
+      }),
+      trackOutlineColor: WidgetStateProperty.all(colorScheme.outline),
+    ),
+    dividerTheme: const DividerThemeData(space: 0, thickness: 0),
   );
 }
 
@@ -118,14 +161,24 @@ class _LastLauncherAppState extends State<LastLauncherApp>
           title: 'Last Launcher',
           themeMode: widget.settingsState.themeMode,
           theme: _lightTheme,
-          darkTheme: _darkTheme,
-          home: LauncherShell(
-            appChannel: widget.appChannel,
-            homeState: widget.homeState,
-            appListState: widget.appListState,
-            settingsState: widget.settingsState,
-            taskState: widget.taskState,
-          ),
+          darkTheme: widget.settingsState.isExtra ? _extraTheme : _darkTheme,
+          home: widget.settingsState.isExtra
+              ? ScanlineOverlay(
+                  child: LauncherShell(
+                    appChannel: widget.appChannel,
+                    homeState: widget.homeState,
+                    appListState: widget.appListState,
+                    settingsState: widget.settingsState,
+                    taskState: widget.taskState,
+                  ),
+                )
+              : LauncherShell(
+                  appChannel: widget.appChannel,
+                  homeState: widget.homeState,
+                  appListState: widget.appListState,
+                  settingsState: widget.settingsState,
+                  taskState: widget.taskState,
+                ),
         );
       },
     );

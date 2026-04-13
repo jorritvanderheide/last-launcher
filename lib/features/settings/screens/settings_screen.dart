@@ -38,8 +38,8 @@ class SettingsScreen extends StatelessWidget {
             children: [
               const _SectionHeader(title: 'Appearance'),
               _ThemeListTile(
-                themeMode: settingsState.themeMode,
-                onChanged: settingsState.setThemeMode,
+                themeValue: settingsState.themeValue,
+                onChanged: settingsState.setTheme,
               ),
               SwitchListTile(
                 title: const Text('Hide status bar'),
@@ -166,38 +166,42 @@ class SettingsScreen extends StatelessWidget {
 }
 
 class _ThemeListTile extends StatelessWidget {
-  const _ThemeListTile({required this.themeMode, required this.onChanged});
+  const _ThemeListTile({required this.themeValue, required this.onChanged});
 
-  final ThemeMode themeMode;
-  final ValueChanged<ThemeMode> onChanged;
+  final String themeValue;
+  final ValueChanged<String> onChanged;
 
-  static String _label(ThemeMode mode) => switch (mode) {
-    ThemeMode.system => 'System',
-    ThemeMode.light => 'Light',
-    ThemeMode.dark => 'Dark',
+  static const _options = ['system', 'light', 'dark', 'extra'];
+
+  static String _label(String value) => switch (value) {
+    'system' => 'System',
+    'light' => 'Light',
+    'dark' => 'Dark',
+    'extra' => 'Extra',
+    _ => 'System',
   };
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: const Text('Theme'),
-      subtitle: Text(_label(themeMode)),
+      subtitle: Text(_label(themeValue)),
       onTap: () async {
-        final result = await showDialog<ThemeMode>(
+        final result = await showDialog<String>(
           context: context,
           builder: (context) => SimpleDialog(
             title: const Text('Theme'),
             children: [
-              RadioGroup<ThemeMode>(
-                groupValue: themeMode,
+              RadioGroup<String>(
+                groupValue: themeValue,
                 onChanged: (value) => Navigator.pop(context, value),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    for (final mode in ThemeMode.values)
-                      RadioListTile<ThemeMode>(
-                        value: mode,
-                        title: Text(_label(mode)),
+                    for (final option in _options)
+                      RadioListTile<String>(
+                        value: option,
+                        title: Text(_label(option)),
                       ),
                   ],
                 ),

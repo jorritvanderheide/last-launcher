@@ -20,6 +20,7 @@ class SettingsState extends ChangeNotifier {
   static const _hideStatusBarKey = 'hide_status_bar';
   final SharedPreferences _prefs;
   ThemeMode _themeMode = ThemeMode.system;
+  bool _extraTheme = false;
   bool _autoKeyboard = true;
   bool _autoKeyboardTasks = true;
   bool _searchOnly = false;
@@ -28,7 +29,8 @@ class SettingsState extends ChangeNotifier {
   bool _showHints = true;
   bool _removeOnComplete = false;
   bool _hideStatusBar = false;
-  ThemeMode get themeMode => _themeMode;
+  ThemeMode get themeMode => _extraTheme ? ThemeMode.dark : _themeMode;
+  bool get isExtra => _extraTheme;
   bool get autoKeyboard => _autoKeyboard;
   bool get autoKeyboardTasks => _autoKeyboardTasks;
   bool get searchOnly => _searchOnly;
@@ -40,6 +42,7 @@ class SettingsState extends ChangeNotifier {
 
   void _load() {
     final value = _prefs.getString(_themeKey);
+    _extraTheme = value == 'extra';
     _themeMode = switch (value) {
       'light' => ThemeMode.light,
       'dark' => ThemeMode.dark,
@@ -55,16 +58,26 @@ class SettingsState extends ChangeNotifier {
     _hideStatusBar = _prefs.getBool(_hideStatusBarKey) ?? false;
   }
 
-  Future<void> setThemeMode(ThemeMode mode) async {
-    _themeMode = mode;
+  Future<void> setTheme(String value) async {
+    _extraTheme = value == 'extra';
+    _themeMode = switch (value) {
+      'light' => ThemeMode.light,
+      'dark' => ThemeMode.dark,
+      'extra' => ThemeMode.dark,
+      _ => ThemeMode.system,
+    };
     notifyListeners();
     themeNotifier.value++;
-    final value = switch (mode) {
+    await _prefs.setString(_themeKey, value);
+  }
+
+  String get themeValue {
+    if (_extraTheme) return 'extra';
+    return switch (_themeMode) {
       ThemeMode.light => 'light',
       ThemeMode.dark => 'dark',
       ThemeMode.system => 'system',
     };
-    await _prefs.setString(_themeKey, value);
   }
 
 

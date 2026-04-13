@@ -180,6 +180,7 @@ class TaskScreenState extends State<TaskScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(
               height: (MediaQuery.sizeOf(context).height * 0.1 + 8)
@@ -195,6 +196,27 @@ class TaskScreenState extends State<TaskScreen> {
                 listenable: Listenable.merge([widget.taskState, _controller, widget.settingsState]),
                 builder: (context, _) {
                   final tasks = _displayTasks(widget.taskState.tasks);
+                  if (tasks.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        top: 32 + AppLabel.verticalPadding,
+                      ),
+                      child: Text(
+                        'Return to add task',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(
+                              fontSize: AppLabel.fontSize,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withAlpha(80),
+                            ),
+                      ),
+                    );
+                  }
                   return NotificationListener<ScrollNotification>(
                     onNotification: (notification) {
                       if (notification is ScrollStartNotification) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/shared/widgets/scanline_overlay.dart';
 
 class AppLabel extends StatelessWidget {
   const AppLabel({
@@ -25,6 +26,12 @@ class AppLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).textTheme.titleLarge?.copyWith(
+      fontSize: fontSize,
+      decoration: textDecoration,
+      decorationThickness: decorationThickness,
+    );
+
     final text = Padding(
       padding: EdgeInsets.only(
         left: 20,
@@ -32,16 +39,7 @@ class AppLabel extends StatelessWidget {
         top: verticalPadding,
         bottom: verticalPadding,
       ),
-      child: Text(
-        label,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-          fontSize: fontSize,
-          decoration: textDecoration,
-          decorationThickness: decorationThickness,
-        ),
-      ),
+      child: _GlitchText(label: label, style: style),
     );
 
     final content = trailing == null
@@ -64,7 +62,60 @@ class AppLabel extends StatelessWidget {
       onLongPress: onLongPress,
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      child: opacity < 1.0 ? Opacity(opacity: opacity, child: content) : content,
+      child: opacity < 1.0
+          ? Opacity(opacity: opacity, child: content)
+          : content,
+    );
+  }
+}
+
+class _GlitchText extends StatefulWidget {
+  const _GlitchText({required this.label, required this.style});
+
+  final String label;
+  final TextStyle? style;
+
+  @override
+  State<_GlitchText> createState() => _GlitchTextState();
+}
+
+class _GlitchTextState extends State<_GlitchText> {
+  final _key = GlobalKey();
+
+  double _getIntensity(ScanlineScope scope) {
+    // Only glitch ~40% of labels per sweep, based on label hash + band position.
+    if ((widget.label.hashCode + scope.bandY.toInt()) % 5 < 3) return 0;
+
+    try {
+      final box = _key.currentContext?.findRenderObject() as RenderBox?;
+      if (box == null || !box.hasSize || !box.attached) return 0;
+
+      final globalY = box.localToGlobal(Offset.zero).dy;
+      final widgetHeight = box.size.height;
+      final bandTop = scope.bandY;
+      final bandBottom = bandTop + scope.bandHeight;
+
+      if (bandBottom < globalY || bandTop > globalY + widgetHeight) return 0;
+
+      final overlapCenter =
+          ((bandTop + bandBottom) / 2 - globalY) / widgetHeight;
+      return (1 - (overlapCenter - 0.5).abs() * 2).clamp(0.0, 0.25);
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final scope = ScanlineScope.of(context);
+    final intensity = scope != null ? _getIntensity(scope) : 0.0;
+
+    return Text(
+      key: _key,
+      intensity > 0 ? glitchText(widget.label, intensity) : widget.label,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: widget.style,
     );
   }
 }
