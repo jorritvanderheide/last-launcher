@@ -24,9 +24,7 @@ class AppSearchField extends StatelessWidget {
         horizontal: 20,
         vertical: AppLabel.verticalPadding,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
         children: [
           TextField(
             controller: controller,
@@ -48,12 +46,16 @@ class AppSearchField extends StatelessWidget {
           ValueListenableBuilder<TextEditingValue>(
             valueListenable: controller,
             builder: (context, value, _) {
-              return Opacity(
-                opacity: value.text.isEmpty ? 1 : 0,
-                child: Container(
-                  width: 32,
-                  height: 2,
-                  color: colorScheme.onSurface,
+              return IgnorePointer(
+                child: Opacity(
+                  opacity: value.text.isEmpty ? 1 : 0,
+                  child: Text(
+                    '█',
+                    style: TextStyle(
+                      fontSize: AppLabel.fontSize,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
                 ),
               );
             },
@@ -63,3 +65,5 @@ class AppSearchField extends StatelessWidget {
     );
   }
 }
+
+
