@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
-import 'package:last_launcher/features/home/screens/reorder_screen.dart';
 import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
+import 'package:last_launcher/shared/data/app_channel.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
     required this.settingsState,
     required this.appListState,
     required this.homeState,
+    required this.appChannel,
     super.key,
   });
 
   final SettingsState settingsState;
   final AppListState appListState;
   final HomeState homeState;
+  final AppChannel appChannel;
 
   @override
   Widget build(BuildContext context) {
@@ -41,31 +43,13 @@ class SettingsScreen extends StatelessWidget {
                     ? null
                     : settingsState.setAmoled,
               ),
-              const _SectionHeader(title: 'Apps'),
-              ListenableBuilder(
-                listenable: homeState,
-                builder: (context, _) {
-                  if (homeState.pinnedApps.isEmpty) {
-                    return const SizedBox.shrink();
-                  }
-                  return ListTile(
-                    leading: const Icon(Icons.swap_vert),
-                    title: const Text('Reorder apps'),
-                    onTap: () {
-                      Navigator.of(context).push(
-                        PageRouteBuilder<void>(
-                          pageBuilder: (_, _, _) => ReorderScreen(
-                            homeState: homeState,
-                            appListState: appListState,
-                          ),
-                          transitionDuration: Duration.zero,
-                          reverseTransitionDuration: Duration.zero,
-                        ),
-                      );
-                    },
-                  );
-                },
+              SwitchListTile(
+                title: const Text('Home screen hints'),
+                subtitle: const Text('Show usage tips when no apps are pinned'),
+                value: settingsState.showHints,
+                onChanged: settingsState.setShowHints,
               ),
+              const _SectionHeader(title: 'Apps'),
               ListenableBuilder(
                 listenable: appListState,
                 builder: (context, _) {
@@ -80,6 +64,7 @@ class SettingsScreen extends StatelessWidget {
                           pageBuilder: (_, _, _) => HiddenAppsScreen(
                             appListState: appListState,
                             homeState: homeState,
+                            appChannel: appChannel,
                           ),
                           transitionDuration: Duration.zero,
                           reverseTransitionDuration: Duration.zero,
@@ -95,6 +80,26 @@ class SettingsScreen extends StatelessWidget {
                 subtitle: const Text('Swipe right from home to view tasks'),
                 value: settingsState.tasksEnabled,
                 onChanged: settingsState.setTasksEnabled,
+              ),
+              SwitchListTile(
+                title: const Text('Completed to bottom'),
+                subtitle: const Text(
+                  'Move completed tasks to the bottom of the list',
+                ),
+                value: settingsState.completedToBottom,
+                onChanged: settingsState.tasksEnabled
+                    ? settingsState.setCompletedToBottom
+                    : null,
+              ),
+              SwitchListTile(
+                title: const Text('Remove on complete'),
+                subtitle: const Text(
+                  'Remove tasks when marked as done',
+                ),
+                value: settingsState.removeOnComplete,
+                onChanged: settingsState.tasksEnabled
+                    ? settingsState.setRemoveOnComplete
+                    : null,
               ),
               const _SectionHeader(title: 'Search'),
               SwitchListTile(

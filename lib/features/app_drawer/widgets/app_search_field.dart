@@ -34,6 +34,7 @@ class AppSearchField extends StatelessWidget {
             onChanged: onChanged,
             onSubmitted: (_) => onSubmit(),
             cursorWidth: 0,
+            textCapitalization: TextCapitalization.sentences,
             textInputAction: TextInputAction.go,
             style: Theme.of(
               context,

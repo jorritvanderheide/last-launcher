@@ -35,7 +35,7 @@ class LauncherShell extends StatefulWidget {
 }
 
 class _LauncherShellState extends State<LauncherShell>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   // Sheet (vertical drawer).
   double _sheetFraction = 0;
   bool get _drawerOpen => _sheetFraction > 0.01;
@@ -61,12 +61,14 @@ class _LauncherShellState extends State<LauncherShell>
   // Whether the app list is scrolled to the top.
   final _listIsAtTop = ValueNotifier<bool>(true);
 
-  // Whether a task reorder drag is in progress.
+  // Whether a reorder drag is in progress.
   bool _isReorderingTasks = false;
+  bool _isReorderingHome = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _sheetAnim =
         AnimationController(
           vsync: this,
@@ -91,7 +93,29 @@ class _LauncherShellState extends State<LauncherShell>
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.hidden ||
+        state == AppLifecycleState.paused) {
+      _resetToHome();
+    }
+  }
+
+  void _resetToHome() {
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    _sheetAnim.stop();
+    _pageAnim.stop();
+    setState(() {
+      _sheetFraction = 0;
+      _sheetAnimTo = 0;
+      _pageFraction = 1;
+      _pageAnimTo = 1;
+    });
+    widget.appListState.clearFilter();
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _sheetAnim.dispose();
     _pageAnim.dispose();
     _listIsAtTop.dispose();
@@ -164,7 +188,7 @@ class _LauncherShellState extends State<LauncherShell>
       } else if (absDy > absDx) {
         // Vertical drag — sheet.
         // Only drag the sheet when on home page and it can actually move.
-        if (!_onHomePage) return;
+        if (!_onHomePage || _isReorderingHome) return;
         if (dy > 0 && !_drawerOpen) {
           // Upward drag with drawer closed — open sheet.
           _isDraggingSheet = true;
@@ -333,6 +357,7 @@ class _LauncherShellState extends State<LauncherShell>
                                 settingsState: widget.settingsState,
                                 appListState: widget.appListState,
                                 homeState: widget.homeState,
+                                appChannel: widget.appChannel,
                               ),
                               transitionDuration: Duration.zero,
                               reverseTransitionDuration: Duration.zero,
@@ -342,9 +367,12 @@ class _LauncherShellState extends State<LauncherShell>
                         child: HomeScreen(
                           homeState: widget.homeState,
                           appListState: widget.appListState,
+                          settingsState: widget.settingsState,
                           onLaunch: _launchApp,
-                          tasksEnabled:
-                              widget.settingsState.tasksEnabled,
+                          onReorderStart: () =>
+                              _isReorderingHome = true,
+                          onReorderEnd: () =>
+                              _isReorderingHome = false,
                         ),
                       ),
                     ),

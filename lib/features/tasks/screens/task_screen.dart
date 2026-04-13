@@ -5,6 +5,7 @@ import 'package:last_launcher/features/tasks/task.dart';
 import 'package:last_launcher/features/tasks/task_state.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
+import 'package:last_launcher/shared/widgets/rename_dialog.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({
@@ -30,7 +31,9 @@ class _TaskScreenState extends State<TaskScreen> {
   final _controller = TextEditingController();
   final _focusNode = FocusNode();
   final _scrollController = ScrollController();
-  bool get _autoKeyboard => widget.settingsState.autoKeyboard;
+  double _cumulativeOverscroll = 0;
+  bool get _autoKeyboard =>
+      widget.settingsState.searchOnly || widget.settingsState.autoKeyboard;
 
   @override
   void initState() {
@@ -62,7 +65,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
-    if (_scrollController.offset > 0 && _focusNode.hasFocus) {
+    if (_scrollController.offset > 20 && _focusNode.hasFocus) {
       _focusNode.unfocus();
     } else if (_scrollController.offset <= 0 &&
         !_focusNode.hasFocus &&
@@ -72,12 +75,15 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   void _onOverscroll(OverscrollNotification notification) {
-    if (notification.overscroll > 0 && _focusNode.hasFocus) {
+    _cumulativeOverscroll += notification.overscroll;
+    if (_cumulativeOverscroll > 20 && _focusNode.hasFocus) {
       _focusNode.unfocus();
-    } else if (notification.overscroll < 0 &&
+      _cumulativeOverscroll = 0;
+    } else if (_cumulativeOverscroll < -20 &&
         !_focusNode.hasFocus &&
         _autoKeyboard) {
       _focusNode.requestFocus();
+      _cumulativeOverscroll = 0;
     }
   }
 
@@ -91,7 +97,7 @@ class _TaskScreenState extends State<TaskScreen> {
     );
 
     if (match.isNotEmpty) {
-      widget.taskState.toggleTask(match.first.id);
+      _completeTask(match.first);
     } else {
       widget.taskState.addTask(query);
     }
@@ -100,32 +106,95 @@ class _TaskScreenState extends State<TaskScreen> {
     _focusNode.requestFocus();
   }
 
-  void _editTask(BuildContext context, Task task) async {
-    final result = await showDialog<_EditResult>(
-      context: context,
-      builder: (context) => _EditTaskDialog(title: task.title),
-    );
-    if (result == null) return;
-    if (result.delete) {
+  void _completeTask(Task task) {
+    if (!task.done && widget.settingsState.removeOnComplete) {
       widget.taskState.removeTask(task.id);
-    } else if (result.title.isNotEmpty && result.title != task.title) {
-      widget.taskState.renameTask(task.id, result.title);
+    } else {
+      widget.taskState.toggleTask(task.id);
     }
   }
 
+  void _showTaskOptions(BuildContext context, Task task) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (sheetContext) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  task.title,
+                  style: Theme.of(sheetContext).textTheme.titleMedium,
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.edit),
+                title: const Text('Rename'),
+                onTap: () async {
+                  Navigator.pop(sheetContext);
+                  final result = await showRenameDialog(
+                    context: context,
+                    currentLabel: task.title,
+                    originalLabel: task.title,
+                  );
+                  if (result != null &&
+                      result.isNotEmpty &&
+                      result != task.title) {
+                    widget.taskState.renameTask(task.id, result);
+                  }
+                },
+              ),
+              ListTile(
+                leading: Icon(
+                  task.done ? Icons.undo : Icons.check,
+                ),
+                title: Text(task.done ? 'Mark incomplete' : 'Complete'),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  _completeTask(task);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete_outline),
+                title: const Text('Remove'),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  widget.taskState.removeTask(task.id);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
-  List<Task> _filteredTasks(List<Task> tasks) {
+
+  List<Task> _displayTasks(List<Task> tasks) {
+    var result = tasks;
     final filter = _controller.text;
-    if (filter.isEmpty) return tasks;
-    final lower = filter.toLowerCase();
-    return tasks.where((t) => t.title.toLowerCase().contains(lower)).toList();
+    if (filter.isNotEmpty) {
+      final lower = filter.toLowerCase();
+      result = result
+          .where((t) => t.title.toLowerCase().contains(lower))
+          .toList();
+    }
+    if (widget.settingsState.completedToBottom) {
+      result = [
+        ...result.where((t) => !t.done),
+        ...result.where((t) => t.done),
+      ];
+    }
+    return result;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: SafeArea(
+        body: SafeArea(
         child: Column(
           children: [
             SizedBox(
@@ -141,12 +210,16 @@ class _TaskScreenState extends State<TaskScreen> {
             ),
             Expanded(
               child: ListenableBuilder(
-                listenable: Listenable.merge([widget.taskState, _controller]),
+                listenable: Listenable.merge([widget.taskState, _controller, widget.settingsState]),
                 builder: (context, _) {
-                  final tasks = _filteredTasks(widget.taskState.tasks);
-                  return NotificationListener<OverscrollNotification>(
+                  final tasks = _displayTasks(widget.taskState.tasks);
+                  return NotificationListener<ScrollNotification>(
                     onNotification: (notification) {
-                      _onOverscroll(notification);
+                      if (notification is ScrollStartNotification) {
+                        _cumulativeOverscroll = 0;
+                      } else if (notification is OverscrollNotification) {
+                        _onOverscroll(notification);
+                      }
                       return false;
                     },
                     child: FadeOverflow(
@@ -165,60 +238,41 @@ class _TaskScreenState extends State<TaskScreen> {
                         itemCount: tasks.length,
                         itemBuilder: (context, index) {
                           final task = tasks[index];
-                          final style = Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(
-                                fontSize: AppLabel.fontSize,
-                                decoration: task.done
+                          return Opacity(
+                            key: ValueKey(task.id),
+                            opacity: task.done ? 0.4 : 1.0,
+                            child: _SwipeToDismiss(
+                              onDismissed: () =>
+                                  widget.taskState.removeTask(task.id),
+                              child: AppLabel(
+                                label: task.title,
+                                onTap: () => _completeTask(task),
+                                onLongPress: () =>
+                                    _showTaskOptions(context, task),
+                                textDecoration: task.done
                                     ? TextDecoration.lineThrough
                                     : null,
                                 decorationThickness:
-                                    task.done ? 2 : null,
-                              );
-                          return _SwipeToDismiss(
-                            key: ValueKey(task.id),
-                            onDismissed: () =>
-                                widget.taskState.removeTask(task.id),
-                            child: InkWell(
-                              onTap: () =>
-                                  widget.taskState.toggleTask(task.id),
-                              onLongPress: () =>
-                                  _editTask(context, task),
-                              child: IntrinsicHeight(
-                                child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          left: 20,
-                                          top: AppLabel.verticalPadding,
-                                          bottom: AppLabel.verticalPadding,
-                                        ),
-                                        child: Text(
-                                          task.title,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: style,
-                                        ),
+                                    task.done ? 1.5 : null,
+                                trailing:
+                                    ReorderableDelayedDragStartListener(
+                                  index: index,
+                                  child: GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 12,
+                                        right: 20,
+                                      ),
+                                      child: Icon(
+                                        Icons.drag_handle,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                            .withAlpha(60),
                                       ),
                                     ),
-                                    ReorderableDragStartListener(
-                                      index: index,
-                                      child: GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        child: const Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 12,
-                                            right: 20,
-                                          ),
-                                          child: SizedBox(width: 24),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -241,7 +295,6 @@ class _SwipeToDismiss extends StatefulWidget {
   const _SwipeToDismiss({
     required this.onDismissed,
     required this.child,
-    super.key,
   });
 
   final VoidCallback onDismissed;
@@ -308,68 +361,5 @@ class _SwipeToDismissState extends State<_SwipeToDismiss> {
   }
 }
 
-class _EditResult {
-  const _EditResult.rename(this.title) : delete = false;
-  const _EditResult.delete()
-      : title = '',
-        delete = true;
 
-  final String title;
-  final bool delete;
-}
-
-class _EditTaskDialog extends StatefulWidget {
-  const _EditTaskDialog({required this.title});
-
-  final String title;
-
-  @override
-  State<_EditTaskDialog> createState() => _EditTaskDialogState();
-}
-
-class _EditTaskDialogState extends State<_EditTaskDialog> {
-  late final TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController(text: widget.title);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _submit() {
-    Navigator.pop(context, _EditResult.rename(_controller.text.trim()));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Edit task'),
-      content: TextField(
-        controller: _controller,
-        autofocus: true,
-        textCapitalization: TextCapitalization.sentences,
-        decoration: const InputDecoration(
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.zero,
-          isDense: true,
-        ),
-        onSubmitted: (_) => _submit(),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () =>
-              Navigator.pop(context, const _EditResult.delete()),
-          child: const Text('Delete'),
-        ),
-        TextButton(onPressed: _submit, child: const Text('Save')),
-      ],
-    );
-  }
-}
 

@@ -3,6 +3,7 @@ import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_options_dialog.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/shared/data/models.dart';
+import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 
@@ -10,11 +11,13 @@ class HiddenAppsScreen extends StatelessWidget {
   const HiddenAppsScreen({
     required this.appListState,
     required this.homeState,
+    required this.appChannel,
     super.key,
   });
 
   final AppListState appListState;
   final HomeState homeState;
+  final AppChannel appChannel;
 
   void _onLongPress(BuildContext context, AppInfo app) {
     showAppOptionsDialog(
@@ -59,7 +62,7 @@ class HiddenAppsScreen extends StatelessWidget {
                   final app = apps[index];
                   return AppLabel(
                     label: appListState.displayLabel(app),
-                    onTap: () => _onLongPress(context, app),
+                    onTap: () => appChannel.launchApp(app.packageName),
                     onLongPress: () => _onLongPress(context, app),
                   );
                 },
