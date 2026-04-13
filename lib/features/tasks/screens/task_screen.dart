@@ -11,14 +11,16 @@ class TaskScreen extends StatefulWidget {
     required this.taskState,
     required this.settingsState,
     required this.isVisible,
-    required this.isReordering,
+    required this.onReorderStart,
+    required this.onReorderEnd,
     super.key,
   });
 
   final TaskState taskState;
   final SettingsState settingsState;
   final bool isVisible;
-  final ValueNotifier<bool> isReordering;
+  final VoidCallback onReorderStart;
+  final VoidCallback onReorderEnd;
 
   @override
   State<TaskScreen> createState() => _TaskScreenState();
@@ -33,7 +35,6 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(() => setState(() {}));
     _scrollController.addListener(_onScroll);
   }
 
@@ -112,6 +113,7 @@ class _TaskScreenState extends State<TaskScreen> {
     }
   }
 
+
   List<Task> _filteredTasks(List<Task> tasks) {
     final filter = _controller.text;
     if (filter.isEmpty) return tasks;
@@ -139,7 +141,7 @@ class _TaskScreenState extends State<TaskScreen> {
             ),
             Expanded(
               child: ListenableBuilder(
-                listenable: widget.taskState,
+                listenable: Listenable.merge([widget.taskState, _controller]),
                 builder: (context, _) {
                   final tasks = _filteredTasks(widget.taskState.tasks);
                   return NotificationListener<OverscrollNotification>(
@@ -156,52 +158,68 @@ class _TaskScreenState extends State<TaskScreen> {
                         proxyDecorator: (child, _, _) =>
                             Material(color: Colors.transparent, child: child),
                         onReorderStart: (_) =>
-                            widget.isReordering.value = true,
+                            widget.onReorderStart(),
                         onReorderEnd: (_) =>
-                            widget.isReordering.value = false,
+                            widget.onReorderEnd(),
                         onReorder: widget.taskState.reorder,
                         itemCount: tasks.length,
                         itemBuilder: (context, index) {
                           final task = tasks[index];
-                          return InkWell(
+                          final style = Theme.of(context)
+                              .textTheme
+                              .titleLarge
+                              ?.copyWith(
+                                fontSize: AppLabel.fontSize,
+                                decoration: task.done
+                                    ? TextDecoration.lineThrough
+                                    : null,
+                                decorationThickness:
+                                    task.done ? 2 : null,
+                              );
+                          return _SwipeToDismiss(
                             key: ValueKey(task.id),
-                            onTap: () =>
-                                widget.taskState.toggleTask(task.id),
-                            onLongPress: () =>
-                                _editTask(context, task),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: AppLabel.verticalPadding,
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      task.title,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge
-                                          ?.copyWith(
-                                            fontSize: AppLabel.fontSize,
-                                            decoration: task.done
-                                                ? TextDecoration.lineThrough
-                                                : null,
-                                            decorationThickness:
-                                                task.done ? 2 : null,
+                            onDismissed: () =>
+                                widget.taskState.removeTask(task.id),
+                            child: InkWell(
+                              onTap: () =>
+                                  widget.taskState.toggleTask(task.id),
+                              onLongPress: () =>
+                                  _editTask(context, task),
+                              child: IntrinsicHeight(
+                                child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          left: 20,
+                                          top: AppLabel.verticalPadding,
+                                          bottom: AppLabel.verticalPadding,
+                                        ),
+                                        child: Text(
+                                          task.title,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: style,
+                                        ),
+                                      ),
+                                    ),
+                                    ReorderableDragStartListener(
+                                      index: index,
+                                      child: GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        child: const Padding(
+                                          padding: EdgeInsets.only(
+                                            left: 12,
+                                            right: 20,
                                           ),
+                                          child: SizedBox(width: 24),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  ReorderableDragStartListener(
-                                    index: index,
-                                    child: const Opacity(
-                                      opacity: 0,
-                                      child: Icon(Icons.drag_handle),
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );
@@ -213,6 +231,77 @@ class _TaskScreenState extends State<TaskScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SwipeToDismiss extends StatefulWidget {
+  const _SwipeToDismiss({
+    required this.onDismissed,
+    required this.child,
+    super.key,
+  });
+
+  final VoidCallback onDismissed;
+  final Widget child;
+
+  @override
+  State<_SwipeToDismiss> createState() => _SwipeToDismissState();
+}
+
+class _SwipeToDismissState extends State<_SwipeToDismiss> {
+  Offset? _start;
+  double _dx = 0;
+  bool _tracking = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Listener(
+      onPointerDown: (e) {
+        _start = e.position;
+        _dx = 0;
+        _tracking = false;
+      },
+      onPointerMove: (e) {
+        final start = _start;
+        if (start == null) return;
+        final dx = e.position.dx - start.dx;
+        final dy = (e.position.dy - start.dy).abs();
+        if (!_tracking) {
+          // Only start tracking if clearly horizontal (2x ratio).
+          if (dx.abs() < 20) return;
+          if (dx.abs() > dy * 2 && dx > 0) {
+            _tracking = true;
+          } else {
+            _start = null;
+            return;
+          }
+        }
+        setState(() => _dx = (dx - 20).clamp(0.0, double.infinity));
+      },
+      onPointerUp: (_) {
+        if (_tracking) {
+          final screenWidth = MediaQuery.sizeOf(context).width;
+          if (_dx > screenWidth * 0.3) {
+            widget.onDismissed();
+          }
+          setState(() => _dx = 0);
+        }
+        _start = null;
+        _tracking = false;
+      },
+      onPointerCancel: (_) {
+        if (_tracking) setState(() => _dx = 0);
+        _start = null;
+        _tracking = false;
+      },
+      child: Transform.translate(
+        offset: Offset(_dx, 0),
+        child: Opacity(
+          opacity: _dx > 0 ? (1 - _dx / MediaQuery.sizeOf(context).width).clamp(0.3, 1.0) : 1.0,
+          child: widget.child,
         ),
       ),
     );
@@ -283,3 +372,4 @@ class _EditTaskDialogState extends State<_EditTaskDialog> {
     );
   }
 }
+

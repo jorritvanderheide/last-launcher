@@ -6,6 +6,9 @@ class SettingsState extends ChangeNotifier {
     _load();
   }
 
+  /// Incremented when theme-related settings change.
+  final themeNotifier = ValueNotifier<int>(0);
+
   static const _themeKey = 'theme_mode';
   static const _amoledKey = 'amoled';
   static const _autoKeyboardKey = 'auto_keyboard';
@@ -43,6 +46,7 @@ class SettingsState extends ChangeNotifier {
   Future<void> setThemeMode(ThemeMode mode) async {
     _themeMode = mode;
     notifyListeners();
+    themeNotifier.value++;
     final value = switch (mode) {
       ThemeMode.light => 'light',
       ThemeMode.dark => 'dark',
@@ -54,6 +58,7 @@ class SettingsState extends ChangeNotifier {
   Future<void> setAmoled(bool enabled) async {
     _amoled = enabled;
     notifyListeners();
+    themeNotifier.value++;
     await _prefs.setBool(_amoledKey, enabled);
   }
 

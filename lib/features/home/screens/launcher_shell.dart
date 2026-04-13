@@ -62,7 +62,7 @@ class _LauncherShellState extends State<LauncherShell>
   final _listIsAtTop = ValueNotifier<bool>(true);
 
   // Whether a task reorder drag is in progress.
-  final _isReorderingTasks = ValueNotifier<bool>(false);
+  bool _isReorderingTasks = false;
 
   @override
   void initState() {
@@ -95,7 +95,6 @@ class _LauncherShellState extends State<LauncherShell>
     _sheetAnim.dispose();
     _pageAnim.dispose();
     _listIsAtTop.dispose();
-    _isReorderingTasks.dispose();
     super.dispose();
   }
 
@@ -154,7 +153,7 @@ class _LauncherShellState extends State<LauncherShell>
 
       if (absDx > absDy && !_drawerOpen &&
           widget.settingsState.tasksEnabled &&
-          !_isReorderingTasks.value) {
+          !_isReorderingTasks) {
         // Horizontal drag — page navigation.
         // Don't start if already at the edge in the drag direction.
         final wouldGoLeft = dx > 0;
@@ -316,7 +315,10 @@ class _LauncherShellState extends State<LauncherShell>
                         taskState: widget.taskState,
                         settingsState: widget.settingsState,
                         isVisible: !_onHomePage,
-                        isReordering: _isReorderingTasks,
+                        onReorderStart: () =>
+                            _isReorderingTasks = true,
+                        onReorderEnd: () =>
+                            _isReorderingTasks = false,
                       ),
                     ),
                     SizedBox(

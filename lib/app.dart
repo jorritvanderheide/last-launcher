@@ -101,7 +101,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: widget.settingsState,
+      listenable: widget.settingsState.themeNotifier,
       builder: (context, _) {
         final amoled = widget.settingsState.amoled;
 
