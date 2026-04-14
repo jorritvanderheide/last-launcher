@@ -48,6 +48,9 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    if (_autoKeyboard) {
+      _requestFocus();
+    }
   }
 
   @override
@@ -61,7 +64,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
       widget.isAtTop.value = true;
       if (_autoKeyboard) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          _focusNode.requestFocus();
+          if (mounted) _focusNode.requestFocus();
         });
       }
     } else if (!widget.isOpen && oldWidget.isOpen) {
@@ -79,6 +82,14 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
     _textController.dispose();
     _focusNode.dispose();
     super.dispose();
+  }
+
+  void _requestFocus() {
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (mounted && !_focusNode.hasFocus) {
+        _focusNode.requestFocus();
+      }
+    });
   }
 
   void _onScroll() {

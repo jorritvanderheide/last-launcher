@@ -1,0 +1,16 @@
+Last Launcher är en minimal, textbaserad Android-launcher designad för hastighet och enkelhet. Inga ikoner, inga widgets, ingen röra — bara dina appar som enkla textlabels.
+
+Funktioner:
+* Textbaserad hemskärm med fästa appgenvägar
+* Snabb applåda med omedelbar sökning
+* Uppgiftslista med sökning, omordning och swipe för borttagning
+* Långtryck för snabbåtgärder — byt namn, fäst, dölj
+* Sökläge för tangentbordsorienterad lansering
+* System/Ljus/Mörk tema med reint svart AMOLED-stöd
+* Extra tema med CRT-scanlinejeffekter och monospace-typsnitt
+* Dölj appar du inte vill se
+* Autolansering när en enda app matchar din sökning
+* Fullskärmsläge — dölj statusfältet och navigering
+* Flerspråkigt stöd
+
+Last Launcher är kostnadsfri, öppen källkod (EUPL-1.2) och innehåller ingen reklam, spårning eller telemetri. Dina data stannar på din enhet.

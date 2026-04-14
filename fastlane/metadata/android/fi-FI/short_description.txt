@@ -1,0 +1,1 @@
+Minimaalinen tekstipohjainen laukaisija, joka keskittyy nopeuteen ja yksinkertaisuuteen

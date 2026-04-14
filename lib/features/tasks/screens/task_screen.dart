@@ -77,6 +77,7 @@ class TaskScreenState extends State<TaskScreen> {
     super.dispose();
   }
 
+
   void _onScroll() {
     if (!_scrollController.hasClients) return;
     if (_activeTaskId != null) setState(() => _activeTaskId = null);

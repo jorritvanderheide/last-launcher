@@ -1,0 +1,1 @@
+Lanceur minimaliste basé sur du texte axé sur la rapidité et la simplicité

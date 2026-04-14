@@ -1,0 +1,16 @@
+Last Launcher est un lanceur Android minimaliste basé sur du texte, conçu pour la rapidité et la simplicité. Pas d'icônes, pas de widgets, pas de désordre — juste vos applications sous forme d'étiquettes de texte simples.
+
+Caractéristiques:
+* Écran d'accueil basé sur du texte avec des raccourcis d'applications épinglées
+* Tiroir d'applications rapide avec recherche instantanée
+* Liste de tâches avec recherche, réorganisation et glissement pour supprimer
+* Appui long pour les actions en ligne — renommer, épingler, masquer
+* Mode de recherche pour le lancement au clavier
+* Thème Système/Clair/Sombre avec support AMOLED noir pur
+* Thème supplémentaire avec effets de lignes de balayage CRT et police monospace
+* Masquer les applications que vous ne souhaitez pas voir
+* Lancement automatique quand une seule application correspond à votre recherche
+* Mode plein écran — masquer la barre d'état et la navigation
+* Prise en charge de plusieurs langues
+
+Last Launcher est gratuit, open source (EUPL-1.2) et ne contient aucune publicité, suivi ou télémétrie. Vos données restent sur votre appareil.

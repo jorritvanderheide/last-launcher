@@ -1,0 +1,1 @@
+Lanzador minimalista basado en texto enfocado en velocidad y simplicidad
