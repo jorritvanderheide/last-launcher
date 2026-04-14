@@ -103,10 +103,10 @@ class _ScanlinePainter extends CustomPainter {
     final bandHeight = size.height * 0.08;
     final bandY = animationValue * (size.height + bandHeight) - bandHeight;
     final bandPaint = Paint()
-      ..shader = LinearGradient(
+      ..shader = const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: const [Color(0x00FFFFFF), Color(0x0CFFFFFF), Color(0x00FFFFFF)],
+        colors: [Color(0x00FFFFFF), Color(0x0CFFFFFF), Color(0x00FFFFFF)],
       ).createShader(Rect.fromLTWH(0, bandY, size.width, bandHeight));
 
     canvas.drawRect(Rect.fromLTWH(0, bandY, size.width, bandHeight), bandPaint);

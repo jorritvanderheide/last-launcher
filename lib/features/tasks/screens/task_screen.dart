@@ -296,12 +296,12 @@ class TaskScreenState extends State<TaskScreen> {
                                 index: index,
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.opaque,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(
                                       left: 12,
                                       right: 20,
                                     ),
-                                    child: const SizedBox(width: 24),
+                                    child: SizedBox(width: 24),
                                   ),
                                 ),
                               ),
@@ -325,7 +325,6 @@ class _SwipeToDismiss extends StatefulWidget {
   const _SwipeToDismiss({
     required this.onDismissed,
     required this.child,
-    super.key,
   });
 
   final VoidCallback onDismissed;

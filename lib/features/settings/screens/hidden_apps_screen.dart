@@ -72,7 +72,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
           }
           return FadeOverflow(
             child: ListView.builder(
-              padding: EdgeInsets.only(top: 24, bottom: 32),
+              padding: const EdgeInsets.only(top: 24, bottom: 32),
               itemCount: apps.length,
               itemBuilder: (context, index) {
                 final app = apps[index];

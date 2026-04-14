@@ -154,9 +154,9 @@ class HomeScreenState extends State<HomeScreen> {
                         index: index,
                         child: GestureDetector(
                           behavior: HitTestBehavior.opaque,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 12, right: 20),
-                            child: const SizedBox(width: 24),
+                          child: const Padding(
+                            padding: EdgeInsets.only(left: 12, right: 20),
+                            child: SizedBox(width: 24),
                           ),
                         ),
                       ),

@@ -5,7 +5,7 @@
 > Run static analysis
 
 ```sh
-flutter analyze
+flutter analyze --fatal-infos
 ```
 
 ## test
@@ -37,7 +37,7 @@ nix flake check
 > Run fmt, analyze, and tests — use before committing
 
 ```sh
-nix fmt && flutter analyze && flutter test
+nix fmt && flutter analyze --fatal-infos && flutter test
 ```
 
 ## build-apk
