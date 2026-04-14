@@ -322,10 +322,7 @@ class TaskScreenState extends State<TaskScreen> {
 }
 
 class _SwipeToDismiss extends StatefulWidget {
-  const _SwipeToDismiss({
-    required this.onDismissed,
-    required this.child,
-  });
+  const _SwipeToDismiss({required this.onDismissed, required this.child});
 
   final VoidCallback onDismissed;
   final Widget child;
