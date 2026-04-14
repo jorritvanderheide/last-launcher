@@ -55,56 +55,49 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.hiddenApps),
-      ),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.hiddenApps)),
       body: ListenableBuilder(
-          listenable: widget.appListState,
-          builder: (context, _) {
-            final apps = widget.appListState.hiddenApps;
-            if (apps.isEmpty) {
-              return Center(
-                child: Text(
-                  AppLocalizations.of(context)!.noHiddenApps,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(
-                      context,
-                    ).colorScheme.onSurface.withAlpha(100),
-                  ),
+        listenable: widget.appListState,
+        builder: (context, _) {
+          final apps = widget.appListState.hiddenApps;
+          if (apps.isEmpty) {
+            return Center(
+              child: Text(
+                AppLocalizations.of(context)!.noHiddenApps,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(100),
                 ),
-              );
-            }
-            return FadeOverflow(
-              child: ListView.builder(
-                padding: EdgeInsets.only(
-                  top: 24,
-                  bottom: 32,
-                ),
-                itemCount: apps.length,
-                itemBuilder: (context, index) {
-                  final app = apps[index];
-                  if (_activeAppPackage == app.packageName) {
-                    return ActionRow(
-                      label: widget.appListState.displayLabel(app),
-                      actions: _appActions(context, app),
-                      onClose: () =>
-                          setState(() => _activeAppPackage = null),
-                    );
-                  }
-                  return AppLabel(
-                    label: widget.appListState.displayLabel(app),
-                    onTap: () => widget.onLaunch(app.packageName),
-                    onLongPress: () => setState(() =>
-                        _activeAppPackage =
-                            _activeAppPackage == app.packageName
-                                ? null
-                                : app.packageName),
-                  );
-                },
               ),
             );
-          },
-        ),
+          }
+          return FadeOverflow(
+            child: ListView.builder(
+              padding: EdgeInsets.only(top: 24, bottom: 32),
+              itemCount: apps.length,
+              itemBuilder: (context, index) {
+                final app = apps[index];
+                if (_activeAppPackage == app.packageName) {
+                  return ActionRow(
+                    label: widget.appListState.displayLabel(app),
+                    actions: _appActions(context, app),
+                    onClose: () => setState(() => _activeAppPackage = null),
+                  );
+                }
+                return AppLabel(
+                  label: widget.appListState.displayLabel(app),
+                  onTap: () => widget.onLaunch(app.packageName),
+                  onLongPress: () => setState(
+                    () =>
+                        _activeAppPackage = _activeAppPackage == app.packageName
+                        ? null
+                        : app.packageName,
+                  ),
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

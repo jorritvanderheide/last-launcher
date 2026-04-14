@@ -42,6 +42,7 @@ class TaskScreenState extends State<TaskScreen> {
     setState(() => _activeTaskId = null);
     return true;
   }
+
   String? _activeTaskId;
   bool get _autoKeyboard => widget.settingsState.autoKeyboardTasks;
 
@@ -76,7 +77,6 @@ class TaskScreenState extends State<TaskScreen> {
     _focusNode.dispose();
     super.dispose();
   }
-
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
@@ -161,7 +161,6 @@ class TaskScreenState extends State<TaskScreen> {
     ];
   }
 
-
   List<Task> _displayTasks(List<Task> tasks) {
     var result = tasks;
     final filter = _controller.text;
@@ -171,10 +170,7 @@ class TaskScreenState extends State<TaskScreen> {
           .where((t) => t.title.toLowerCase().contains(lower))
           .toList();
     }
-    result = [
-      ...result.where((t) => !t.done),
-      ...result.where((t) => t.done),
-    ];
+    result = [...result.where((t) => !t.done), ...result.where((t) => t.done)];
     return result;
   }
 
@@ -182,126 +178,121 @@ class TaskScreenState extends State<TaskScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(
-              height: (MediaQuery.sizeOf(context).height * 0.1 + 8)
-                  .clamp(0, double.infinity),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(
+            height: (MediaQuery.sizeOf(context).height * 0.1 + 8).clamp(
+              0,
+              double.infinity,
             ),
-            AppSearchField(
-              controller: _controller,
-              focusNode: _focusNode,
-              onSubmit: _onSubmit,
-            ),
-            Expanded(
-              child: ListenableBuilder(
-                listenable: Listenable.merge([widget.taskState, _controller, widget.settingsState]),
-                builder: (context, _) {
-                  final tasks = _displayTasks(widget.taskState.tasks);
-                  if (tasks.isEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.only(
-                        left: 20,
-                        top: 32 + AppLabel.verticalPadding,
+          ),
+          AppSearchField(
+            controller: _controller,
+            focusNode: _focusNode,
+            onSubmit: _onSubmit,
+          ),
+          Expanded(
+            child: ListenableBuilder(
+              listenable: Listenable.merge([
+                widget.taskState,
+                _controller,
+                widget.settingsState,
+              ]),
+              builder: (context, _) {
+                final tasks = _displayTasks(widget.taskState.tasks);
+                if (tasks.isEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      top: 32 + AppLabel.verticalPadding,
+                    ),
+                    child: Text(
+                      AppLocalizations.of(context)!.returnToAddTask,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontSize: AppLabel.fontSize,
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withAlpha(80),
                       ),
-                      child: Text(
-                        AppLocalizations.of(context)!.returnToAddTask,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(
-                              fontSize: AppLabel.fontSize,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .onSurface
-                                  .withAlpha(80),
-                            ),
-                      ),
-                    );
-                  }
-                  return NotificationListener<ScrollNotification>(
-                    onNotification: (notification) {
-                      if (notification is ScrollStartNotification) {
-                        _cumulativeOverscroll = 0;
-                      } else if (notification is OverscrollNotification) {
-                        _onOverscroll(notification);
-                      }
-                      return false;
-                    },
-                    child: FadeOverflow(
-                      child: ReorderableListView.builder(
-                        scrollController: _scrollController,
-                        physics: widget.scrollLocked
-                            ? const NeverScrollableScrollPhysics()
-                            : const AlwaysScrollableScrollPhysics(),
-                        padding: const EdgeInsets.only(top: 32, bottom: 80),
-                        buildDefaultDragHandles: false,
-                        proxyDecorator: dragProxyDecorator,
-                        onReorderStart: (_) =>
-                            widget.onReorderStart(),
-                        onReorderEnd: (_) =>
-                            widget.onReorderEnd(),
-                        onReorder: (oldIndex, newIndex) {
-                          final allTasks = widget.taskState.tasks;
-                          final realOld = allTasks.indexWhere(
-                            (t) => t.id == tasks[oldIndex].id,
-                          );
-                          var realNew = newIndex < tasks.length
-                              ? allTasks.indexWhere(
-                                  (t) => t.id == tasks[newIndex].id,
-                                )
-                              : allTasks.length;
-                          if (realNew > realOld) realNew++;
-                          widget.taskState.reorder(realOld, realNew);
-                        },
-                        itemCount: tasks.length,
-                        itemBuilder: (context, index) {
-                          final task = tasks[index];
-                          final isFirstDone = task.done &&
-                              (index == 0 || !tasks[index - 1].done);
-                          if (_activeTaskId == task.id) {
-                            return Padding(
-                              key: ValueKey(task.id),
-                              padding: EdgeInsets.only(
-                                top: isFirstDone ? 24 : 0,
-                              ),
-                              child: ActionRow(
-                                label: task.title,
-                                actions: _taskActions(context, task),
-                                onClose: () =>
-                                    setState(() => _activeTaskId = null),
-                                textDecoration: task.done
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                                decorationThickness: task.done ? 1.5 : null,
-                                opacity: task.done ? 0.4 : 1.0,
-                              ),
-                            );
-                          }
+                    ),
+                  );
+                }
+                return NotificationListener<ScrollNotification>(
+                  onNotification: (notification) {
+                    if (notification is ScrollStartNotification) {
+                      _cumulativeOverscroll = 0;
+                    } else if (notification is OverscrollNotification) {
+                      _onOverscroll(notification);
+                    }
+                    return false;
+                  },
+                  child: FadeOverflow(
+                    child: ReorderableListView.builder(
+                      scrollController: _scrollController,
+                      physics: widget.scrollLocked
+                          ? const NeverScrollableScrollPhysics()
+                          : const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(top: 32, bottom: 80),
+                      buildDefaultDragHandles: false,
+                      proxyDecorator: dragProxyDecorator,
+                      onReorderStart: (_) => widget.onReorderStart(),
+                      onReorderEnd: (_) => widget.onReorderEnd(),
+                      onReorder: (oldIndex, newIndex) {
+                        final allTasks = widget.taskState.tasks;
+                        final realOld = allTasks.indexWhere(
+                          (t) => t.id == tasks[oldIndex].id,
+                        );
+                        var realNew = newIndex < tasks.length
+                            ? allTasks.indexWhere(
+                                (t) => t.id == tasks[newIndex].id,
+                              )
+                            : allTasks.length;
+                        if (realNew > realOld) realNew++;
+                        widget.taskState.reorder(realOld, realNew);
+                      },
+                      itemCount: tasks.length,
+                      itemBuilder: (context, index) {
+                        final task = tasks[index];
+                        final isFirstDone =
+                            task.done && (index == 0 || !tasks[index - 1].done);
+                        if (_activeTaskId == task.id) {
                           return Padding(
                             key: ValueKey(task.id),
-                            padding: EdgeInsets.only(
-                              top: isFirstDone ? 24 : 0,
+                            padding: EdgeInsets.only(top: isFirstDone ? 24 : 0),
+                            child: ActionRow(
+                              label: task.title,
+                              actions: _taskActions(context, task),
+                              onClose: () =>
+                                  setState(() => _activeTaskId = null),
+                              textDecoration: task.done
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                              decorationThickness: task.done ? 1.5 : null,
+                              opacity: task.done ? 0.4 : 1.0,
                             ),
-                            child: _SwipeToDismiss(
+                          );
+                        }
+                        return Padding(
+                          key: ValueKey(task.id),
+                          padding: EdgeInsets.only(top: isFirstDone ? 24 : 0),
+                          child: _SwipeToDismiss(
                             onDismissed: () =>
                                 widget.taskState.removeTask(task.id),
                             child: AppLabel(
                               label: task.title,
                               onTap: () => _completeTask(task),
-                              onLongPress: () => setState(() =>
-                                  _activeTaskId = _activeTaskId == task.id
-                                      ? null
-                                      : task.id),
+                              onLongPress: () => setState(
+                                () => _activeTaskId = _activeTaskId == task.id
+                                    ? null
+                                    : task.id,
+                              ),
                               opacity: task.done ? 0.4 : 1.0,
                               textDecoration: task.done
                                   ? TextDecoration.lineThrough
                                   : null,
-                              decorationThickness:
-                                  task.done ? 1.5 : null,
-                              trailing:
-                                  ReorderableDelayedDragStartListener(
+                              decorationThickness: task.done ? 1.5 : null,
+                              trailing: ReorderableDelayedDragStartListener(
                                 index: index,
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.opaque,
@@ -316,16 +307,16 @@ class TaskScreenState extends State<TaskScreen> {
                               ),
                             ),
                           ),
-                          );
-                        },
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -355,13 +346,14 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
   @override
   void initState() {
     super.initState();
-    _snapBack = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 150),
-    )..addListener(() {
-        final t = Curves.easeOut.transform(_snapBack.value);
-        setState(() => _dx = _snapFrom * (1 - t));
-      });
+    _snapBack =
+        AnimationController(
+          vsync: this,
+          duration: const Duration(milliseconds: 150),
+        )..addListener(() {
+          final t = Curves.easeOut.transform(_snapBack.value);
+          setState(() => _dx = _snapFrom * (1 - t));
+        });
   }
 
   @override
@@ -429,6 +421,3 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
     );
   }
 }
-
-
-

@@ -20,6 +20,7 @@ migrate_working_dir/
 
 # Nix/direnv
 .direnv/
+result
 
 # Flutter/Dart/Pub related
 **/doc/api/

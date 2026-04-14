@@ -30,9 +30,15 @@ ThemeData _buildTheme(Brightness brightness, {bool extra = false}) {
     onError: Colors.white,
     inverseSurface: textColor,
     onInverseSurface: isDark ? Colors.black : Colors.white,
-    surfaceContainerLow: isDark ? const Color(0xFF0A0A0A) : const Color(0xFFF5F5F5),
-    surfaceContainer: isDark ? const Color(0xFF121212) : const Color(0xFFEEEEEE),
-    surfaceContainerHigh: isDark ? const Color(0xFF1A1A1A) : const Color(0xFFE0E0E0),
+    surfaceContainerLow: isDark
+        ? const Color(0xFF0A0A0A)
+        : const Color(0xFFF5F5F5),
+    surfaceContainer: isDark
+        ? const Color(0xFF121212)
+        : const Color(0xFFEEEEEE),
+    surfaceContainerHigh: isDark
+        ? const Color(0xFF1A1A1A)
+        : const Color(0xFFE0E0E0),
     outline: isDark ? textColor.withAlpha(60) : Colors.black26,
   );
 
@@ -83,9 +89,7 @@ ThemeData _buildTheme(Brightness brightness, {bool extra = false}) {
     bottomSheetTheme: const BottomSheetThemeData(
       shape: RoundedRectangleBorder(),
     ),
-    dialogTheme: const DialogThemeData(
-      shape: RoundedRectangleBorder(),
-    ),
+    dialogTheme: const DialogThemeData(shape: RoundedRectangleBorder()),
     inputDecorationTheme: const InputDecorationTheme(
       border: OutlineInputBorder(borderRadius: BorderRadius.zero),
       focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.zero),

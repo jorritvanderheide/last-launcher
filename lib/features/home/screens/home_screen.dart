@@ -82,96 +82,92 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: LayoutBuilder(
-          builder: (context, constraints) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              widget.homeState.updateMaxApps(constraints.maxHeight);
-            });
-            return Align(
-              alignment: Alignment.centerLeft,
-              child: ListenableBuilder(
-                listenable: Listenable.merge([
-                  widget.homeState,
-                  widget.appListState,
-                  widget.settingsState,
-                ]),
-                builder: (context, _) {
-                  final apps = widget.homeState.pinnedApps;
-                  if (apps.isEmpty && widget.settingsState.showHints) {
-                    final l10n = AppLocalizations.of(context)!;
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Text(
-                        '${l10n.hintSwipeUp}\n'
-                        '${widget.settingsState.tasksEnabled ? '${l10n.hintSwipeRight}\n' : ''}'
-                        '${l10n.hintLongPress}',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 14,
-                          letterSpacing: 1.5,
-                          shadows: [],
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withAlpha(140),
-                        ),
+        builder: (context, constraints) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            widget.homeState.updateMaxApps(constraints.maxHeight);
+          });
+          return Align(
+            alignment: Alignment.centerLeft,
+            child: ListenableBuilder(
+              listenable: Listenable.merge([
+                widget.homeState,
+                widget.appListState,
+                widget.settingsState,
+              ]),
+              builder: (context, _) {
+                final apps = widget.homeState.pinnedApps;
+                if (apps.isEmpty && widget.settingsState.showHints) {
+                  final l10n = AppLocalizations.of(context)!;
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      '${l10n.hintSwipeUp}\n'
+                      '${widget.settingsState.tasksEnabled ? '${l10n.hintSwipeRight}\n' : ''}'
+                      '${l10n.hintLongPress}',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 14,
+                        letterSpacing: 1.5,
+                        shadows: [],
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSurface.withAlpha(140),
                       ),
-                    );
-                  }
-                  return ReorderableListView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    buildDefaultDragHandles: false,
-                    proxyDecorator: dragProxyDecorator,
-                    onReorderStart: (_) => widget.onReorderStart(),
-                    onReorderEnd: (_) => widget.onReorderEnd(),
-                    onReorder: widget.homeState.reorderApps,
-                    itemCount: apps.length,
-                    itemBuilder: (context, index) {
-                      final app = apps[index];
-                      if (_activeAppPackage == app.packageName) {
-                        return ActionRow(
-                          key: ValueKey(app.packageName),
-                          label: widget.appListState.displayLabelFor(
-                            app.packageName,
-                            app.label,
-                          ),
-                          actions: _appActions(context, app),
-                          onClose: () =>
-                              setState(() => _activeAppPackage = null),
-                        );
-                      }
-                      return AppLabel(
+                    ),
+                  );
+                }
+                return ReorderableListView.builder(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.zero,
+                  buildDefaultDragHandles: false,
+                  proxyDecorator: dragProxyDecorator,
+                  onReorderStart: (_) => widget.onReorderStart(),
+                  onReorderEnd: (_) => widget.onReorderEnd(),
+                  onReorder: widget.homeState.reorderApps,
+                  itemCount: apps.length,
+                  itemBuilder: (context, index) {
+                    final app = apps[index];
+                    if (_activeAppPackage == app.packageName) {
+                      return ActionRow(
                         key: ValueKey(app.packageName),
                         label: widget.appListState.displayLabelFor(
                           app.packageName,
                           app.label,
                         ),
-                        onTap: () => widget.onLaunch(app.packageName),
-                        onLongPress: () => setState(() =>
-                            _activeAppPackage =
-                                _activeAppPackage == app.packageName
-                                    ? null
-                                    : app.packageName),
-                        trailing: ReorderableDelayedDragStartListener(
-                          index: index,
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                left: 12,
-                                right: 20,
-                              ),
-                              child: const SizedBox(width: 24),
-                            ),
+                        actions: _appActions(context, app),
+                        onClose: () => setState(() => _activeAppPackage = null),
+                      );
+                    }
+                    return AppLabel(
+                      key: ValueKey(app.packageName),
+                      label: widget.appListState.displayLabelFor(
+                        app.packageName,
+                        app.label,
+                      ),
+                      onTap: () => widget.onLaunch(app.packageName),
+                      onLongPress: () => setState(
+                        () => _activeAppPackage =
+                            _activeAppPackage == app.packageName
+                            ? null
+                            : app.packageName,
+                      ),
+                      trailing: ReorderableDelayedDragStartListener(
+                        index: index,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 12, right: 20),
+                            child: const SizedBox(width: 24),
                           ),
                         ),
-                      );
-                    },
-                  );
-                },
-              ),
-            );
-          },
-        ),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -73,27 +73,20 @@ class _LauncherShellState extends State<LauncherShell>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _sheetAnim =
-        AnimationController(
-          vsync: this,
-          duration: Duration.zero,
-        )..addListener(() {
-          final t = Curves.easeOut.transform(_sheetAnim.value);
-          setState(() {
-            _sheetFraction =
-                _sheetAnimFrom + (_sheetAnimTo - _sheetAnimFrom) * t;
-          });
+    _sheetAnim = AnimationController(vsync: this, duration: Duration.zero)
+      ..addListener(() {
+        final t = Curves.easeOut.transform(_sheetAnim.value);
+        setState(() {
+          _sheetFraction = _sheetAnimFrom + (_sheetAnimTo - _sheetAnimFrom) * t;
         });
-    _pageAnim =
-        AnimationController(
-          vsync: this,
-          duration: _pageAnimDuration,
-        )..addListener(() {
-          final t = Curves.easeOut.transform(_pageAnim.value);
-          setState(() {
-            _pageFraction = _pageAnimFrom + (_pageAnimTo - _pageAnimFrom) * t;
-          });
+      });
+    _pageAnim = AnimationController(vsync: this, duration: _pageAnimDuration)
+      ..addListener(() {
+        final t = Curves.easeOut.transform(_pageAnim.value);
+        setState(() {
+          _pageFraction = _pageAnimFrom + (_pageAnimTo - _pageAnimFrom) * t;
         });
+      });
   }
 
   @override
@@ -147,7 +140,6 @@ class _LauncherShellState extends State<LauncherShell>
     _pageAnim.forward(from: 0);
   }
 
-
   void _launchApp(String packageName) {
     widget.appChannel.launchApp(packageName);
     _closeDrawer();
@@ -180,7 +172,8 @@ class _LauncherShellState extends State<LauncherShell>
     if (!_isDraggingSheet && !_isDraggingPage) {
       if (absDx < _dragStartThreshold && absDy < _dragStartThreshold) return;
 
-      if (absDx > absDy && !_drawerOpen &&
+      if (absDx > absDy &&
+          !_drawerOpen &&
           widget.settingsState.tasksEnabled &&
           !_isReorderingTasks) {
         // Horizontal drag — page navigation.
@@ -273,7 +266,6 @@ class _LauncherShellState extends State<LauncherShell>
       _animateSheetTo(_sheetAnimTo > 0 ? _maxSheetFraction : 0);
       return;
     }
-
   }
 
   void _onPointerCancel(PointerCancelEvent event) {
@@ -347,10 +339,8 @@ class _LauncherShellState extends State<LauncherShell>
                         taskState: widget.taskState,
                         settingsState: widget.settingsState,
                         isVisible: !_onHomePage,
-                        onReorderStart: () =>
-                            _isReorderingTasks = true,
-                        onReorderEnd: () =>
-                            _isReorderingTasks = false,
+                        onReorderStart: () => _isReorderingTasks = true,
+                        onReorderEnd: () => _isReorderingTasks = false,
                         scrollLocked: _isDraggingPage,
                       ),
                     ),
@@ -379,10 +369,8 @@ class _LauncherShellState extends State<LauncherShell>
                           appListState: widget.appListState,
                           settingsState: widget.settingsState,
                           onLaunch: _launchApp,
-                          onReorderStart: () =>
-                              _isReorderingHome = true,
-                          onReorderEnd: () =>
-                              _isReorderingHome = false,
+                          onReorderStart: () => _isReorderingHome = true,
+                          onReorderEnd: () => _isReorderingHome = false,
                           isActive: _onHomePage && !_drawerOpen,
                         ),
                       ),

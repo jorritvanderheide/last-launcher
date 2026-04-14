@@ -37,130 +37,126 @@ class SettingsScreen extends StatelessWidget {
 
           return FadeOverflow(
             child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              _SectionHeader(title: l10n.sectionAppearance),
-              _ThemeListTile(
-                themeValue: settingsState.themeValue,
-                onChanged: settingsState.setTheme,
-              ),
-              SwitchListTile(
-                title: Text(l10n.hideStatusBar),
-                subtitle: Text(l10n.hideStatusBarSubtitle),
-                value: settingsState.hideStatusBar,
-                onChanged: settingsState.setHideStatusBar,
-              ),
-              SwitchListTile(
-                title: Text(l10n.homeScreenHints),
-                subtitle: Text(l10n.homeScreenHintsSubtitle),
-                value: settingsState.showHints,
-                onChanged: settingsState.setShowHints,
-              ),
-              _SectionHeader(title: l10n.sectionApps),
-              ListenableBuilder(
-                listenable: appListState,
-                builder: (context, _) {
-                  final count = appListState.hiddenApps.length;
-                  return ListTile(
-                    title: Text(l10n.hiddenApps),
-                    subtitle: Text(count == 0 ? l10n.hiddenAppsNone : l10n.hiddenAppsCount(count)),
-                    onTap: () {
-                      Navigator.of(context).push(
-                        PageRouteBuilder<void>(
-                          pageBuilder: (_, _, _) => HiddenAppsScreen(
-                            appListState: appListState,
-                            homeState: homeState,
-                            onLaunch: appChannel.launchApp,
+              padding: EdgeInsets.zero,
+              children: [
+                _SectionHeader(title: l10n.sectionAppearance),
+                _ThemeListTile(
+                  themeValue: settingsState.themeValue,
+                  onChanged: settingsState.setTheme,
+                ),
+                SwitchListTile(
+                  title: Text(l10n.hideStatusBar),
+                  subtitle: Text(l10n.hideStatusBarSubtitle),
+                  value: settingsState.hideStatusBar,
+                  onChanged: settingsState.setHideStatusBar,
+                ),
+                SwitchListTile(
+                  title: Text(l10n.homeScreenHints),
+                  subtitle: Text(l10n.homeScreenHintsSubtitle),
+                  value: settingsState.showHints,
+                  onChanged: settingsState.setShowHints,
+                ),
+                _SectionHeader(title: l10n.sectionApps),
+                ListenableBuilder(
+                  listenable: appListState,
+                  builder: (context, _) {
+                    final count = appListState.hiddenApps.length;
+                    return ListTile(
+                      title: Text(l10n.hiddenApps),
+                      subtitle: Text(
+                        count == 0
+                            ? l10n.hiddenAppsNone
+                            : l10n.hiddenAppsCount(count),
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          PageRouteBuilder<void>(
+                            pageBuilder: (_, _, _) => HiddenAppsScreen(
+                              appListState: appListState,
+                              homeState: homeState,
+                              onLaunch: appChannel.launchApp,
+                            ),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
                           ),
-                          transitionDuration: Duration.zero,
-                          reverseTransitionDuration: Duration.zero,
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-              _SectionHeader(title: l10n.sectionBehavior),
-              SwitchListTile(
-                title: Text(l10n.searchOnlyMode),
-                subtitle: Text(l10n.searchOnlyModeSubtitle),
-                value: searchOnly,
-                onChanged: settingsState.setSearchOnly,
-              ),
-              SwitchListTile(
-                title: Text(l10n.autoShowKeyboard),
-                subtitle: Text(
-                  l10n.autoShowKeyboardAppsSubtitle,
+                        );
+                      },
+                    );
+                  },
                 ),
-                value: searchOnly || settingsState.autoKeyboard,
-                onChanged: searchOnly ? null : settingsState.setAutoKeyboard,
-              ),
-              SwitchListTile(
-                title: Text(l10n.autoLaunchOnMatch),
-                subtitle: Text(
-                  l10n.autoLaunchOnMatchSubtitle,
+                _SectionHeader(title: l10n.sectionBehavior),
+                SwitchListTile(
+                  title: Text(l10n.searchOnlyMode),
+                  subtitle: Text(l10n.searchOnlyModeSubtitle),
+                  value: searchOnly,
+                  onChanged: settingsState.setSearchOnly,
                 ),
-                value: searchOnly || settingsState.autoLaunch,
-                onChanged: searchOnly ? null : settingsState.setAutoLaunch,
-              ),
-              _SectionHeader(title: l10n.sectionTasks),
-              SwitchListTile(
-                title: Text(l10n.taskScreen),
-                subtitle: Text(l10n.taskScreenSubtitle),
-                value: settingsState.tasksEnabled,
-                onChanged: settingsState.setTasksEnabled,
-              ),
-              SwitchListTile(
-                title: Text(l10n.autoShowKeyboard),
-                subtitle: Text(
-                  l10n.autoShowKeyboardTasksSubtitle,
+                SwitchListTile(
+                  title: Text(l10n.autoShowKeyboard),
+                  subtitle: Text(l10n.autoShowKeyboardAppsSubtitle),
+                  value: searchOnly || settingsState.autoKeyboard,
+                  onChanged: searchOnly ? null : settingsState.setAutoKeyboard,
                 ),
-                value: settingsState.autoKeyboardTasks,
-                onChanged: settingsState.tasksEnabled
-                    ? settingsState.setAutoKeyboardTasks
-                    : null,
-              ),
-              SwitchListTile(
-                title: Text(l10n.removeOnComplete),
-                subtitle: Text(
-                  l10n.removeOnCompleteSubtitle,
+                SwitchListTile(
+                  title: Text(l10n.autoLaunchOnMatch),
+                  subtitle: Text(l10n.autoLaunchOnMatchSubtitle),
+                  value: searchOnly || settingsState.autoLaunch,
+                  onChanged: searchOnly ? null : settingsState.setAutoLaunch,
                 ),
-                value: settingsState.removeOnComplete,
-                onChanged: settingsState.tasksEnabled
-                    ? settingsState.setRemoveOnComplete
-                    : null,
-              ),
-              if (_store == 'fdroid') ...[
-                _SectionHeader(title: l10n.sectionSupport),
+                _SectionHeader(title: l10n.sectionTasks),
+                SwitchListTile(
+                  title: Text(l10n.taskScreen),
+                  subtitle: Text(l10n.taskScreenSubtitle),
+                  value: settingsState.tasksEnabled,
+                  onChanged: settingsState.setTasksEnabled,
+                ),
+                SwitchListTile(
+                  title: Text(l10n.autoShowKeyboard),
+                  subtitle: Text(l10n.autoShowKeyboardTasksSubtitle),
+                  value: settingsState.autoKeyboardTasks,
+                  onChanged: settingsState.tasksEnabled
+                      ? settingsState.setAutoKeyboardTasks
+                      : null,
+                ),
+                SwitchListTile(
+                  title: Text(l10n.removeOnComplete),
+                  subtitle: Text(l10n.removeOnCompleteSubtitle),
+                  value: settingsState.removeOnComplete,
+                  onChanged: settingsState.tasksEnabled
+                      ? settingsState.setRemoveOnComplete
+                      : null,
+                ),
+                if (_store == 'fdroid') ...[
+                  _SectionHeader(title: l10n.sectionSupport),
+                  ListTile(
+                    leading: const Icon(Icons.favorite_outline),
+                    title: Text(l10n.donate),
+                    subtitle: Text(l10n.donateSubtitle),
+                    onTap: () => launchUrl(
+                      Uri.parse('https://liberapay.com/BW20'),
+                      mode: LaunchMode.externalApplication,
+                    ),
+                  ),
+                ],
+                _SectionHeader(title: l10n.sectionAbout),
                 ListTile(
-                  leading: const Icon(Icons.favorite_outline),
-                  title: Text(l10n.donate),
-                  subtitle: Text(l10n.donateSubtitle),
-                  onTap: () => launchUrl(
-                    Uri.parse('https://liberapay.com/BW20'),
-                    mode: LaunchMode.externalApplication,
+                  title: Text(l10n.version),
+                  subtitle: const Text('1.0.0'),
+                ),
+                ListTile(
+                  title: Text(l10n.license),
+                  subtitle: const Text('EUPL-1.2'),
+                ),
+                ListTile(
+                  title: Text(l10n.openSourceLicenses),
+                  onTap: () => showLicensePage(
+                    context: context,
+                    applicationName: 'Last Launcher',
+                    applicationVersion: '1.0.0',
                   ),
                 ),
               ],
-              _SectionHeader(title: l10n.sectionAbout),
-              ListTile(
-                title: Text(l10n.version),
-                subtitle: const Text('1.0.0'),
-              ),
-              ListTile(
-                title: Text(l10n.license),
-                subtitle: const Text('EUPL-1.2'),
-              ),
-              ListTile(
-                title: Text(l10n.openSourceLicenses),
-                onTap: () => showLicensePage(
-                  context: context,
-                  applicationName: 'Last Launcher',
-                  applicationVersion: '1.0.0',
-                ),
-              ),
-            ],
-          ),
+            ),
           );
         },
       ),

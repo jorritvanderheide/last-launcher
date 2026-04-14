@@ -90,6 +90,24 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
         _focusNode.requestFocus();
       }
     });
+    // Re-request if focus was granted but keyboard suppressed during app transition.
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (mounted &&
+          _focusNode.hasFocus &&
+          WidgetsBinding
+                  .instance
+                  .platformDispatcher
+                  .views
+                  .first
+                  .viewInsets
+                  .bottom ==
+              0) {
+        _focusNode.unfocus();
+        Future.delayed(const Duration(milliseconds: 100), () {
+          if (mounted) _focusNode.requestFocus();
+        });
+      }
+    });
   }
 
   void _onScroll() {
@@ -161,10 +179,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
               ? () {}
               : () {
                   widget.homeState.addApp(
-                    PinnedApp(
-                      packageName: app.packageName,
-                      label: app.label,
-                    ),
+                    PinnedApp(packageName: app.packageName, label: app.label),
                   );
                   widget.onCloseDrawer();
                 },
@@ -186,103 +201,97 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
       child: Material(
         color: colorScheme.surface,
         child: CustomScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            slivers: [
-              const SliverToBoxAdapter(child: SizedBox(height: 8)),
-              SliverToBoxAdapter(
-                child: AppSearchField(
-                  controller: _textController,
-                  focusNode: _focusNode,
-                  onChanged: _onSearchChanged,
-                  onSubmit: _onSubmit,
-                ),
+          physics: const NeverScrollableScrollPhysics(),
+          slivers: [
+            const SliverToBoxAdapter(child: SizedBox(height: 8)),
+            SliverToBoxAdapter(
+              child: AppSearchField(
+                controller: _textController,
+                focusNode: _focusNode,
+                onChanged: _onSearchChanged,
+                onSubmit: _onSubmit,
               ),
-              const SliverToBoxAdapter(child: SizedBox(height: 32)),
-              if (_searchOnly)
-                SliverFillRemaining(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onVerticalDragEnd: (details) {
-                      if (details.velocity.pixelsPerSecond.dy > 100) {
-                        widget.onCloseDrawer();
-                      }
-                    },
-                  ),
-                )
-              else
-                SliverFillRemaining(
-                  child: NotificationListener<OverscrollNotification>(
-                    onNotification: (notification) {
-                      _onOverscroll(notification);
-                      return false;
-                    },
-                    child: FadeOverflow(
-                      child: ListenableBuilder(
-                        listenable: widget.appListState,
-                        builder: (context, _) {
-                          final apps = widget.appListState.filteredApps;
-                          if (apps.isEmpty &&
-                              widget.appListState.query.isNotEmpty) {
-                            return Padding(
-                              padding: const EdgeInsets.only(
-                                left: 20,
-                                top: 8 + AppLabel.verticalPadding,
-                              ),
-                              child: Text(
-                                AppLocalizations.of(context)!.noResults,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge
-                                    ?.copyWith(
-                                      fontSize: AppLabel.fontSize,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onSurface
-                                          .withAlpha(80),
-                                    ),
-                              ),
-                            );
-                          }
-                          return ListView.builder(
-                            controller: _scrollController,
-                            physics: const AlwaysScrollableScrollPhysics(),
+            ),
+            const SliverToBoxAdapter(child: SizedBox(height: 32)),
+            if (_searchOnly)
+              SliverFillRemaining(
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onVerticalDragEnd: (details) {
+                    if (details.velocity.pixelsPerSecond.dy > 100) {
+                      widget.onCloseDrawer();
+                    }
+                  },
+                ),
+              )
+            else
+              SliverFillRemaining(
+                child: NotificationListener<OverscrollNotification>(
+                  onNotification: (notification) {
+                    _onOverscroll(notification);
+                    return false;
+                  },
+                  child: FadeOverflow(
+                    child: ListenableBuilder(
+                      listenable: widget.appListState,
+                      builder: (context, _) {
+                        final apps = widget.appListState.filteredApps;
+                        if (apps.isEmpty &&
+                            widget.appListState.query.isNotEmpty) {
+                          return Padding(
                             padding: const EdgeInsets.only(
-                              top: 8,
-                              bottom: 32,
+                              left: 20,
+                              top: 8 + AppLabel.verticalPadding,
                             ),
+                            child: Text(
+                              AppLocalizations.of(context)!.noResults,
+                              style: Theme.of(context).textTheme.titleLarge
+                                  ?.copyWith(
+                                    fontSize: AppLabel.fontSize,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface.withAlpha(80),
+                                  ),
+                            ),
+                          );
+                        }
+                        return ListView.builder(
+                          controller: _scrollController,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          padding: const EdgeInsets.only(top: 8, bottom: 32),
                           itemCount: apps.length,
                           itemBuilder: (context, index) {
                             final app = apps[index];
                             if (_activeAppPackage == app.packageName) {
                               return ActionRow(
                                 key: ValueKey(app.packageName),
-                                label: widget.appListState
-                                    .displayLabel(app),
+                                label: widget.appListState.displayLabel(app),
                                 actions: _appActions(context, app),
-                                onClose: () => setState(
-                                    () => _activeAppPackage = null),
+                                onClose: () =>
+                                    setState(() => _activeAppPackage = null),
                               );
                             }
                             return AppLabel(
                               key: ValueKey(app.packageName),
                               label: widget.appListState.displayLabel(app),
                               onTap: () => widget.onLaunch(app.packageName),
-                              onLongPress: () => setState(() =>
-                                  _activeAppPackage =
-                                      _activeAppPackage == app.packageName
-                                          ? null
-                                          : app.packageName),
+                              onLongPress: () => setState(
+                                () => _activeAppPackage =
+                                    _activeAppPackage == app.packageName
+                                    ? null
+                                    : app.packageName,
+                              ),
                             );
                           },
-                          );
-                        },
-                      ),
+                        );
+                      },
                     ),
                   ),
                 ),
-            ],
-          ),
+              ),
+          ],
         ),
+      ),
     );
   }
 }

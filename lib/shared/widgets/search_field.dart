@@ -18,9 +18,9 @@ class AppSearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).textTheme.titleLarge?.copyWith(
-      fontSize: AppLabel.fontSize,
-    );
+    final style = Theme.of(
+      context,
+    ).textTheme.titleLarge?.copyWith(fontSize: AppLabel.fontSize);
     final colorScheme = Theme.of(context).colorScheme;
     final isExtra = ScanlineScope.of(context) != null;
 
@@ -127,8 +127,7 @@ class _ExtraField extends StatelessWidget {
               listenable: Listenable.merge([controller, focusNode]),
               builder: (context, _) {
                 final text = controller.text;
-                final focused =
-                    MediaQuery.viewInsetsOf(context).bottom > 0;
+                final focused = MediaQuery.viewInsetsOf(context).bottom > 0;
                 return Row(
                   children: [
                     Text('\$ ', style: style),
@@ -140,8 +139,7 @@ class _ExtraField extends StatelessWidget {
                         style: style,
                       ),
                     ),
-                    if (focused)
-                      _BlinkingCursor(color: color),
+                    if (focused) _BlinkingCursor(color: color),
                   ],
                 );
               },

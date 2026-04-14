@@ -63,8 +63,7 @@ class _ScanlineOverlayState extends State<ScanlineOverlay>
         final quantized = steps > 0
             ? (_controller.value * steps).round() / steps
             : _controller.value;
-        final bandY =
-            quantized * (screenHeight + bandHeight) - bandHeight;
+        final bandY = quantized * (screenHeight + bandHeight) - bandHeight;
 
         return ScanlineScope(
           bandY: bandY,
@@ -74,9 +73,7 @@ class _ScanlineOverlayState extends State<ScanlineOverlay>
               child!,
               Positioned.fill(
                 child: IgnorePointer(
-                  child: CustomPaint(
-                    painter: _ScanlinePainter(quantized),
-                  ),
+                  child: CustomPaint(painter: _ScanlinePainter(quantized)),
                 ),
               ),
             ],
@@ -109,17 +106,11 @@ class _ScanlinePainter extends CustomPainter {
       ..shader = LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: const [
-          Color(0x00FFFFFF),
-          Color(0x0CFFFFFF),
-          Color(0x00FFFFFF),
-        ],
+        colors: const [Color(0x00FFFFFF), Color(0x0CFFFFFF), Color(0x00FFFFFF)],
       ).createShader(Rect.fromLTWH(0, bandY, size.width, bandHeight));
 
-    canvas.drawRect(
-      Rect.fromLTWH(0, bandY, size.width, bandHeight),
-      bandPaint,
-    );  }
+    canvas.drawRect(Rect.fromLTWH(0, bandY, size.width, bandHeight), bandPaint);
+  }
 
   @override
   bool shouldRepaint(_ScanlinePainter oldDelegate) =>

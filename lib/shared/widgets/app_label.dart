@@ -49,10 +49,7 @@ class AppLabel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(child: text),
-                SizedBox(
-                  height: double.infinity,
-                  child: trailing!,
-                ),
+                SizedBox(height: double.infinity, child: trailing!),
               ],
             ),
           );
@@ -120,7 +117,11 @@ class _GlitchTextState extends State<_GlitchText> {
   }
 }
 
-Widget dragProxyDecorator(Widget child, int index, Animation<double> animation) {
+Widget dragProxyDecorator(
+  Widget child,
+  int index,
+  Animation<double> animation,
+) {
   return Material(
     color: Colors.transparent,
     child: Opacity(opacity: 0.6, child: child),

@@ -80,7 +80,6 @@ class SettingsState extends ChangeNotifier {
     };
   }
 
-
   Future<void> setAutoKeyboard(bool enabled) async {
     _autoKeyboard = enabled;
     notifyListeners();
@@ -116,7 +115,6 @@ class SettingsState extends ChangeNotifier {
     notifyListeners();
     await _prefs.setBool(_showHintsKey, enabled);
   }
-
 
   Future<void> setRemoveOnComplete(bool enabled) async {
     _removeOnComplete = enabled;
