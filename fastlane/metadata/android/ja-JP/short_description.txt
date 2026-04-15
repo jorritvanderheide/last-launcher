@@ -1,1 +1,1 @@
-Minimal text-only launcher focused on speed and simplicity
+速度とシンプルさを追求した最小限のテキスト専用ランチャー

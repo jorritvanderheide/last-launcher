@@ -62,6 +62,7 @@ class SettingsScreen extends StatelessWidget {
                   builder: (context, _) {
                     final count = appListState.hiddenApps.length;
                     return ListTile(
+                      leading: const Icon(Icons.visibility_off_outlined),
                       title: Text(l10n.hiddenApps),
                       subtitle: Text(
                         count == 0
@@ -154,6 +155,9 @@ class SettingsScreen extends StatelessWidget {
                     applicationName: 'Last Launcher',
                     applicationVersion: '1.0.0',
                   ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).viewPadding.bottom,
                 ),
               ],
             ),

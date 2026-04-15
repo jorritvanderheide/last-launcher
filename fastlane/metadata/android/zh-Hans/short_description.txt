@@ -1,1 +1,1 @@
-Minimal text-only launcher focused on speed and simplicity
+专注于速度和简单性的极简纯文本启动器

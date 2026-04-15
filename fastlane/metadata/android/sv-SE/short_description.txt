@@ -1,1 +1,1 @@
-Minimal text-only launcher focused on speed and simplicity
+Minimal textbaserad launcher fokuserad på hastighet och enkelhet
