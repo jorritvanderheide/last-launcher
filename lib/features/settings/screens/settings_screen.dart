@@ -156,9 +156,7 @@ class SettingsScreen extends StatelessWidget {
                     applicationVersion: '1.0.0',
                   ),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).viewPadding.bottom,
-                ),
+                SizedBox(height: MediaQuery.of(context).viewPadding.bottom),
               ],
             ),
           );
