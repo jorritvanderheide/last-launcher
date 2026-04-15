@@ -2,7 +2,7 @@
 
 **The last launcher you'll ever need.**
 
-A minimal, text-only Android launcher built for speed and zero distractions. No icons, no widgets, no clutter — just your apps as plain text.
+A minimal, text-only Android launcher built for speed and zero distractions. No icons, no widgets, no clutter; Just your apps as plain text.
 
 [![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/BW20)
 
