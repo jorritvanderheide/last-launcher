@@ -1,10 +1,12 @@
-# Last Launcher
+# <img src="fastlane/metadata/android/en-US/images/Icon.png" width="48" align="absmiddle" /> Last Launcher
 
 **The last launcher you'll ever need.**
 
 A minimal, text-only Android launcher built for speed and zero distractions. No icons, no widgets, no clutter — just your apps as plain text.
 
 [![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/BW20)
+
+![Feature graphic](fastlane/metadata/android/Feature%20graphic.png)
 
 ## Features
 
