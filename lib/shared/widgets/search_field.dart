@@ -55,6 +55,8 @@ class AppSearchField extends StatelessWidget {
             style: style,
             decoration: const InputDecoration(
               border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
               contentPadding: EdgeInsets.zero,
               isDense: true,
             ),
@@ -117,6 +119,8 @@ class _ExtraField extends StatelessWidget {
               style: style,
               decoration: const InputDecoration(
                 border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
                 contentPadding: EdgeInsets.zero,
                 isDense: true,
               ),
