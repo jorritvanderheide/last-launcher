@@ -1,16 +1,16 @@
-Last Launcher je minimální textový spouštěč systému Android vytvořený pro rychlost a jednoduchost. Žádné ikony, žádné widgety, žádný chaos — pouze vaše aplikace jako jednoduché textové popisky.
+Last Launcher je minimální textový spouštěč systému Android vytvořený pro rychlost a jednoduchost. Žádné ikony, žádné widgety, žádný chaos, pouze vaše aplikace jako jednoduché textové popisky.
 
 Funkce:
 * Textová domovská obrazovka s připnutými zkratkami aplikací
 * Rychlá zásuvka aplikací s okamžitým hledáním
 * Seznam úkolů s hledáním, přeuspořádáním a posouváním k odstranění
-* Dlouhé stisknutí pro vložené akce — přejmenování, připnutí, skrytí
+* Dlouhé stisknutí pro vložené akce, přejmenování, připnutí, skrytí
 * Režim hledání pro spuštění orientované na klávesnici
 * Systém/Světlý/Tmavý motiv s podporou čistě černého AMOLED
 * Dodatečný motiv s efekty CRT scanline a neproporcionálním písmem
 * Skrýt aplikace, které nechcete vidět
 * Automatické spuštění, když se jedna aplikace shoduje s vaším hledáním
-* Režim na celou obrazovku — skrýt stavový řádek a navigaci
+* Režim na celou obrazovku, skrýt stavový řádek a navigaci
 * Podpora více jazyků
 
 Last Launcher je bezplatný, open source (EUPL-1.2) a neobsahuje žádné reklamy, sledování ani telemetrii. Vaše data zůstávají na vašem zařízení.

@@ -1,16 +1,16 @@
-Last Launcher is a minimal, text-only Android launcher built for speed and simplicity. No icons, no widgets, no clutter — just your apps as plain text labels.
+Last Launcher is a minimal, text-only Android launcher built for speed and simplicity. No icons, no widgets, no clutter, just your apps as plain text labels.
 
 Features:
 * Text-only home screen with pinned app shortcuts
 * Fast app drawer with instant search
 * Task list with search, reorder, and swipe to remove
-* Long press for inline actions — rename, pin, hide
+* Long press for inline actions, rename, pin, hide
 * Search-only mode for keyboard-first launching
 * System/Light/Dark theme with pure black AMOLED support
 * Extra theme with CRT scanline effects and monospace font
 * Hide apps you don't want to see
 * Auto-launch when a single app matches your search
-* Fullscreen mode — hide status bar and navigation
+* Fullscreen mode, hide status bar and navigation
 * Multiple languages supported
 
 Last Launcher is free, open source (EUPL-1.2), and contains no ads, tracking, or telemetry. Your data stays on your device.

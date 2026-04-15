@@ -1,16 +1,16 @@
-Last Launcher is een minimale, tekstgebaseerde Android-launcher gebouwd voor snelheid en eenvoud. Geen iconen, geen widgets, geen rommel — alleen uw apps als eenvoudige tekstlabels.
+Last Launcher is een minimale, tekstgebaseerde Android-launcher gebouwd voor snelheid en eenvoud. Geen iconen, geen widgets, geen rommel, alleen uw apps als eenvoudige tekstlabels.
 
 Functies:
 * Tekstgebaseerd startscherm met vastgemaakte app-snelkoppelingen
 * Snelle app-keuzelijst met instant zoeken
 * Takenlijst met zoeken, herschikken en wissen door te vegen
-* Lang indrukken voor inline acties — hernoemen, vastmaken, verbergen
+* Lang indrukken voor inline acties, hernoemen, vastmaken, verbergen
 * Zoekmodus voor sneltoetsgeoriënteerd starten
 * Systeem/Licht/Donker thema met ondersteuning voor pure black AMOLED
 * Extra thema met CRT-scanlijnen en monospace lettertype
 * Apps verbergen die u niet wilt zien
 * Automatisch starten wanneer een enkele app overeenkomt met uw zoekopdracht
-* Volledig scherm — verberg statusbalk en navigatie
+* Volledig scherm, verberg statusbalk en navigatie
 * Ondersteuning voor meerdere talen
 
 Last Launcher is gratis, open source (EUPL-1.2) en bevat geen advertenties, tracking of telemetrie. Uw gegevens blijven op uw apparaat.
