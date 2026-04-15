@@ -24,6 +24,11 @@
   "hiddenApps": "Verborgen apps",
   "hiddenAppsNone": "Geen",
   "hiddenAppsCount": "{count} verborgen",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "noHiddenApps": "Geen verborgen apps",
 
   "searchOnlyMode": "Alleen zoeken",

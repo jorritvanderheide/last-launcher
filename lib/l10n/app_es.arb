@@ -24,6 +24,11 @@
   "hiddenApps": "Aplicaciones ocultas",
   "hiddenAppsNone": "Ninguna",
   "hiddenAppsCount": "{count} ocultas",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
   "noHiddenApps": "No hay aplicaciones ocultas",
 
   "searchOnlyMode": "Solo búsqueda",
