@@ -1,1 +1,1 @@
-Initial release.
+Initial release. Text-only launcher with instant app search, integrated task list, and three themes.
