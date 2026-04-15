@@ -128,6 +128,12 @@ abstract class AppLocalizations {
   /// **'Last Launcher'**
   String get appTitle;
 
+  /// No description provided for @appTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'The last launcher you\'ll ever need'**
+  String get appTagline;
+
   /// No description provided for @settings.
   ///
   /// In en, this message translates to:

@@ -1,6 +1,7 @@
 {
   "@@locale": "cs",
   "appTitle": "Last Launcher",
+  "appTagline": "Poslední spouštěč, který kdy budete potřebovat",
 
   "settings": "Nastavení",
   "sectionAppearance": "Vzhled",

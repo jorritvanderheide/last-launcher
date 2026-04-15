@@ -1,6 +1,7 @@
 {
   "@@locale": "nl",
   "appTitle": "Last Launcher",
+  "appTagline": "De laatste launcher die je ooit nodig hebt",
 
   "settings": "Instellingen",
   "sectionAppearance": "Uiterlijk",

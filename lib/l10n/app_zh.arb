@@ -1,6 +1,7 @@
 {
   "@@locale": "zh",
   "appTitle": "Last Launcher",
+  "appTagline": "你需要的最後一個啟動器",
 
   "settings": "设置",
   "sectionAppearance": "外观",

@@ -1,6 +1,7 @@
 {
   "@@locale": "ja",
   "appTitle": "Last Launcher",
+  "appTagline": "これが最後のランチャー",
 
   "settings": "設定",
   "sectionAppearance": "外観",

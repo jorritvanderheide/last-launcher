@@ -1,6 +1,7 @@
 {
   "@@locale": "ko",
   "appTitle": "Last Launcher",
+  "appTagline": "마지막으로 필요한 런처",
 
   "settings": "설정",
   "sectionAppearance": "외관",

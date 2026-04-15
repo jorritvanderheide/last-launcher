@@ -12,6 +12,9 @@ class AppLocalizationsSv extends AppLocalizations {
   String get appTitle => 'Last Launcher';
 
   @override
+  String get appTagline => 'Den sista launchern du någonsin behöver';
+
+  @override
   String get settings => 'Inställningar';
 
   @override

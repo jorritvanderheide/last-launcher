@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/settings/screens/about_screen.dart';
 import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
@@ -141,20 +142,16 @@ class SettingsScreen extends StatelessWidget {
                 ],
                 _SectionHeader(title: l10n.sectionAbout),
                 ListTile(
-                  title: Text(l10n.version),
-                  subtitle: const Text('1.0.0'),
-                ),
-                ListTile(
-                  title: Text(l10n.license),
-                  subtitle: const Text('EUPL-1.2'),
-                ),
-                ListTile(
-                  title: Text(l10n.openSourceLicenses),
-                  onTap: () => showLicensePage(
-                    context: context,
-                    applicationName: 'Last Launcher',
-                    applicationVersion: '1.0.0',
-                  ),
+                  title: Text(l10n.sectionAbout),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      PageRouteBuilder<void>(
+                        pageBuilder: (_, _, _) => const AboutScreen(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
+                  },
                 ),
                 SizedBox(height: MediaQuery.of(context).viewPadding.bottom),
               ],

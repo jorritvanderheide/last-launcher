@@ -12,6 +12,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appTitle => 'Last Launcher';
 
   @override
+  String get appTagline => '你需要的最後一個啟動器';
+
+  @override
   String get settings => '设置';
 
   @override

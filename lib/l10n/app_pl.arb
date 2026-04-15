@@ -1,6 +1,7 @@
 {
   "@@locale": "pl",
   "appTitle": "Last Launcher",
+  "appTagline": "Ostatni launcher, jakiego kiedykolwiek będziesz potrzebować",
 
   "settings": "Ustawienia",
   "sectionAppearance": "Wygląd",

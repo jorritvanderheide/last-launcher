@@ -12,6 +12,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get appTitle => 'Last Launcher';
 
   @override
+  String get appTagline => '마지막으로 필요한 런처';
+
+  @override
   String get settings => '설정';
 
   @override

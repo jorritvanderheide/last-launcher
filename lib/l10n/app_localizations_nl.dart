@@ -12,6 +12,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get appTitle => 'Last Launcher';
 
   @override
+  String get appTagline => 'De laatste launcher die je ooit nodig hebt';
+
+  @override
   String get settings => 'Instellingen';
 
   @override

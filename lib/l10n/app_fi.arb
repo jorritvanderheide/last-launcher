@@ -1,6 +1,7 @@
 {
   "@@locale": "fi",
   "appTitle": "Last Launcher",
+  "appTagline": "Viimeinen laukaisija, jonka koskaan tarvitset",
 
   "settings": "Asetukset",
   "sectionAppearance": "Ulkoasu",

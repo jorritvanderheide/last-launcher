@@ -12,6 +12,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get appTitle => 'Last Launcher';
 
   @override
+  String get appTagline => 'Poslední spouštěč, který kdy budete potřebovat';
+
+  @override
   String get settings => 'Nastavení';
 
   @override

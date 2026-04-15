@@ -12,6 +12,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appTitle => 'Last Launcher';
 
   @override
+  String get appTagline => 'El último lanzador que necesitarás';
+
+  @override
   String get settings => 'Ajustes';
 
   @override

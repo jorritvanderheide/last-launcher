@@ -12,6 +12,9 @@ class AppLocalizationsFi extends AppLocalizations {
   String get appTitle => 'Last Launcher';
 
   @override
+  String get appTagline => 'Viimeinen laukaisija, jonka koskaan tarvitset';
+
+  @override
   String get settings => 'Asetukset';
 
   @override

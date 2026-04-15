@@ -1,6 +1,7 @@
 {
   "@@locale": "sv",
   "appTitle": "Last Launcher",
+  "appTagline": "Den sista launchern du någonsin behöver",
 
   "settings": "Inställningar",
   "sectionAppearance": "Utseende",
