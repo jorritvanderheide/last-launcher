@@ -15,34 +15,34 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appTagline => '你需要的最後一個啟動器';
 
   @override
-  String get settings => '设置';
+  String get settings => '設定';
 
   @override
-  String get sectionAppearance => '外观';
+  String get sectionAppearance => '外觀';
 
   @override
-  String get sectionApps => '应用';
+  String get sectionApps => '應用程式';
 
   @override
-  String get sectionBehavior => '行为';
+  String get sectionBehavior => '行為';
 
   @override
-  String get sectionTasks => '任务';
+  String get sectionTasks => '任務';
 
   @override
-  String get sectionSupport => '支持';
+  String get sectionSupport => '支援';
 
   @override
-  String get sectionAbout => '关于';
+  String get sectionAbout => '關於';
 
   @override
-  String get themeTitle => '主题';
+  String get themeTitle => '主題';
 
   @override
-  String get themeSystem => '系统';
+  String get themeSystem => '系統';
 
   @override
-  String get themeLight => '浅色';
+  String get themeLight => '淺色';
 
   @override
   String get themeDark => '深色';
@@ -51,102 +51,102 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themeExtra => 'Extra';
 
   @override
-  String get hideStatusBar => '全屏';
+  String get hideStatusBar => '全螢幕';
 
   @override
-  String get hideStatusBarSubtitle => '隐藏状态栏和导航栏';
+  String get hideStatusBarSubtitle => '隱藏狀態列和導覽列';
 
   @override
-  String get showHints => '显示提示';
+  String get showHints => '顯示提示';
 
   @override
-  String get showHintsSubtitle => '在整个应用中显示使用提示';
+  String get showHintsSubtitle => '在整個應用程式中顯示使用提示';
 
   @override
-  String get hiddenApps => '隐藏的应用';
+  String get hiddenApps => '已隱藏的應用程式';
 
   @override
-  String get hiddenAppsNone => '无';
+  String get hiddenAppsNone => '無';
 
   @override
   String hiddenAppsCount(int count) {
-    return '已隐藏 $count 个';
+    return '已隱藏 $count 個';
   }
 
   @override
-  String get noHiddenApps => '没有隐藏的应用';
+  String get noHiddenApps => '沒有已隱藏的應用程式';
 
   @override
-  String get searchOnlyMode => '仅搜索';
+  String get searchOnlyMode => '僅搜尋';
 
   @override
-  String get searchOnlyModeSubtitle => '隐藏应用名称，搜索启动';
+  String get searchOnlyModeSubtitle => '隱藏應用程式名稱，以搜尋開啟';
 
   @override
-  String get autoShowKeyboard => '显示键盘';
+  String get autoShowKeyboard => '顯示鍵盤';
 
   @override
-  String get autoShowKeyboardAppsSubtitle => '打开抽屉时显示键盘';
+  String get autoShowKeyboardAppsSubtitle => '開啟抽屜時顯示鍵盤';
 
   @override
-  String get autoShowKeyboardTasksSubtitle => '打开任务时显示键盘';
+  String get autoShowKeyboardTasksSubtitle => '開啟任務時顯示鍵盤';
 
   @override
-  String get autoLaunchOnMatch => '匹配时自动启动';
+  String get autoLaunchOnMatch => '符合時自動開啟';
 
   @override
-  String get autoLaunchOnMatchSubtitle => '仅匹配一个应用时启动';
+  String get autoLaunchOnMatchSubtitle => '當只有一個應用程式符合時自動開啟';
 
   @override
-  String get taskScreen => '任务屏幕';
+  String get taskScreen => '任務畫面';
 
   @override
-  String get taskScreenSubtitle => '从主屏幕向右滑动查看任务';
+  String get taskScreenSubtitle => '從主畫面向右滑動以查看任務';
 
   @override
-  String get removeOnComplete => '完成后移除';
+  String get removeOnComplete => '完成後移除';
 
   @override
-  String get removeOnCompleteSubtitle => '标记完成后移除任务';
+  String get removeOnCompleteSubtitle => '標記為完成後移除任務';
 
   @override
-  String get donate => '捐赠';
+  String get donate => '贊助';
 
   @override
-  String get donateSubtitle => '支持 Last Launcher 的开发';
+  String get donateSubtitle => '支持 Last Launcher 的開發';
 
   @override
   String get version => '版本';
 
   @override
-  String get license => '许可证';
+  String get license => '授權條款';
 
   @override
-  String get openSourceLicenses => '开源许可证';
+  String get openSourceLicenses => '開放原始碼授權';
 
   @override
-  String get aboutSubtitle => '版本和许可证';
+  String get aboutSubtitle => '版本與授權';
 
   @override
-  String get hintSwipeUp => '向上滑动搜索';
+  String get hintSwipeUp => '向上滑動以搜尋';
 
   @override
-  String get hintSwipeRight => '向右滑动查看任务';
+  String get hintSwipeRight => '向右滑動以查看任務';
 
   @override
-  String get hintLongPress => '长按打开设置';
+  String get hintLongPress => '長按以開啟設定';
 
   @override
-  String get noResults => '无结果';
+  String get noResults => '沒有結果';
 
   @override
-  String get emptyTaskList => '输入以添加任务';
+  String get emptyTaskList => '輸入以新增任務';
 
   @override
-  String get returnToAddTask => '按回车键添加任务';
+  String get returnToAddTask => '按 Enter 鍵以新增任務';
 
   @override
-  String get actionRename => '重命名';
+  String get actionRename => '重新命名';
 
   @override
   String get actionUnpin => '取消固定';
@@ -155,38 +155,38 @@ class AppLocalizationsZh extends AppLocalizations {
   String get actionPin => '固定';
 
   @override
-  String get actionPinFull => '已满';
+  String get actionPinFull => '已滿';
 
   @override
-  String get actionHide => '隐藏';
+  String get actionHide => '隱藏';
 
   @override
-  String get actionUnhide => '取消隐藏';
+  String get actionUnhide => '取消隱藏';
 
   @override
   String get actionDone => '完成';
 
   @override
-  String get actionUndo => '撤销';
+  String get actionUndo => '還原';
 
   @override
   String get actionRemove => '移除';
 
   @override
-  String get actionClose => '关闭';
+  String get actionClose => '關閉';
 
   @override
-  String get actionAppInfo => '应用信息';
+  String get actionAppInfo => '應用程式資訊';
 
   @override
-  String get renameDialogTitle => '重命名';
+  String get renameDialogTitle => '重新命名';
 
   @override
   String get renameDialogCancel => '取消';
 
   @override
-  String get renameDialogSave => '保存';
+  String get renameDialogSave => '儲存';
 
   @override
-  String get homeScreenFull => '主屏幕已满';
+  String get homeScreenFull => '主畫面已滿';
 }

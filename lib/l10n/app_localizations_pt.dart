@@ -12,16 +12,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appTitle => 'Last Launcher';
 
   @override
-  String get appTagline => 'O último inicializador que você vai precisar';
+  String get appTagline => 'O último launcher de que vais precisar';
 
   @override
-  String get settings => 'Configurações';
+  String get settings => 'Definições';
 
   @override
   String get sectionAppearance => 'Aparência';
 
   @override
-  String get sectionApps => 'Apps';
+  String get sectionApps => 'Aplicações';
 
   @override
   String get sectionBehavior => 'Comportamento';
@@ -33,7 +33,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get sectionSupport => 'Apoio';
 
   @override
-  String get sectionAbout => 'Sobre';
+  String get sectionAbout => 'Acerca';
 
   @override
   String get themeTitle => 'Tema';
@@ -51,59 +51,62 @@ class AppLocalizationsPt extends AppLocalizations {
   String get themeExtra => 'Extra';
 
   @override
-  String get hideStatusBar => 'Tela cheia';
+  String get hideStatusBar => 'Ecrã inteiro';
 
   @override
-  String get hideStatusBarSubtitle => 'Ocultar barra de status e navegação';
+  String get hideStatusBarSubtitle => 'Ocultar barra de estado e de navegação';
 
   @override
   String get showHints => 'Mostrar dicas';
 
   @override
-  String get showHintsSubtitle => 'Mostrar dicas de uso em todo o app';
+  String get showHintsSubtitle =>
+      'Mostrar dicas de utilização em toda a aplicação';
 
   @override
-  String get hiddenApps => 'Apps ocultos';
+  String get hiddenApps => 'Aplicações ocultas';
 
   @override
-  String get hiddenAppsNone => 'Nenhum';
+  String get hiddenAppsNone => 'Nenhuma';
 
   @override
   String hiddenAppsCount(int count) {
-    return '$count ocultos';
+    return '$count ocultas';
   }
 
   @override
-  String get noHiddenApps => 'Nenhum app oculto';
+  String get noHiddenApps => 'Nenhuma aplicação oculta';
 
   @override
   String get searchOnlyMode => 'Apenas pesquisa';
 
   @override
   String get searchOnlyModeSubtitle =>
-      'Ocultar nomes de apps, pesquisar para abrir';
+      'Ocultar nomes das aplicações, pesquisar para abrir';
 
   @override
   String get autoShowKeyboard => 'Mostrar teclado';
 
   @override
-  String get autoShowKeyboardAppsSubtitle => 'Abrir teclado ao abrir a gaveta';
+  String get autoShowKeyboardAppsSubtitle =>
+      'Abrir o teclado ao abrir a gaveta';
 
   @override
-  String get autoShowKeyboardTasksSubtitle => 'Abrir teclado ao abrir tarefas';
+  String get autoShowKeyboardTasksSubtitle =>
+      'Abrir o teclado ao abrir as tarefas';
 
   @override
-  String get autoLaunchOnMatch => 'Abrir ao encontrar';
+  String get autoLaunchOnMatch => 'Abrir ao corresponder';
 
   @override
   String get autoLaunchOnMatchSubtitle =>
-      'Abrir quando apenas um app corresponder';
+      'Abrir quando apenas uma aplicação corresponder';
 
   @override
-  String get taskScreen => 'Tela de tarefas';
+  String get taskScreen => 'Ecrã de tarefas';
 
   @override
-  String get taskScreenSubtitle => 'Deslize para a direita para ver tarefas';
+  String get taskScreenSubtitle => 'Desliza para a direita para ver as tarefas';
 
   @override
   String get removeOnComplete => 'Remover ao concluir';
@@ -116,7 +119,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get donate => 'Doar';
 
   @override
-  String get donateSubtitle => 'Apoie o desenvolvimento do Last Launcher';
+  String get donateSubtitle => 'Apoia o desenvolvimento do Last Launcher';
 
   @override
   String get version => 'Versão';
@@ -131,22 +134,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aboutSubtitle => 'Versão e licenças';
 
   @override
-  String get hintSwipeUp => 'Deslize para cima para pesquisar';
+  String get hintSwipeUp => 'Desliza para cima para pesquisar';
 
   @override
-  String get hintSwipeRight => 'Deslize para a direita para tarefas';
+  String get hintSwipeRight => 'Desliza para a direita para as tarefas';
 
   @override
-  String get hintLongPress => 'Pressione longo para configurações';
+  String get hintLongPress => 'Prime longamente para as definições';
 
   @override
   String get noResults => 'Sem resultados';
 
   @override
-  String get emptyTaskList => 'Digite para adicionar uma tarefa';
+  String get emptyTaskList => 'Escreve para adicionar uma tarefa';
 
   @override
-  String get returnToAddTask => 'Pressione Enter para adicionar uma tarefa';
+  String get returnToAddTask => 'Prime Enter para adicionar uma tarefa';
 
   @override
   String get actionRename => 'Renomear';
@@ -170,7 +173,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get actionDone => 'Concluído';
 
   @override
-  String get actionUndo => 'Desfazer';
+  String get actionUndo => 'Anular';
 
   @override
   String get actionRemove => 'Remover';
@@ -179,7 +182,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get actionClose => 'Fechar';
 
   @override
-  String get actionAppInfo => 'Informações do app';
+  String get actionAppInfo => 'Informações da aplicação';
 
   @override
   String get renameDialogTitle => 'Renomear';
@@ -188,8 +191,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get renameDialogCancel => 'Cancelar';
 
   @override
-  String get renameDialogSave => 'Salvar';
+  String get renameDialogSave => 'Guardar';
 
   @override
-  String get homeScreenFull => 'A tela inicial está cheia';
+  String get homeScreenFull => 'O ecrã inicial está cheio';
 }

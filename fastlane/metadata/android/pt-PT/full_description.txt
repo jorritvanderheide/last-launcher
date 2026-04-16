@@ -1,4 +1,4 @@
-O Last Launcher é um launcher Android minimalista, só de texto, pensado para velocidade e simplicidade. Sem ícones, sem widgets, sem confusão — apenas as tuas aplicações como etiquetas de texto simples.
+O Last Launcher é um launcher Android minimalista, só de texto, pensado para velocidade e simplicidade. Sem ícones, sem widgets, sem confusão, apenas as tuas aplicações como etiquetas de texto simples.
 
 Funcionalidades:
 * Ecrã inicial só de texto com atalhos de aplicações fixados
