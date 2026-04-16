@@ -1,0 +1,5 @@
+• Novo atalho "Informações da aplicação" ao premir longamente uma aplicação
+• Ícone de fechar (X) adicionado a todas as linhas de ação
+• Dicas mais claras no ecrã de tarefas (lista vazia vs. sem resultados)
+• Interruptores desativados estão agora corretamente esbatidos
+• Ajustes: opção "Mostrar dicas" unificada, novos ícones, melhorias no esquema

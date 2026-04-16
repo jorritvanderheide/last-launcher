@@ -1,15 +1,15 @@
 {
   "@@locale": "pt",
   "appTitle": "Last Launcher",
-  "appTagline": "O último inicializador que você vai precisar",
+  "appTagline": "O último launcher de que vais precisar",
 
-  "settings": "Configurações",
+  "settings": "Definições",
   "sectionAppearance": "Aparência",
-  "sectionApps": "Apps",
+  "sectionApps": "Aplicações",
   "sectionBehavior": "Comportamento",
   "sectionTasks": "Tarefas",
   "sectionSupport": "Apoio",
-  "sectionAbout": "Sobre",
+  "sectionAbout": "Acerca",
 
   "themeTitle": "Tema",
   "themeSystem": "Sistema",
@@ -17,48 +17,48 @@
   "themeDark": "Escuro",
   "themeExtra": "Extra",
 
-  "hideStatusBar": "Tela cheia",
-  "hideStatusBarSubtitle": "Ocultar barra de status e navegação",
+  "hideStatusBar": "Ecrã inteiro",
+  "hideStatusBarSubtitle": "Ocultar barra de estado e de navegação",
   "showHints": "Mostrar dicas",
-  "showHintsSubtitle": "Mostrar dicas de uso em todo o app",
+  "showHintsSubtitle": "Mostrar dicas de utilização em toda a aplicação",
 
-  "hiddenApps": "Apps ocultos",
-  "hiddenAppsNone": "Nenhum",
-  "hiddenAppsCount": "{count} ocultos",
+  "hiddenApps": "Aplicações ocultas",
+  "hiddenAppsNone": "Nenhuma",
+  "hiddenAppsCount": "{count} ocultas",
   "@hiddenAppsCount": {
     "placeholders": {
       "count": {"type": "int"}
     }
   },
-  "noHiddenApps": "Nenhum app oculto",
+  "noHiddenApps": "Nenhuma aplicação oculta",
 
   "searchOnlyMode": "Apenas pesquisa",
-  "searchOnlyModeSubtitle": "Ocultar nomes de apps, pesquisar para abrir",
+  "searchOnlyModeSubtitle": "Ocultar nomes das aplicações, pesquisar para abrir",
   "autoShowKeyboard": "Mostrar teclado",
-  "autoShowKeyboardAppsSubtitle": "Abrir teclado ao abrir a gaveta",
-  "autoShowKeyboardTasksSubtitle": "Abrir teclado ao abrir tarefas",
-  "autoLaunchOnMatch": "Abrir ao encontrar",
-  "autoLaunchOnMatchSubtitle": "Abrir quando apenas um app corresponder",
+  "autoShowKeyboardAppsSubtitle": "Abrir o teclado ao abrir a gaveta",
+  "autoShowKeyboardTasksSubtitle": "Abrir o teclado ao abrir as tarefas",
+  "autoLaunchOnMatch": "Abrir ao corresponder",
+  "autoLaunchOnMatchSubtitle": "Abrir quando apenas uma aplicação corresponder",
 
-  "taskScreen": "Tela de tarefas",
-  "taskScreenSubtitle": "Deslize para a direita para ver tarefas",
+  "taskScreen": "Ecrã de tarefas",
+  "taskScreenSubtitle": "Desliza para a direita para ver as tarefas",
   "removeOnComplete": "Remover ao concluir",
   "removeOnCompleteSubtitle": "Remover tarefas quando marcadas como concluídas",
 
   "donate": "Doar",
-  "donateSubtitle": "Apoie o desenvolvimento do Last Launcher",
+  "donateSubtitle": "Apoia o desenvolvimento do Last Launcher",
   "version": "Versão",
   "license": "Licença",
   "openSourceLicenses": "Licenças de código aberto",
   "aboutSubtitle": "Versão e licenças",
 
-  "hintSwipeUp": "Deslize para cima para pesquisar",
-  "hintSwipeRight": "Deslize para a direita para tarefas",
-  "hintLongPress": "Pressione longo para configurações",
+  "hintSwipeUp": "Desliza para cima para pesquisar",
+  "hintSwipeRight": "Desliza para a direita para as tarefas",
+  "hintLongPress": "Prime longamente para as definições",
 
   "noResults": "Sem resultados",
-  "emptyTaskList": "Digite para adicionar uma tarefa",
-  "returnToAddTask": "Pressione Enter para adicionar uma tarefa",
+  "emptyTaskList": "Escreve para adicionar uma tarefa",
+  "returnToAddTask": "Prime Enter para adicionar uma tarefa",
 
   "actionRename": "Renomear",
   "actionUnpin": "Desafixar",
@@ -67,14 +67,14 @@
   "actionHide": "Ocultar",
   "actionUnhide": "Mostrar",
   "actionDone": "Concluído",
-  "actionUndo": "Desfazer",
+  "actionUndo": "Anular",
   "actionRemove": "Remover",
   "actionClose": "Fechar",
-  "actionAppInfo": "Informações do app",
+  "actionAppInfo": "Informações da aplicação",
 
   "renameDialogTitle": "Renomear",
   "renameDialogCancel": "Cancelar",
-  "renameDialogSave": "Salvar",
+  "renameDialogSave": "Guardar",
 
-  "homeScreenFull": "A tela inicial está cheia"
+  "homeScreenFull": "O ecrã inicial está cheio"
 }

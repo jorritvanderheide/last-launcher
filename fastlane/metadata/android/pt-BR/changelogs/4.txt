@@ -1,5 +1,0 @@
-• Novo atalho "Informações do app" ao pressionar longamente um app
-• Ícone de fechar (X) adicionado a todas as linhas de ação
-• Dicas mais claras na tela de tarefas (lista vazia vs. sem resultado)
-• Interruptores desativados agora são corretamente esmaecidos
-• Ajustes: chave "Mostrar dicas" unificada, novos ícones, melhorias de layout
