@@ -1,0 +1,5 @@
+• New "App info" shortcut when long-pressing an app
+• Close (X) icon added to all long-press action rows
+• Task screen hints clarified (empty list vs. no match)
+• Disabled switches now properly dim
+• Settings: unified "Show hints" toggle, new section icons, layout polish

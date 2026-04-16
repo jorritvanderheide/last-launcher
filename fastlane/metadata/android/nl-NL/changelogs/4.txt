@@ -1,0 +1,5 @@
+• Nieuwe snelkoppeling "App-info" bij lang indrukken van een app
+• Sluiten (X) toegevoegd aan alle actierijen bij lang indrukken
+• Duidelijkere tips op het takenscherm (lege lijst vs. geen match)
+• Uitgeschakelde schakelaars worden nu correct gedimd
+• Instellingen: gecombineerde "Tips tonen" schakelaar, nieuwe pictogrammen, opmaakverbeteringen

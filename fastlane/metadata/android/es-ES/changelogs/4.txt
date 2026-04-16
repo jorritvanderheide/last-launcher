@@ -1,0 +1,5 @@
+• Nuevo acceso directo "Información de la app" al mantener pulsada una app
+• Icono de cerrar (X) añadido a todas las acciones de pulsación larga
+• Consejos más claros en la pantalla de tareas (lista vacía vs. sin coincidencia)
+• Los interruptores deshabilitados ahora se atenúan correctamente
+• Ajustes: interruptor "Mostrar consejos" unificado, nuevos iconos, mejoras de diseño

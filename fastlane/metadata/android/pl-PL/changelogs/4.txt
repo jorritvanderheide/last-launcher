@@ -1,0 +1,5 @@
+• Nowy skrót "Informacje o aplikacji" po długim naciśnięciu
+• Ikona zamknięcia (X) dodana do wszystkich wierszy akcji
+• Wyraźniejsze wskazówki na ekranie zadań (pusta lista vs. brak wyniku)
+• Wyłączone przełączniki są teraz prawidłowo przyciemnione
+• Ustawienia: ujednolicony przełącznik "Pokaż wskazówki", nowe ikony, poprawki układu

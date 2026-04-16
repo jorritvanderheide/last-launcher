@@ -1,0 +1,5 @@
+• Uusi "Sovelluksen tiedot" -pikakuvake pitkällä painalluksella
+• Sulje (X) -kuvake lisätty kaikkiin toimintariveihin
+• Selkeämmät vinkit tehtävänäytöllä (tyhjä lista vs. ei osumaa)
+• Pois käytöstä olevat kytkimet näkyvät nyt oikein himmennettyinä
+• Asetukset: yhtenäinen "Näytä vinkit" -kytkin, uudet kuvakkeet, asettelun parannukset

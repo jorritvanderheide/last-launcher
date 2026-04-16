@@ -1,0 +1,5 @@
+• Nová zkratka "Informace o aplikaci" při dlouhém stisku aplikace
+• Ikona zavření (X) přidána do všech řádků akcí
+• Jasnější nápověda na obrazovce úkolů (prázdný seznam vs. žádný výsledek)
+• Zakázané přepínače jsou nyní správně ztlumeny
+• Nastavení: sjednocený přepínač "Zobrazit nápovědu", nové ikony, úpravy rozvržení

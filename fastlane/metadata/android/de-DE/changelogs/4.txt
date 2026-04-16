@@ -1,0 +1,5 @@
+• Neue "App-Info"-Verknüpfung beim langen Drücken einer App
+• Schließen (X) zu allen Aktionsleisten hinzugefügt
+• Klarere Hinweise auf dem Aufgabenbildschirm (leere Liste vs. kein Treffer)
+• Deaktivierte Schalter werden nun korrekt abgeblendet
+• Einstellungen: vereinheitlichter "Tipps anzeigen"-Schalter, neue Symbole, Layoutverbesserungen

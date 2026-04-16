@@ -1,0 +1,5 @@
+• Nouveau raccourci "Infos sur l'application" via appui long
+• Icône de fermeture (X) ajoutée à toutes les actions en appui long
+• Astuces plus claires sur l'écran des tâches (liste vide vs. pas de résultat)
+• Les interrupteurs désactivés sont désormais correctement grisés
+• Réglages : bascule "Afficher les astuces" unifiée, nouvelles icônes, ajustements de mise en page

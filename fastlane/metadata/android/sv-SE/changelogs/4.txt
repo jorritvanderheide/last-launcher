@@ -1,0 +1,5 @@
+• Ny "Appinfo"-genväg vid långt tryck på en app
+• Stäng-ikon (X) tillagd i alla långtrycksrader
+• Tydligare tips på uppgiftsskärmen (tom lista vs. ingen träff)
+• Inaktiverade växlar tonas nu korrekt ner
+• Inställningar: enhetlig "Visa tips"-växel, nya ikoner, layoutförbättringar
