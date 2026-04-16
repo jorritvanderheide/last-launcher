@@ -117,7 +117,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get donate => 'Doar';
 
   @override
-  String get donateSubtitle => 'Apoie o desenvolvimento no Liberapay';
+  String get donateSubtitle => 'Apoie o desenvolvimento do Last Launcher';
 
   @override
   String get version => 'Versão';

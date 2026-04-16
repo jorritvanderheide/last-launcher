@@ -329,7 +329,7 @@ abstract class AppLocalizations {
   /// No description provided for @donateSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Support development on Liberapay'**
+  /// **'Support the development of Last Launcher'**
   String get donateSubtitle;
 
   /// No description provided for @version.

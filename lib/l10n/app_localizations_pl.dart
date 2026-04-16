@@ -119,7 +119,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get donate => 'Wspomóż';
 
   @override
-  String get donateSubtitle => 'Wesprzyj rozwój na Liberapay';
+  String get donateSubtitle => 'Wesprzyj rozwój Last Launchera';
 
   @override
   String get version => 'Wersja';

@@ -113,7 +113,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get donate => 'दान करें';
 
   @override
-  String get donateSubtitle => 'Liberapay पर विकास का समर्थन करें';
+  String get donateSubtitle => 'Last Launcher के विकास का समर्थन करें';
 
   @override
   String get version => 'संस्करण';

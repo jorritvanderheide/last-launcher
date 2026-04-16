@@ -118,7 +118,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get donate => 'Lahjoita';
 
   @override
-  String get donateSubtitle => 'Tue kehitystä Liberapayssa';
+  String get donateSubtitle => 'Tue Last Launcherin kehitystä';
 
   @override
   String get version => 'Versio';

@@ -119,7 +119,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get donate => 'Přispět';
 
   @override
-  String get donateSubtitle => 'Podpořte vývoj na Liberapay';
+  String get donateSubtitle => 'Podpořte vývoj Last Launcheru';
 
   @override
   String get version => 'Verze';

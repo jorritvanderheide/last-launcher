@@ -113,7 +113,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get donate => '기부';
 
   @override
-  String get donateSubtitle => 'Liberapay에서 개발 지원';
+  String get donateSubtitle => 'Last Launcher 개발 지원';
 
   @override
   String get version => '버전';

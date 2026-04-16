@@ -120,7 +120,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get donate => 'Spenden';
 
   @override
-  String get donateSubtitle => 'Entwicklung auf Liberapay unterstützen';
+  String get donateSubtitle => 'Unterstütze die Entwicklung von Last Launcher';
 
   @override
   String get version => 'Version';
