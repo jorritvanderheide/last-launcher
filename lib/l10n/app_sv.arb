@@ -50,13 +50,15 @@
   "version": "Version",
   "license": "Licens",
   "openSourceLicenses": "Licenser för öppen källkod",
+  "aboutSubtitle": "Version och licenser",
 
   "hintSwipeUp": "Svep uppåt för att söka",
   "hintSwipeRight": "Svep höger för uppgifter",
   "hintLongPress": "Tryck länge för inställningar",
 
   "noResults": "Inga resultat",
-  "returnToAddTask": "Skriv för att lägga till uppgift",
+  "emptyTaskList": "Skriv för att lägga till en ny uppgift",
+  "returnToAddTask": "Tryck på Enter för att lägga till",
 
   "actionRename": "Byt namn",
   "actionUnpin": "Lossa",
@@ -67,6 +69,8 @@
   "actionDone": "Klar",
   "actionUndo": "Ångra",
   "actionRemove": "Ta bort",
+  "actionClose": "Stäng",
+  "actionAppInfo": "Appinfo",
 
   "renameDialogTitle": "Byt namn",
   "renameDialogCancel": "Avbryt",

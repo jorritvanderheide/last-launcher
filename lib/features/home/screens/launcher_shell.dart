@@ -145,6 +145,11 @@ class _LauncherShellState extends State<LauncherShell>
     _closeDrawer();
   }
 
+  void _openAppInfo(String packageName) {
+    widget.appChannel.openAppInfo(packageName);
+    _closeDrawer();
+  }
+
   // --- Pointer handling ---
 
   void _onPointerDown(PointerDownEvent event) {
@@ -393,6 +398,7 @@ class _LauncherShellState extends State<LauncherShell>
                         _sheetAnimTo == _maxSheetFraction && !_isDraggingSheet,
                     isAtTop: _listIsAtTop,
                     onLaunch: _launchApp,
+                    onOpenAppInfo: _openAppInfo,
                     onCloseDrawer: _closeDrawer,
                   ),
                 ),

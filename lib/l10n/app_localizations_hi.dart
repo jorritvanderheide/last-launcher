@@ -125,6 +125,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get openSourceLicenses => 'ओपन सोर्स लाइसेंस';
 
   @override
+  String get aboutSubtitle => 'संस्करण और लाइसेंस';
+
+  @override
   String get hintSwipeUp => 'खोजने के लिए ऊपर स्वाइप करें';
 
   @override
@@ -137,7 +140,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noResults => 'कोई परिणाम नहीं';
 
   @override
-  String get returnToAddTask => 'कार्य जोड़ने के लिए टाइप करें';
+  String get emptyTaskList => 'नया कार्य जोड़ने के लिए टाइप करें';
+
+  @override
+  String get returnToAddTask => 'कार्य जोड़ने के लिए एंटर दबाएं';
 
   @override
   String get actionRename => 'नाम बदलें';
@@ -165,6 +171,12 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get actionRemove => 'हटाएँ';
+
+  @override
+  String get actionClose => 'बंद करें';
+
+  @override
+  String get actionAppInfo => 'ऐप जानकारी';
 
   @override
   String get renameDialogTitle => 'नाम बदलें';

@@ -125,6 +125,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get openSourceLicenses => '오픈소스 라이선스';
 
   @override
+  String get aboutSubtitle => '버전 및 라이선스';
+
+  @override
   String get hintSwipeUp => '위로 스와이프하여 검색';
 
   @override
@@ -137,7 +140,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get noResults => '결과 없음';
 
   @override
-  String get returnToAddTask => '입력하여 할 일 추가';
+  String get emptyTaskList => '입력하여 새 할 일 추가';
+
+  @override
+  String get returnToAddTask => 'Enter 키로 할 일 추가';
 
   @override
   String get actionRename => '이름 변경';
@@ -165,6 +171,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get actionRemove => '제거';
+
+  @override
+  String get actionClose => '닫기';
+
+  @override
+  String get actionAppInfo => '앱 정보';
 
   @override
   String get renameDialogTitle => '이름 변경';

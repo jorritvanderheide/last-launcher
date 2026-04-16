@@ -50,13 +50,15 @@
   "version": "バージョン",
   "license": "ライセンス",
   "openSourceLicenses": "オープンソースライセンス",
+  "aboutSubtitle": "バージョンとライセンス",
 
   "hintSwipeUp": "上にスワイプして検索",
   "hintSwipeRight": "右にスワイプしてタスク",
   "hintLongPress": "長押しで設定",
 
   "noResults": "結果なし",
-  "returnToAddTask": "入力してタスクを追加",
+  "emptyTaskList": "入力して新しいタスクを追加",
+  "returnToAddTask": "Enterキーでタスクを追加",
 
   "actionRename": "名前変更",
   "actionUnpin": "ピン解除",
@@ -67,6 +69,8 @@
   "actionDone": "完了",
   "actionUndo": "元に戻す",
   "actionRemove": "削除",
+  "actionClose": "閉じる",
+  "actionAppInfo": "アプリ情報",
 
   "renameDialogTitle": "名前変更",
   "renameDialogCancel": "キャンセル",

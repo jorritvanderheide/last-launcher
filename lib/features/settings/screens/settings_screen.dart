@@ -77,6 +77,7 @@ class SettingsScreen extends StatelessWidget {
                               appListState: appListState,
                               homeState: homeState,
                               onLaunch: appChannel.launchApp,
+                              onOpenAppInfo: appChannel.openAppInfo,
                             ),
                             transitionDuration: Duration.zero,
                             reverseTransitionDuration: Duration.zero,
@@ -142,7 +143,9 @@ class SettingsScreen extends StatelessWidget {
                 ],
                 _SectionHeader(title: l10n.sectionAbout),
                 ListTile(
+                  leading: const Icon(Icons.info_outline),
                   title: Text(l10n.sectionAbout),
+                  subtitle: Text(l10n.aboutSubtitle),
                   onTap: () {
                     Navigator.of(context).push(
                       PageRouteBuilder<void>(
@@ -153,7 +156,7 @@ class SettingsScreen extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(height: MediaQuery.of(context).viewPadding.bottom),
+                SizedBox(height: MediaQuery.of(context).viewPadding.bottom + 8),
               ],
             ),
           );

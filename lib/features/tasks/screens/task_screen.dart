@@ -202,13 +202,17 @@ class TaskScreenState extends State<TaskScreen> {
               builder: (context, _) {
                 final tasks = _displayTasks(widget.taskState.tasks);
                 if (tasks.isEmpty) {
+                  final l10n = AppLocalizations.of(context)!;
+                  final hint = _controller.text.trim().isEmpty
+                      ? l10n.emptyTaskList
+                      : l10n.returnToAddTask;
                   return Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
                       top: 32 + AppLabel.verticalPadding,
                     ),
                     child: Text(
-                      AppLocalizations.of(context)!.returnToAddTask,
+                      hint,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontSize: AppLabel.fontSize,
                         color: Theme.of(
@@ -255,7 +259,7 @@ class TaskScreenState extends State<TaskScreen> {
                       itemBuilder: (context, index) {
                         final task = tasks[index];
                         final isFirstDone =
-                            task.done && (index == 0 || !tasks[index - 1].done);
+                            task.done && index > 0 && !tasks[index - 1].done;
                         if (_activeTaskId == task.id) {
                           return Padding(
                             key: ValueKey(task.id),

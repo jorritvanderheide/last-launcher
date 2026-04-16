@@ -125,6 +125,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get openSourceLicenses => 'オープンソースライセンス';
 
   @override
+  String get aboutSubtitle => 'バージョンとライセンス';
+
+  @override
   String get hintSwipeUp => '上にスワイプして検索';
 
   @override
@@ -137,7 +140,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noResults => '結果なし';
 
   @override
-  String get returnToAddTask => '入力してタスクを追加';
+  String get emptyTaskList => '入力して新しいタスクを追加';
+
+  @override
+  String get returnToAddTask => 'Enterキーでタスクを追加';
 
   @override
   String get actionRename => '名前変更';
@@ -165,6 +171,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get actionRemove => '削除';
+
+  @override
+  String get actionClose => '閉じる';
+
+  @override
+  String get actionAppInfo => 'アプリ情報';
 
   @override
   String get renameDialogTitle => '名前変更';

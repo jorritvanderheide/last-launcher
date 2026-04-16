@@ -50,13 +50,15 @@
   "version": "संस्करण",
   "license": "लाइसेंस",
   "openSourceLicenses": "ओपन सोर्स लाइसेंस",
+  "aboutSubtitle": "संस्करण और लाइसेंस",
 
   "hintSwipeUp": "खोजने के लिए ऊपर स्वाइप करें",
   "hintSwipeRight": "कार्यों के लिए दाएँ स्वाइप करें",
   "hintLongPress": "सेटिंग्स के लिए लंबा दबाएँ",
 
   "noResults": "कोई परिणाम नहीं",
-  "returnToAddTask": "कार्य जोड़ने के लिए टाइप करें",
+  "emptyTaskList": "नया कार्य जोड़ने के लिए टाइप करें",
+  "returnToAddTask": "कार्य जोड़ने के लिए एंटर दबाएं",
 
   "actionRename": "नाम बदलें",
   "actionUnpin": "अनपिन",
@@ -67,6 +69,8 @@
   "actionDone": "पूर्ण",
   "actionUndo": "पूर्ववत",
   "actionRemove": "हटाएँ",
+  "actionClose": "बंद करें",
+  "actionAppInfo": "ऐप जानकारी",
 
   "renameDialogTitle": "नाम बदलें",
   "renameDialogCancel": "रद्द करें",

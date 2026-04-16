@@ -41,4 +41,14 @@ class AppChannel {
       debugPrint('Failed to launch $packageName: $e');
     }
   }
+
+  Future<void> openAppInfo(String packageName) async {
+    try {
+      await _channel.invokeMethod<void>('openAppInfo', {
+        'packageName': packageName,
+      });
+    } on PlatformException catch (e) {
+      debugPrint('Failed to open app info for $packageName: $e');
+    }
+  }
 }

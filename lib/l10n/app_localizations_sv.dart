@@ -128,6 +128,9 @@ class AppLocalizationsSv extends AppLocalizations {
   String get openSourceLicenses => 'Licenser för öppen källkod';
 
   @override
+  String get aboutSubtitle => 'Version och licenser';
+
+  @override
   String get hintSwipeUp => 'Svep uppåt för att söka';
 
   @override
@@ -140,7 +143,10 @@ class AppLocalizationsSv extends AppLocalizations {
   String get noResults => 'Inga resultat';
 
   @override
-  String get returnToAddTask => 'Skriv för att lägga till uppgift';
+  String get emptyTaskList => 'Skriv för att lägga till en ny uppgift';
+
+  @override
+  String get returnToAddTask => 'Tryck på Enter för att lägga till';
 
   @override
   String get actionRename => 'Byt namn';
@@ -168,6 +174,12 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get actionRemove => 'Ta bort';
+
+  @override
+  String get actionClose => 'Stäng';
+
+  @override
+  String get actionAppInfo => 'Appinfo';
 
   @override
   String get renameDialogTitle => 'Byt namn';

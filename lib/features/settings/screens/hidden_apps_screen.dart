@@ -13,12 +13,14 @@ class HiddenAppsScreen extends StatefulWidget {
     required this.appListState,
     required this.homeState,
     required this.onLaunch,
+    required this.onOpenAppInfo,
     super.key,
   });
 
   final AppListState appListState;
   final HomeState homeState;
   final void Function(String packageName) onLaunch;
+  final void Function(String packageName) onOpenAppInfo;
 
   @override
   State<HiddenAppsScreen> createState() => _HiddenAppsScreenState();
@@ -48,6 +50,11 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
         icon: Icons.visibility,
         label: l10n.actionUnhide,
         onTap: () => widget.appListState.unhideApp(app.packageName),
+      ),
+      ActionItem(
+        icon: Icons.info_outline,
+        label: l10n.actionAppInfo,
+        onTap: () => widget.onOpenAppInfo(app.packageName),
       ),
     ];
   }

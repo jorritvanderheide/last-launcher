@@ -2,6 +2,8 @@ package nl.bw20.last_launcher
 
 import android.content.Intent
 import android.content.pm.ResolveInfo
+import android.net.Uri
+import android.provider.Settings
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -24,6 +26,15 @@ class MainActivity : FlutterActivity() {
                         val packageName = call.argument<String>("packageName")
                         if (packageName != null) {
                             launchApp(packageName)
+                            result.success(null)
+                        } else {
+                            result.error("INVALID_ARGUMENT", "packageName is required", null)
+                        }
+                    }
+                    "openAppInfo" -> {
+                        val packageName = call.argument<String>("packageName")
+                        if (packageName != null) {
+                            openAppInfo(packageName)
                             result.success(null)
                         } else {
                             result.error("INVALID_ARGUMENT", "packageName is required", null)
@@ -70,6 +81,18 @@ class MainActivity : FlutterActivity() {
             startActivity(intent)
             @Suppress("DEPRECATION")
             overridePendingTransition(0, 0)
+        }
+    }
+
+    private fun openAppInfo(targetPackageName: String) {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.fromParts("package", targetPackageName, null)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        try {
+            startActivity(intent)
+        } catch (_: Exception) {
+            // Silently fail if the settings activity cannot be resolved.
         }
     }
 }

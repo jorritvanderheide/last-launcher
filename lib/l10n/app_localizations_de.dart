@@ -132,6 +132,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get openSourceLicenses => 'Open-Source-Lizenzen';
 
   @override
+  String get aboutSubtitle => 'Version und Lizenzen';
+
+  @override
   String get hintSwipeUp => 'Nach oben wischen zum Suchen';
 
   @override
@@ -144,7 +147,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noResults => 'Keine Ergebnisse';
 
   @override
-  String get returnToAddTask => 'Tippen, um Aufgabe hinzuzufügen';
+  String get emptyTaskList => 'Tippe, um eine neue Aufgabe hinzuzufügen';
+
+  @override
+  String get returnToAddTask => 'Eingabe drücken, um Aufgabe hinzuzufügen';
 
   @override
   String get actionRename => 'Umbenennen';
@@ -172,6 +178,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get actionRemove => 'Entfernen';
+
+  @override
+  String get actionClose => 'Schließen';
+
+  @override
+  String get actionAppInfo => 'App-Info';
 
   @override
   String get renameDialogTitle => 'Umbenennen';

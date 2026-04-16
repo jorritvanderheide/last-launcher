@@ -125,6 +125,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get openSourceLicenses => '开源许可证';
 
   @override
+  String get aboutSubtitle => '版本和许可证';
+
+  @override
   String get hintSwipeUp => '向上滑动搜索';
 
   @override
@@ -137,7 +140,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noResults => '无结果';
 
   @override
-  String get returnToAddTask => '输入以添加任务';
+  String get emptyTaskList => '输入以添加新任务';
+
+  @override
+  String get returnToAddTask => '按回车键添加任务';
 
   @override
   String get actionRename => '重命名';
@@ -165,6 +171,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get actionRemove => '移除';
+
+  @override
+  String get actionClose => '关闭';
+
+  @override
+  String get actionAppInfo => '应用信息';
 
   @override
   String get renameDialogTitle => '重命名';

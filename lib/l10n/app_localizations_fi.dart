@@ -130,6 +130,9 @@ class AppLocalizationsFi extends AppLocalizations {
   String get openSourceLicenses => 'Avoimen lähdekoodin lisenssit';
 
   @override
+  String get aboutSubtitle => 'Versio ja lisenssit';
+
+  @override
   String get hintSwipeUp => 'Pyyhkäise ylös hakeaksesi';
 
   @override
@@ -142,7 +145,10 @@ class AppLocalizationsFi extends AppLocalizations {
   String get noResults => 'Ei tuloksia';
 
   @override
-  String get returnToAddTask => 'Kirjoita lisätäksesi tehtävän';
+  String get emptyTaskList => 'Kirjoita lisätäksesi uuden tehtävän';
+
+  @override
+  String get returnToAddTask => 'Paina Enter lisätäksesi tehtävän';
 
   @override
   String get actionRename => 'Nimeä uudelleen';
@@ -170,6 +176,12 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get actionRemove => 'Poista';
+
+  @override
+  String get actionClose => 'Sulje';
+
+  @override
+  String get actionAppInfo => 'Sovelluksen tiedot';
 
   @override
   String get renameDialogTitle => 'Nimeä uudelleen';

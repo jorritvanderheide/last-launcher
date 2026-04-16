@@ -17,6 +17,7 @@ class AppDrawerSheet extends StatefulWidget {
     required this.settingsState,
     required this.isOpen,
     required this.onLaunch,
+    required this.onOpenAppInfo,
     required this.onCloseDrawer,
     required this.isAtTop,
     super.key,
@@ -27,6 +28,7 @@ class AppDrawerSheet extends StatefulWidget {
   final SettingsState settingsState;
   final bool isOpen;
   final void Function(String packageName) onLaunch;
+  final void Function(String packageName) onOpenAppInfo;
   final VoidCallback onCloseDrawer;
   final ValueNotifier<bool> isAtTop;
 
@@ -188,6 +190,11 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
         icon: Icons.visibility_off,
         label: l10n.actionHide,
         onTap: () => widget.appListState.hideApp(app.packageName),
+      ),
+      ActionItem(
+        icon: Icons.info_outline,
+        label: l10n.actionAppInfo,
+        onTap: () => widget.onOpenAppInfo(app.packageName),
       ),
     ];
   }

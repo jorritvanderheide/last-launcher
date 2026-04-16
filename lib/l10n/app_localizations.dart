@@ -350,6 +350,12 @@ abstract class AppLocalizations {
   /// **'Open source licenses'**
   String get openSourceLicenses;
 
+  /// No description provided for @aboutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Version and licenses'**
+  String get aboutSubtitle;
+
   /// No description provided for @hintSwipeUp.
   ///
   /// In en, this message translates to:
@@ -374,10 +380,16 @@ abstract class AppLocalizations {
   /// **'No results'**
   String get noResults;
 
+  /// No description provided for @emptyTaskList.
+  ///
+  /// In en, this message translates to:
+  /// **'Type to add a new task'**
+  String get emptyTaskList;
+
   /// No description provided for @returnToAddTask.
   ///
   /// In en, this message translates to:
-  /// **'Type to add task'**
+  /// **'Press return to add task'**
   String get returnToAddTask;
 
   /// No description provided for @actionRename.
@@ -433,6 +445,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove'**
   String get actionRemove;
+
+  /// No description provided for @actionClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get actionClose;
+
+  /// No description provided for @actionAppInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'App info'**
+  String get actionAppInfo;
 
   /// No description provided for @renameDialogTitle.
   ///

@@ -131,6 +131,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get openSourceLicenses => 'Open source licence';
 
   @override
+  String get aboutSubtitle => 'Verze a licence';
+
+  @override
   String get hintSwipeUp => 'Přejetím nahoru vyhledávejte';
 
   @override
@@ -143,7 +146,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get noResults => 'Žádné výsledky';
 
   @override
-  String get returnToAddTask => 'Zadejte text pro přidání úkolu';
+  String get emptyTaskList => 'Pište pro přidání nového úkolu';
+
+  @override
+  String get returnToAddTask => 'Stisknutím Enter přidáte úkol';
 
   @override
   String get actionRename => 'Přejmenovat';
@@ -171,6 +177,12 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get actionRemove => 'Odstranit';
+
+  @override
+  String get actionClose => 'Zavřít';
+
+  @override
+  String get actionAppInfo => 'Informace o aplikaci';
 
   @override
   String get renameDialogTitle => 'Přejmenovat';

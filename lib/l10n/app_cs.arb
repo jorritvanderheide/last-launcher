@@ -50,13 +50,15 @@
   "version": "Verze",
   "license": "Licence",
   "openSourceLicenses": "Open source licence",
+  "aboutSubtitle": "Verze a licence",
 
   "hintSwipeUp": "Přejetím nahoru vyhledávejte",
   "hintSwipeRight": "Přejetím doprava zobrazíte úkoly",
   "hintLongPress": "Dlouhým stiskem otevřete nastavení",
 
   "noResults": "Žádné výsledky",
-  "returnToAddTask": "Zadejte text pro přidání úkolu",
+  "emptyTaskList": "Pište pro přidání nového úkolu",
+  "returnToAddTask": "Stisknutím Enter přidáte úkol",
 
   "actionRename": "Přejmenovat",
   "actionUnpin": "Odepnout",
@@ -67,6 +69,8 @@
   "actionDone": "Hotovo",
   "actionUndo": "Zpět",
   "actionRemove": "Odstranit",
+  "actionClose": "Zavřít",
+  "actionAppInfo": "Informace o aplikaci",
 
   "renameDialogTitle": "Přejmenovat",
   "renameDialogCancel": "Zrušit",

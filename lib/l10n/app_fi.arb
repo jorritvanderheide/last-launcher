@@ -50,13 +50,15 @@
   "version": "Versio",
   "license": "Lisenssi",
   "openSourceLicenses": "Avoimen lähdekoodin lisenssit",
+  "aboutSubtitle": "Versio ja lisenssit",
 
   "hintSwipeUp": "Pyyhkäise ylös hakeaksesi",
   "hintSwipeRight": "Pyyhkäise oikealle tehtäviin",
   "hintLongPress": "Paina pitkään asetuksiin",
 
   "noResults": "Ei tuloksia",
-  "returnToAddTask": "Kirjoita lisätäksesi tehtävän",
+  "emptyTaskList": "Kirjoita lisätäksesi uuden tehtävän",
+  "returnToAddTask": "Paina Enter lisätäksesi tehtävän",
 
   "actionRename": "Nimeä uudelleen",
   "actionUnpin": "Irrota",
@@ -67,6 +69,8 @@
   "actionDone": "Valmis",
   "actionUndo": "Kumoa",
   "actionRemove": "Poista",
+  "actionClose": "Sulje",
+  "actionAppInfo": "Sovelluksen tiedot",
 
   "renameDialogTitle": "Nimeä uudelleen",
   "renameDialogCancel": "Peruuta",

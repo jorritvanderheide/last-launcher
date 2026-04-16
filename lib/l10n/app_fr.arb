@@ -50,13 +50,15 @@
   "version": "Version",
   "license": "Licence",
   "openSourceLicenses": "Licences open source",
+  "aboutSubtitle": "Version et licences",
 
   "hintSwipeUp": "Glisser vers le haut pour rechercher",
   "hintSwipeRight": "Glisser vers la droite pour les tâches",
   "hintLongPress": "Appui long pour les paramètres",
 
   "noResults": "Aucun résultat",
-  "returnToAddTask": "Saisir pour ajouter une tâche",
+  "emptyTaskList": "Tapez pour ajouter une nouvelle tâche",
+  "returnToAddTask": "Appuyez sur Entrée pour ajouter",
 
   "actionRename": "Renommer",
   "actionUnpin": "Désépingler",
@@ -67,6 +69,8 @@
   "actionDone": "Terminé",
   "actionUndo": "Annuler",
   "actionRemove": "Supprimer",
+  "actionClose": "Fermer",
+  "actionAppInfo": "Infos sur l'application",
 
   "renameDialogTitle": "Renommer",
   "renameDialogCancel": "Annuler",

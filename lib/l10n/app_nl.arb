@@ -50,13 +50,15 @@
   "version": "Versie",
   "license": "Licentie",
   "openSourceLicenses": "Opensourcelicenties",
+  "aboutSubtitle": "Versie en licenties",
 
   "hintSwipeUp": "Veeg omhoog om te zoeken",
   "hintSwipeRight": "Veeg naar rechts voor taken",
   "hintLongPress": "Lang drukken voor instellingen",
 
   "noResults": "Geen resultaten",
-  "returnToAddTask": "Typ om een taak toe te voegen",
+  "emptyTaskList": "Typ om een nieuwe taak toe te voegen",
+  "returnToAddTask": "Druk op enter om toe te voegen",
 
   "actionRename": "Hernoemen",
   "actionUnpin": "Losmaken",
@@ -67,6 +69,8 @@
   "actionDone": "Klaar",
   "actionUndo": "Ongedaan maken",
   "actionRemove": "Verwijderen",
+  "actionClose": "Sluiten",
+  "actionAppInfo": "App-info",
 
   "renameDialogTitle": "Hernoemen",
   "renameDialogCancel": "Annuleren",

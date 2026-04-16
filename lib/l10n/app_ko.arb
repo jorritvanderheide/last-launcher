@@ -50,13 +50,15 @@
   "version": "버전",
   "license": "라이선스",
   "openSourceLicenses": "오픈소스 라이선스",
+  "aboutSubtitle": "버전 및 라이선스",
 
   "hintSwipeUp": "위로 스와이프하여 검색",
   "hintSwipeRight": "오른쪽으로 스와이프하여 할 일",
   "hintLongPress": "길게 눌러 설정",
 
   "noResults": "결과 없음",
-  "returnToAddTask": "입력하여 할 일 추가",
+  "emptyTaskList": "입력하여 새 할 일 추가",
+  "returnToAddTask": "Enter 키로 할 일 추가",
 
   "actionRename": "이름 변경",
   "actionUnpin": "고정 해제",
@@ -67,6 +69,8 @@
   "actionDone": "완료",
   "actionUndo": "실행 취소",
   "actionRemove": "제거",
+  "actionClose": "닫기",
+  "actionAppInfo": "앱 정보",
 
   "renameDialogTitle": "이름 변경",
   "renameDialogCancel": "취소",

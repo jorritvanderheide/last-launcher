@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
 
 class ActionItem {
@@ -81,6 +82,21 @@ class ActionRow extends StatelessWidget {
                 ),
               );
             }),
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onClose,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: Tooltip(
+                  message: AppLocalizations.of(context)!.actionClose,
+                  child: Icon(
+                    Icons.close,
+                    color: colorScheme.onSurface,
+                    size: 22,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

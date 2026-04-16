@@ -96,16 +96,24 @@ ThemeData _buildTheme(Brightness brightness, {bool extra = false}) {
     ),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith((states) {
-        return states.contains(WidgetState.selected)
-            ? textColor
-            : colorScheme.outline;
+        final selected = states.contains(WidgetState.selected);
+        final disabled = states.contains(WidgetState.disabled);
+        final base = selected ? textColor : colorScheme.outline;
+        return disabled ? base.withAlpha(80) : base;
       }),
       trackColor: WidgetStateProperty.resolveWith((states) {
-        return states.contains(WidgetState.selected)
-            ? textColor.withAlpha(60)
-            : colorScheme.surface;
+        final selected = states.contains(WidgetState.selected);
+        final disabled = states.contains(WidgetState.disabled);
+        if (selected) {
+          return textColor.withAlpha(disabled ? 30 : 60);
+        }
+        return colorScheme.surface;
       }),
-      trackOutlineColor: WidgetStateProperty.all(colorScheme.outline),
+      trackOutlineColor: WidgetStateProperty.resolveWith((states) {
+        return states.contains(WidgetState.disabled)
+            ? colorScheme.outline.withAlpha(60)
+            : colorScheme.outline;
+      }),
     ),
     dividerTheme: const DividerThemeData(space: 0, thickness: 0),
   );
