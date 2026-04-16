@@ -19,8 +19,8 @@
 
   "hideStatusBar": "Celá obrazovka",
   "hideStatusBarSubtitle": "Skrýt stavový řádek a navigaci",
-  "homeScreenHints": "Nápověda na domovské obrazovce",
-  "homeScreenHintsSubtitle": "Zobrazit tipy, když je domovská obrazovka prázdná",
+  "showHints": "Zobrazit nápovědu",
+  "showHintsSubtitle": "Zobrazit tipy k používání v celé aplikaci",
 
   "hiddenApps": "Skryté aplikace",
   "hiddenAppsNone": "Žádné",
@@ -57,7 +57,7 @@
   "hintLongPress": "Dlouhým stiskem otevřete nastavení",
 
   "noResults": "Žádné výsledky",
-  "emptyTaskList": "Pište pro přidání nového úkolu",
+  "emptyTaskList": "Pište pro přidání úkolu",
   "returnToAddTask": "Stisknutím Enter přidáte úkol",
 
   "actionRename": "Přejmenovat",

@@ -57,10 +57,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hideStatusBarSubtitle => 'Hide status bar and navigation';
 
   @override
-  String get homeScreenHints => 'Home screen hints';
+  String get showHints => 'Show hints';
 
   @override
-  String get homeScreenHintsSubtitle => 'Show tips when home screen is empty';
+  String get showHintsSubtitle => 'Show usage hints throughout the app';
 
   @override
   String get hiddenApps => 'Hidden apps';
@@ -140,10 +140,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noResults => 'No results';
 
   @override
-  String get emptyTaskList => 'Type to add a new task';
+  String get emptyTaskList => 'Type to add a task';
 
   @override
-  String get returnToAddTask => 'Press return to add task';
+  String get returnToAddTask => 'Press return to add a task';
 
   @override
   String get actionRename => 'Rename';

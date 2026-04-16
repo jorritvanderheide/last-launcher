@@ -57,10 +57,10 @@ class AppLocalizationsSv extends AppLocalizations {
   String get hideStatusBarSubtitle => 'Dölj statusfält och navigering';
 
   @override
-  String get homeScreenHints => 'Tips på hemskärmen';
+  String get showHints => 'Visa tips';
 
   @override
-  String get homeScreenHintsSubtitle => 'Visa tips när hemskärmen är tom';
+  String get showHintsSubtitle => 'Visa användningstips i hela appen';
 
   @override
   String get hiddenApps => 'Dolda appar';
@@ -143,10 +143,10 @@ class AppLocalizationsSv extends AppLocalizations {
   String get noResults => 'Inga resultat';
 
   @override
-  String get emptyTaskList => 'Skriv för att lägga till en ny uppgift';
+  String get emptyTaskList => 'Skriv för att lägga till en uppgift';
 
   @override
-  String get returnToAddTask => 'Tryck på Enter för att lägga till';
+  String get returnToAddTask => 'Tryck på Enter för att lägga till en uppgift';
 
   @override
   String get actionRename => 'Byt namn';

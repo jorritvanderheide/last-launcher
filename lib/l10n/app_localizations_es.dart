@@ -57,11 +57,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get hideStatusBarSubtitle => 'Ocultar barra de estado y navegación';
 
   @override
-  String get homeScreenHints => 'Consejos de pantalla de inicio';
+  String get showHints => 'Mostrar consejos';
 
   @override
-  String get homeScreenHintsSubtitle =>
-      'Mostrar consejos cuando la pantalla de inicio está vacía';
+  String get showHintsSubtitle =>
+      'Mostrar consejos de uso en toda la aplicación';
 
   @override
   String get hiddenApps => 'Aplicaciones ocultas';
@@ -146,10 +146,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noResults => 'Sin resultados';
 
   @override
-  String get emptyTaskList => 'Escribe para añadir una nueva tarea';
+  String get emptyTaskList => 'Escribe para añadir una tarea';
 
   @override
-  String get returnToAddTask => 'Pulsa Enter para añadir';
+  String get returnToAddTask => 'Pulsa Enter para añadir una tarea';
 
   @override
   String get actionRename => 'Renombrar';

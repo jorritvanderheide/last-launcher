@@ -19,8 +19,8 @@
 
   "hideStatusBar": "Volledig scherm",
   "hideStatusBarSubtitle": "Statusbalk en navigatie verbergen",
-  "homeScreenHints": "Startschermtips",
-  "homeScreenHintsSubtitle": "Toon tips wanneer het startscherm leeg is",
+  "showHints": "Tips tonen",
+  "showHintsSubtitle": "Toon gebruikstips in de hele app",
 
   "hiddenApps": "Verborgen apps",
   "hiddenAppsNone": "Geen",
@@ -57,8 +57,8 @@
   "hintLongPress": "Lang drukken voor instellingen",
 
   "noResults": "Geen resultaten",
-  "emptyTaskList": "Typ om een nieuwe taak toe te voegen",
-  "returnToAddTask": "Druk op enter om toe te voegen",
+  "emptyTaskList": "Typ om een taak toe te voegen",
+  "returnToAddTask": "Druk op enter om een taak toe te voegen",
 
   "actionRename": "Hernoemen",
   "actionUnpin": "Losmaken",

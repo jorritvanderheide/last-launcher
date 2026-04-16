@@ -19,8 +19,8 @@
 
   "hideStatusBar": "फ़ुलस्क्रीन",
   "hideStatusBarSubtitle": "स्टेटस बार और नेविगेशन छुपाएँ",
-  "homeScreenHints": "होम स्क्रीन संकेत",
-  "homeScreenHintsSubtitle": "होम स्क्रीन खाली होने पर सुझाव दिखाएँ",
+  "showHints": "संकेत दिखाएँ",
+  "showHintsSubtitle": "पूरे ऐप में उपयोग संकेत दिखाएँ",
 
   "hiddenApps": "छुपे हुए ऐप्स",
   "hiddenAppsNone": "कोई नहीं",
@@ -57,7 +57,7 @@
   "hintLongPress": "सेटिंग्स के लिए लंबा दबाएँ",
 
   "noResults": "कोई परिणाम नहीं",
-  "emptyTaskList": "नया कार्य जोड़ने के लिए टाइप करें",
+  "emptyTaskList": "कार्य जोड़ने के लिए टाइप करें",
   "returnToAddTask": "कार्य जोड़ने के लिए एंटर दबाएं",
 
   "actionRename": "नाम बदलें",

@@ -57,11 +57,10 @@ class AppLocalizationsFi extends AppLocalizations {
   String get hideStatusBarSubtitle => 'Piilota tilarivi ja navigointi';
 
   @override
-  String get homeScreenHints => 'Aloitusnäytön vihjeet';
+  String get showHints => 'Näytä vinkit';
 
   @override
-  String get homeScreenHintsSubtitle =>
-      'Näytä vinkit, kun aloitusnäyttö on tyhjä';
+  String get showHintsSubtitle => 'Näytä käyttövinkit koko sovelluksessa';
 
   @override
   String get hiddenApps => 'Piilotetut sovellukset';
@@ -145,7 +144,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get noResults => 'Ei tuloksia';
 
   @override
-  String get emptyTaskList => 'Kirjoita lisätäksesi uuden tehtävän';
+  String get emptyTaskList => 'Kirjoita lisätäksesi tehtävän';
 
   @override
   String get returnToAddTask => 'Paina Enter lisätäksesi tehtävän';

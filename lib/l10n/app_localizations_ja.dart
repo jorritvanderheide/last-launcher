@@ -57,10 +57,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get hideStatusBarSubtitle => 'ステータスバーとナビゲーションを非表示';
 
   @override
-  String get homeScreenHints => 'ホーム画面のヒント';
+  String get showHints => 'ヒントを表示';
 
   @override
-  String get homeScreenHintsSubtitle => 'ホーム画面が空のときヒントを表示';
+  String get showHintsSubtitle => 'アプリ全体で使用ヒントを表示';
 
   @override
   String get hiddenApps => '非表示のアプリ';
@@ -140,7 +140,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noResults => '結果なし';
 
   @override
-  String get emptyTaskList => '入力して新しいタスクを追加';
+  String get emptyTaskList => '入力してタスクを追加';
 
   @override
   String get returnToAddTask => 'Enterキーでタスクを追加';

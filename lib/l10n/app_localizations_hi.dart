@@ -57,10 +57,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get hideStatusBarSubtitle => 'स्टेटस बार और नेविगेशन छुपाएँ';
 
   @override
-  String get homeScreenHints => 'होम स्क्रीन संकेत';
+  String get showHints => 'संकेत दिखाएँ';
 
   @override
-  String get homeScreenHintsSubtitle => 'होम स्क्रीन खाली होने पर सुझाव दिखाएँ';
+  String get showHintsSubtitle => 'पूरे ऐप में उपयोग संकेत दिखाएँ';
 
   @override
   String get hiddenApps => 'छुपे हुए ऐप्स';
@@ -140,7 +140,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noResults => 'कोई परिणाम नहीं';
 
   @override
-  String get emptyTaskList => 'नया कार्य जोड़ने के लिए टाइप करें';
+  String get emptyTaskList => 'कार्य जोड़ने के लिए टाइप करें';
 
   @override
   String get returnToAddTask => 'कार्य जोड़ने के लिए एंटर दबाएं';

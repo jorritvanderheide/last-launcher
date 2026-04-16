@@ -52,8 +52,8 @@ class SettingsScreen extends StatelessWidget {
                   onChanged: settingsState.setHideStatusBar,
                 ),
                 SwitchListTile(
-                  title: Text(l10n.homeScreenHints),
-                  subtitle: Text(l10n.homeScreenHintsSubtitle),
+                  title: Text(l10n.showHints),
+                  subtitle: Text(l10n.showHintsSubtitle),
                   value: settingsState.showHints,
                   onChanged: settingsState.setShowHints,
                 ),
@@ -188,6 +188,7 @@ class _ThemeListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      leading: const Icon(Icons.palette_outlined),
       title: Text(AppLocalizations.of(context)!.themeTitle),
       subtitle: Text(_label(context, themeValue)),
       onTap: () async {

@@ -19,8 +19,8 @@
 
   "hideStatusBar": "Tela cheia",
   "hideStatusBarSubtitle": "Ocultar barra de status e navegação",
-  "homeScreenHints": "Dicas da tela inicial",
-  "homeScreenHintsSubtitle": "Mostrar dicas quando a tela inicial estiver vazia",
+  "showHints": "Mostrar dicas",
+  "showHintsSubtitle": "Mostrar dicas de uso em todo o app",
 
   "hiddenApps": "Apps ocultos",
   "hiddenAppsNone": "Nenhum",
@@ -57,8 +57,8 @@
   "hintLongPress": "Pressione longo para configurações",
 
   "noResults": "Sem resultados",
-  "emptyTaskList": "Digite para adicionar uma nova tarefa",
-  "returnToAddTask": "Pressione Enter para adicionar",
+  "emptyTaskList": "Digite para adicionar uma tarefa",
+  "returnToAddTask": "Pressione Enter para adicionar uma tarefa",
 
   "actionRename": "Renomear",
   "actionUnpin": "Desafixar",

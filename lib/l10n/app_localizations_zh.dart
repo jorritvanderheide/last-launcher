@@ -57,10 +57,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hideStatusBarSubtitle => '隐藏状态栏和导航栏';
 
   @override
-  String get homeScreenHints => '主屏幕提示';
+  String get showHints => '显示提示';
 
   @override
-  String get homeScreenHintsSubtitle => '主屏幕为空时显示提示';
+  String get showHintsSubtitle => '在整个应用中显示使用提示';
 
   @override
   String get hiddenApps => '隐藏的应用';
@@ -140,7 +140,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noResults => '无结果';
 
   @override
-  String get emptyTaskList => '输入以添加新任务';
+  String get emptyTaskList => '输入以添加任务';
 
   @override
   String get returnToAddTask => '按回车键添加任务';

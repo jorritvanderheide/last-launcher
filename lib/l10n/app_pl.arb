@@ -19,8 +19,8 @@
 
   "hideStatusBar": "Pełny ekran",
   "hideStatusBarSubtitle": "Ukryj pasek stanu i nawigację",
-  "homeScreenHints": "Wskazówki ekranu głównego",
-  "homeScreenHintsSubtitle": "Pokaż wskazówki, gdy ekran główny jest pusty",
+  "showHints": "Pokaż wskazówki",
+  "showHintsSubtitle": "Pokaż wskazówki użytkowania w całej aplikacji",
 
   "hiddenApps": "Ukryte aplikacje",
   "hiddenAppsNone": "Brak",
@@ -57,8 +57,8 @@
   "hintLongPress": "Przytrzymaj, aby otworzyć ustawienia",
 
   "noResults": "Brak wyników",
-  "emptyTaskList": "Wpisz, aby dodać nowe zadanie",
-  "returnToAddTask": "Naciśnij Enter, aby dodać",
+  "emptyTaskList": "Wpisz, aby dodać zadanie",
+  "returnToAddTask": "Naciśnij Enter, aby dodać zadanie",
 
   "actionRename": "Zmień nazwę",
   "actionUnpin": "Odepnij",

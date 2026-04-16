@@ -57,10 +57,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get hideStatusBarSubtitle => '상태 표시줄과 내비게이션 숨기기';
 
   @override
-  String get homeScreenHints => '홈 화면 힌트';
+  String get showHints => '힌트 표시';
 
   @override
-  String get homeScreenHintsSubtitle => '홈 화면이 비어 있을 때 팁 표시';
+  String get showHintsSubtitle => '앱 전체에서 사용 힌트 표시';
 
   @override
   String get hiddenApps => '숨긴 앱';
@@ -140,7 +140,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get noResults => '결과 없음';
 
   @override
-  String get emptyTaskList => '입력하여 새 할 일 추가';
+  String get emptyTaskList => '입력하여 할 일 추가';
 
   @override
   String get returnToAddTask => 'Enter 키로 할 일 추가';

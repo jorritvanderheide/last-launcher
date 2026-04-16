@@ -57,11 +57,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get hideStatusBarSubtitle => 'Statusbalk en navigatie verbergen';
 
   @override
-  String get homeScreenHints => 'Startschermtips';
+  String get showHints => 'Tips tonen';
 
   @override
-  String get homeScreenHintsSubtitle =>
-      'Toon tips wanneer het startscherm leeg is';
+  String get showHintsSubtitle => 'Toon gebruikstips in de hele app';
 
   @override
   String get hiddenApps => 'Verborgen apps';
@@ -146,10 +145,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get noResults => 'Geen resultaten';
 
   @override
-  String get emptyTaskList => 'Typ om een nieuwe taak toe te voegen';
+  String get emptyTaskList => 'Typ om een taak toe te voegen';
 
   @override
-  String get returnToAddTask => 'Druk op enter om toe te voegen';
+  String get returnToAddTask => 'Druk op enter om een taak toe te voegen';
 
   @override
   String get actionRename => 'Hernoemen';

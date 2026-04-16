@@ -19,8 +19,8 @@
 
   "hideStatusBar": "Koko näyttö",
   "hideStatusBarSubtitle": "Piilota tilarivi ja navigointi",
-  "homeScreenHints": "Aloitusnäytön vihjeet",
-  "homeScreenHintsSubtitle": "Näytä vinkit, kun aloitusnäyttö on tyhjä",
+  "showHints": "Näytä vinkit",
+  "showHintsSubtitle": "Näytä käyttövinkit koko sovelluksessa",
 
   "hiddenApps": "Piilotetut sovellukset",
   "hiddenAppsNone": "Ei mitään",
@@ -57,7 +57,7 @@
   "hintLongPress": "Paina pitkään asetuksiin",
 
   "noResults": "Ei tuloksia",
-  "emptyTaskList": "Kirjoita lisätäksesi uuden tehtävän",
+  "emptyTaskList": "Kirjoita lisätäksesi tehtävän",
   "returnToAddTask": "Paina Enter lisätäksesi tehtävän",
 
   "actionRename": "Nimeä uudelleen",

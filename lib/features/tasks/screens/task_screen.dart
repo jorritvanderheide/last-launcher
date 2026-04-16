@@ -202,23 +202,32 @@ class TaskScreenState extends State<TaskScreen> {
               builder: (context, _) {
                 final tasks = _displayTasks(widget.taskState.tasks);
                 if (tasks.isEmpty) {
+                  if (!widget.settingsState.showHints) {
+                    return const SizedBox.shrink();
+                  }
                   final l10n = AppLocalizations.of(context)!;
-                  final hint = _controller.text.trim().isEmpty
-                      ? l10n.emptyTaskList
-                      : l10n.returnToAddTask;
                   return Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
                       top: 32 + AppLabel.verticalPadding,
                     ),
-                    child: Text(
-                      hint,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontSize: AppLabel.fontSize,
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withAlpha(80),
-                      ),
+                    child: ValueListenableBuilder<TextEditingValue>(
+                      valueListenable: _controller,
+                      builder: (context, value, _) {
+                        final hint = value.text.trim().isEmpty
+                            ? l10n.emptyTaskList
+                            : l10n.returnToAddTask;
+                        return Text(
+                          hint,
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                fontSize: AppLabel.fontSize,
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface.withAlpha(80),
+                              ),
+                        );
+                      },
                     ),
                   );
                 }

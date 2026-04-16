@@ -57,11 +57,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get hideStatusBarSubtitle => 'Skrýt stavový řádek a navigaci';
 
   @override
-  String get homeScreenHints => 'Nápověda na domovské obrazovce';
+  String get showHints => 'Zobrazit nápovědu';
 
   @override
-  String get homeScreenHintsSubtitle =>
-      'Zobrazit tipy, když je domovská obrazovka prázdná';
+  String get showHintsSubtitle => 'Zobrazit tipy k používání v celé aplikaci';
 
   @override
   String get hiddenApps => 'Skryté aplikace';
@@ -146,7 +145,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get noResults => 'Žádné výsledky';
 
   @override
-  String get emptyTaskList => 'Pište pro přidání nového úkolu';
+  String get emptyTaskList => 'Pište pro přidání úkolu';
 
   @override
   String get returnToAddTask => 'Stisknutím Enter přidáte úkol';

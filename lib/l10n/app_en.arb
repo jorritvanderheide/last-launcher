@@ -19,8 +19,8 @@
 
   "hideStatusBar": "Fullscreen",
   "hideStatusBarSubtitle": "Hide status bar and navigation",
-  "homeScreenHints": "Home screen hints",
-  "homeScreenHintsSubtitle": "Show tips when home screen is empty",
+  "showHints": "Show hints",
+  "showHintsSubtitle": "Show usage hints throughout the app",
 
   "hiddenApps": "Hidden apps",
   "hiddenAppsNone": "None",
@@ -57,8 +57,8 @@
   "hintLongPress": "Long press for settings",
 
   "noResults": "No results",
-  "emptyTaskList": "Type to add a new task",
-  "returnToAddTask": "Press return to add task",
+  "emptyTaskList": "Type to add a task",
+  "returnToAddTask": "Press return to add a task",
 
   "actionRename": "Rename",
   "actionUnpin": "Unpin",

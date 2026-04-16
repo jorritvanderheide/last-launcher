@@ -218,17 +218,17 @@ abstract class AppLocalizations {
   /// **'Hide status bar and navigation'**
   String get hideStatusBarSubtitle;
 
-  /// No description provided for @homeScreenHints.
+  /// No description provided for @showHints.
   ///
   /// In en, this message translates to:
-  /// **'Home screen hints'**
-  String get homeScreenHints;
+  /// **'Show hints'**
+  String get showHints;
 
-  /// No description provided for @homeScreenHintsSubtitle.
+  /// No description provided for @showHintsSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Show tips when home screen is empty'**
-  String get homeScreenHintsSubtitle;
+  /// **'Show usage hints throughout the app'**
+  String get showHintsSubtitle;
 
   /// No description provided for @hiddenApps.
   ///
@@ -383,13 +383,13 @@ abstract class AppLocalizations {
   /// No description provided for @emptyTaskList.
   ///
   /// In en, this message translates to:
-  /// **'Type to add a new task'**
+  /// **'Type to add a task'**
   String get emptyTaskList;
 
   /// No description provided for @returnToAddTask.
   ///
   /// In en, this message translates to:
-  /// **'Press return to add task'**
+  /// **'Press return to add a task'**
   String get returnToAddTask;
 
   /// No description provided for @actionRename.

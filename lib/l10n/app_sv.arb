@@ -19,8 +19,8 @@
 
   "hideStatusBar": "Helskärm",
   "hideStatusBarSubtitle": "Dölj statusfält och navigering",
-  "homeScreenHints": "Tips på hemskärmen",
-  "homeScreenHintsSubtitle": "Visa tips när hemskärmen är tom",
+  "showHints": "Visa tips",
+  "showHintsSubtitle": "Visa användningstips i hela appen",
 
   "hiddenApps": "Dolda appar",
   "hiddenAppsNone": "Inga",
@@ -57,8 +57,8 @@
   "hintLongPress": "Tryck länge för inställningar",
 
   "noResults": "Inga resultat",
-  "emptyTaskList": "Skriv för att lägga till en ny uppgift",
-  "returnToAddTask": "Tryck på Enter för att lägga till",
+  "emptyTaskList": "Skriv för att lägga till en uppgift",
+  "returnToAddTask": "Tryck på Enter för att lägga till en uppgift",
 
   "actionRename": "Byt namn",
   "actionUnpin": "Lossa",

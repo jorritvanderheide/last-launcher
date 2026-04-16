@@ -240,11 +240,17 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                   },
                   child: FadeOverflow(
                     child: ListenableBuilder(
-                      listenable: widget.appListState,
+                      listenable: Listenable.merge([
+                        widget.appListState,
+                        widget.settingsState,
+                      ]),
                       builder: (context, _) {
                         final apps = widget.appListState.filteredApps;
                         if (apps.isEmpty &&
                             widget.appListState.query.isNotEmpty) {
+                          if (!widget.settingsState.showHints) {
+                            return const SizedBox.shrink();
+                          }
                           return Padding(
                             padding: const EdgeInsets.only(
                               left: 20,

@@ -57,11 +57,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get hideStatusBarSubtitle => 'Statusleiste und Navigation ausblenden';
 
   @override
-  String get homeScreenHints => 'Startbildschirm-Tipps';
+  String get showHints => 'Tipps anzeigen';
 
   @override
-  String get homeScreenHintsSubtitle =>
-      'Tipps anzeigen, wenn der Startbildschirm leer ist';
+  String get showHintsSubtitle => 'Nutzungstipps in der gesamten App anzeigen';
 
   @override
   String get hiddenApps => 'Versteckte Apps';
@@ -147,10 +146,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noResults => 'Keine Ergebnisse';
 
   @override
-  String get emptyTaskList => 'Tippe, um eine neue Aufgabe hinzuzufügen';
+  String get emptyTaskList => 'Tippe, um eine Aufgabe hinzuzufügen';
 
   @override
-  String get returnToAddTask => 'Eingabe drücken, um Aufgabe hinzuzufügen';
+  String get returnToAddTask => 'Eingabe drücken, um eine Aufgabe hinzuzufügen';
 
   @override
   String get actionRename => 'Umbenennen';

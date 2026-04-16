@@ -58,11 +58,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'Masquer la barre d\'état et la navigation';
 
   @override
-  String get homeScreenHints => 'Astuces de l\'écran d\'accueil';
+  String get showHints => 'Afficher les astuces';
 
   @override
-  String get homeScreenHintsSubtitle =>
-      'Afficher des astuces quand l\'écran d\'accueil est vide';
+  String get showHintsSubtitle =>
+      'Afficher les astuces d\'utilisation dans toute l\'appli';
 
   @override
   String get hiddenApps => 'Applications masquées';
@@ -148,10 +148,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noResults => 'Aucun résultat';
 
   @override
-  String get emptyTaskList => 'Tapez pour ajouter une nouvelle tâche';
+  String get emptyTaskList => 'Tapez pour ajouter une tâche';
 
   @override
-  String get returnToAddTask => 'Appuyez sur Entrée pour ajouter';
+  String get returnToAddTask => 'Appuyez sur Entrée pour ajouter une tâche';
 
   @override
   String get actionRename => 'Renommer';

@@ -19,8 +19,8 @@
 
   "hideStatusBar": "フルスクリーン",
   "hideStatusBarSubtitle": "ステータスバーとナビゲーションを非表示",
-  "homeScreenHints": "ホーム画面のヒント",
-  "homeScreenHintsSubtitle": "ホーム画面が空のときヒントを表示",
+  "showHints": "ヒントを表示",
+  "showHintsSubtitle": "アプリ全体で使用ヒントを表示",
 
   "hiddenApps": "非表示のアプリ",
   "hiddenAppsNone": "なし",
@@ -57,7 +57,7 @@
   "hintLongPress": "長押しで設定",
 
   "noResults": "結果なし",
-  "emptyTaskList": "入力して新しいタスクを追加",
+  "emptyTaskList": "入力してタスクを追加",
   "returnToAddTask": "Enterキーでタスクを追加",
 
   "actionRename": "名前変更",

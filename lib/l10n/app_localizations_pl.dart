@@ -58,11 +58,11 @@ class AppLocalizationsPl extends AppLocalizations {
   String get hideStatusBarSubtitle => 'Ukryj pasek stanu i nawigację';
 
   @override
-  String get homeScreenHints => 'Wskazówki ekranu głównego';
+  String get showHints => 'Pokaż wskazówki';
 
   @override
-  String get homeScreenHintsSubtitle =>
-      'Pokaż wskazówki, gdy ekran główny jest pusty';
+  String get showHintsSubtitle =>
+      'Pokaż wskazówki użytkowania w całej aplikacji';
 
   @override
   String get hiddenApps => 'Ukryte aplikacje';
@@ -146,10 +146,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get noResults => 'Brak wyników';
 
   @override
-  String get emptyTaskList => 'Wpisz, aby dodać nowe zadanie';
+  String get emptyTaskList => 'Wpisz, aby dodać zadanie';
 
   @override
-  String get returnToAddTask => 'Naciśnij Enter, aby dodać';
+  String get returnToAddTask => 'Naciśnij Enter, aby dodać zadanie';
 
   @override
   String get actionRename => 'Zmień nazwę';

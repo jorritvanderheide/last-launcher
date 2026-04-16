@@ -19,8 +19,8 @@
 
   "hideStatusBar": "Plein écran",
   "hideStatusBarSubtitle": "Masquer la barre d'état et la navigation",
-  "homeScreenHints": "Astuces de l'écran d'accueil",
-  "homeScreenHintsSubtitle": "Afficher des astuces quand l'écran d'accueil est vide",
+  "showHints": "Afficher les astuces",
+  "showHintsSubtitle": "Afficher les astuces d'utilisation dans toute l'appli",
 
   "hiddenApps": "Applications masquées",
   "hiddenAppsNone": "Aucune",
@@ -57,8 +57,8 @@
   "hintLongPress": "Appui long pour les paramètres",
 
   "noResults": "Aucun résultat",
-  "emptyTaskList": "Tapez pour ajouter une nouvelle tâche",
-  "returnToAddTask": "Appuyez sur Entrée pour ajouter",
+  "emptyTaskList": "Tapez pour ajouter une tâche",
+  "returnToAddTask": "Appuyez sur Entrée pour ajouter une tâche",
 
   "actionRename": "Renommer",
   "actionUnpin": "Désépingler",

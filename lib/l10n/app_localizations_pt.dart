@@ -57,11 +57,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get hideStatusBarSubtitle => 'Ocultar barra de status e navegação';
 
   @override
-  String get homeScreenHints => 'Dicas da tela inicial';
+  String get showHints => 'Mostrar dicas';
 
   @override
-  String get homeScreenHintsSubtitle =>
-      'Mostrar dicas quando a tela inicial estiver vazia';
+  String get showHintsSubtitle => 'Mostrar dicas de uso em todo o app';
 
   @override
   String get hiddenApps => 'Apps ocultos';
@@ -144,10 +143,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get noResults => 'Sem resultados';
 
   @override
-  String get emptyTaskList => 'Digite para adicionar uma nova tarefa';
+  String get emptyTaskList => 'Digite para adicionar uma tarefa';
 
   @override
-  String get returnToAddTask => 'Pressione Enter para adicionar';
+  String get returnToAddTask => 'Pressione Enter para adicionar uma tarefa';
 
   @override
   String get actionRename => 'Renomear';

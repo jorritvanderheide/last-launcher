@@ -19,8 +19,8 @@
 
   "hideStatusBar": "全屏",
   "hideStatusBarSubtitle": "隐藏状态栏和导航栏",
-  "homeScreenHints": "主屏幕提示",
-  "homeScreenHintsSubtitle": "主屏幕为空时显示提示",
+  "showHints": "显示提示",
+  "showHintsSubtitle": "在整个应用中显示使用提示",
 
   "hiddenApps": "隐藏的应用",
   "hiddenAppsNone": "无",
@@ -57,7 +57,7 @@
   "hintLongPress": "长按打开设置",
 
   "noResults": "无结果",
-  "emptyTaskList": "输入以添加新任务",
+  "emptyTaskList": "输入以添加任务",
   "returnToAddTask": "按回车键添加任务",
 
   "actionRename": "重命名",
