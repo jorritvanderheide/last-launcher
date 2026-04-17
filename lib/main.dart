@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
 
-  const appChannel = AppChannel();
+  final appChannel = AppChannel()..initialize();
   final homeState = HomeState(prefs);
   final appListState = AppListState(appChannel, prefs);
   final settingsState = SettingsState(prefs);

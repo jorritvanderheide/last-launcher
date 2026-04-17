@@ -87,6 +87,28 @@ class _LauncherShellState extends State<LauncherShell>
           _pageFraction = _pageAnimFrom + (_pageAnimTo - _pageAnimFrom) * t;
         });
       });
+    widget.appChannel.onOpenSettings = _openSettings;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      if (await widget.appChannel.consumePendingOpenSettings()) {
+        if (mounted) _openSettings();
+      }
+    });
+  }
+
+  void _openSettings() {
+    Navigator.of(context).push(
+      PageRouteBuilder<void>(
+        pageBuilder: (_, _, _) => SettingsScreen(
+          settingsState: widget.settingsState,
+          appListState: widget.appListState,
+          homeState: widget.homeState,
+          appChannel: widget.appChannel,
+        ),
+        transitionDuration: Duration.zero,
+        reverseTransitionDuration: Duration.zero,
+      ),
+    );
   }
 
   @override
@@ -112,6 +134,9 @@ class _LauncherShellState extends State<LauncherShell>
 
   @override
   void dispose() {
+    if (widget.appChannel.onOpenSettings == _openSettings) {
+      widget.appChannel.onOpenSettings = null;
+    }
     WidgetsBinding.instance.removeObserver(this);
     _sheetAnim.dispose();
     _pageAnim.dispose();
@@ -354,20 +379,7 @@ class _LauncherShellState extends State<LauncherShell>
                       height: screenHeight,
                       child: GestureDetector(
                         behavior: HitTestBehavior.opaque,
-                        onLongPress: () {
-                          Navigator.of(context).push(
-                            PageRouteBuilder<void>(
-                              pageBuilder: (_, _, _) => SettingsScreen(
-                                settingsState: widget.settingsState,
-                                appListState: widget.appListState,
-                                homeState: widget.homeState,
-                                appChannel: widget.appChannel,
-                              ),
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                            ),
-                          );
-                        },
+                        onLongPress: _openSettings,
                         child: HomeScreen(
                           key: _homeKey,
                           homeState: widget.homeState,

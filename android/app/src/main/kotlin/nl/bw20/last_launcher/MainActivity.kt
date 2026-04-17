@@ -10,39 +10,58 @@ import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
     private val channel = "nl.bw20.last_launcher/apps"
+    private var methodChannel: MethodChannel? = null
+    private var pendingOpenSettings = false
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
-            .setMethodCallHandler { call, result ->
-                when (call.method) {
-                    "getInstalledApps" -> result.success(getInstalledApps())
-                    "expandQuickSettings" -> {
-                        expandQuickSettings()
-                        result.success(null)
-                    }
-                    "launchApp" -> {
-                        val packageName = call.argument<String>("packageName")
-                        if (packageName != null) {
-                            launchApp(packageName)
-                            result.success(null)
-                        } else {
-                            result.error("INVALID_ARGUMENT", "packageName is required", null)
-                        }
-                    }
-                    "openAppInfo" -> {
-                        val packageName = call.argument<String>("packageName")
-                        if (packageName != null) {
-                            openAppInfo(packageName)
-                            result.success(null)
-                        } else {
-                            result.error("INVALID_ARGUMENT", "packageName is required", null)
-                        }
-                    }
-                    else -> result.notImplemented()
+        methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, channel)
+        methodChannel?.setMethodCallHandler { call, result ->
+            when (call.method) {
+                "getInstalledApps" -> result.success(getInstalledApps())
+                "expandQuickSettings" -> {
+                    expandQuickSettings()
+                    result.success(null)
                 }
+                "launchApp" -> {
+                    val packageName = call.argument<String>("packageName")
+                    if (packageName != null) {
+                        launchApp(packageName)
+                        result.success(null)
+                    } else {
+                        result.error("INVALID_ARGUMENT", "packageName is required", null)
+                    }
+                }
+                "openAppInfo" -> {
+                    val packageName = call.argument<String>("packageName")
+                    if (packageName != null) {
+                        openAppInfo(packageName)
+                        result.success(null)
+                    } else {
+                        result.error("INVALID_ARGUMENT", "packageName is required", null)
+                    }
+                }
+                "consumePendingOpenSettings" -> {
+                    val consumed = pendingOpenSettings
+                    pendingOpenSettings = false
+                    result.success(consumed)
+                }
+                else -> result.notImplemented()
             }
+        }
+
+        // Capture any cold-start pending action for Flutter to consume.
+        if (intent?.action == Intent.ACTION_APPLICATION_PREFERENCES) {
+            pendingOpenSettings = true
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (intent.action == Intent.ACTION_APPLICATION_PREFERENCES) {
+            methodChannel?.invokeMethod("openSettings", null)
+        }
     }
 
     private fun getInstalledApps(): List<Map<String, String>> {

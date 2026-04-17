@@ -3,9 +3,32 @@ import 'package:flutter/services.dart';
 import 'package:last_launcher/shared/data/models.dart';
 
 class AppChannel {
-  const AppChannel();
+  AppChannel();
 
   static const _channel = MethodChannel('nl.bw20.last_launcher/apps');
+
+  VoidCallback? onOpenSettings;
+
+  void initialize() {
+    _channel.setMethodCallHandler((call) async {
+      if (call.method == 'openSettings') {
+        onOpenSettings?.call();
+      }
+      return null;
+    });
+  }
+
+  Future<bool> consumePendingOpenSettings() async {
+    try {
+      final result = await _channel.invokeMethod<bool>(
+        'consumePendingOpenSettings',
+      );
+      return result ?? false;
+    } on PlatformException catch (e) {
+      debugPrint('Failed to consume pending open settings: $e');
+      return false;
+    }
+  }
 
   Future<List<AppInfo>> getInstalledApps() async {
     try {
