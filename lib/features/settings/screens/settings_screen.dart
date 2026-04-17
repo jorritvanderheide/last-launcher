@@ -58,12 +58,6 @@ class SettingsScreen extends StatelessWidget {
                   onChanged: settingsState.setShowHints,
                 ),
                 _SectionHeader(title: l10n.sectionApps),
-                SwitchListTile(
-                  title: Text(l10n.hidePinnedApps),
-                  subtitle: Text(l10n.hidePinnedAppsSubtitle),
-                  value: settingsState.hidePinnedFromDrawer,
-                  onChanged: settingsState.setHidePinnedFromDrawer,
-                ),
                 ListenableBuilder(
                   listenable: appListState,
                   builder: (context, _) {
@@ -82,6 +76,7 @@ class SettingsScreen extends StatelessWidget {
                             pageBuilder: (_, _, _) => HiddenAppsScreen(
                               appListState: appListState,
                               homeState: homeState,
+                              settingsState: settingsState,
                               onLaunch: appChannel.launchApp,
                               onOpenAppInfo: appChannel.openAppInfo,
                             ),
@@ -92,6 +87,12 @@ class SettingsScreen extends StatelessWidget {
                       },
                     );
                   },
+                ),
+                SwitchListTile(
+                  title: Text(l10n.hidePinnedApps),
+                  subtitle: Text(l10n.hidePinnedAppsSubtitle),
+                  value: settingsState.hidePinnedFromDrawer,
+                  onChanged: settingsState.setHidePinnedFromDrawer,
                 ),
                 _SectionHeader(title: l10n.sectionBehavior),
                 SwitchListTile(

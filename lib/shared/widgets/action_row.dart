@@ -35,18 +35,20 @@ class ActionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onLongPress: onClose,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: AppLabel.verticalPadding,
-        ),
-        child: Row(
-          children: [
-            Expanded(
+      child: Row(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                top: AppLabel.verticalPadding,
+                bottom: AppLabel.verticalPadding,
+              ),
               child: Opacity(
                 opacity: opacity,
                 child: Text(
@@ -61,43 +63,54 @@ class ActionRow extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 24),
-            ...actions.map((action) {
-              return GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () {
-                  action.onTap();
-                  onClose();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Tooltip(
-                    message: action.label,
-                    child: Icon(
-                      action.icon,
-                      color: colorScheme.onSurface,
-                      size: 22,
-                    ),
-                  ),
-                ),
-              );
-            }),
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: onClose,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: Tooltip(
-                  message: AppLocalizations.of(context)!.actionClose,
-                  child: Icon(
-                    Icons.close,
-                    color: colorScheme.onSurface,
-                    size: 22,
-                  ),
-                ),
-              ),
+          ),
+          for (final action in actions)
+            _ActionIcon(
+              icon: action.icon,
+              label: action.label,
+              color: colorScheme.onSurface,
+              onTap: () {
+                action.onTap();
+                onClose();
+              },
             ),
-          ],
+          _ActionIcon(
+            icon: Icons.close,
+            label: l10n.actionClose,
+            color: colorScheme.onSurface,
+            onTap: onClose,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ActionIcon extends StatelessWidget {
+  const _ActionIcon({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Tooltip(
+        message: label,
+        child: SizedBox.square(
+          dimension: 48,
+          child: Center(
+            child: Icon(icon, color: color, size: 22),
+          ),
         ),
       ),
     );

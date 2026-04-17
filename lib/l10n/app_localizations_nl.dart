@@ -66,7 +66,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get hidePinnedApps => 'Vastgemaakte apps verbergen';
 
   @override
-  String get hidePinnedAppsSubtitle => 'Verberg vastgemaakte apps in de app-lade';
+  String get hidePinnedAppsSubtitle =>
+      'Verberg vastgemaakte apps in de app-lade';
 
   @override
   String get hiddenApps => 'Verborgen apps';

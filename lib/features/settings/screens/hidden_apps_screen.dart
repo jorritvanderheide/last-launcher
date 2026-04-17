@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
@@ -12,6 +13,7 @@ class HiddenAppsScreen extends StatefulWidget {
   const HiddenAppsScreen({
     required this.appListState,
     required this.homeState,
+    required this.settingsState,
     required this.onLaunch,
     required this.onOpenAppInfo,
     super.key,
@@ -19,6 +21,7 @@ class HiddenAppsScreen extends StatefulWidget {
 
   final AppListState appListState;
   final HomeState homeState;
+  final SettingsState settingsState;
   final void Function(String packageName) onLaunch;
   final void Function(String packageName) onOpenAppInfo;
 
@@ -64,15 +67,23 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.hiddenApps)),
       body: ListenableBuilder(
-        listenable: widget.appListState,
+        listenable: Listenable.merge([widget.appListState, widget.settingsState]),
         builder: (context, _) {
           final apps = widget.appListState.hiddenApps;
           if (apps.isEmpty) {
-            return Center(
+            if (!widget.settingsState.showHints) {
+              return const SizedBox.shrink();
+            }
+            return Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                top: 8 + AppLabel.verticalPadding,
+              ),
               child: Text(
                 AppLocalizations.of(context)!.noHiddenApps,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withAlpha(100),
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontSize: AppLabel.fontSize,
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(80),
                 ),
               ),
             );
