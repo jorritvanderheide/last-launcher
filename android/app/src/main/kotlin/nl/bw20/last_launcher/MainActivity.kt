@@ -36,8 +36,16 @@ class MainActivity : FlutterActivity() {
                 "openAppInfo" -> {
                     val packageName = call.argument<String>("packageName")
                     if (packageName != null) {
-                        openAppInfo(packageName)
-                        result.success(null)
+                        try {
+                            openAppInfo(packageName)
+                            result.success(null)
+                        } catch (e: Exception) {
+                            result.error(
+                                "OPEN_APP_INFO_FAILED",
+                                e.message ?: "Unable to open app info",
+                                null,
+                            )
+                        }
                     } else {
                         result.error("INVALID_ARGUMENT", "packageName is required", null)
                     }
@@ -60,7 +68,20 @@ class MainActivity : FlutterActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         if (intent.action == Intent.ACTION_APPLICATION_PREFERENCES) {
-            methodChannel?.invokeMethod("openSettings", null)
+            // Set a fallback flag in case Flutter's handler isn't attached yet;
+            // clear it once Dart acknowledges the direct invoke.
+            pendingOpenSettings = true
+            methodChannel?.invokeMethod(
+                "openSettings",
+                null,
+                object : MethodChannel.Result {
+                    override fun success(result: Any?) {
+                        pendingOpenSettings = false
+                    }
+                    override fun error(code: String, msg: String?, details: Any?) {}
+                    override fun notImplemented() {}
+                },
+            )
         }
     }
 
@@ -108,10 +129,6 @@ class MainActivity : FlutterActivity() {
             data = Uri.fromParts("package", targetPackageName, null)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-        try {
-            startActivity(intent)
-        } catch (_: Exception) {
-            // Silently fail if the settings activity cannot be resolved.
-        }
+        startActivity(intent)
     }
 }

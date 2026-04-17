@@ -103,12 +103,9 @@ void main() {
     });
 
     test('persists and restores tasks', () async {
-      state.addTask('Persisted');
+      await state.addTask('Persisted');
       final id = state.tasks.first.id;
-      state.toggleTask(id);
-
-      // Wait for save.
-      await Future<void>.delayed(Duration.zero);
+      await state.toggleTask(id);
 
       final prefs = await SharedPreferences.getInstance();
       final restored = TaskState(prefs);
