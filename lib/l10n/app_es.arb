@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "Ocultar apps fijadas",
   "hidePinnedAppsSubtitle": "Ocultar apps fijadas del cajón de aplicaciones",
+  "includeHiddenInSearch": "Incluir ocultas en búsqueda",
+  "includeHiddenInSearchSubtitle": "Permite que la búsqueda encuentre apps ocultas",
 
   "hiddenApps": "Aplicaciones ocultas",
   "hiddenAppsNone": "Ninguna",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "Deslizar a la derecha desde el inicio para ver tareas",
   "removeOnComplete": "Eliminar al completar",
   "removeOnCompleteSubtitle": "Eliminar tareas cuando se marcan como hechas",
+  "taskOptionDisabled": "Activa la pantalla de tareas para configurar",
 
   "donate": "Donar",
   "donateSubtitle": "Apoya el desarrollo de Last Launcher",

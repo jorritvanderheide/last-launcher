@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "Skrýt připnuté aplikace",
   "hidePinnedAppsSubtitle": "Skrýt připnuté aplikace z šuplíku aplikací",
+  "includeHiddenInSearch": "Zahrnout skryté do vyhledávání",
+  "includeHiddenInSearchSubtitle": "Hledání najde i skryté aplikace",
 
   "hiddenApps": "Skryté aplikace",
   "hiddenAppsNone": "Žádné",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "Přejetím doprava zobrazíte úkoly",
   "removeOnComplete": "Odstranit po dokončení",
   "removeOnCompleteSubtitle": "Odstranit úkoly po označení jako hotové",
+  "taskOptionDisabled": "Povolte obrazovku úkolů pro konfiguraci",
 
   "donate": "Přispět",
   "donateSubtitle": "Podpořte vývoj Last Launcheru",

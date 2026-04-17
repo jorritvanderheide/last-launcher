@@ -71,6 +71,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Ocultar apps fijadas del cajón de aplicaciones';
 
   @override
+  String get includeHiddenInSearch => 'Incluir ocultas en búsqueda';
+
+  @override
+  String get includeHiddenInSearchSubtitle =>
+      'Permite que la búsqueda encuentre apps ocultas';
+
+  @override
   String get hiddenApps => 'Aplicaciones ocultas';
 
   @override
@@ -121,6 +128,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Eliminar tareas cuando se marcan como hechas';
+
+  @override
+  String get taskOptionDisabled =>
+      'Activa la pantalla de tareas para configurar';
 
   @override
   String get donate => 'Donar';

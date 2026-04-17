@@ -6,7 +6,10 @@ class SettingsState extends ChangeNotifier {
     _load();
   }
 
-  /// Incremented when theme-related settings change.
+  /// Incremented when settings that require rebuilding the [MaterialApp]
+  /// subtree change (theme mode, status bar visibility). Exists separately
+  /// from [notifyListeners] so routine setting changes (e.g. keyboard toggle)
+  /// don't rebuild the entire app.
   final themeNotifier = ValueNotifier<int>(0);
 
   static const _themeKey = 'theme_mode';
@@ -19,6 +22,7 @@ class SettingsState extends ChangeNotifier {
   static const _removeOnCompleteKey = 'remove_on_complete';
   static const _hideStatusBarKey = 'hide_status_bar';
   static const _hidePinnedFromDrawerKey = 'hide_pinned_from_drawer';
+  static const _includeHiddenInSearchKey = 'include_hidden_in_search';
   final SharedPreferences _prefs;
   ThemeMode _themeMode = ThemeMode.system;
   bool _extraTheme = false;
@@ -31,6 +35,7 @@ class SettingsState extends ChangeNotifier {
   bool _removeOnComplete = false;
   bool _hideStatusBar = false;
   bool _hidePinnedFromDrawer = true;
+  bool _includeHiddenInSearch = false;
   ThemeMode get themeMode => _extraTheme ? ThemeMode.dark : _themeMode;
   bool get isExtra => _extraTheme;
   bool get autoKeyboard => _autoKeyboard;
@@ -42,6 +47,7 @@ class SettingsState extends ChangeNotifier {
   bool get removeOnComplete => _removeOnComplete;
   bool get hideStatusBar => _hideStatusBar;
   bool get hidePinnedFromDrawer => _hidePinnedFromDrawer;
+  bool get includeHiddenInSearch => !_searchOnly && _includeHiddenInSearch;
 
   void _load() {
     final value = _prefs.getString(_themeKey);
@@ -60,6 +66,7 @@ class SettingsState extends ChangeNotifier {
     _removeOnComplete = _prefs.getBool(_removeOnCompleteKey) ?? false;
     _hideStatusBar = _prefs.getBool(_hideStatusBarKey) ?? false;
     _hidePinnedFromDrawer = _prefs.getBool(_hidePinnedFromDrawerKey) ?? true;
+    _includeHiddenInSearch = _prefs.getBool(_includeHiddenInSearchKey) ?? false;
   }
 
   Future<void> setTheme(String value) async {
@@ -137,5 +144,11 @@ class SettingsState extends ChangeNotifier {
     _hidePinnedFromDrawer = enabled;
     notifyListeners();
     await _prefs.setBool(_hidePinnedFromDrawerKey, enabled);
+  }
+
+  Future<void> setIncludeHiddenInSearch(bool enabled) async {
+    _includeHiddenInSearch = enabled;
+    notifyListeners();
+    await _prefs.setBool(_includeHiddenInSearchKey, enabled);
   }
 }

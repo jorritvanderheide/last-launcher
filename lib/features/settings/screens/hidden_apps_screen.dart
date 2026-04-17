@@ -31,9 +31,29 @@ class HiddenAppsScreen extends StatefulWidget {
 
 class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
   String? _activeAppPackage;
+  late final Listenable _mergedState = Listenable.merge([
+    widget.appListState,
+    widget.settingsState,
+    widget.homeState,
+  ]);
+
+  List<AppInfo> _hiddenListItems() {
+    final hiddenSet = widget.appListState.hiddenApps
+        .map((a) => a.packageName)
+        .toSet();
+    return widget.appListState.allApps.where((app) {
+      if (hiddenSet.contains(app.packageName)) return true;
+      if (widget.settingsState.hidePinnedFromDrawer &&
+          widget.homeState.isPinned(app.packageName)) {
+        return true;
+      }
+      return false;
+    }).toList();
+  }
 
   List<ActionItem> _appActions(BuildContext context, AppInfo app) {
     final l10n = AppLocalizations.of(context)!;
+    final isHidden = widget.appListState.isHidden(app.packageName);
     return [
       ActionItem(
         icon: Icons.edit,
@@ -49,11 +69,12 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
           }
         },
       ),
-      ActionItem(
-        icon: Icons.visibility,
-        label: l10n.actionUnhide,
-        onTap: () => widget.appListState.unhideApp(app.packageName),
-      ),
+      if (isHidden)
+        ActionItem(
+          icon: Icons.visibility,
+          label: l10n.actionUnhide,
+          onTap: () => widget.appListState.unhideApp(app.packageName),
+        ),
       ActionItem(
         icon: Icons.info_outline,
         label: l10n.actionAppInfo,
@@ -67,9 +88,9 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.hiddenApps)),
       body: ListenableBuilder(
-        listenable: Listenable.merge([widget.appListState, widget.settingsState]),
+        listenable: _mergedState,
         builder: (context, _) {
-          final apps = widget.appListState.hiddenApps;
+          final apps = _hiddenListItems();
           if (apps.isEmpty) {
             if (!widget.settingsState.showHints) {
               return const SizedBox.shrink();
@@ -83,7 +104,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
                 AppLocalizations.of(context)!.noHiddenApps,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontSize: AppLabel.fontSize,
-                  color: Theme.of(context).colorScheme.onSurface.withAlpha(80),
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(130),
                 ),
               ),
             );

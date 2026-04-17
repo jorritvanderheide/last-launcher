@@ -69,6 +69,13 @@ class AppLocalizationsSv extends AppLocalizations {
   String get hidePinnedAppsSubtitle => 'Dölj fästa appar från app-lådan';
 
   @override
+  String get includeHiddenInSearch => 'Inkludera dolda i sökning';
+
+  @override
+  String get includeHiddenInSearchSubtitle =>
+      'Låt sökningen även matcha dolda appar';
+
+  @override
   String get hiddenApps => 'Dolda appar';
 
   @override
@@ -117,6 +124,10 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Ta bort uppgifter när de markeras som klara';
+
+  @override
+  String get taskOptionDisabled =>
+      'Aktivera uppgiftsskärmen för att konfigurera';
 
   @override
   String get donate => 'Donera';

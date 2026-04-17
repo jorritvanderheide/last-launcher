@@ -59,40 +59,58 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 _SectionHeader(title: l10n.sectionApps),
                 ListenableBuilder(
-                  listenable: appListState,
+                  listenable: Listenable.merge([appListState, homeState]),
                   builder: (context, _) {
-                    final count = appListState.hiddenApps.length;
-                    return ListTile(
-                      leading: const Icon(Icons.visibility_off_outlined),
-                      title: Text(l10n.hiddenApps),
-                      subtitle: Text(
-                        count == 0
-                            ? l10n.hiddenAppsNone
-                            : l10n.hiddenAppsCount(count),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(
-                          PageRouteBuilder<void>(
-                            pageBuilder: (_, _, _) => HiddenAppsScreen(
-                              appListState: appListState,
-                              homeState: homeState,
-                              settingsState: settingsState,
-                              onLaunch: appChannel.launchApp,
-                              onOpenAppInfo: appChannel.openAppInfo,
-                            ),
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
+                    final hiddenPackages = <String>{
+                      ...appListState.hiddenApps.map((a) => a.packageName),
+                      if (settingsState.hidePinnedFromDrawer)
+                        ...homeState.pinnedApps.map((a) => a.packageName),
+                    };
+                    final count = hiddenPackages.length;
+                    return Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          leading: const Icon(Icons.visibility_off_outlined),
+                          title: Text(l10n.hiddenApps),
+                          subtitle: Text(
+                            count == 0
+                                ? l10n.hiddenAppsNone
+                                : l10n.hiddenAppsCount(count),
                           ),
-                        );
-                      },
+                          onTap: () {
+                            Navigator.of(context).push(
+                              PageRouteBuilder<void>(
+                                pageBuilder: (_, _, _) => HiddenAppsScreen(
+                                  appListState: appListState,
+                                  homeState: homeState,
+                                  settingsState: settingsState,
+                                  onLaunch: appChannel.launchApp,
+                                  onOpenAppInfo: appChannel.openAppInfo,
+                                ),
+                                transitionDuration: Duration.zero,
+                                reverseTransitionDuration: Duration.zero,
+                              ),
+                            );
+                          },
+                        ),
+                        SwitchListTile(
+                          title: Text(l10n.hidePinnedApps),
+                          subtitle: Text(l10n.hidePinnedAppsSubtitle),
+                          value: settingsState.hidePinnedFromDrawer,
+                          onChanged: settingsState.setHidePinnedFromDrawer,
+                        ),
+                        SwitchListTile(
+                          title: Text(l10n.includeHiddenInSearch),
+                          subtitle: Text(l10n.includeHiddenInSearchSubtitle),
+                          value: settingsState.includeHiddenInSearch,
+                          onChanged: (searchOnly || count == 0)
+                              ? null
+                              : settingsState.setIncludeHiddenInSearch,
+                        ),
+                      ],
                     );
                   },
-                ),
-                SwitchListTile(
-                  title: Text(l10n.hidePinnedApps),
-                  subtitle: Text(l10n.hidePinnedAppsSubtitle),
-                  value: settingsState.hidePinnedFromDrawer,
-                  onChanged: settingsState.setHidePinnedFromDrawer,
                 ),
                 _SectionHeader(title: l10n.sectionBehavior),
                 SwitchListTile(
@@ -122,7 +140,11 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 SwitchListTile(
                   title: Text(l10n.autoShowKeyboard),
-                  subtitle: Text(l10n.autoShowKeyboardTasksSubtitle),
+                  subtitle: Text(
+                    settingsState.tasksEnabled
+                        ? l10n.autoShowKeyboardTasksSubtitle
+                        : l10n.taskOptionDisabled,
+                  ),
                   value: settingsState.autoKeyboardTasks,
                   onChanged: settingsState.tasksEnabled
                       ? settingsState.setAutoKeyboardTasks
@@ -130,7 +152,11 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 SwitchListTile(
                   title: Text(l10n.removeOnComplete),
-                  subtitle: Text(l10n.removeOnCompleteSubtitle),
+                  subtitle: Text(
+                    settingsState.tasksEnabled
+                        ? l10n.removeOnCompleteSubtitle
+                        : l10n.taskOptionDisabled,
+                  ),
                   value: settingsState.removeOnComplete,
                   onChanged: settingsState.tasksEnabled
                       ? settingsState.setRemoveOnComplete

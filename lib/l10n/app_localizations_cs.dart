@@ -70,6 +70,12 @@ class AppLocalizationsCs extends AppLocalizations {
       'Skrýt připnuté aplikace z šuplíku aplikací';
 
   @override
+  String get includeHiddenInSearch => 'Zahrnout skryté do vyhledávání';
+
+  @override
+  String get includeHiddenInSearchSubtitle => 'Hledání najde i skryté aplikace';
+
+  @override
   String get hiddenApps => 'Skryté aplikace';
 
   @override
@@ -120,6 +126,9 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Odstranit úkoly po označení jako hotové';
+
+  @override
+  String get taskOptionDisabled => 'Povolte obrazovku úkolů pro konfiguraci';
 
   @override
   String get donate => 'Přispět';

@@ -69,6 +69,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get hidePinnedAppsSubtitle => '앱 서랍에서 고정된 앱 숨기기';
 
   @override
+  String get includeHiddenInSearch => '검색에 숨긴 앱 포함';
+
+  @override
+  String get includeHiddenInSearchSubtitle => '검색에서 숨긴 앱도 일치';
+
+  @override
   String get hiddenApps => '숨긴 앱';
 
   @override
@@ -114,6 +120,9 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get removeOnCompleteSubtitle => '완료된 할 일 제거';
+
+  @override
+  String get taskOptionDisabled => '작업 화면을 활성화하여 구성하세요';
 
   @override
   String get donate => '기부';

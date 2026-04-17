@@ -70,6 +70,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get hidePinnedAppsSubtitle => 'Ocultar aplicações fixadas da gaveta';
 
   @override
+  String get includeHiddenInSearch => 'Incluir ocultas na pesquisa';
+
+  @override
+  String get includeHiddenInSearchSubtitle =>
+      'Permite que a pesquisa encontre aplicações ocultas';
+
+  @override
   String get hiddenApps => 'Aplicações ocultas';
 
   @override
@@ -120,6 +127,9 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Remover tarefas quando marcadas como concluídas';
+
+  @override
+  String get taskOptionDisabled => 'Ativa o ecrã de tarefas para configurar';
 
   @override
   String get donate => 'Doar';

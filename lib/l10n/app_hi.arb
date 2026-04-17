@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "पिन किए गए ऐप्स छुपाएँ",
   "hidePinnedAppsSubtitle": "ऐप ड्रॉअर से पिन किए गए ऐप्स छुपाएँ",
+  "includeHiddenInSearch": "खोज में छुपे शामिल करें",
+  "includeHiddenInSearchSubtitle": "खोज को छुपे ऐप्स से मिलान करने दें",
 
   "hiddenApps": "छुपे हुए ऐप्स",
   "hiddenAppsNone": "कोई नहीं",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "कार्य देखने के लिए होम से दाएँ स्वाइप करें",
   "removeOnComplete": "पूरा होने पर हटाएँ",
   "removeOnCompleteSubtitle": "पूर्ण होने पर कार्य हटाएँ",
+  "taskOptionDisabled": "कॉन्फ़िगर करने के लिए कार्य स्क्रीन सक्षम करें",
 
   "donate": "दान करें",
   "donateSubtitle": "Last Launcher के विकास का समर्थन करें",

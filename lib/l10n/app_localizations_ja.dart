@@ -69,6 +69,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get hidePinnedAppsSubtitle => '固定したアプリをアプリドロワーから隠す';
 
   @override
+  String get includeHiddenInSearch => '非表示アプリも検索対象';
+
+  @override
+  String get includeHiddenInSearchSubtitle => '検索で非表示のアプリも一致させる';
+
+  @override
   String get hiddenApps => '非表示のアプリ';
 
   @override
@@ -114,6 +120,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get removeOnCompleteSubtitle => '完了したタスクを削除';
+
+  @override
+  String get taskOptionDisabled => '設定するにはタスク画面を有効にしてください';
 
   @override
   String get donate => '寄付';

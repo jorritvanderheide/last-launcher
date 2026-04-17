@@ -37,6 +37,12 @@ class TaskScreenState extends State<TaskScreen> {
   final _scrollController = ScrollController();
   double _cumulativeOverscroll = 0;
 
+  late final Listenable _mergedState = Listenable.merge([
+    widget.taskState,
+    _controller,
+    widget.settingsState,
+  ]);
+
   bool dismissActions() {
     if (_activeTaskId == null) return false;
     setState(() => _activeTaskId = null);
@@ -116,6 +122,9 @@ class TaskScreenState extends State<TaskScreen> {
       _completeTask(match.first);
     } else {
       widget.taskState.addTask(query);
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(0);
+      }
     }
 
     _controller.clear();
@@ -149,7 +158,7 @@ class TaskScreenState extends State<TaskScreen> {
               originalLabel: task.title,
             );
             if (result != null && result.isNotEmpty && result != task.title) {
-              widget.taskState.renameTask(task.id, result);
+              await widget.taskState.renameTask(task.id, result);
             }
           },
         ),
@@ -194,11 +203,7 @@ class TaskScreenState extends State<TaskScreen> {
           ),
           Expanded(
             child: ListenableBuilder(
-              listenable: Listenable.merge([
-                widget.taskState,
-                _controller,
-                widget.settingsState,
-              ]),
+              listenable: _mergedState,
               builder: (context, _) {
                 final tasks = _displayTasks(widget.taskState.tasks);
                 if (tasks.isEmpty) {
@@ -224,7 +229,7 @@ class TaskScreenState extends State<TaskScreen> {
                                 fontSize: AppLabel.fontSize,
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onSurface.withAlpha(80),
+                                ).colorScheme.onSurface.withAlpha(130),
                               ),
                         );
                       },
@@ -282,7 +287,7 @@ class TaskScreenState extends State<TaskScreen> {
                                   ? TextDecoration.lineThrough
                                   : null,
                               decorationThickness: task.done ? 1.5 : null,
-                              opacity: task.done ? 0.4 : 1.0,
+                              opacity: task.done ? 0.6 : 1.0,
                             ),
                           );
                         }
@@ -300,7 +305,7 @@ class TaskScreenState extends State<TaskScreen> {
                                     ? null
                                     : task.id,
                               ),
-                              opacity: task.done ? 0.4 : 1.0,
+                              opacity: task.done ? 0.6 : 1.0,
                               textDecoration: task.done
                                   ? TextDecoration.lineThrough
                                   : null,
@@ -309,12 +314,17 @@ class TaskScreenState extends State<TaskScreen> {
                                 index: index,
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.opaque,
-                                  child: const Padding(
-                                    padding: EdgeInsets.only(
-                                      left: 12,
-                                      right: 20,
+                                  child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      minHeight: 48,
                                     ),
-                                    child: SizedBox(width: 24),
+                                    child: const Padding(
+                                      padding: EdgeInsets.only(
+                                        left: 12,
+                                        right: 20,
+                                      ),
+                                      child: SizedBox(width: 24),
+                                    ),
                                   ),
                                 ),
                               ),

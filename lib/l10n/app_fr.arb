@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "Masquer les apps épinglées",
   "hidePinnedAppsSubtitle": "Masquer les applications épinglées de la liste",
+  "includeHiddenInSearch": "Inclure les masquées dans la recherche",
+  "includeHiddenInSearchSubtitle": "La recherche correspond aussi aux applications masquées",
 
   "hiddenApps": "Applications masquées",
   "hiddenAppsNone": "Aucune",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "Glisser vers la droite depuis l'accueil pour voir les tâches",
   "removeOnComplete": "Supprimer à l'achèvement",
   "removeOnCompleteSubtitle": "Supprimer les tâches quand elles sont terminées",
+  "taskOptionDisabled": "Activez l'écran des tâches pour configurer",
 
   "donate": "Faire un don",
   "donateSubtitle": "Soutenir le développement de Last Launcher",

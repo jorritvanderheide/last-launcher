@@ -42,6 +42,12 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   final _textController = TextEditingController();
   String? _activeAppPackage;
 
+  late final Listenable _mergedState = Listenable.merge([
+    widget.appListState,
+    widget.settingsState,
+    widget.homeState,
+  ]);
+
   bool get _searchOnly => widget.settingsState.searchOnly;
   bool get _autoKeyboard => _searchOnly || widget.settingsState.autoKeyboard;
   bool get _autoLaunch => _searchOnly || widget.settingsState.autoLaunch;
@@ -50,24 +56,19 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    if (_autoKeyboard) {
-      _requestFocus();
-    }
   }
 
   @override
   void didUpdateWidget(AppDrawerSheet oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.isOpen && !oldWidget.isOpen) {
-      // Drawer just opened.
+      // Drawer just opened (post-snap, not during drag).
       if (_scrollController.hasClients) {
         _scrollController.jumpTo(0);
       }
       widget.isAtTop.value = true;
       if (_autoKeyboard) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (mounted) _focusNode.requestFocus();
-        });
+        _requestKeyboardReliably();
       }
     } else if (!widget.isOpen && oldWidget.isOpen) {
       // Drawer just closed.
@@ -77,6 +78,25 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
     }
   }
 
+  void _requestKeyboardReliably() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _focusNode.requestFocus();
+      // After app switch or device unlock the platform sometimes grants
+      // focus but suppresses the keyboard. Detect that and bounce focus.
+      Future.delayed(const Duration(milliseconds: 200), () {
+        if (!mounted || !_focusNode.hasFocus) return;
+        final insets = MediaQuery.viewInsetsOf(context);
+        if (insets.bottom == 0) {
+          _focusNode.unfocus();
+          Future.delayed(const Duration(milliseconds: 50), () {
+            if (mounted) _focusNode.requestFocus();
+          });
+        }
+      });
+    });
+  }
+
   @override
   void dispose() {
     _scrollController.removeListener(_onScroll);
@@ -84,32 +104,6 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
     _textController.dispose();
     _focusNode.dispose();
     super.dispose();
-  }
-
-  void _requestFocus() {
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (mounted && !_focusNode.hasFocus) {
-        _focusNode.requestFocus();
-      }
-    });
-    // Re-request if focus was granted but keyboard suppressed during app transition.
-    Future.delayed(const Duration(milliseconds: 300), () {
-      if (mounted &&
-          _focusNode.hasFocus &&
-          WidgetsBinding
-                  .instance
-                  .platformDispatcher
-                  .views
-                  .first
-                  .viewInsets
-                  .bottom ==
-              0) {
-        _focusNode.unfocus();
-        Future.delayed(const Duration(milliseconds: 100), () {
-          if (mounted) _focusNode.requestFocus();
-        });
-      }
-    });
   }
 
   void _onScroll() {
@@ -133,9 +127,17 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   }
 
   List<AppInfo> get _visibleApps {
-    final apps = widget.appListState.filteredApps;
-    if (!widget.settingsState.hidePinnedFromDrawer) return apps;
-    return apps
+    final query = widget.appListState.query;
+    final searching = query.isNotEmpty;
+    final expandSearch =
+        searching && widget.settingsState.includeHiddenInSearch;
+    final base = expandSearch
+        ? widget.appListState.search(query, includeHidden: true)
+        : widget.appListState.filteredApps;
+    if (expandSearch || !widget.settingsState.hidePinnedFromDrawer) {
+      return base;
+    }
+    return base
         .where((a) => !widget.homeState.isPinned(a.packageName))
         .toList();
   }
@@ -152,7 +154,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
     final visible = _visibleApps;
     if (visible.length == 1) {
       widget.onLaunch(visible.first.packageName);
-    } else if (visible.isEmpty) {
+    } else if (visible.isEmpty && widget.appListState.query.isNotEmpty) {
       widget.onCloseDrawer();
     }
   }
@@ -160,6 +162,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   List<ActionItem> _appActions(BuildContext context, AppInfo app) {
     final l10n = AppLocalizations.of(context)!;
     final isPinned = widget.homeState.isPinned(app.packageName);
+    final isHidden = widget.appListState.isHidden(app.packageName);
     return [
       ActionItem(
         icon: Icons.edit,
@@ -175,18 +178,16 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
           }
         },
       ),
-      if (isPinned)
-        ActionItem(
-          icon: Icons.remove_circle_outline,
-          label: l10n.actionUnpin,
-          onTap: () => widget.homeState.removeApp(app.packageName),
-        )
-      else
+      if (!isPinned)
         ActionItem(
           icon: Icons.add_circle_outline,
           label: widget.homeState.isFull ? l10n.actionPinFull : l10n.actionPin,
           onTap: widget.homeState.isFull
-              ? () {}
+              ? () {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(l10n.homeScreenFull)));
+                }
               : () {
                   widget.homeState.addApp(
                     PinnedApp(packageName: app.packageName, label: app.label),
@@ -194,11 +195,12 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                   widget.onCloseDrawer();
                 },
         ),
-      ActionItem(
-        icon: Icons.visibility_off,
-        label: l10n.actionHide,
-        onTap: () => widget.appListState.hideApp(app.packageName),
-      ),
+      if (!isHidden)
+        ActionItem(
+          icon: Icons.visibility_off,
+          label: l10n.actionHide,
+          onTap: () => widget.appListState.hideApp(app.packageName),
+        ),
       ActionItem(
         icon: Icons.info_outline,
         label: l10n.actionAppInfo,
@@ -248,11 +250,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                   },
                   child: FadeOverflow(
                     child: ListenableBuilder(
-                      listenable: Listenable.merge([
-                        widget.appListState,
-                        widget.settingsState,
-                        widget.homeState,
-                      ]),
+                      listenable: _mergedState,
                       builder: (context, _) {
                         final apps = _visibleApps;
                         if (apps.isEmpty &&
@@ -272,7 +270,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                                     fontSize: AppLabel.fontSize,
                                     color: Theme.of(
                                       context,
-                                    ).colorScheme.onSurface.withAlpha(80),
+                                    ).colorScheme.onSurface.withAlpha(130),
                                   ),
                             ),
                           );
@@ -284,6 +282,10 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                           itemCount: apps.length,
                           itemBuilder: (context, index) {
                             final app = apps[index];
+                            final opacity =
+                                widget.appListState.isHidden(app.packageName)
+                                ? 0.6
+                                : 1.0;
                             if (_activeAppPackage == app.packageName) {
                               return ActionRow(
                                 key: ValueKey(app.packageName),
@@ -291,6 +293,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                                 actions: _appActions(context, app),
                                 onClose: () =>
                                     setState(() => _activeAppPackage = null),
+                                opacity: opacity,
                               );
                             }
                             return AppLabel(
@@ -303,6 +306,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                                     ? null
                                     : app.packageName,
                               ),
+                              opacity: opacity,
                             );
                           },
                         );

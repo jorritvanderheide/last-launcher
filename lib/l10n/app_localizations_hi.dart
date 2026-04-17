@@ -69,6 +69,13 @@ class AppLocalizationsHi extends AppLocalizations {
   String get hidePinnedAppsSubtitle => 'ऐप ड्रॉअर से पिन किए गए ऐप्स छुपाएँ';
 
   @override
+  String get includeHiddenInSearch => 'खोज में छुपे शामिल करें';
+
+  @override
+  String get includeHiddenInSearchSubtitle =>
+      'खोज को छुपे ऐप्स से मिलान करने दें';
+
+  @override
   String get hiddenApps => 'छुपे हुए ऐप्स';
 
   @override
@@ -114,6 +121,10 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get removeOnCompleteSubtitle => 'पूर्ण होने पर कार्य हटाएँ';
+
+  @override
+  String get taskOptionDisabled =>
+      'कॉन्फ़िगर करने के लिए कार्य स्क्रीन सक्षम करें';
 
   @override
   String get donate => 'दान करें';

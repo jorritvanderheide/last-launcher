@@ -70,6 +70,13 @@ class AppLocalizationsNl extends AppLocalizations {
       'Verberg vastgemaakte apps in de app-lade';
 
   @override
+  String get includeHiddenInSearch => 'Verborgen in zoekresultaten';
+
+  @override
+  String get includeHiddenInSearchSubtitle =>
+      'Laat zoeken ook verborgen apps vinden';
+
+  @override
   String get hiddenApps => 'Verborgen apps';
 
   @override
@@ -120,6 +127,9 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Taken verwijderen wanneer ze zijn afgerond';
+
+  @override
+  String get taskOptionDisabled => 'Schakel Takenscherm in om te configureren';
 
   @override
   String get donate => 'Doneren';

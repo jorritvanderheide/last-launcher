@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "Piilota kiinnitetyt sovellukset",
   "hidePinnedAppsSubtitle": "Piilota kiinnitetyt sovellukset sovellusvalikosta",
+  "includeHiddenInSearch": "Sisällytä piilotetut hakuun",
+  "includeHiddenInSearchSubtitle": "Anna haun löytää myös piilotetut sovellukset",
 
   "hiddenApps": "Piilotetut sovellukset",
   "hiddenAppsNone": "Ei mitään",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "Pyyhkäise oikealle nähdäksesi tehtävät",
   "removeOnComplete": "Poista valmistuttua",
   "removeOnCompleteSubtitle": "Poista tehtävät, kun ne merkitään valmiiksi",
+  "taskOptionDisabled": "Ota tehtävänäyttö käyttöön määrittääksesi",
 
   "donate": "Lahjoita",
   "donateSubtitle": "Tue Last Launcherin kehitystä",

@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "Hide pinned apps",
   "hidePinnedAppsSubtitle": "Hide pinned apps from the app drawer",
+  "includeHiddenInSearch": "Include hidden in search",
+  "includeHiddenInSearchSubtitle": "Let search also match hidden apps",
 
   "hiddenApps": "Hidden apps",
   "hiddenAppsNone": "None",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "Swipe right from home to view tasks",
   "removeOnComplete": "Remove on complete",
   "removeOnCompleteSubtitle": "Remove tasks when marked as done",
+  "taskOptionDisabled": "Enable Task screen to configure",
 
   "donate": "Donate",
   "donateSubtitle": "Support the development of Last Launcher",

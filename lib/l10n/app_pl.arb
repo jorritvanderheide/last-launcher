@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "Ukryj przypięte aplikacje",
   "hidePinnedAppsSubtitle": "Ukryj przypięte aplikacje z szuflady aplikacji",
+  "includeHiddenInSearch": "Uwzględnij ukryte w wyszukiwaniu",
+  "includeHiddenInSearchSubtitle": "Pozwól wyszukiwaniu znajdować ukryte aplikacje",
 
   "hiddenApps": "Ukryte aplikacje",
   "hiddenAppsNone": "Brak",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "Przesuń w prawo, aby zobaczyć zadania",
   "removeOnComplete": "Usuń po ukończeniu",
   "removeOnCompleteSubtitle": "Usuń zadania po oznaczeniu jako wykonane",
+  "taskOptionDisabled": "Włącz ekran zadań, aby skonfigurować",
 
   "donate": "Wspomóż",
   "donateSubtitle": "Wesprzyj rozwój Last Launchera",

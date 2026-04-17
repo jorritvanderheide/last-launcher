@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "固定したアプリを非表示",
   "hidePinnedAppsSubtitle": "固定したアプリをアプリドロワーから隠す",
+  "includeHiddenInSearch": "非表示アプリも検索対象",
+  "includeHiddenInSearchSubtitle": "検索で非表示のアプリも一致させる",
 
   "hiddenApps": "非表示のアプリ",
   "hiddenAppsNone": "なし",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "ホームから右にスワイプしてタスクを表示",
   "removeOnComplete": "完了時に削除",
   "removeOnCompleteSubtitle": "完了したタスクを削除",
+  "taskOptionDisabled": "設定するにはタスク画面を有効にしてください",
 
   "donate": "寄付",
   "donateSubtitle": "Last Launcherの開発を支援",

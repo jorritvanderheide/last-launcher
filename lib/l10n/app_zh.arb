@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "隱藏已固定的應用程式",
   "hidePinnedAppsSubtitle": "從應用程式抽屜中隱藏已固定的應用程式",
+  "includeHiddenInSearch": "在搜尋中包含隱藏項目",
+  "includeHiddenInSearchSubtitle": "讓搜尋也能找到已隱藏的應用程式",
 
   "hiddenApps": "已隱藏的應用程式",
   "hiddenAppsNone": "無",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "從主畫面向右滑動以查看任務",
   "removeOnComplete": "完成後移除",
   "removeOnCompleteSubtitle": "標記為完成後移除任務",
+  "taskOptionDisabled": "啟用任務畫面以進行設定",
 
   "donate": "贊助",
   "donateSubtitle": "支持 Last Launcher 的開發",

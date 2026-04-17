@@ -72,6 +72,13 @@ class AppLocalizationsPl extends AppLocalizations {
       'Ukryj przypięte aplikacje z szuflady aplikacji';
 
   @override
+  String get includeHiddenInSearch => 'Uwzględnij ukryte w wyszukiwaniu';
+
+  @override
+  String get includeHiddenInSearchSubtitle =>
+      'Pozwól wyszukiwaniu znajdować ukryte aplikacje';
+
+  @override
   String get hiddenApps => 'Ukryte aplikacje';
 
   @override
@@ -121,6 +128,9 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Usuń zadania po oznaczeniu jako wykonane';
+
+  @override
+  String get taskOptionDisabled => 'Włącz ekran zadań, aby skonfigurować';
 
   @override
   String get donate => 'Wspomóż';

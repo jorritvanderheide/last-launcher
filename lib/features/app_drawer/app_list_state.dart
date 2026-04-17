@@ -24,13 +24,25 @@ class AppListState extends ChangeNotifier {
   final Set<String> _hiddenApps = {};
 
   List<AppInfo> get filteredApps => _filteredApps;
+  List<AppInfo> get allApps => List.unmodifiable(_allApps);
   String get query => _query;
-  bool get hasSingleResult => _filteredApps.length == 1;
 
   List<AppInfo> get hiddenApps =>
       _allApps.where((a) => _hiddenApps.contains(a.packageName)).toList();
 
   bool isHidden(String packageName) => _hiddenApps.contains(packageName);
+
+  List<AppInfo> search(String query, {bool includeHidden = false}) {
+    final source = includeHidden
+        ? _allApps
+        : _allApps.where((a) => !_hiddenApps.contains(a.packageName));
+    if (query.isEmpty) return source.toList();
+    final lower = query.toLowerCase();
+    return source.where((app) {
+      return displayLabel(app).toLowerCase().contains(lower) ||
+          app.label.toLowerCase().contains(lower);
+    }).toList();
+  }
 
   Future<void> loadApps() async {
     if (_loading) return;
@@ -39,6 +51,8 @@ class AppListState extends ChangeNotifier {
       _allApps = await _channel.getInstalledApps();
       _sortApps();
       _applyFilter();
+    } catch (e) {
+      debugPrint('Failed to load installed apps: $e');
     } finally {
       _loading = false;
     }

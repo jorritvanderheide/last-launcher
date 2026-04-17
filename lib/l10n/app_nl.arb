@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "Vastgemaakte apps verbergen",
   "hidePinnedAppsSubtitle": "Verberg vastgemaakte apps in de app-lade",
+  "includeHiddenInSearch": "Verborgen in zoekresultaten",
+  "includeHiddenInSearchSubtitle": "Laat zoeken ook verborgen apps vinden",
 
   "hiddenApps": "Verborgen apps",
   "hiddenAppsNone": "Geen",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "Veeg naar rechts vanaf het startscherm om taken te bekijken",
   "removeOnComplete": "Verwijderen bij voltooiing",
   "removeOnCompleteSubtitle": "Taken verwijderen wanneer ze zijn afgerond",
+  "taskOptionDisabled": "Schakel Takenscherm in om te configureren",
 
   "donate": "Doneren",
   "donateSubtitle": "Ondersteun de ontwikkeling van Last Launcher",

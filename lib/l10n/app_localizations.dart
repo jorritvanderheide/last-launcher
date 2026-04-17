@@ -242,6 +242,18 @@ abstract class AppLocalizations {
   /// **'Hide pinned apps from the app drawer'**
   String get hidePinnedAppsSubtitle;
 
+  /// No description provided for @includeHiddenInSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Include hidden in search'**
+  String get includeHiddenInSearch;
+
+  /// No description provided for @includeHiddenInSearchSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Let search also match hidden apps'**
+  String get includeHiddenInSearchSubtitle;
+
   /// No description provided for @hiddenApps.
   ///
   /// In en, this message translates to:
@@ -331,6 +343,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove tasks when marked as done'**
   String get removeOnCompleteSubtitle;
+
+  /// No description provided for @taskOptionDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Task screen to configure'**
+  String get taskOptionDisabled;
 
   /// No description provided for @donate.
   ///

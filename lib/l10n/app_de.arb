@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "Angeheftete Apps ausblenden",
   "hidePinnedAppsSubtitle": "Angeheftete Apps aus der App-Schublade ausblenden",
+  "includeHiddenInSearch": "Versteckte in Suche einbeziehen",
+  "includeHiddenInSearchSubtitle": "Suche findet auch versteckte Apps",
 
   "hiddenApps": "Versteckte Apps",
   "hiddenAppsNone": "Keine",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "Vom Startbildschirm nach rechts wischen, um Aufgaben anzuzeigen",
   "removeOnComplete": "Bei Erledigung entfernen",
   "removeOnCompleteSubtitle": "Aufgaben entfernen, wenn sie als erledigt markiert werden",
+  "taskOptionDisabled": "Aktiviere den Aufgabenbildschirm zum Konfigurieren",
 
   "donate": "Spenden",
   "donateSubtitle": "Unterstütze die Entwicklung von Last Launcher",

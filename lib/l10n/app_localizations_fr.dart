@@ -72,6 +72,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Masquer les applications épinglées de la liste';
 
   @override
+  String get includeHiddenInSearch => 'Inclure les masquées dans la recherche';
+
+  @override
+  String get includeHiddenInSearchSubtitle =>
+      'La recherche correspond aussi aux applications masquées';
+
+  @override
   String get hiddenApps => 'Applications masquées';
 
   @override
@@ -123,6 +130,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Supprimer les tâches quand elles sont terminées';
+
+  @override
+  String get taskOptionDisabled =>
+      'Activez l\'écran des tâches pour configurer';
 
   @override
   String get donate => 'Faire un don';

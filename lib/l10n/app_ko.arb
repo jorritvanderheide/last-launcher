@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "고정된 앱 숨기기",
   "hidePinnedAppsSubtitle": "앱 서랍에서 고정된 앱 숨기기",
+  "includeHiddenInSearch": "검색에 숨긴 앱 포함",
+  "includeHiddenInSearchSubtitle": "검색에서 숨긴 앱도 일치",
 
   "hiddenApps": "숨긴 앱",
   "hiddenAppsNone": "없음",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "홈에서 오른쪽으로 스와이프하여 할 일 보기",
   "removeOnComplete": "완료 시 제거",
   "removeOnCompleteSubtitle": "완료된 할 일 제거",
+  "taskOptionDisabled": "작업 화면을 활성화하여 구성하세요",
 
   "donate": "기부",
   "donateSubtitle": "Last Launcher 개발 지원",

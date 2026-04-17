@@ -69,6 +69,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hidePinnedAppsSubtitle => 'Hide pinned apps from the app drawer';
 
   @override
+  String get includeHiddenInSearch => 'Include hidden in search';
+
+  @override
+  String get includeHiddenInSearchSubtitle =>
+      'Let search also match hidden apps';
+
+  @override
   String get hiddenApps => 'Hidden apps';
 
   @override
@@ -114,6 +121,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get removeOnCompleteSubtitle => 'Remove tasks when marked as done';
+
+  @override
+  String get taskOptionDisabled => 'Enable Task screen to configure';
 
   @override
   String get donate => 'Donate';

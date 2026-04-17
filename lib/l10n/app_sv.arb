@@ -24,6 +24,8 @@
 
   "hidePinnedApps": "Dölj fästa appar",
   "hidePinnedAppsSubtitle": "Dölj fästa appar från app-lådan",
+  "includeHiddenInSearch": "Inkludera dolda i sökning",
+  "includeHiddenInSearchSubtitle": "Låt sökningen även matcha dolda appar",
 
   "hiddenApps": "Dolda appar",
   "hiddenAppsNone": "Inga",
@@ -47,6 +49,7 @@
   "taskScreenSubtitle": "Svep höger från hemskärmen för uppgifter",
   "removeOnComplete": "Ta bort vid slutförande",
   "removeOnCompleteSubtitle": "Ta bort uppgifter när de markeras som klara",
+  "taskOptionDisabled": "Aktivera uppgiftsskärmen för att konfigurera",
 
   "donate": "Donera",
   "donateSubtitle": "Stöd utvecklingen av Last Launcher",

@@ -70,6 +70,13 @@ class AppLocalizationsFi extends AppLocalizations {
       'Piilota kiinnitetyt sovellukset sovellusvalikosta';
 
   @override
+  String get includeHiddenInSearch => 'Sisällytä piilotetut hakuun';
+
+  @override
+  String get includeHiddenInSearchSubtitle =>
+      'Anna haun löytää myös piilotetut sovellukset';
+
+  @override
   String get hiddenApps => 'Piilotetut sovellukset';
 
   @override
@@ -119,6 +126,9 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Poista tehtävät, kun ne merkitään valmiiksi';
+
+  @override
+  String get taskOptionDisabled => 'Ota tehtävänäyttö käyttöön määrittääksesi';
 
   @override
   String get donate => 'Lahjoita';

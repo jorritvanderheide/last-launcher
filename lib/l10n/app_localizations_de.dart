@@ -70,6 +70,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Angeheftete Apps aus der App-Schublade ausblenden';
 
   @override
+  String get includeHiddenInSearch => 'Versteckte in Suche einbeziehen';
+
+  @override
+  String get includeHiddenInSearchSubtitle =>
+      'Suche findet auch versteckte Apps';
+
+  @override
   String get hiddenApps => 'Versteckte Apps';
 
   @override
@@ -121,6 +128,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Aufgaben entfernen, wenn sie als erledigt markiert werden';
+
+  @override
+  String get taskOptionDisabled =>
+      'Aktiviere den Aufgabenbildschirm zum Konfigurieren';
 
   @override
   String get donate => 'Spenden';
