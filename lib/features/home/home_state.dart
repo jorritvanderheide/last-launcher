@@ -36,11 +36,14 @@ class HomeState extends ChangeNotifier {
   }
 
   int _maxPinnedApps = 10;
+  double? _lastAvailableHeight;
 
   int get maxPinnedApps => _maxPinnedApps;
   bool get isFull => _pinnedApps.length >= _maxPinnedApps;
 
   void updateMaxApps(double availableHeight) {
+    if (_lastAvailableHeight == availableHeight) return;
+    _lastAvailableHeight = availableHeight;
     _maxPinnedApps = (availableHeight / _itemHeight).floor().clamp(1, 10);
   }
 

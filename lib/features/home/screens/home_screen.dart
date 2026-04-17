@@ -34,6 +34,11 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   String? _activeAppPackage;
+  late final Listenable _mergedState = Listenable.merge([
+    widget.homeState,
+    widget.appListState,
+    widget.settingsState,
+  ]);
 
   bool dismissActions() {
     if (_activeAppPackage == null) return false;
@@ -89,11 +94,7 @@ class HomeScreenState extends State<HomeScreen> {
           return Align(
             alignment: Alignment.centerLeft,
             child: ListenableBuilder(
-              listenable: Listenable.merge([
-                widget.homeState,
-                widget.appListState,
-                widget.settingsState,
-              ]),
+              listenable: _mergedState,
               builder: (context, _) {
                 final apps = widget.homeState.pinnedApps;
                 if (apps.isEmpty && widget.settingsState.showHints) {
@@ -154,9 +155,12 @@ class HomeScreenState extends State<HomeScreen> {
                         index: index,
                         child: GestureDetector(
                           behavior: HitTestBehavior.opaque,
-                          child: const Padding(
-                            padding: EdgeInsets.only(left: 12, right: 20),
-                            child: SizedBox(width: 24),
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(minHeight: 48),
+                            child: const Padding(
+                              padding: EdgeInsets.only(left: 12, right: 20),
+                              child: SizedBox(width: 24),
+                            ),
                           ),
                         ),
                       ),

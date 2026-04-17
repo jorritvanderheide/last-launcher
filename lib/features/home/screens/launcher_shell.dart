@@ -69,9 +69,12 @@ class _LauncherShellState extends State<LauncherShell>
   bool _isReorderingTasks = false;
   bool _isReorderingHome = false;
 
+  late final VoidCallback _onOpenSettingsHandler;
+
   @override
   void initState() {
     super.initState();
+    _onOpenSettingsHandler = _openSettings;
     WidgetsBinding.instance.addObserver(this);
     _sheetAnim = AnimationController(vsync: this, duration: Duration.zero)
       ..addListener(() {
@@ -87,7 +90,7 @@ class _LauncherShellState extends State<LauncherShell>
           _pageFraction = _pageAnimFrom + (_pageAnimTo - _pageAnimFrom) * t;
         });
       });
-    widget.appChannel.onOpenSettings = _openSettings;
+    widget.appChannel.onOpenSettings = _onOpenSettingsHandler;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
       if (await widget.appChannel.consumePendingOpenSettings()) {
@@ -120,7 +123,13 @@ class _LauncherShellState extends State<LauncherShell>
   }
 
   void _resetToHome() {
-    Navigator.of(context).popUntil((route) => route.isFirst);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      final navigator = Navigator.of(context);
+      if (navigator.canPop()) {
+        navigator.popUntil((route) => route.isFirst);
+      }
+    });
     _sheetAnim.stop();
     _pageAnim.stop();
     setState(() {
@@ -130,11 +139,13 @@ class _LauncherShellState extends State<LauncherShell>
       _pageAnimTo = 1;
     });
     widget.appListState.clearFilter();
+    _homeKey.currentState?.dismissActions();
+    _taskKey.currentState?.dismissActions();
   }
 
   @override
   void dispose() {
-    if (widget.appChannel.onOpenSettings == _openSettings) {
+    if (widget.appChannel.onOpenSettings == _onOpenSettingsHandler) {
       widget.appChannel.onOpenSettings = null;
     }
     WidgetsBinding.instance.removeObserver(this);
@@ -205,7 +216,8 @@ class _LauncherShellState extends State<LauncherShell>
       if (absDx > absDy &&
           !_drawerOpen &&
           widget.settingsState.tasksEnabled &&
-          !_isReorderingTasks) {
+          !_isReorderingTasks &&
+          !_isReorderingHome) {
         // Horizontal drag — page navigation.
         // Don't start if already at the edge in the drag direction.
         final wouldGoLeft = dx > 0;
@@ -364,15 +376,17 @@ class _LauncherShellState extends State<LauncherShell>
                     SizedBox(
                       width: screenWidth,
                       height: screenHeight,
-                      child: TaskScreen(
-                        key: _taskKey,
-                        taskState: widget.taskState,
-                        settingsState: widget.settingsState,
-                        isVisible: !_onHomePage,
-                        onReorderStart: () => _isReorderingTasks = true,
-                        onReorderEnd: () => _isReorderingTasks = false,
-                        scrollLocked: _isDraggingPage,
-                      ),
+                      child: widget.settingsState.tasksEnabled
+                          ? TaskScreen(
+                              key: _taskKey,
+                              taskState: widget.taskState,
+                              settingsState: widget.settingsState,
+                              isVisible: !_onHomePage,
+                              onReorderStart: () => _isReorderingTasks = true,
+                              onReorderEnd: () => _isReorderingTasks = false,
+                              scrollLocked: _isDraggingPage,
+                            )
+                          : const SizedBox.shrink(),
                     ),
                     SizedBox(
                       width: screenWidth,
