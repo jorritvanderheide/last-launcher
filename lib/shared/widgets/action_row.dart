@@ -101,15 +101,17 @@ class _ActionIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: onTap,
-      child: Tooltip(
-        message: label,
-        child: SizedBox.square(
-          dimension: 48,
-          child: Center(
-            child: Icon(icon, color: color, size: 22),
+    return Semantics(
+      button: true,
+      label: label,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Tooltip(
+          message: label,
+          child: SizedBox.square(
+            dimension: 48,
+            child: Center(child: Icon(icon, color: color, size: 22)),
           ),
         ),
       ),

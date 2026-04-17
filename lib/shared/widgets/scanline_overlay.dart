@@ -42,7 +42,18 @@ class _ScanlineOverlayState extends State<ScanlineOverlay>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 8),
-    )..repeat();
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final disable = MediaQuery.disableAnimationsOf(context);
+    if (disable && _controller.isAnimating) {
+      _controller.stop();
+    } else if (!disable && !_controller.isAnimating) {
+      _controller.repeat();
+    }
   }
 
   @override

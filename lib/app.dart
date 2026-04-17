@@ -90,9 +90,19 @@ ThemeData _buildTheme(Brightness brightness, {bool extra = false}) {
       shape: RoundedRectangleBorder(),
     ),
     dialogTheme: const DialogThemeData(shape: RoundedRectangleBorder()),
-    inputDecorationTheme: const InputDecorationTheme(
-      border: OutlineInputBorder(borderRadius: BorderRadius.zero),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.zero),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.zero,
+        borderSide: BorderSide(color: colorScheme.outline),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.zero,
+        borderSide: BorderSide(color: colorScheme.outline),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.zero,
+        borderSide: BorderSide(color: textColor, width: 1.5),
+      ),
     ),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith((states) {

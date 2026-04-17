@@ -64,7 +64,8 @@ class AppSearchField extends StatelessWidget {
           ValueListenableBuilder<TextEditingValue>(
             valueListenable: controller,
             builder: (context, value, _) {
-              return Opacity(
+              return AnimatedOpacity(
+                duration: const Duration(milliseconds: 150),
                 opacity: value.text.isEmpty ? 1 : 0,
                 child: Container(
                   width: 32,

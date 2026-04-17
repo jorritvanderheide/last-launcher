@@ -54,14 +54,18 @@ class AppLabel extends StatelessWidget {
             ),
           );
 
-    return InkWell(
-      onTap: onTap,
-      onLongPress: onLongPress,
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
-      child: opacity < 1.0
-          ? Opacity(opacity: opacity, child: content)
-          : content,
+    return Semantics(
+      button: true,
+      child: InkWell(
+        onTap: onTap,
+        onLongPress: onLongPress,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        focusColor: Theme.of(context).colorScheme.onSurface.withAlpha(30),
+        child: opacity < 1.0
+            ? Opacity(opacity: opacity, child: content)
+            : content,
+      ),
     );
   }
 }
@@ -105,14 +109,21 @@ class _GlitchTextState extends State<_GlitchText> {
   @override
   Widget build(BuildContext context) {
     final scope = ScanlineScope.of(context);
-    final intensity = scope != null ? _getIntensity(scope) : 0.0;
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final intensity = (!reduceMotion && scope != null)
+        ? _getIntensity(scope)
+        : 0.0;
 
-    return Text(
-      key: _key,
-      intensity > 0 ? glitchText(widget.label, intensity) : widget.label,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-      style: widget.style,
+    return Semantics(
+      label: widget.label,
+      excludeSemantics: true,
+      child: Text(
+        key: _key,
+        intensity > 0 ? glitchText(widget.label, intensity) : widget.label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: widget.style,
+      ),
     );
   }
 }
