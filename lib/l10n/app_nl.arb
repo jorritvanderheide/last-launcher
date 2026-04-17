@@ -22,6 +22,9 @@
   "showHints": "Tips tonen",
   "showHintsSubtitle": "Toon gebruikstips in de hele app",
 
+  "hidePinnedApps": "Vastgemaakte apps verbergen",
+  "hidePinnedAppsSubtitle": "Verberg vastgemaakte apps in de app-lade",
+
   "hiddenApps": "Verborgen apps",
   "hiddenAppsNone": "Geen",
   "hiddenAppsCount": "{count} verborgen",

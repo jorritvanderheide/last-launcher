@@ -65,6 +65,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Afficher les astuces d\'utilisation dans toute l\'appli';
 
   @override
+  String get hidePinnedApps => 'Masquer les apps épinglées';
+
+  @override
+  String get hidePinnedAppsSubtitle =>
+      'Masquer les applications épinglées de la liste';
+
+  @override
   String get hiddenApps => 'Applications masquées';
 
   @override

@@ -22,6 +22,9 @@
   "showHints": "Zobrazit nápovědu",
   "showHintsSubtitle": "Zobrazit tipy k používání v celé aplikaci",
 
+  "hidePinnedApps": "Skrýt připnuté aplikace",
+  "hidePinnedAppsSubtitle": "Skrýt připnuté aplikace z šuplíku aplikací",
+
   "hiddenApps": "Skryté aplikace",
   "hiddenAppsNone": "Žádné",
   "hiddenAppsCount": "{count} skryto",

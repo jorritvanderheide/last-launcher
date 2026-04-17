@@ -18,6 +18,7 @@ class SettingsState extends ChangeNotifier {
   static const _showHintsKey = 'show_hints';
   static const _removeOnCompleteKey = 'remove_on_complete';
   static const _hideStatusBarKey = 'hide_status_bar';
+  static const _hidePinnedFromDrawerKey = 'hide_pinned_from_drawer';
   final SharedPreferences _prefs;
   ThemeMode _themeMode = ThemeMode.system;
   bool _extraTheme = false;
@@ -29,6 +30,7 @@ class SettingsState extends ChangeNotifier {
   bool _showHints = true;
   bool _removeOnComplete = false;
   bool _hideStatusBar = false;
+  bool _hidePinnedFromDrawer = true;
   ThemeMode get themeMode => _extraTheme ? ThemeMode.dark : _themeMode;
   bool get isExtra => _extraTheme;
   bool get autoKeyboard => _autoKeyboard;
@@ -39,6 +41,7 @@ class SettingsState extends ChangeNotifier {
   bool get showHints => _showHints;
   bool get removeOnComplete => _removeOnComplete;
   bool get hideStatusBar => _hideStatusBar;
+  bool get hidePinnedFromDrawer => _hidePinnedFromDrawer;
 
   void _load() {
     final value = _prefs.getString(_themeKey);
@@ -56,6 +59,7 @@ class SettingsState extends ChangeNotifier {
     _showHints = _prefs.getBool(_showHintsKey) ?? true;
     _removeOnComplete = _prefs.getBool(_removeOnCompleteKey) ?? false;
     _hideStatusBar = _prefs.getBool(_hideStatusBarKey) ?? false;
+    _hidePinnedFromDrawer = _prefs.getBool(_hidePinnedFromDrawerKey) ?? true;
   }
 
   Future<void> setTheme(String value) async {
@@ -127,5 +131,11 @@ class SettingsState extends ChangeNotifier {
     notifyListeners();
     themeNotifier.value++;
     await _prefs.setBool(_hideStatusBarKey, enabled);
+  }
+
+  Future<void> setHidePinnedFromDrawer(bool enabled) async {
+    _hidePinnedFromDrawer = enabled;
+    notifyListeners();
+    await _prefs.setBool(_hidePinnedFromDrawerKey, enabled);
   }
 }

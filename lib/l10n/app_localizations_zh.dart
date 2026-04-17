@@ -63,6 +63,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get showHintsSubtitle => '在整個應用程式中顯示使用提示';
 
   @override
+  String get hidePinnedApps => '隱藏已固定的應用程式';
+
+  @override
+  String get hidePinnedAppsSubtitle => '從應用程式抽屜中隱藏已固定的應用程式';
+
+  @override
   String get hiddenApps => '已隱藏的應用程式';
 
   @override

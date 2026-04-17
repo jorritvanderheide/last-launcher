@@ -22,6 +22,9 @@
   "showHints": "Afficher les astuces",
   "showHintsSubtitle": "Afficher les astuces d'utilisation dans toute l'appli",
 
+  "hidePinnedApps": "Masquer les apps épinglées",
+  "hidePinnedAppsSubtitle": "Masquer les applications épinglées de la liste",
+
   "hiddenApps": "Applications masquées",
   "hiddenAppsNone": "Aucune",
   "hiddenAppsCount": "{count} masquées",

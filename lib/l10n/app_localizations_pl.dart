@@ -65,6 +65,13 @@ class AppLocalizationsPl extends AppLocalizations {
       'Pokaż wskazówki użytkowania w całej aplikacji';
 
   @override
+  String get hidePinnedApps => 'Ukryj przypięte aplikacje';
+
+  @override
+  String get hidePinnedAppsSubtitle =>
+      'Ukryj przypięte aplikacje z szuflady aplikacji';
+
+  @override
   String get hiddenApps => 'Ukryte aplikacje';
 
   @override

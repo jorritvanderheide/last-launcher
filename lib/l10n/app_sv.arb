@@ -22,6 +22,9 @@
   "showHints": "Visa tips",
   "showHintsSubtitle": "Visa användningstips i hela appen",
 
+  "hidePinnedApps": "Dölj fästa appar",
+  "hidePinnedAppsSubtitle": "Dölj fästa appar från app-lådan",
+
   "hiddenApps": "Dolda appar",
   "hiddenAppsNone": "Inga",
   "hiddenAppsCount": "{count} dolda",

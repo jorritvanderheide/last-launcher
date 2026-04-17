@@ -63,6 +63,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get showHintsSubtitle => '앱 전체에서 사용 힌트 표시';
 
   @override
+  String get hidePinnedApps => '고정된 앱 숨기기';
+
+  @override
+  String get hidePinnedAppsSubtitle => '앱 서랍에서 고정된 앱 숨기기';
+
+  @override
   String get hiddenApps => '숨긴 앱';
 
   @override

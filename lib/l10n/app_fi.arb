@@ -22,6 +22,9 @@
   "showHints": "Näytä vinkit",
   "showHintsSubtitle": "Näytä käyttövinkit koko sovelluksessa",
 
+  "hidePinnedApps": "Piilota kiinnitetyt sovellukset",
+  "hidePinnedAppsSubtitle": "Piilota kiinnitetyt sovellukset sovellusvalikosta",
+
   "hiddenApps": "Piilotetut sovellukset",
   "hiddenAppsNone": "Ei mitään",
   "hiddenAppsCount": "{count} piilotettu",

@@ -63,6 +63,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get showHintsSubtitle => 'アプリ全体で使用ヒントを表示';
 
   @override
+  String get hidePinnedApps => '固定したアプリを非表示';
+
+  @override
+  String get hidePinnedAppsSubtitle => '固定したアプリをアプリドロワーから隠す';
+
+  @override
   String get hiddenApps => '非表示のアプリ';
 
   @override

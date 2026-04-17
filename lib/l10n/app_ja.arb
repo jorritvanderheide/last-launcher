@@ -22,6 +22,9 @@
   "showHints": "ヒントを表示",
   "showHintsSubtitle": "アプリ全体で使用ヒントを表示",
 
+  "hidePinnedApps": "固定したアプリを非表示",
+  "hidePinnedAppsSubtitle": "固定したアプリをアプリドロワーから隠す",
+
   "hiddenApps": "非表示のアプリ",
   "hiddenAppsNone": "なし",
   "hiddenAppsCount": "{count}件非表示",

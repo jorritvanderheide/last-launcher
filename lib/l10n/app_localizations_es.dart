@@ -64,6 +64,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Mostrar consejos de uso en toda la aplicación';
 
   @override
+  String get hidePinnedApps => 'Ocultar apps fijadas';
+
+  @override
+  String get hidePinnedAppsSubtitle =>
+      'Ocultar apps fijadas del cajón de aplicaciones';
+
+  @override
   String get hiddenApps => 'Aplicaciones ocultas';
 
   @override

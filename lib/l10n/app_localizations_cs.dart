@@ -63,6 +63,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get showHintsSubtitle => 'Zobrazit tipy k používání v celé aplikaci';
 
   @override
+  String get hidePinnedApps => 'Skrýt připnuté aplikace';
+
+  @override
+  String get hidePinnedAppsSubtitle =>
+      'Skrýt připnuté aplikace z šuplíku aplikací';
+
+  @override
   String get hiddenApps => 'Skryté aplikace';
 
   @override

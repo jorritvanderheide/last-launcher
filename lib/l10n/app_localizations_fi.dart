@@ -63,6 +63,13 @@ class AppLocalizationsFi extends AppLocalizations {
   String get showHintsSubtitle => 'Näytä käyttövinkit koko sovelluksessa';
 
   @override
+  String get hidePinnedApps => 'Piilota kiinnitetyt sovellukset';
+
+  @override
+  String get hidePinnedAppsSubtitle =>
+      'Piilota kiinnitetyt sovellukset sovellusvalikosta';
+
+  @override
   String get hiddenApps => 'Piilotetut sovellukset';
 
   @override

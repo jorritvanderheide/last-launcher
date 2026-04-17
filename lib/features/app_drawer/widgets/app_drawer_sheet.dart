@@ -132,19 +132,27 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
     }
   }
 
+  List<AppInfo> get _visibleApps {
+    final apps = widget.appListState.filteredApps;
+    if (!widget.settingsState.hidePinnedFromDrawer) return apps;
+    return apps
+        .where((a) => !widget.homeState.isPinned(a.packageName))
+        .toList();
+  }
+
   void _onSearchChanged(String query) {
     widget.appListState.filter(query);
-    if (_autoLaunch &&
-        widget.appListState.query.isNotEmpty &&
-        widget.appListState.hasSingleResult) {
-      widget.onLaunch(widget.appListState.filteredApps.first.packageName);
+    final visible = _visibleApps;
+    if (_autoLaunch && query.isNotEmpty && visible.length == 1) {
+      widget.onLaunch(visible.first.packageName);
     }
   }
 
   void _onSubmit() {
-    if (widget.appListState.hasSingleResult) {
-      widget.onLaunch(widget.appListState.filteredApps.first.packageName);
-    } else if (widget.appListState.filteredApps.isEmpty) {
+    final visible = _visibleApps;
+    if (visible.length == 1) {
+      widget.onLaunch(visible.first.packageName);
+    } else if (visible.isEmpty) {
       widget.onCloseDrawer();
     }
   }
@@ -243,9 +251,10 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
                       listenable: Listenable.merge([
                         widget.appListState,
                         widget.settingsState,
+                        widget.homeState,
                       ]),
                       builder: (context, _) {
-                        final apps = widget.appListState.filteredApps;
+                        final apps = _visibleApps;
                         if (apps.isEmpty &&
                             widget.appListState.query.isNotEmpty) {
                           if (!widget.settingsState.showHints) {

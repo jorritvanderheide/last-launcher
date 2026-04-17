@@ -63,6 +63,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get showHintsSubtitle => 'Nutzungstipps in der gesamten App anzeigen';
 
   @override
+  String get hidePinnedApps => 'Angeheftete Apps ausblenden';
+
+  @override
+  String get hidePinnedAppsSubtitle =>
+      'Angeheftete Apps aus der App-Schublade ausblenden';
+
+  @override
   String get hiddenApps => 'Versteckte Apps';
 
   @override

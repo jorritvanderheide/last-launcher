@@ -22,6 +22,9 @@
   "showHints": "Tipps anzeigen",
   "showHintsSubtitle": "Nutzungstipps in der gesamten App anzeigen",
 
+  "hidePinnedApps": "Angeheftete Apps ausblenden",
+  "hidePinnedAppsSubtitle": "Angeheftete Apps aus der App-Schublade ausblenden",
+
   "hiddenApps": "Versteckte Apps",
   "hiddenAppsNone": "Keine",
   "hiddenAppsCount": "{count} versteckt",

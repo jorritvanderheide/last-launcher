@@ -22,6 +22,9 @@
   "showHints": "Pokaż wskazówki",
   "showHintsSubtitle": "Pokaż wskazówki użytkowania w całej aplikacji",
 
+  "hidePinnedApps": "Ukryj przypięte aplikacje",
+  "hidePinnedAppsSubtitle": "Ukryj przypięte aplikacje z szuflady aplikacji",
+
   "hiddenApps": "Ukryte aplikacje",
   "hiddenAppsNone": "Brak",
   "hiddenAppsCount": "{count} ukrytych",

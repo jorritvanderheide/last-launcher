@@ -64,6 +64,12 @@ class AppLocalizationsPt extends AppLocalizations {
       'Mostrar dicas de utilização em toda a aplicação';
 
   @override
+  String get hidePinnedApps => 'Ocultar aplicações fixadas';
+
+  @override
+  String get hidePinnedAppsSubtitle => 'Ocultar aplicações fixadas da gaveta';
+
+  @override
   String get hiddenApps => 'Aplicações ocultas';
 
   @override

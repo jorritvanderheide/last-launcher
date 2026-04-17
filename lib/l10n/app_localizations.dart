@@ -230,6 +230,18 @@ abstract class AppLocalizations {
   /// **'Show usage hints throughout the app'**
   String get showHintsSubtitle;
 
+  /// No description provided for @hidePinnedApps.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide pinned apps'**
+  String get hidePinnedApps;
+
+  /// No description provided for @hidePinnedAppsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide pinned apps from the app drawer'**
+  String get hidePinnedAppsSubtitle;
+
   /// No description provided for @hiddenApps.
   ///
   /// In en, this message translates to:

@@ -63,6 +63,12 @@ class AppLocalizationsSv extends AppLocalizations {
   String get showHintsSubtitle => 'Visa användningstips i hela appen';
 
   @override
+  String get hidePinnedApps => 'Dölj fästa appar';
+
+  @override
+  String get hidePinnedAppsSubtitle => 'Dölj fästa appar från app-lådan';
+
+  @override
   String get hiddenApps => 'Dolda appar';
 
   @override

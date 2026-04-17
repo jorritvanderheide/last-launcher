@@ -63,6 +63,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get showHintsSubtitle => 'पूरे ऐप में उपयोग संकेत दिखाएँ';
 
   @override
+  String get hidePinnedApps => 'पिन किए गए ऐप्स छुपाएँ';
+
+  @override
+  String get hidePinnedAppsSubtitle => 'ऐप ड्रॉअर से पिन किए गए ऐप्स छुपाएँ';
+
+  @override
   String get hiddenApps => 'छुपे हुए ऐप्स';
 
   @override

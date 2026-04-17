@@ -22,6 +22,9 @@
   "showHints": "Show hints",
   "showHintsSubtitle": "Show usage hints throughout the app",
 
+  "hidePinnedApps": "Hide pinned apps",
+  "hidePinnedAppsSubtitle": "Hide pinned apps from the app drawer",
+
   "hiddenApps": "Hidden apps",
   "hiddenAppsNone": "None",
   "hiddenAppsCount": "{count} hidden",

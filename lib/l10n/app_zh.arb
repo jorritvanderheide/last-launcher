@@ -22,6 +22,9 @@
   "showHints": "顯示提示",
   "showHintsSubtitle": "在整個應用程式中顯示使用提示",
 
+  "hidePinnedApps": "隱藏已固定的應用程式",
+  "hidePinnedAppsSubtitle": "從應用程式抽屜中隱藏已固定的應用程式",
+
   "hiddenApps": "已隱藏的應用程式",
   "hiddenAppsNone": "無",
   "hiddenAppsCount": "已隱藏 {count} 個",

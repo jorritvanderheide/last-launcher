@@ -22,6 +22,9 @@
   "showHints": "Mostrar dicas",
   "showHintsSubtitle": "Mostrar dicas de utilização em toda a aplicação",
 
+  "hidePinnedApps": "Ocultar aplicações fixadas",
+  "hidePinnedAppsSubtitle": "Ocultar aplicações fixadas da gaveta",
+
   "hiddenApps": "Aplicações ocultas",
   "hiddenAppsNone": "Nenhuma",
   "hiddenAppsCount": "{count} ocultas",

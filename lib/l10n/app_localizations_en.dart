@@ -63,6 +63,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get showHintsSubtitle => 'Show usage hints throughout the app';
 
   @override
+  String get hidePinnedApps => 'Hide pinned apps';
+
+  @override
+  String get hidePinnedAppsSubtitle => 'Hide pinned apps from the app drawer';
+
+  @override
   String get hiddenApps => 'Hidden apps';
 
   @override
