@@ -1,0 +1,5 @@
+• Nova opção "Ocultar aplicações fixadas" na gaveta de aplicações
+• A pesquisa pode agora incluir aplicações ocultas
+• Abrir as definições pelo ícone de engrenagem nas aplicações predefinidas do Android
+• Acessibilidade: etiquetas para leitor de ecrã, indicadores de foco, contraste, animações reduzidas
+• Melhorias de desempenho e estabilidade

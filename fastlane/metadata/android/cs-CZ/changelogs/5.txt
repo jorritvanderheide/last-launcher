@@ -1,0 +1,5 @@
+• Nová možnost "Skrýt připnuté aplikace" pro seznam aplikací
+• Vyhledávání nyní může zahrnovat skryté aplikace
+• Otevření nastavení přes ikonu ozubeného kola ve výchozích aplikacích Androidu
+• Přístupnost: popisky pro čtečku obrazovky, indikátory zaměření, kontrast, omezené animace
+• Vylepšení výkonu a stability

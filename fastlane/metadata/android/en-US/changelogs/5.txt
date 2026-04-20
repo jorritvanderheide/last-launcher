@@ -1,0 +1,5 @@
+• New "Hide pinned apps" option for the app drawer
+• Search can now include hidden apps
+• Open settings via the gear icon in Android's default apps
+• Accessibility pass: screen reader labels, focus rings, contrast, reduced motion
+• Performance and stability polish

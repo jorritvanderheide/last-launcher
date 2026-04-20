@@ -1,0 +1,5 @@
+• Neue Option "Angeheftete Apps ausblenden" für den App-Drawer
+• Die Suche kann nun auch ausgeblendete Apps einbeziehen
+• Einstellungen über das Zahnrad-Symbol in Androids Standard-Apps öffnen
+• Barrierefreiheit: Screenreader-Labels, Fokusrahmen, Kontrast, reduzierte Animationen
+• Leistungs- und Stabilitätsverbesserungen

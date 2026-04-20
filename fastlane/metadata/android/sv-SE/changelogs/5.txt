@@ -1,0 +1,5 @@
+• Nytt alternativ "Dölj fästa appar" i applådan
+• Sökningen kan nu inkludera dolda appar
+• Öppna inställningar via kugghjulsikonen i Androids standardappar
+• Tillgänglighet: skärmläsaretiketter, fokusramar, kontrast, minskad rörelse
+• Prestanda- och stabilitetsförbättringar

@@ -1,0 +1,5 @@
+• Nouvelle option "Masquer les apps épinglées" pour le tiroir d'applications
+• La recherche peut maintenant inclure les apps masquées
+• Ouvrir les réglages via l'icône d'engrenage dans les applications par défaut d'Android
+• Accessibilité : étiquettes pour lecteur d'écran, indicateurs de focus, contraste, animations réduites
+• Améliorations de performance et de stabilité
