@@ -99,21 +99,31 @@ class HomeScreenState extends State<HomeScreen> {
                 final apps = widget.homeState.pinnedApps;
                 if (apps.isEmpty && widget.settingsState.showHints) {
                   final l10n = AppLocalizations.of(context)!;
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      '${l10n.hintSwipeUp}\n'
-                      '${widget.settingsState.tasksEnabled ? '${l10n.hintSwipeRight}\n' : ''}'
-                      '${l10n.hintLongPress}',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 14,
-                        letterSpacing: 1.5,
-                        shadows: [],
+                  final lines = [
+                    l10n.hintSwipeUp,
+                    if (widget.settingsState.tasksEnabled) l10n.hintSwipeRight,
+                    l10n.hintLongPress,
+                  ];
+                  final style = Theme.of(context).textTheme.titleLarge
+                      ?.copyWith(
+                        fontSize: AppLabel.fontSize,
                         color: Theme.of(
                           context,
-                        ).colorScheme.onSurface.withAlpha(140),
-                      ),
-                    ),
+                        ).colorScheme.onSurface.withAlpha(130),
+                      );
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (final line in lines)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: AppLabel.verticalPadding,
+                          ),
+                          child: Text(line, style: style),
+                        ),
+                    ],
                   );
                 }
                 return ReorderableListView.builder(

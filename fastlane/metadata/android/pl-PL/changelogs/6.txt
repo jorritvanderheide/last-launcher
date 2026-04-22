@@ -1,0 +1,6 @@
+• Nowa opcja "Ukryj przypięte aplikacje" w szufladzie aplikacji
+• Wyszukiwanie może teraz obejmować ukryte aplikacje
+• Otwieranie ustawień ikoną koła zębatego w aplikacjach domyślnych Androida
+• Dostępność: etykiety dla czytnika ekranu, wskaźniki fokusu, kontrast, ograniczone animacje
+• Poprawki wydajności i stabilności
+• Poprawka: klawiatura szuflady aplikacji czasem nie pojawiała się po powrocie z aplikacji

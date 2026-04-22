@@ -1,0 +1,6 @@
+• Nueva opción "Ocultar apps fijadas" en el cajón de aplicaciones
+• La búsqueda ahora puede incluir apps ocultas
+• Abrir los ajustes mediante el icono de engranaje en las apps predeterminadas de Android
+• Accesibilidad: etiquetas para lector de pantalla, indicadores de foco, contraste, animaciones reducidas
+• Mejoras de rendimiento y estabilidad
+• Corregido: el teclado del cajón de apps a veces faltaba al volver de una app

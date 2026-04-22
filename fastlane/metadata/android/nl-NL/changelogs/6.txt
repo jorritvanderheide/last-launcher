@@ -1,0 +1,6 @@
+• Nieuwe optie "Vastgezette apps verbergen" in de app-lade
+• Zoeken kan nu ook verborgen apps tonen
+• Instellingen openen via het tandwielpictogram bij Android's standaard-apps
+• Toegankelijkheid: screenreader-labels, focuskaders, contrast, minder beweging
+• Prestatie- en stabiliteitsverbeteringen
+• Opgelost: toetsenbord van de app-lade ontbrak soms na terugkeer uit een app

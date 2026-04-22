@@ -1,0 +1,6 @@
+• Uusi "Piilota kiinnitetyt sovellukset" -valinta sovelluslaatikkoon
+• Haku voi nyt sisältää myös piilotetut sovellukset
+• Asetukset avautuvat hammasrataskuvakkeesta Androidin oletussovelluksissa
+• Esteettömyys: näytönlukijan tekstit, kohdistusreunat, kontrasti, vähennetty liike
+• Suorituskyvyn ja vakauden parannuksia
+• Korjaus: sovelluslaatikon näppäimistö saattoi puuttua sovelluksesta palattua
