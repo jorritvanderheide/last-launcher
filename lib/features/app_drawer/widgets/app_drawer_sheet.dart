@@ -36,7 +36,8 @@ class AppDrawerSheet extends StatefulWidget {
   State<AppDrawerSheet> createState() => _AppDrawerSheetState();
 }
 
-class _AppDrawerSheetState extends State<AppDrawerSheet> {
+class _AppDrawerSheetState extends State<AppDrawerSheet>
+    with WidgetsBindingObserver {
   final _focusNode = FocusNode();
   final _scrollController = ScrollController();
   final _textController = TextEditingController();
@@ -56,25 +57,45 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    WidgetsBinding.instance.addObserver(this);
+    if (widget.isOpen) _handleOpened();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state != AppLifecycleState.resumed) return;
+    if (!widget.isOpen || !_autoKeyboard) return;
+    // A fast swipe-up after returning to the launcher can process the drag
+    // before Android marks the window as resumed, causing the IME to ignore
+    // the focus request. When we finally resume, retry if the keyboard
+    // hasn't appeared yet.
+    if (MediaQuery.viewInsetsOf(context).bottom > 0) return;
+    _focusNode.unfocus();
+    Future.delayed(const Duration(milliseconds: 50), () {
+      if (!mounted || !widget.isOpen) return;
+      _requestKeyboardReliably();
+    });
   }
 
   @override
   void didUpdateWidget(AppDrawerSheet oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.isOpen && !oldWidget.isOpen) {
-      // Drawer just opened (post-snap, not during drag).
-      if (_scrollController.hasClients) {
-        _scrollController.jumpTo(0);
-      }
-      widget.isAtTop.value = true;
-      if (_autoKeyboard) {
-        _requestKeyboardReliably();
-      }
+      _handleOpened();
     } else if (!widget.isOpen && oldWidget.isOpen) {
-      // Drawer just closed.
       _focusNode.unfocus();
       _textController.clear();
       _activeAppPackage = null;
+    }
+  }
+
+  void _handleOpened() {
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(0);
+    }
+    widget.isAtTop.value = true;
+    if (_autoKeyboard) {
+      _requestKeyboardReliably();
     }
   }
 
@@ -99,6 +120,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     _textController.dispose();
