@@ -1,0 +1,6 @@
+• Lista de tareas rediseñada: toca para renombrar, casilla para completar, asidero al mantener pulsado
+• Las tareas completadas se reordenan independientemente de las abiertas
+• Nueva opción "Coincidir nombre original" encuentra apps renombradas por su nombre original
+• Nueva opción "Bloquear disposición" desactiva la pulsación larga en las pantallas de inicio y tareas
+• Ajustes reorganizados (General, Cajón de aplicaciones, Tareas)
+• Corregido: las apps fijadas ocultas aparecen atenuadas en la búsqueda

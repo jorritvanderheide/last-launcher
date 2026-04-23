@@ -184,9 +184,7 @@ class TaskScreenState extends State<TaskScreen> {
               dimension: 48,
               child: Center(
                 child: Icon(
-                  task.done
-                      ? Icons.check_box
-                      : Icons.check_box_outline_blank,
+                  task.done ? Icons.check_box : Icons.check_box_outline_blank,
                   size: 22,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
@@ -218,8 +216,8 @@ class TaskScreenState extends State<TaskScreen> {
           onLongPress: widget.settingsState.locked
               ? null
               : () => setState(
-                  () => _activeTaskId =
-                      _activeTaskId == task.id ? null : task.id,
+                  () =>
+                      _activeTaskId = _activeTaskId == task.id ? null : task.id,
                 ),
           opacity: task.done ? 0.6 : 1.0,
           textDecoration: task.done ? TextDecoration.lineThrough : null,
@@ -258,9 +256,7 @@ class TaskScreenState extends State<TaskScreen> {
                     : widget.taskState.tasks
                           .where((t) => t.title.toLowerCase().contains(filter))
                           .toList();
-                final incomplete = filtered
-                    .where((t) => !t.done)
-                    .toList();
+                final incomplete = filtered.where((t) => !t.done).toList();
                 final complete = filtered.where((t) => t.done).toList();
 
                 if (incomplete.isEmpty && complete.isEmpty) {
@@ -318,27 +314,26 @@ class TaskScreenState extends State<TaskScreen> {
                             onReorderEnd: _onReorderEnd,
                             onReorder: (o, n) => widget.taskState
                                 .reorderInGroup(o, n, done: false),
-                            itemBuilder: (context, index) =>
-                                _buildTaskItem(context, incomplete[index], index),
+                            itemBuilder: (context, index) => _buildTaskItem(
+                              context,
+                              incomplete[index],
+                              index,
+                            ),
                           ),
                         ),
                         if (incomplete.isNotEmpty && complete.isNotEmpty)
-                          const SliverToBoxAdapter(
-                            child: SizedBox(height: 24),
-                          ),
+                          const SliverToBoxAdapter(child: SizedBox(height: 24)),
                         SliverReorderableList(
                           itemCount: complete.length,
                           proxyDecorator: dragProxyDecorator,
                           onReorderStart: _onReorderStart,
                           onReorderEnd: _onReorderEnd,
-                          onReorder: (o, n) => widget.taskState
-                              .reorderInGroup(o, n, done: true),
+                          onReorder: (o, n) =>
+                              widget.taskState.reorderInGroup(o, n, done: true),
                           itemBuilder: (context, index) =>
                               _buildTaskItem(context, complete[index], index),
                         ),
-                        const SliverToBoxAdapter(
-                          child: SizedBox(height: 80),
-                        ),
+                        const SliverToBoxAdapter(child: SizedBox(height: 80)),
                       ],
                     ),
                   ),

@@ -1,0 +1,6 @@
+• Přepracovaný seznam úkolů: klepnutím přejmenujete, zaškrtávátkem dokončíte, úchyt pro přetažení po dlouhém stisku
+• Dokončené úkoly lze řadit nezávisle na otevřených
+• Nové nastavení „Odpovídat původnímu názvu" najde přejmenované aplikace podle jejich původního názvu
+• Nové nastavení „Uzamknout rozložení" vypne dlouhé stisknutí na domovské obrazovce a obrazovce úkolů
+• Reorganizovaná nastavení (Obecné, Šuplík aplikací, Úkoly)
+• Opraveno: skryté připnuté aplikace se ve vyhledávání zobrazují ztlumené

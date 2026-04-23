@@ -1,0 +1,6 @@
+• Takenlijst herzien: tik om te hernoemen, vinkje om af te vinken, sleephendel bij lang indrukken
+• Afgevinkte taken zijn los van open taken te ordenen
+• Nieuwe optie "Originele naam matchen" vindt hernoemde apps op hun originele naam
+• Nieuwe optie "Indeling vergrendelen" schakelt lang indrukken uit op start- en takenscherm
+• Instellingen opnieuw ingedeeld (Algemeen, App-lade, Taken)
+• Opgelost: verborgen vastgemaakte apps verschijnen gedimd in zoekresultaten

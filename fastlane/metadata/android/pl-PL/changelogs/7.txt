@@ -1,0 +1,6 @@
+• Przeprojektowana lista zadań: dotknij, aby zmienić nazwę, pole wyboru do oznaczenia, uchwyt po długim przytrzymaniu
+• Ukończone zadania można porządkować niezależnie od otwartych
+• Nowa opcja „Dopasuj oryginalną nazwę" znajduje zmienione aplikacje po oryginalnej nazwie
+• Nowa opcja „Zablokuj układ" wyłącza długie przytrzymanie na ekranach głównym i zadań
+• Zreorganizowane ustawienia (Ogólne, Szuflada aplikacji, Zadania)
+• Poprawka: ukryte przypięte aplikacje są wyszarzone w wynikach wyszukiwania

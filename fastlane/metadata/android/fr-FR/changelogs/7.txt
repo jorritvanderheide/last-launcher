@@ -1,0 +1,6 @@
+• Liste des tâches redessinée : appuyez pour renommer, case à cocher pour valider, poignée au maintien prolongé
+• Les tâches terminées se réorganisent indépendamment des tâches ouvertes
+• Nouvelle option « Correspondre au nom d'origine » : retrouve les apps renommées par leur nom d'origine
+• Nouvelle option « Verrouiller la disposition » : désactive l'appui long sur les écrans d'accueil et de tâches
+• Réorganisation des réglages (Général, Tiroir d'applications, Tâches)
+• Correction : les apps épinglées masquées apparaissent atténuées dans la recherche

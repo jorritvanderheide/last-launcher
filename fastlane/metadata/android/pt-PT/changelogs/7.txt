@@ -1,0 +1,6 @@
+• Lista de tarefas redesenhada: toque para renomear, caixa para concluir, puxador ao manter premido
+• Tarefas concluídas podem ser reordenadas independentemente das em aberto
+• Nova opção "Corresponder nome original" encontra aplicações renomeadas pelo nome original
+• Nova opção "Bloquear disposição" desativa o toque longo nos ecrãs inicial e de tarefas
+• Definições reorganizadas (Geral, Gaveta de aplicações, Tarefas)
+• Corrigido: aplicações fixadas ocultas aparecem esmaecidas na pesquisa

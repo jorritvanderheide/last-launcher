@@ -1,0 +1,6 @@
+• Aufgabenliste überarbeitet: Tippen zum Umbenennen, Kontrollkästchen zum Abhaken, Drag-Griff beim Gedrückthalten
+• Erledigte Aufgaben lassen sich unabhängig von offenen neu anordnen
+• Neue Option „Originalnamen abgleichen" findet umbenannte Apps am Originalnamen
+• Neue Option „Layout sperren" deaktiviert langes Drücken auf Start- und Aufgabenbildschirm
+• Einstellungen neu gegliedert (Allgemein, App-Schublade, Aufgaben)
+• Behoben: versteckte angeheftete Apps erscheinen in der Suche ausgegraut

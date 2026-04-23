@@ -1,0 +1,6 @@
+• Uudistettu tehtävälista: napauta nimeämiseen, valintaruutu merkintään, veto-kahva pitkällä painalluksella
+• Valmiit tehtävät järjestetään erikseen avoimista
+• Uusi asetus "Vastaa alkuperäistä nimeä" löytää uudelleennimetyt sovellukset alkuperäisellä nimellä
+• Uusi asetus "Lukitse asettelu" poistaa pitkän painalluksen käytöstä koti- ja tehtävänäytöissä
+• Asetukset järjestetty uudelleen (Yleiset, Sovellusvalikko, Tehtävät)
+• Korjattu: piilotetut kiinnitetyt sovellukset näkyvät haussa himmennettyinä

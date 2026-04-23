@@ -1,0 +1,6 @@
+• Redesigned task list: tap to rename, checkbox to complete, drag handle on long-press
+• Completed tasks can be reordered independently from open tasks
+• New "Match original name" option finds renamed apps by their original name
+• New "Lock layout" option disables long-press on home and task screens
+• Reorganised settings (General, App drawer, Tasks)
+• Fix: hidden pinned apps show dimmed when "Include hidden in search" is on

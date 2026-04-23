@@ -1,0 +1,6 @@
+• Omdesignad uppgiftslista: tryck för att byta namn, kryssruta för att slutföra, draghandtag vid långt tryck
+• Slutförda uppgifter kan ordnas om oberoende av öppna uppgifter
+• Nytt alternativ "Matcha originalnamn" hittar omdöpta appar via deras originalnamn
+• Nytt alternativ "Lås layout" inaktiverar långt tryck på start- och uppgiftsskärmar
+• Omorganiserade inställningar (Allmänt, Applåda, Uppgifter)
+• Korrigerat: dolda fästa appar visas nedtonade i sökning

@@ -138,7 +138,9 @@ class HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (context, index) {
                     final app = apps[index];
                     final showHandles = _activeAppPackage != null;
-                    final handle = showHandles ? dragHandle(context, index) : null;
+                    final handle = showHandles
+                        ? dragHandle(context, index)
+                        : null;
                     if (_activeAppPackage == app.packageName) {
                       return ActionRow(
                         key: ValueKey(app.packageName),
