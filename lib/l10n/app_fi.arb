@@ -37,6 +37,8 @@
   },
   "noHiddenApps": "Ei piilotettuja sovelluksia",
 
+  "lockLayout": "Lukitse asettelu",
+  "lockLayoutSubtitle": "Poista pitkä painallus käytöstä aloitus- ja tehtävänäytöltä",
   "searchOnlyMode": "Vain haku",
   "searchOnlyModeSubtitle": "Piilota sovellusten nimet, käynnistä hakemalla",
   "autoShowKeyboard": "Näytä näppäimistö",

@@ -90,6 +90,13 @@ class AppLocalizationsSv extends AppLocalizations {
   String get noHiddenApps => 'Inga dolda appar';
 
   @override
+  String get lockLayout => 'Lås layout';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'Inaktivera långtryckning på hem- och uppgiftsskärmen';
+
+  @override
   String get searchOnlyMode => 'Enbart sökning';
 
   @override

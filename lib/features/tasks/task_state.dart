@@ -61,11 +61,21 @@ class TaskState extends ChangeNotifier {
     await _save();
   }
 
-  Future<void> reorder(int oldIndex, int newIndex) async {
+  Future<void> reorderInGroup(
+    int oldIndex,
+    int newIndex, {
+    required bool done,
+  }) async {
+    final incompletes = _tasks.where((t) => !t.done).toList();
+    final dones = _tasks.where((t) => t.done).toList();
+    final group = done ? dones : incompletes;
+    if (oldIndex < 0 || oldIndex >= group.length) return;
+    if (newIndex > group.length) newIndex = group.length;
     if (newIndex > oldIndex) newIndex--;
     if (oldIndex == newIndex) return;
-    final task = _tasks.removeAt(oldIndex);
-    _tasks.insert(newIndex, task);
+    final task = group.removeAt(oldIndex);
+    group.insert(newIndex, task);
+    _tasks = [...incompletes, ...dones];
     notifyListeners();
     await _save();
   }

@@ -19,6 +19,7 @@ class ActionRow extends StatelessWidget {
     required this.label,
     required this.actions,
     required this.onClose,
+    this.leading,
     this.textDecoration,
     this.decorationThickness,
     this.opacity = 1.0,
@@ -28,6 +29,7 @@ class ActionRow extends StatelessWidget {
   final String label;
   final List<ActionItem> actions;
   final VoidCallback onClose;
+  final Widget? leading;
   final TextDecoration? textDecoration;
   final double? decorationThickness;
   final double opacity;
@@ -42,10 +44,11 @@ class ActionRow extends StatelessWidget {
       onLongPress: onClose,
       child: Row(
         children: [
+          ?leading,
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
+              padding: EdgeInsets.only(
+                left: leading == null ? 20 : 0,
                 top: AppLabel.verticalPadding,
                 bottom: AppLabel.verticalPadding,
               ),

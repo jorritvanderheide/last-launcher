@@ -37,6 +37,8 @@
   },
   "noHiddenApps": "No hidden apps",
 
+  "lockLayout": "Lock layout",
+  "lockLayoutSubtitle": "Disable long press on the home and task screens",
   "searchOnlyMode": "Search only",
   "searchOnlyModeSubtitle": "Hide app names, search to launch",
   "autoShowKeyboard": "Show keyboard",

@@ -114,6 +114,12 @@ class SettingsScreen extends StatelessWidget {
                 ),
                 _SectionHeader(title: l10n.sectionBehavior),
                 SwitchListTile(
+                  title: Text(l10n.lockLayout),
+                  subtitle: Text(l10n.lockLayoutSubtitle),
+                  value: settingsState.locked,
+                  onChanged: settingsState.setLocked,
+                ),
+                SwitchListTile(
                   title: Text(l10n.searchOnlyMode),
                   subtitle: Text(l10n.searchOnlyModeSubtitle),
                   value: searchOnly,

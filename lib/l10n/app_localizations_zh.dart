@@ -89,6 +89,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get noHiddenApps => '沒有已隱藏的應用程式';
 
   @override
+  String get lockLayout => '鎖定版面';
+
+  @override
+  String get lockLayoutSubtitle => '停用主畫面和任務畫面的長按';
+
+  @override
   String get searchOnlyMode => '僅搜尋';
 
   @override

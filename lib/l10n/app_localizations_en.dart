@@ -90,6 +90,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get noHiddenApps => 'No hidden apps';
 
   @override
+  String get lockLayout => 'Lock layout';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'Disable long press on the home and task screens';
+
+  @override
   String get searchOnlyMode => 'Search only';
 
   @override

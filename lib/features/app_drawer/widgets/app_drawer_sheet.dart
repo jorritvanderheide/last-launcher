@@ -304,10 +304,11 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
                           itemCount: apps.length,
                           itemBuilder: (context, index) {
                             final app = apps[index];
-                            final opacity =
-                                widget.appListState.isHidden(app.packageName)
-                                ? 0.6
-                                : 1.0;
+                            final dimmed =
+                                widget.appListState.isHidden(app.packageName) ||
+                                (widget.settingsState.hidePinnedFromDrawer &&
+                                    widget.homeState.isPinned(app.packageName));
+                            final opacity = dimmed ? 0.6 : 1.0;
                             if (_activeAppPackage == app.packageName) {
                               return ActionRow(
                                 key: ValueKey(app.packageName),

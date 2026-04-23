@@ -90,6 +90,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get noHiddenApps => 'Žádné skryté aplikace';
 
   @override
+  String get lockLayout => 'Uzamknout rozložení';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'Zakázat dlouhé stisknutí na domovské obrazovce a obrazovce úkolů';
+
+  @override
   String get searchOnlyMode => 'Pouze hledání';
 
   @override

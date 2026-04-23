@@ -137,6 +137,8 @@ class HomeScreenState extends State<HomeScreen> {
                   itemCount: apps.length,
                   itemBuilder: (context, index) {
                     final app = apps[index];
+                    final showHandles = _activeAppPackage != null;
+                    final handle = showHandles ? dragHandle(context, index) : null;
                     if (_activeAppPackage == app.packageName) {
                       return ActionRow(
                         key: ValueKey(app.packageName),
@@ -146,6 +148,7 @@ class HomeScreenState extends State<HomeScreen> {
                         ),
                         actions: _appActions(context, app),
                         onClose: () => setState(() => _activeAppPackage = null),
+                        leading: handle,
                       );
                     }
                     return AppLabel(
@@ -155,25 +158,15 @@ class HomeScreenState extends State<HomeScreen> {
                         app.label,
                       ),
                       onTap: () => widget.onLaunch(app.packageName),
-                      onLongPress: () => setState(
-                        () => _activeAppPackage =
-                            _activeAppPackage == app.packageName
-                            ? null
-                            : app.packageName,
-                      ),
-                      trailing: ReorderableDelayedDragStartListener(
-                        index: index,
-                        child: GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints(minHeight: 48),
-                            child: const Padding(
-                              padding: EdgeInsets.only(left: 12, right: 20),
-                              child: SizedBox(width: 24),
+                      onLongPress: widget.settingsState.locked
+                          ? null
+                          : () => setState(
+                              () => _activeAppPackage =
+                                  _activeAppPackage == app.packageName
+                                  ? null
+                                  : app.packageName,
                             ),
-                          ),
-                        ),
-                      ),
+                      leading: handle,
                     );
                   },
                 );

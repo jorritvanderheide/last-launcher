@@ -74,14 +74,14 @@ void main() {
       state.addTask('A');
       expect(state.tasks.map((t) => t.title).toList(), ['A', 'B', 'C']);
 
-      state.reorder(0, 2);
+      state.reorderInGroup(0, 2, done: false);
       expect(state.tasks.map((t) => t.title).toList(), ['B', 'A', 'C']);
     });
 
     test('reorder same index does nothing', () {
       state.addTask('B');
       state.addTask('A');
-      state.reorder(0, 0);
+      state.reorderInGroup(0, 0, done: false);
       expect(state.tasks.map((t) => t.title).toList(), ['A', 'B']);
     });
 

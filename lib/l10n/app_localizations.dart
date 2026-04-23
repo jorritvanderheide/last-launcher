@@ -278,6 +278,18 @@ abstract class AppLocalizations {
   /// **'No hidden apps'**
   String get noHiddenApps;
 
+  /// No description provided for @lockLayout.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock layout'**
+  String get lockLayout;
+
+  /// No description provided for @lockLayoutSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable long press on the home and task screens'**
+  String get lockLayoutSubtitle;
+
   /// No description provided for @searchOnlyMode.
   ///
   /// In en, this message translates to:

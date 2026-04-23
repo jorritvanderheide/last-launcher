@@ -91,6 +91,13 @@ class AppLocalizationsNl extends AppLocalizations {
   String get noHiddenApps => 'Geen verborgen apps';
 
   @override
+  String get lockLayout => 'Lay-out vergrendelen';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'Lang indrukken op start- en takenscherm uitschakelen';
+
+  @override
   String get searchOnlyMode => 'Alleen zoeken';
 
   @override

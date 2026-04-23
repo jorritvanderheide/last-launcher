@@ -89,6 +89,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get noHiddenApps => '非表示のアプリはありません';
 
   @override
+  String get lockLayout => 'レイアウトをロック';
+
+  @override
+  String get lockLayoutSubtitle => 'ホームとタスク画面の長押しを無効化';
+
+  @override
   String get searchOnlyMode => '検索のみ';
 
   @override

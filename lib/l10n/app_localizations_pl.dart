@@ -93,6 +93,13 @@ class AppLocalizationsPl extends AppLocalizations {
   String get noHiddenApps => 'Brak ukrytych aplikacji';
 
   @override
+  String get lockLayout => 'Zablokuj układ';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'Wyłącz długie naciśnięcie na ekranie głównym i zadań';
+
+  @override
   String get searchOnlyMode => 'Tylko wyszukiwanie';
 
   @override

@@ -37,6 +37,8 @@
   },
   "noHiddenApps": "非表示のアプリはありません",
 
+  "lockLayout": "レイアウトをロック",
+  "lockLayoutSubtitle": "ホームとタスク画面の長押しを無効化",
   "searchOnlyMode": "検索のみ",
   "searchOnlyModeSubtitle": "アプリ名を非表示にし、検索で起動",
   "autoShowKeyboard": "キーボードを表示",

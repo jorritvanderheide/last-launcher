@@ -50,6 +50,7 @@ class TaskScreenState extends State<TaskScreen> {
   }
 
   String? _activeTaskId;
+  bool _isReordering = false;
   bool get _autoKeyboard => widget.settingsState.autoKeyboardTasks;
 
   @override
@@ -86,6 +87,7 @@ class TaskScreenState extends State<TaskScreen> {
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
+    if (_isReordering) return;
     if (_activeTaskId != null) setState(() => _activeTaskId = null);
     if (_scrollController.offset > 20 && _focusNode.hasFocus) {
       _focusNode.unfocus();
@@ -139,29 +141,20 @@ class TaskScreenState extends State<TaskScreen> {
     }
   }
 
+  Future<void> _renameTask(BuildContext context, Task task) async {
+    final result = await showRenameDialog(
+      context: context,
+      currentLabel: task.title,
+      originalLabel: task.title,
+    );
+    if (result != null && result.isNotEmpty && result != task.title) {
+      await widget.taskState.renameTask(task.id, result);
+    }
+  }
+
   List<ActionItem> _taskActions(BuildContext context, Task task) {
     final l10n = AppLocalizations.of(context)!;
     return [
-      ActionItem(
-        icon: task.done ? Icons.undo : Icons.check,
-        label: task.done ? l10n.actionUndo : l10n.actionDone,
-        onTap: () => _completeTask(task),
-      ),
-      if (!task.done)
-        ActionItem(
-          icon: Icons.edit,
-          label: l10n.actionRename,
-          onTap: () async {
-            final result = await showRenameDialog(
-              context: context,
-              currentLabel: task.title,
-              originalLabel: task.title,
-            );
-            if (result != null && result.isNotEmpty && result != task.title) {
-              await widget.taskState.renameTask(task.id, result);
-            }
-          },
-        ),
       ActionItem(
         icon: Icons.delete_outline,
         label: l10n.actionRemove,
@@ -170,17 +163,71 @@ class TaskScreenState extends State<TaskScreen> {
     ];
   }
 
-  List<Task> _displayTasks(List<Task> tasks) {
-    var result = tasks;
-    final filter = _controller.text;
-    if (filter.isNotEmpty) {
-      final lower = filter.toLowerCase();
-      result = result
-          .where((t) => t.title.toLowerCase().contains(lower))
-          .toList();
+  void _onReorderStart(int _) {
+    _isReordering = true;
+    widget.onReorderStart();
+  }
+
+  void _onReorderEnd(int _) {
+    _isReordering = false;
+    widget.onReorderEnd();
+  }
+
+  Widget _buildTaskItem(BuildContext context, Task task, int index) {
+    final showHandle = _activeTaskId != null;
+    final Widget leading = showHandle
+        ? dragHandle(context, index)
+        : GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => _completeTask(task),
+            child: SizedBox.square(
+              dimension: 48,
+              child: Center(
+                child: Icon(
+                  task.done
+                      ? Icons.check_box
+                      : Icons.check_box_outline_blank,
+                  size: 22,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ),
+          );
+
+    if (_activeTaskId == task.id) {
+      return KeyedSubtree(
+        key: ValueKey(task.id),
+        child: ActionRow(
+          label: task.title,
+          actions: _taskActions(context, task),
+          onClose: () => setState(() => _activeTaskId = null),
+          textDecoration: task.done ? TextDecoration.lineThrough : null,
+          decorationThickness: task.done ? 1.5 : null,
+          opacity: task.done ? 0.6 : 1.0,
+          leading: leading,
+        ),
+      );
     }
-    result = [...result.where((t) => !t.done), ...result.where((t) => t.done)];
-    return result;
+    return KeyedSubtree(
+      key: ValueKey(task.id),
+      child: _SwipeToDismiss(
+        onDismissed: () => widget.taskState.removeTask(task.id),
+        child: AppLabel(
+          label: task.title,
+          onTap: task.done ? null : () => _renameTask(context, task),
+          onLongPress: widget.settingsState.locked
+              ? null
+              : () => setState(
+                  () => _activeTaskId =
+                      _activeTaskId == task.id ? null : task.id,
+                ),
+          opacity: task.done ? 0.6 : 1.0,
+          textDecoration: task.done ? TextDecoration.lineThrough : null,
+          decorationThickness: task.done ? 1.5 : null,
+          leading: leading,
+        ),
+      ),
+    );
   }
 
   @override
@@ -205,8 +252,18 @@ class TaskScreenState extends State<TaskScreen> {
             child: ListenableBuilder(
               listenable: _mergedState,
               builder: (context, _) {
-                final tasks = _displayTasks(widget.taskState.tasks);
-                if (tasks.isEmpty) {
+                final filter = _controller.text.trim().toLowerCase();
+                final filtered = filter.isEmpty
+                    ? widget.taskState.tasks
+                    : widget.taskState.tasks
+                          .where((t) => t.title.toLowerCase().contains(filter))
+                          .toList();
+                final incomplete = filtered
+                    .where((t) => !t.done)
+                    .toList();
+                final complete = filtered.where((t) => t.done).toList();
+
+                if (incomplete.isEmpty && complete.isEmpty) {
                   if (!widget.settingsState.showHints) {
                     return const SizedBox.shrink();
                   }
@@ -246,92 +303,43 @@ class TaskScreenState extends State<TaskScreen> {
                     return false;
                   },
                   child: FadeOverflow(
-                    child: ReorderableListView.builder(
-                      scrollController: _scrollController,
+                    child: CustomScrollView(
+                      controller: _scrollController,
                       physics: widget.scrollLocked
                           ? const NeverScrollableScrollPhysics()
                           : const AlwaysScrollableScrollPhysics(),
-                      padding: const EdgeInsets.only(top: 32, bottom: 80),
-                      buildDefaultDragHandles: false,
-                      proxyDecorator: dragProxyDecorator,
-                      onReorderStart: (_) => widget.onReorderStart(),
-                      onReorderEnd: (_) => widget.onReorderEnd(),
-                      onReorder: (oldIndex, newIndex) {
-                        final allTasks = widget.taskState.tasks;
-                        final realOld = allTasks.indexWhere(
-                          (t) => t.id == tasks[oldIndex].id,
-                        );
-                        var realNew = newIndex < tasks.length
-                            ? allTasks.indexWhere(
-                                (t) => t.id == tasks[newIndex].id,
-                              )
-                            : allTasks.length;
-                        if (realNew > realOld) realNew++;
-                        widget.taskState.reorder(realOld, realNew);
-                      },
-                      itemCount: tasks.length,
-                      itemBuilder: (context, index) {
-                        final task = tasks[index];
-                        final isFirstDone =
-                            task.done && index > 0 && !tasks[index - 1].done;
-                        if (_activeTaskId == task.id) {
-                          return Padding(
-                            key: ValueKey(task.id),
-                            padding: EdgeInsets.only(top: isFirstDone ? 24 : 0),
-                            child: ActionRow(
-                              label: task.title,
-                              actions: _taskActions(context, task),
-                              onClose: () =>
-                                  setState(() => _activeTaskId = null),
-                              textDecoration: task.done
-                                  ? TextDecoration.lineThrough
-                                  : null,
-                              decorationThickness: task.done ? 1.5 : null,
-                              opacity: task.done ? 0.6 : 1.0,
-                            ),
-                          );
-                        }
-                        return Padding(
-                          key: ValueKey(task.id),
-                          padding: EdgeInsets.only(top: isFirstDone ? 24 : 0),
-                          child: _SwipeToDismiss(
-                            onDismissed: () =>
-                                widget.taskState.removeTask(task.id),
-                            child: AppLabel(
-                              label: task.title,
-                              onTap: () => _completeTask(task),
-                              onLongPress: () => setState(
-                                () => _activeTaskId = _activeTaskId == task.id
-                                    ? null
-                                    : task.id,
-                              ),
-                              opacity: task.done ? 0.6 : 1.0,
-                              textDecoration: task.done
-                                  ? TextDecoration.lineThrough
-                                  : null,
-                              decorationThickness: task.done ? 1.5 : null,
-                              trailing: ReorderableDelayedDragStartListener(
-                                index: index,
-                                child: GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  child: ConstrainedBox(
-                                    constraints: const BoxConstraints(
-                                      minHeight: 48,
-                                    ),
-                                    child: const Padding(
-                                      padding: EdgeInsets.only(
-                                        left: 12,
-                                        right: 20,
-                                      ),
-                                      child: SizedBox(width: 24),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
+                      slivers: [
+                        SliverPadding(
+                          padding: const EdgeInsets.only(top: 32),
+                          sliver: SliverReorderableList(
+                            itemCount: incomplete.length,
+                            proxyDecorator: dragProxyDecorator,
+                            onReorderStart: _onReorderStart,
+                            onReorderEnd: _onReorderEnd,
+                            onReorder: (o, n) => widget.taskState
+                                .reorderInGroup(o, n, done: false),
+                            itemBuilder: (context, index) =>
+                                _buildTaskItem(context, incomplete[index], index),
                           ),
-                        );
-                      },
+                        ),
+                        if (incomplete.isNotEmpty && complete.isNotEmpty)
+                          const SliverToBoxAdapter(
+                            child: SizedBox(height: 24),
+                          ),
+                        SliverReorderableList(
+                          itemCount: complete.length,
+                          proxyDecorator: dragProxyDecorator,
+                          onReorderStart: _onReorderStart,
+                          onReorderEnd: _onReorderEnd,
+                          onReorder: (o, n) => widget.taskState
+                              .reorderInGroup(o, n, done: true),
+                          itemBuilder: (context, index) =>
+                              _buildTaskItem(context, complete[index], index),
+                        ),
+                        const SliverToBoxAdapter(
+                          child: SizedBox(height: 80),
+                        ),
+                      ],
                     ),
                   ),
                 );

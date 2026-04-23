@@ -37,6 +37,8 @@
   },
   "noHiddenApps": "Žádné skryté aplikace",
 
+  "lockLayout": "Uzamknout rozložení",
+  "lockLayoutSubtitle": "Zakázat dlouhé stisknutí na domovské obrazovce a obrazovce úkolů",
   "searchOnlyMode": "Pouze hledání",
   "searchOnlyModeSubtitle": "Skrýt názvy aplikací, spustit vyhledáváním",
   "autoShowKeyboard": "Zobrazit klávesnici",

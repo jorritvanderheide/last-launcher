@@ -37,6 +37,8 @@
   },
   "noHiddenApps": "沒有已隱藏的應用程式",
 
+  "lockLayout": "鎖定版面",
+  "lockLayoutSubtitle": "停用主畫面和任務畫面的長按",
   "searchOnlyMode": "僅搜尋",
   "searchOnlyModeSubtitle": "隱藏應用程式名稱，以搜尋開啟",
   "autoShowKeyboard": "顯示鍵盤",

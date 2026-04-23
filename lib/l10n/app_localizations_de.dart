@@ -91,6 +91,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get noHiddenApps => 'Keine versteckten Apps';
 
   @override
+  String get lockLayout => 'Layout sperren';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'Langes Drücken auf Start- und Aufgabenbildschirm deaktivieren';
+
+  @override
   String get searchOnlyMode => 'Nur Suche';
 
   @override

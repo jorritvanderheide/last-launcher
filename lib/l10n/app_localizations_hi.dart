@@ -90,6 +90,13 @@ class AppLocalizationsHi extends AppLocalizations {
   String get noHiddenApps => 'कोई छुपे हुए ऐप्स नहीं';
 
   @override
+  String get lockLayout => 'लेआउट लॉक करें';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'होम और कार्य स्क्रीन पर लंबा दबाना अक्षम करें';
+
+  @override
   String get searchOnlyMode => 'केवल खोज';
 
   @override

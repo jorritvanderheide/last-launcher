@@ -4,21 +4,21 @@ import 'package:last_launcher/shared/widgets/scanline_overlay.dart';
 class AppLabel extends StatelessWidget {
   const AppLabel({
     required this.label,
-    required this.onTap,
+    this.onTap,
     this.onLongPress,
+    this.leading,
     this.textDecoration,
     this.decorationThickness,
-    this.trailing,
     this.opacity = 1.0,
     super.key,
   });
 
   final String label;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final VoidCallback? onLongPress;
+  final Widget? leading;
   final TextDecoration? textDecoration;
   final double? decorationThickness;
-  final Widget? trailing;
   final double opacity;
 
   static const fontSize = 28.0;
@@ -34,24 +34,21 @@ class AppLabel extends StatelessWidget {
 
     final text = Padding(
       padding: EdgeInsets.only(
-        left: 20,
-        right: trailing == null ? 20 : 0,
+        left: leading == null ? 20 : 0,
+        right: 20,
         top: verticalPadding,
         bottom: verticalPadding,
       ),
       child: _GlitchText(label: label, style: style),
     );
 
-    final content = trailing == null
+    final content = leading == null
         ? text
-        : IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(child: text),
-                SizedBox(height: double.infinity, child: trailing!),
-              ],
-            ),
+        : Row(
+            children: [
+              leading!,
+              Expanded(child: text),
+            ],
           );
 
     return Semantics(
@@ -136,5 +133,21 @@ Widget dragProxyDecorator(
   return Material(
     color: Colors.transparent,
     child: Opacity(opacity: 0.6, child: child),
+  );
+}
+
+Widget dragHandle(BuildContext context, int index) {
+  return ReorderableDragStartListener(
+    index: index,
+    child: SizedBox.square(
+      dimension: 48,
+      child: Center(
+        child: Icon(
+          Icons.drag_indicator,
+          size: 22,
+          color: Theme.of(context).colorScheme.onSurface.withAlpha(130),
+        ),
+      ),
+    ),
   );
 }

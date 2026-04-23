@@ -37,6 +37,8 @@
   },
   "noHiddenApps": "Aucune application masquée",
 
+  "lockLayout": "Verrouiller la disposition",
+  "lockLayoutSubtitle": "Désactiver l'appui long sur les écrans d'accueil et de tâches",
   "searchOnlyMode": "Recherche uniquement",
   "searchOnlyModeSubtitle": "Masquer les noms d'apps, rechercher pour lancer",
   "autoShowKeyboard": "Afficher le clavier",

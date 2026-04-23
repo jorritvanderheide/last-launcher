@@ -37,6 +37,8 @@
   },
   "noHiddenApps": "No hay aplicaciones ocultas",
 
+  "lockLayout": "Bloquear diseño",
+  "lockLayoutSubtitle": "Desactivar pulsación larga en pantallas de inicio y tareas",
   "searchOnlyMode": "Solo búsqueda",
   "searchOnlyModeSubtitle": "Ocultar nombres de apps, buscar para abrir",
   "autoShowKeyboard": "Mostrar teclado",

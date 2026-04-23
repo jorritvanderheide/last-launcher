@@ -92,6 +92,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get noHiddenApps => 'No hay aplicaciones ocultas';
 
   @override
+  String get lockLayout => 'Bloquear diseño';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'Desactivar pulsación larga en pantallas de inicio y tareas';
+
+  @override
   String get searchOnlyMode => 'Solo búsqueda';
 
   @override

@@ -91,6 +91,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get noHiddenApps => 'Nenhuma aplicação oculta';
 
   @override
+  String get lockLayout => 'Bloquear disposição';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'Desativar toque longo nos ecrãs inicial e de tarefas';
+
+  @override
   String get searchOnlyMode => 'Apenas pesquisa';
 
   @override

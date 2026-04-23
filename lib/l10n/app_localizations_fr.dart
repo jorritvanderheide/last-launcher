@@ -93,6 +93,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get noHiddenApps => 'Aucune application masquée';
 
   @override
+  String get lockLayout => 'Verrouiller la disposition';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'Désactiver l\'appui long sur les écrans d\'accueil et de tâches';
+
+  @override
   String get searchOnlyMode => 'Recherche uniquement';
 
   @override

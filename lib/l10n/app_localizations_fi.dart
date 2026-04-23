@@ -91,6 +91,13 @@ class AppLocalizationsFi extends AppLocalizations {
   String get noHiddenApps => 'Ei piilotettuja sovelluksia';
 
   @override
+  String get lockLayout => 'Lukitse asettelu';
+
+  @override
+  String get lockLayoutSubtitle =>
+      'Poista pitkä painallus käytöstä aloitus- ja tehtävänäytöltä';
+
+  @override
   String get searchOnlyMode => 'Vain haku';
 
   @override
