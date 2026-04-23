@@ -18,13 +18,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settings => '설정';
 
   @override
-  String get sectionAppearance => '외관';
+  String get sectionGeneral => '일반';
 
   @override
-  String get sectionApps => '앱';
-
-  @override
-  String get sectionBehavior => '동작';
+  String get sectionAppDrawer => '앱 서랍';
 
   @override
   String get sectionTasks => '할 일';
@@ -73,6 +70,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get includeHiddenInSearchSubtitle => '검색에서 숨긴 앱도 일치';
+
+  @override
+  String get matchOriginalName => '원래 이름으로 일치';
+
+  @override
+  String get matchOriginalNameSubtitle => '이름이 변경된 앱을 원래 이름으로 찾기';
 
   @override
   String get hiddenApps => '숨긴 앱';

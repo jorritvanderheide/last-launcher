@@ -4,9 +4,8 @@
   "appTagline": "마지막으로 필요한 런처",
 
   "settings": "설정",
-  "sectionAppearance": "외관",
-  "sectionApps": "앱",
-  "sectionBehavior": "동작",
+  "sectionGeneral": "일반",
+  "sectionAppDrawer": "앱 서랍",
   "sectionTasks": "할 일",
   "sectionSupport": "지원",
   "sectionAbout": "정보",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "앱 서랍에서 고정된 앱 숨기기",
   "includeHiddenInSearch": "검색에 숨긴 앱 포함",
   "includeHiddenInSearchSubtitle": "검색에서 숨긴 앱도 일치",
+  "matchOriginalName": "원래 이름으로 일치",
+  "matchOriginalNameSubtitle": "이름이 변경된 앱을 원래 이름으로 찾기",
 
   "hiddenApps": "숨긴 앱",
   "hiddenAppsNone": "없음",

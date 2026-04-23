@@ -4,9 +4,8 @@
   "appTagline": "Poslední spouštěč, který kdy budete potřebovat",
 
   "settings": "Nastavení",
-  "sectionAppearance": "Vzhled",
-  "sectionApps": "Aplikace",
-  "sectionBehavior": "Chování",
+  "sectionGeneral": "Obecné",
+  "sectionAppDrawer": "Šuplík aplikací",
   "sectionTasks": "Úkoly",
   "sectionSupport": "Podpora",
   "sectionAbout": "O aplikaci",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "Skrýt připnuté aplikace z šuplíku aplikací",
   "includeHiddenInSearch": "Zahrnout skryté do vyhledávání",
   "includeHiddenInSearchSubtitle": "Hledání najde i skryté aplikace",
+  "matchOriginalName": "Odpovídat původnímu názvu",
+  "matchOriginalNameSubtitle": "Hledat přejmenované aplikace podle jejich původního názvu",
 
   "hiddenApps": "Skryté aplikace",
   "hiddenAppsNone": "Žádné",

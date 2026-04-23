@@ -4,9 +4,8 @@
   "appTagline": "El último lanzador que necesitarás",
 
   "settings": "Ajustes",
-  "sectionAppearance": "Apariencia",
-  "sectionApps": "Aplicaciones",
-  "sectionBehavior": "Comportamiento",
+  "sectionGeneral": "General",
+  "sectionAppDrawer": "Cajón de aplicaciones",
   "sectionTasks": "Tareas",
   "sectionSupport": "Apoyo",
   "sectionAbout": "Acerca de",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "Ocultar apps fijadas del cajón de aplicaciones",
   "includeHiddenInSearch": "Incluir ocultas en búsqueda",
   "includeHiddenInSearchSubtitle": "Permite que la búsqueda encuentre apps ocultas",
+  "matchOriginalName": "Coincidir nombre original",
+  "matchOriginalNameSubtitle": "Encontrar apps renombradas por su nombre original",
 
   "hiddenApps": "Aplicaciones ocultas",
   "hiddenAppsNone": "Ninguna",

@@ -4,9 +4,8 @@
   "appTagline": "The last launcher you'll ever need",
 
   "settings": "Settings",
-  "sectionAppearance": "Appearance",
-  "sectionApps": "Apps",
-  "sectionBehavior": "Behavior",
+  "sectionGeneral": "General",
+  "sectionAppDrawer": "App drawer",
   "sectionTasks": "Tasks",
   "sectionSupport": "Support",
   "sectionAbout": "About",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "Hide pinned apps from the app drawer",
   "includeHiddenInSearch": "Include hidden in search",
   "includeHiddenInSearchSubtitle": "Let search also match hidden apps",
+  "matchOriginalName": "Match original name",
+  "matchOriginalNameSubtitle": "Find renamed apps by their original name",
 
   "hiddenApps": "Hidden apps",
   "hiddenAppsNone": "None",

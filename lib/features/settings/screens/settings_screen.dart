@@ -40,7 +40,7 @@ class SettingsScreen extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                _SectionHeader(title: l10n.sectionAppearance),
+                _SectionHeader(title: l10n.sectionGeneral),
                 _ThemeListTile(
                   themeValue: settingsState.themeValue,
                   onChanged: settingsState.setTheme,
@@ -57,7 +57,13 @@ class SettingsScreen extends StatelessWidget {
                   value: settingsState.showHints,
                   onChanged: settingsState.setShowHints,
                 ),
-                _SectionHeader(title: l10n.sectionApps),
+                SwitchListTile(
+                  title: Text(l10n.lockLayout),
+                  subtitle: Text(l10n.lockLayoutSubtitle),
+                  value: settingsState.locked,
+                  onChanged: settingsState.setLocked,
+                ),
+                _SectionHeader(title: l10n.sectionAppDrawer),
                 ListenableBuilder(
                   listenable: Listenable.merge([appListState, homeState]),
                   builder: (context, _) {
@@ -104,20 +110,19 @@ class SettingsScreen extends StatelessWidget {
                           title: Text(l10n.includeHiddenInSearch),
                           subtitle: Text(l10n.includeHiddenInSearchSubtitle),
                           value: settingsState.includeHiddenInSearch,
-                          onChanged: (searchOnly || count == 0)
+                          onChanged: count == 0
                               ? null
                               : settingsState.setIncludeHiddenInSearch,
+                        ),
+                        SwitchListTile(
+                          title: Text(l10n.matchOriginalName),
+                          subtitle: Text(l10n.matchOriginalNameSubtitle),
+                          value: settingsState.matchOriginalName,
+                          onChanged: settingsState.setMatchOriginalName,
                         ),
                       ],
                     );
                   },
-                ),
-                _SectionHeader(title: l10n.sectionBehavior),
-                SwitchListTile(
-                  title: Text(l10n.lockLayout),
-                  subtitle: Text(l10n.lockLayoutSubtitle),
-                  value: settingsState.locked,
-                  onChanged: settingsState.setLocked,
                 ),
                 SwitchListTile(
                   title: Text(l10n.searchOnlyMode),

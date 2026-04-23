@@ -140,23 +140,17 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settings;
 
-  /// No description provided for @sectionAppearance.
+  /// No description provided for @sectionGeneral.
   ///
   /// In en, this message translates to:
-  /// **'Appearance'**
-  String get sectionAppearance;
+  /// **'General'**
+  String get sectionGeneral;
 
-  /// No description provided for @sectionApps.
+  /// No description provided for @sectionAppDrawer.
   ///
   /// In en, this message translates to:
-  /// **'Apps'**
-  String get sectionApps;
-
-  /// No description provided for @sectionBehavior.
-  ///
-  /// In en, this message translates to:
-  /// **'Behavior'**
-  String get sectionBehavior;
+  /// **'App drawer'**
+  String get sectionAppDrawer;
 
   /// No description provided for @sectionTasks.
   ///
@@ -253,6 +247,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Let search also match hidden apps'**
   String get includeHiddenInSearchSubtitle;
+
+  /// No description provided for @matchOriginalName.
+  ///
+  /// In en, this message translates to:
+  /// **'Match original name'**
+  String get matchOriginalName;
+
+  /// No description provided for @matchOriginalNameSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Find renamed apps by their original name'**
+  String get matchOriginalNameSubtitle;
 
   /// No description provided for @hiddenApps.
   ///

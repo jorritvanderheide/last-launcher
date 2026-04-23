@@ -4,9 +4,8 @@
   "appTagline": "你需要的最後一個啟動器",
 
   "settings": "設定",
-  "sectionAppearance": "外觀",
-  "sectionApps": "應用程式",
-  "sectionBehavior": "行為",
+  "sectionGeneral": "一般",
+  "sectionAppDrawer": "應用程式抽屜",
   "sectionTasks": "任務",
   "sectionSupport": "支援",
   "sectionAbout": "關於",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "從應用程式抽屜中隱藏已固定的應用程式",
   "includeHiddenInSearch": "在搜尋中包含隱藏項目",
   "includeHiddenInSearchSubtitle": "讓搜尋也能找到已隱藏的應用程式",
+  "matchOriginalName": "比對原始名稱",
+  "matchOriginalNameSubtitle": "以原始名稱尋找已重新命名的應用程式",
 
   "hiddenApps": "已隱藏的應用程式",
   "hiddenAppsNone": "無",

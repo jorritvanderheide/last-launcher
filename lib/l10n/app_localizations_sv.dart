@@ -18,13 +18,10 @@ class AppLocalizationsSv extends AppLocalizations {
   String get settings => 'Inställningar';
 
   @override
-  String get sectionAppearance => 'Utseende';
+  String get sectionGeneral => 'Allmänt';
 
   @override
-  String get sectionApps => 'Appar';
-
-  @override
-  String get sectionBehavior => 'Beteende';
+  String get sectionAppDrawer => 'Applåda';
 
   @override
   String get sectionTasks => 'Uppgifter';
@@ -74,6 +71,13 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get includeHiddenInSearchSubtitle =>
       'Låt sökningen även matcha dolda appar';
+
+  @override
+  String get matchOriginalName => 'Matcha originalnamn';
+
+  @override
+  String get matchOriginalNameSubtitle =>
+      'Hitta omdöpta appar med deras originalnamn';
 
   @override
   String get hiddenApps => 'Dolda appar';

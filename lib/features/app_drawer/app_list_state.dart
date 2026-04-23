@@ -17,13 +17,11 @@ class AppListState extends ChangeNotifier {
   final AppChannel _channel;
   final SharedPreferences _prefs;
   List<AppInfo> _allApps = [];
-  List<AppInfo> _filteredApps = const [];
   String _query = '';
   bool _loading = false;
   final Map<String, String> _customLabels = {};
   final Set<String> _hiddenApps = {};
 
-  List<AppInfo> get filteredApps => _filteredApps;
   List<AppInfo> get allApps => List.unmodifiable(_allApps);
   String get query => _query;
 
@@ -32,15 +30,20 @@ class AppListState extends ChangeNotifier {
 
   bool isHidden(String packageName) => _hiddenApps.contains(packageName);
 
-  List<AppInfo> search(String query, {bool includeHidden = false}) {
+  List<AppInfo> search(
+    String query, {
+    bool includeHidden = false,
+    bool matchOriginal = true,
+  }) {
     final source = includeHidden
         ? _allApps
         : _allApps.where((a) => !_hiddenApps.contains(a.packageName));
     if (query.isEmpty) return source.toList();
     final lower = query.toLowerCase();
     return source.where((app) {
-      return displayLabel(app).toLowerCase().contains(lower) ||
-          app.label.toLowerCase().contains(lower);
+      if (displayLabel(app).toLowerCase().contains(lower)) return true;
+      if (matchOriginal && app.label.toLowerCase().contains(lower)) return true;
+      return false;
     }).toList();
   }
 
@@ -50,7 +53,7 @@ class AppListState extends ChangeNotifier {
     try {
       _allApps = await _channel.getInstalledApps();
       _sortApps();
-      _applyFilter();
+      notifyListeners();
     } catch (e) {
       debugPrint('Failed to load installed apps: $e');
     } finally {
@@ -60,12 +63,12 @@ class AppListState extends ChangeNotifier {
 
   void filter(String query) {
     _query = query;
-    _applyFilter();
+    notifyListeners();
   }
 
   void clearFilter() {
     _query = '';
-    _applyFilter();
+    notifyListeners();
   }
 
   void setCustomLabel(String packageName, String label) {
@@ -75,19 +78,19 @@ class AppListState extends ChangeNotifier {
       _customLabels[packageName] = label;
     }
     _sortApps();
-    _applyFilter();
+    notifyListeners();
     _saveCustomLabels();
   }
 
   void hideApp(String packageName) {
     _hiddenApps.add(packageName);
-    _applyFilter();
+    notifyListeners();
     _saveHiddenApps();
   }
 
   void unhideApp(String packageName) {
     _hiddenApps.remove(packageName);
-    _applyFilter();
+    notifyListeners();
     _saveHiddenApps();
   }
 
@@ -137,19 +140,5 @@ class AppListState extends ChangeNotifier {
 
   Future<void> _saveHiddenApps() async {
     await _prefs.setString(_hiddenKey, jsonEncode(_hiddenApps.toList()));
-  }
-
-  void _applyFilter() {
-    final visible = _allApps.where((a) => !_hiddenApps.contains(a.packageName));
-    if (_query.isEmpty) {
-      _filteredApps = visible.toList();
-    } else {
-      final lower = _query.toLowerCase();
-      _filteredApps = visible.where((app) {
-        return displayLabel(app).toLowerCase().contains(lower) ||
-            app.label.toLowerCase().contains(lower);
-      }).toList();
-    }
-    notifyListeners();
   }
 }

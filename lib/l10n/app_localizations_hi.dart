@@ -18,13 +18,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get settings => 'सेटिंग्स';
 
   @override
-  String get sectionAppearance => 'दिखावट';
+  String get sectionGeneral => 'सामान्य';
 
   @override
-  String get sectionApps => 'ऐप्स';
-
-  @override
-  String get sectionBehavior => 'व्यवहार';
+  String get sectionAppDrawer => 'ऐप ड्रॉअर';
 
   @override
   String get sectionTasks => 'कार्य';
@@ -74,6 +71,13 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get includeHiddenInSearchSubtitle =>
       'खोज को छुपे ऐप्स से मिलान करने दें';
+
+  @override
+  String get matchOriginalName => 'मूल नाम से मिलान करें';
+
+  @override
+  String get matchOriginalNameSubtitle =>
+      'नाम बदली गई ऐप्स को उनके मूल नाम से खोजें';
 
   @override
   String get hiddenApps => 'छुपे हुए ऐप्स';

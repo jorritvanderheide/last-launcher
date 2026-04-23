@@ -18,13 +18,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settings => '設定';
 
   @override
-  String get sectionAppearance => '外観';
+  String get sectionGeneral => '全般';
 
   @override
-  String get sectionApps => 'アプリ';
-
-  @override
-  String get sectionBehavior => '動作';
+  String get sectionAppDrawer => 'アプリドロワー';
 
   @override
   String get sectionTasks => 'タスク';
@@ -73,6 +70,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get includeHiddenInSearchSubtitle => '検索で非表示のアプリも一致させる';
+
+  @override
+  String get matchOriginalName => '元の名前と一致';
+
+  @override
+  String get matchOriginalNameSubtitle => '名前を変更したアプリを元の名前で検索できる';
 
   @override
   String get hiddenApps => '非表示のアプリ';

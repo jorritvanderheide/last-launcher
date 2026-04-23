@@ -4,9 +4,8 @@
   "appTagline": "Ostatni launcher, jakiego kiedykolwiek będziesz potrzebować",
 
   "settings": "Ustawienia",
-  "sectionAppearance": "Wygląd",
-  "sectionApps": "Aplikacje",
-  "sectionBehavior": "Zachowanie",
+  "sectionGeneral": "Ogólne",
+  "sectionAppDrawer": "Szuflada aplikacji",
   "sectionTasks": "Zadania",
   "sectionSupport": "Wsparcie",
   "sectionAbout": "O aplikacji",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "Ukryj przypięte aplikacje z szuflady aplikacji",
   "includeHiddenInSearch": "Uwzględnij ukryte w wyszukiwaniu",
   "includeHiddenInSearchSubtitle": "Pozwól wyszukiwaniu znajdować ukryte aplikacje",
+  "matchOriginalName": "Dopasuj oryginalną nazwę",
+  "matchOriginalNameSubtitle": "Znajdź zmienione aplikacje po ich oryginalnej nazwie",
 
   "hiddenApps": "Ukryte aplikacje",
   "hiddenAppsNone": "Brak",

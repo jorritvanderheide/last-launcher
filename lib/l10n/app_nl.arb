@@ -4,9 +4,8 @@
   "appTagline": "De laatste launcher die je ooit nodig hebt",
 
   "settings": "Instellingen",
-  "sectionAppearance": "Uiterlijk",
-  "sectionApps": "Apps",
-  "sectionBehavior": "Gedrag",
+  "sectionGeneral": "Algemeen",
+  "sectionAppDrawer": "App-lade",
   "sectionTasks": "Taken",
   "sectionSupport": "Ondersteuning",
   "sectionAbout": "Over",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "Verberg vastgemaakte apps in de app-lade",
   "includeHiddenInSearch": "Verborgen in zoekresultaten",
   "includeHiddenInSearchSubtitle": "Laat zoeken ook verborgen apps vinden",
+  "matchOriginalName": "Originele naam matchen",
+  "matchOriginalNameSubtitle": "Hernoemde apps vinden op hun originele naam",
 
   "hiddenApps": "Verborgen apps",
   "hiddenAppsNone": "Geen",

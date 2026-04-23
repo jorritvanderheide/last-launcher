@@ -18,13 +18,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settings => '設定';
 
   @override
-  String get sectionAppearance => '外觀';
+  String get sectionGeneral => '一般';
 
   @override
-  String get sectionApps => '應用程式';
-
-  @override
-  String get sectionBehavior => '行為';
+  String get sectionAppDrawer => '應用程式抽屜';
 
   @override
   String get sectionTasks => '任務';
@@ -73,6 +70,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get includeHiddenInSearchSubtitle => '讓搜尋也能找到已隱藏的應用程式';
+
+  @override
+  String get matchOriginalName => '比對原始名稱';
+
+  @override
+  String get matchOriginalNameSubtitle => '以原始名稱尋找已重新命名的應用程式';
 
   @override
   String get hiddenApps => '已隱藏的應用程式';

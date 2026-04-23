@@ -18,13 +18,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settings => 'Definições';
 
   @override
-  String get sectionAppearance => 'Aparência';
+  String get sectionGeneral => 'Geral';
 
   @override
-  String get sectionApps => 'Aplicações';
-
-  @override
-  String get sectionBehavior => 'Comportamento';
+  String get sectionAppDrawer => 'Gaveta de aplicações';
 
   @override
   String get sectionTasks => 'Tarefas';
@@ -75,6 +72,13 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get includeHiddenInSearchSubtitle =>
       'Permite que a pesquisa encontre aplicações ocultas';
+
+  @override
+  String get matchOriginalName => 'Corresponder nome original';
+
+  @override
+  String get matchOriginalNameSubtitle =>
+      'Encontrar aplicações renomeadas pelo nome original';
 
   @override
   String get hiddenApps => 'Aplicações ocultas';

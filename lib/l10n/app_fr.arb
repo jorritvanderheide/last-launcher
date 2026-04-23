@@ -4,9 +4,8 @@
   "appTagline": "Le dernier lanceur dont vous aurez besoin",
 
   "settings": "Paramètres",
-  "sectionAppearance": "Apparence",
-  "sectionApps": "Applications",
-  "sectionBehavior": "Comportement",
+  "sectionGeneral": "Général",
+  "sectionAppDrawer": "Tiroir d'applications",
   "sectionTasks": "Tâches",
   "sectionSupport": "Soutien",
   "sectionAbout": "À propos",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "Masquer les applications épinglées de la liste",
   "includeHiddenInSearch": "Inclure les masquées dans la recherche",
   "includeHiddenInSearchSubtitle": "La recherche correspond aussi aux applications masquées",
+  "matchOriginalName": "Correspondre au nom d'origine",
+  "matchOriginalNameSubtitle": "Trouver les applications renommées par leur nom d'origine",
 
   "hiddenApps": "Applications masquées",
   "hiddenAppsNone": "Aucune",

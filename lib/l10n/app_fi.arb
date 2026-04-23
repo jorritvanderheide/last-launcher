@@ -4,9 +4,8 @@
   "appTagline": "Viimeinen laukaisija, jonka koskaan tarvitset",
 
   "settings": "Asetukset",
-  "sectionAppearance": "Ulkoasu",
-  "sectionApps": "Sovellukset",
-  "sectionBehavior": "Toiminta",
+  "sectionGeneral": "Yleiset",
+  "sectionAppDrawer": "Sovellusvalikko",
   "sectionTasks": "Tehtävät",
   "sectionSupport": "Tuki",
   "sectionAbout": "Tietoja",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "Piilota kiinnitetyt sovellukset sovellusvalikosta",
   "includeHiddenInSearch": "Sisällytä piilotetut hakuun",
   "includeHiddenInSearchSubtitle": "Anna haun löytää myös piilotetut sovellukset",
+  "matchOriginalName": "Vastaa alkuperäistä nimeä",
+  "matchOriginalNameSubtitle": "Löydä uudelleennimetyt sovellukset alkuperäisellä nimellä",
 
   "hiddenApps": "Piilotetut sovellukset",
   "hiddenAppsNone": "Ei mitään",

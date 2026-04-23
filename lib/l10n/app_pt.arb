@@ -4,9 +4,8 @@
   "appTagline": "O último launcher de que vais precisar",
 
   "settings": "Definições",
-  "sectionAppearance": "Aparência",
-  "sectionApps": "Aplicações",
-  "sectionBehavior": "Comportamento",
+  "sectionGeneral": "Geral",
+  "sectionAppDrawer": "Gaveta de aplicações",
   "sectionTasks": "Tarefas",
   "sectionSupport": "Apoio",
   "sectionAbout": "Acerca",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "Ocultar aplicações fixadas da gaveta",
   "includeHiddenInSearch": "Incluir ocultas na pesquisa",
   "includeHiddenInSearchSubtitle": "Permite que a pesquisa encontre aplicações ocultas",
+  "matchOriginalName": "Corresponder nome original",
+  "matchOriginalNameSubtitle": "Encontrar aplicações renomeadas pelo nome original",
 
   "hiddenApps": "Aplicações ocultas",
   "hiddenAppsNone": "Nenhuma",

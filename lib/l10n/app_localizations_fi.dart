@@ -18,13 +18,10 @@ class AppLocalizationsFi extends AppLocalizations {
   String get settings => 'Asetukset';
 
   @override
-  String get sectionAppearance => 'Ulkoasu';
+  String get sectionGeneral => 'Yleiset';
 
   @override
-  String get sectionApps => 'Sovellukset';
-
-  @override
-  String get sectionBehavior => 'Toiminta';
+  String get sectionAppDrawer => 'Sovellusvalikko';
 
   @override
   String get sectionTasks => 'Tehtävät';
@@ -75,6 +72,13 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get includeHiddenInSearchSubtitle =>
       'Anna haun löytää myös piilotetut sovellukset';
+
+  @override
+  String get matchOriginalName => 'Vastaa alkuperäistä nimeä';
+
+  @override
+  String get matchOriginalNameSubtitle =>
+      'Löydä uudelleennimetyt sovellukset alkuperäisellä nimellä';
 
   @override
   String get hiddenApps => 'Piilotetut sovellukset';

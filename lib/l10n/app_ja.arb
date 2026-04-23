@@ -4,9 +4,8 @@
   "appTagline": "これが最後のランチャー",
 
   "settings": "設定",
-  "sectionAppearance": "外観",
-  "sectionApps": "アプリ",
-  "sectionBehavior": "動作",
+  "sectionGeneral": "全般",
+  "sectionAppDrawer": "アプリドロワー",
   "sectionTasks": "タスク",
   "sectionSupport": "サポート",
   "sectionAbout": "概要",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "固定したアプリをアプリドロワーから隠す",
   "includeHiddenInSearch": "非表示アプリも検索対象",
   "includeHiddenInSearchSubtitle": "検索で非表示のアプリも一致させる",
+  "matchOriginalName": "元の名前と一致",
+  "matchOriginalNameSubtitle": "名前を変更したアプリを元の名前で検索できる",
 
   "hiddenApps": "非表示のアプリ",
   "hiddenAppsNone": "なし",

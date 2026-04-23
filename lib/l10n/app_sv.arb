@@ -4,9 +4,8 @@
   "appTagline": "Den sista launchern du någonsin behöver",
 
   "settings": "Inställningar",
-  "sectionAppearance": "Utseende",
-  "sectionApps": "Appar",
-  "sectionBehavior": "Beteende",
+  "sectionGeneral": "Allmänt",
+  "sectionAppDrawer": "Applåda",
   "sectionTasks": "Uppgifter",
   "sectionSupport": "Stöd",
   "sectionAbout": "Om",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "Dölj fästa appar från app-lådan",
   "includeHiddenInSearch": "Inkludera dolda i sökning",
   "includeHiddenInSearchSubtitle": "Låt sökningen även matcha dolda appar",
+  "matchOriginalName": "Matcha originalnamn",
+  "matchOriginalNameSubtitle": "Hitta omdöpta appar med deras originalnamn",
 
   "hiddenApps": "Dolda appar",
   "hiddenAppsNone": "Inga",

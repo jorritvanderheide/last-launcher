@@ -23,6 +23,7 @@ class SettingsState extends ChangeNotifier {
   static const _hideStatusBarKey = 'hide_status_bar';
   static const _hidePinnedFromDrawerKey = 'hide_pinned_from_drawer';
   static const _includeHiddenInSearchKey = 'include_hidden_in_search';
+  static const _matchOriginalNameKey = 'match_original_name';
   static const _lockedKey = 'locked';
   final SharedPreferences _prefs;
   ThemeMode _themeMode = ThemeMode.system;
@@ -37,6 +38,7 @@ class SettingsState extends ChangeNotifier {
   bool _hideStatusBar = false;
   bool _hidePinnedFromDrawer = true;
   bool _includeHiddenInSearch = false;
+  bool _matchOriginalName = true;
   bool _locked = false;
   ThemeMode get themeMode => _extraTheme ? ThemeMode.dark : _themeMode;
   bool get isExtra => _extraTheme;
@@ -49,7 +51,8 @@ class SettingsState extends ChangeNotifier {
   bool get removeOnComplete => _removeOnComplete;
   bool get hideStatusBar => _hideStatusBar;
   bool get hidePinnedFromDrawer => _hidePinnedFromDrawer;
-  bool get includeHiddenInSearch => !_searchOnly && _includeHiddenInSearch;
+  bool get includeHiddenInSearch => _includeHiddenInSearch;
+  bool get matchOriginalName => _matchOriginalName;
   bool get locked => _locked;
 
   void _load() {
@@ -70,6 +73,7 @@ class SettingsState extends ChangeNotifier {
     _hideStatusBar = _prefs.getBool(_hideStatusBarKey) ?? false;
     _hidePinnedFromDrawer = _prefs.getBool(_hidePinnedFromDrawerKey) ?? true;
     _includeHiddenInSearch = _prefs.getBool(_includeHiddenInSearchKey) ?? false;
+    _matchOriginalName = _prefs.getBool(_matchOriginalNameKey) ?? true;
     _locked = _prefs.getBool(_lockedKey) ?? false;
   }
 
@@ -154,6 +158,12 @@ class SettingsState extends ChangeNotifier {
     _includeHiddenInSearch = enabled;
     notifyListeners();
     await _prefs.setBool(_includeHiddenInSearchKey, enabled);
+  }
+
+  Future<void> setMatchOriginalName(bool enabled) async {
+    _matchOriginalName = enabled;
+    notifyListeners();
+    await _prefs.setBool(_matchOriginalNameKey, enabled);
   }
 
   Future<void> setLocked(bool enabled) async {

@@ -4,9 +4,8 @@
   "appTagline": "आखिरी लॉन्चर जिसकी आपको कभी ज़रूरत होगी",
 
   "settings": "सेटिंग्स",
-  "sectionAppearance": "दिखावट",
-  "sectionApps": "ऐप्स",
-  "sectionBehavior": "व्यवहार",
+  "sectionGeneral": "सामान्य",
+  "sectionAppDrawer": "ऐप ड्रॉअर",
   "sectionTasks": "कार्य",
   "sectionSupport": "सहायता",
   "sectionAbout": "परिचय",
@@ -26,6 +25,8 @@
   "hidePinnedAppsSubtitle": "ऐप ड्रॉअर से पिन किए गए ऐप्स छुपाएँ",
   "includeHiddenInSearch": "खोज में छुपे शामिल करें",
   "includeHiddenInSearchSubtitle": "खोज को छुपे ऐप्स से मिलान करने दें",
+  "matchOriginalName": "मूल नाम से मिलान करें",
+  "matchOriginalNameSubtitle": "नाम बदली गई ऐप्स को उनके मूल नाम से खोजें",
 
   "hiddenApps": "छुपे हुए ऐप्स",
   "hiddenAppsNone": "कोई नहीं",

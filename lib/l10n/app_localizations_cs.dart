@@ -18,13 +18,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get settings => 'Nastavení';
 
   @override
-  String get sectionAppearance => 'Vzhled';
+  String get sectionGeneral => 'Obecné';
 
   @override
-  String get sectionApps => 'Aplikace';
-
-  @override
-  String get sectionBehavior => 'Chování';
+  String get sectionAppDrawer => 'Šuplík aplikací';
 
   @override
   String get sectionTasks => 'Úkoly';
@@ -74,6 +71,13 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get includeHiddenInSearchSubtitle => 'Hledání najde i skryté aplikace';
+
+  @override
+  String get matchOriginalName => 'Odpovídat původnímu názvu';
+
+  @override
+  String get matchOriginalNameSubtitle =>
+      'Hledat přejmenované aplikace podle jejich původního názvu';
 
   @override
   String get hiddenApps => 'Skryté aplikace';

@@ -153,9 +153,11 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     final searching = query.isNotEmpty;
     final expandSearch =
         searching && widget.settingsState.includeHiddenInSearch;
-    final base = expandSearch
-        ? widget.appListState.search(query, includeHidden: true)
-        : widget.appListState.filteredApps;
+    final base = widget.appListState.search(
+      query,
+      includeHidden: expandSearch,
+      matchOriginal: widget.settingsState.matchOriginalName,
+    );
     if (expandSearch || !widget.settingsState.hidePinnedFromDrawer) {
       return base;
     }
