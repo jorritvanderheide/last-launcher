@@ -380,6 +380,42 @@ abstract class AppLocalizations {
   /// **'Support the development of Last Launcher'**
   String get donateSubtitle;
 
+  /// No description provided for @rateApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate Last Launcher'**
+  String get rateApp;
+
+  /// No description provided for @rateAppSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave a review on the Play Store'**
+  String get rateAppSubtitle;
+
+  /// No description provided for @sendFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Send feedback'**
+  String get sendFeedback;
+
+  /// No description provided for @sendFeedbackSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Email the developer'**
+  String get sendFeedbackSubtitle;
+
+  /// No description provided for @help.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get help;
+
+  /// No description provided for @helpSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'View the project page'**
+  String get helpSubtitle;
+
   /// No description provided for @version.
   ///
   /// In en, this message translates to:

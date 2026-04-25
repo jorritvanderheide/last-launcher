@@ -148,6 +148,24 @@ class AppLocalizationsFi extends AppLocalizations {
   String get donateSubtitle => 'Tue Last Launcherin kehitystä';
 
   @override
+  String get rateApp => 'Arvostele Last Launcher';
+
+  @override
+  String get rateAppSubtitle => 'Jätä arvio Play Kauppaan';
+
+  @override
+  String get sendFeedback => 'Lähetä palautetta';
+
+  @override
+  String get sendFeedbackSubtitle => 'Lähetä sähköpostia kehittäjälle';
+
+  @override
+  String get help => 'Ohje';
+
+  @override
+  String get helpSubtitle => 'Avaa projektisivu';
+
+  @override
   String get version => 'Versio';
 
   @override

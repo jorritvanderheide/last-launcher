@@ -140,6 +140,24 @@ class AppLocalizationsKo extends AppLocalizations {
   String get donateSubtitle => 'Last Launcher 개발 지원';
 
   @override
+  String get rateApp => 'Last Launcher 평가';
+
+  @override
+  String get rateAppSubtitle => 'Play 스토어에 리뷰 남기기';
+
+  @override
+  String get sendFeedback => '피드백 보내기';
+
+  @override
+  String get sendFeedbackSubtitle => '개발자에게 이메일 보내기';
+
+  @override
+  String get help => '도움말';
+
+  @override
+  String get helpSubtitle => '프로젝트 페이지 보기';
+
+  @override
   String get version => '버전';
 
   @override

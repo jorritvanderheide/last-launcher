@@ -148,6 +148,24 @@ class AppLocalizationsCs extends AppLocalizations {
   String get donateSubtitle => 'Podpořte vývoj Last Launcheru';
 
   @override
+  String get rateApp => 'Ohodnotit Last Launcher';
+
+  @override
+  String get rateAppSubtitle => 'Zanechte recenzi v Obchodě Play';
+
+  @override
+  String get sendFeedback => 'Poslat zpětnou vazbu';
+
+  @override
+  String get sendFeedbackSubtitle => 'Napsat vývojáři e-mail';
+
+  @override
+  String get help => 'Nápověda';
+
+  @override
+  String get helpSubtitle => 'Zobrazit stránku projektu';
+
+  @override
   String get version => 'Verze';
 
   @override

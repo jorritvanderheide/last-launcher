@@ -56,6 +56,12 @@
 
   "donate": "Přispět",
   "donateSubtitle": "Podpořte vývoj Last Launcheru",
+  "rateApp": "Ohodnotit Last Launcher",
+  "rateAppSubtitle": "Zanechte recenzi v Obchodě Play",
+  "sendFeedback": "Poslat zpětnou vazbu",
+  "sendFeedbackSubtitle": "Napsat vývojáři e-mail",
+  "help": "Nápověda",
+  "helpSubtitle": "Zobrazit stránku projektu",
   "version": "Verze",
   "license": "Licence",
   "openSourceLicenses": "Open source licence",

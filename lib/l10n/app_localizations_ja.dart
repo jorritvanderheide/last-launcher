@@ -140,6 +140,24 @@ class AppLocalizationsJa extends AppLocalizations {
   String get donateSubtitle => 'Last Launcherの開発を支援';
 
   @override
+  String get rateApp => 'Last Launcherを評価';
+
+  @override
+  String get rateAppSubtitle => 'Playストアでレビューを残す';
+
+  @override
+  String get sendFeedback => 'フィードバックを送信';
+
+  @override
+  String get sendFeedbackSubtitle => '開発者にメールを送る';
+
+  @override
+  String get help => 'ヘルプ';
+
+  @override
+  String get helpSubtitle => 'プロジェクトページを表示';
+
+  @override
   String get version => 'バージョン';
 
   @override

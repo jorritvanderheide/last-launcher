@@ -147,6 +147,24 @@ class AppLocalizationsSv extends AppLocalizations {
   String get donateSubtitle => 'Stöd utvecklingen av Last Launcher';
 
   @override
+  String get rateApp => 'Betygsätt Last Launcher';
+
+  @override
+  String get rateAppSubtitle => 'Lämna ett omdöme i Play Butik';
+
+  @override
+  String get sendFeedback => 'Skicka feedback';
+
+  @override
+  String get sendFeedbackSubtitle => 'Mejla utvecklaren';
+
+  @override
+  String get help => 'Hjälp';
+
+  @override
+  String get helpSubtitle => 'Visa projektsidan';
+
+  @override
   String get version => 'Version';
 
   @override

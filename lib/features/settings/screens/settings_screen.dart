@@ -7,6 +7,7 @@ import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const _store = String.fromEnvironment('STORE', defaultValue: 'playstore');
@@ -173,8 +174,20 @@ class SettingsScreen extends StatelessWidget {
                       ? settingsState.setRemoveOnComplete
                       : null,
                 ),
-                if (_store == 'fdroid') ...[
-                  _SectionHeader(title: l10n.sectionSupport),
+                _SectionHeader(title: l10n.sectionSupport),
+                if (_store == 'playstore')
+                  ListTile(
+                    leading: const Icon(Icons.star_outline),
+                    title: Text(l10n.rateApp),
+                    subtitle: Text(l10n.rateAppSubtitle),
+                    onTap: () => launchUrl(
+                      Uri.parse(
+                        'https://play.google.com/store/apps/details?id=nl.bw20.last_launcher',
+                      ),
+                      mode: LaunchMode.externalApplication,
+                    ),
+                  ),
+                if (_store == 'fdroid')
                   ListTile(
                     leading: const Icon(Icons.favorite_outline),
                     title: Text(l10n.donate),
@@ -184,7 +197,21 @@ class SettingsScreen extends StatelessWidget {
                       mode: LaunchMode.externalApplication,
                     ),
                   ),
-                ],
+                ListTile(
+                  leading: const Icon(Icons.mail_outline),
+                  title: Text(l10n.sendFeedback),
+                  subtitle: Text(l10n.sendFeedbackSubtitle),
+                  onTap: _launchFeedback,
+                ),
+                ListTile(
+                  leading: const Icon(Icons.help_outline),
+                  title: Text(l10n.help),
+                  subtitle: Text(l10n.helpSubtitle),
+                  onTap: () => launchUrl(
+                    Uri.parse('https://codeberg.org/BW20/last-launcher'),
+                    mode: LaunchMode.externalApplication,
+                  ),
+                ),
                 _SectionHeader(title: l10n.sectionAbout),
                 ListTile(
                   leading: const Icon(Icons.info_outline),
@@ -206,6 +233,17 @@ class SettingsScreen extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Future<void> _launchFeedback() async {
+    final info = await PackageInfo.fromPlatform();
+    final subject = Uri.encodeComponent(
+      'Last Launcher feedback (v${info.version})',
+    );
+    await launchUrl(
+      Uri.parse('mailto:jorrit@bw20.nl?subject=$subject'),
+      mode: LaunchMode.externalApplication,
     );
   }
 }

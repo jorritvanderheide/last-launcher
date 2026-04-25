@@ -153,6 +153,24 @@ class AppLocalizationsFr extends AppLocalizations {
   String get donateSubtitle => 'Soutenir le développement de Last Launcher';
 
   @override
+  String get rateApp => 'Noter Last Launcher';
+
+  @override
+  String get rateAppSubtitle => 'Laissez un avis sur le Play Store';
+
+  @override
+  String get sendFeedback => 'Envoyer un retour';
+
+  @override
+  String get sendFeedbackSubtitle => 'Envoyer un e-mail au développeur';
+
+  @override
+  String get help => 'Aide';
+
+  @override
+  String get helpSubtitle => 'Voir la page du projet';
+
+  @override
   String get version => 'Version';
 
   @override

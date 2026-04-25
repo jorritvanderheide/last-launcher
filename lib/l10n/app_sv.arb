@@ -56,6 +56,12 @@
 
   "donate": "Donera",
   "donateSubtitle": "Stöd utvecklingen av Last Launcher",
+  "rateApp": "Betygsätt Last Launcher",
+  "rateAppSubtitle": "Lämna ett omdöme i Play Butik",
+  "sendFeedback": "Skicka feedback",
+  "sendFeedbackSubtitle": "Mejla utvecklaren",
+  "help": "Hjälp",
+  "helpSubtitle": "Visa projektsidan",
   "version": "Version",
   "license": "Licens",
   "openSourceLicenses": "Licenser för öppen källkod",

@@ -150,6 +150,24 @@ class AppLocalizationsPl extends AppLocalizations {
   String get donateSubtitle => 'Wesprzyj rozwój Last Launchera';
 
   @override
+  String get rateApp => 'Oceń Last Launcher';
+
+  @override
+  String get rateAppSubtitle => 'Zostaw recenzję w Sklepie Play';
+
+  @override
+  String get sendFeedback => 'Wyślij opinię';
+
+  @override
+  String get sendFeedbackSubtitle => 'Wyślij e-mail do dewelopera';
+
+  @override
+  String get help => 'Pomoc';
+
+  @override
+  String get helpSubtitle => 'Zobacz stronę projektu';
+
+  @override
   String get version => 'Wersja';
 
   @override

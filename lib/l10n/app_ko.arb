@@ -56,6 +56,12 @@
 
   "donate": "기부",
   "donateSubtitle": "Last Launcher 개발 지원",
+  "rateApp": "Last Launcher 평가",
+  "rateAppSubtitle": "Play 스토어에 리뷰 남기기",
+  "sendFeedback": "피드백 보내기",
+  "sendFeedbackSubtitle": "개발자에게 이메일 보내기",
+  "help": "도움말",
+  "helpSubtitle": "프로젝트 페이지 보기",
   "version": "버전",
   "license": "라이선스",
   "openSourceLicenses": "오픈소스 라이선스",

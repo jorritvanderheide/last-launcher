@@ -56,6 +56,12 @@
 
   "donate": "贊助",
   "donateSubtitle": "支持 Last Launcher 的開發",
+  "rateApp": "評分 Last Launcher",
+  "rateAppSubtitle": "在 Play 商店留下評論",
+  "sendFeedback": "傳送意見",
+  "sendFeedbackSubtitle": "寄電子郵件給開發者",
+  "help": "說明",
+  "helpSubtitle": "檢視專案頁面",
   "version": "版本",
   "license": "授權條款",
   "openSourceLicenses": "開放原始碼授權",

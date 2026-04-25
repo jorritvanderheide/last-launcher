@@ -56,6 +56,12 @@
 
   "donate": "Donar",
   "donateSubtitle": "Apoya el desarrollo de Last Launcher",
+  "rateApp": "Valorar Last Launcher",
+  "rateAppSubtitle": "Deja una reseña en Play Store",
+  "sendFeedback": "Enviar comentarios",
+  "sendFeedbackSubtitle": "Enviar correo al desarrollador",
+  "help": "Ayuda",
+  "helpSubtitle": "Ver la página del proyecto",
   "version": "Versión",
   "license": "Licencia",
   "openSourceLicenses": "Licencias de código abierto",

@@ -56,6 +56,12 @@
 
   "donate": "दान करें",
   "donateSubtitle": "Last Launcher के विकास का समर्थन करें",
+  "rateApp": "Last Launcher को रेट करें",
+  "rateAppSubtitle": "Play Store पर समीक्षा छोड़ें",
+  "sendFeedback": "प्रतिक्रिया भेजें",
+  "sendFeedbackSubtitle": "डेवलपर को ईमेल करें",
+  "help": "सहायता",
+  "helpSubtitle": "प्रोजेक्ट पेज देखें",
   "version": "संस्करण",
   "license": "लाइसेंस",
   "openSourceLicenses": "ओपन सोर्स लाइसेंस",

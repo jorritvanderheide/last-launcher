@@ -140,6 +140,24 @@ class AppLocalizationsZh extends AppLocalizations {
   String get donateSubtitle => '支持 Last Launcher 的開發';
 
   @override
+  String get rateApp => '評分 Last Launcher';
+
+  @override
+  String get rateAppSubtitle => '在 Play 商店留下評論';
+
+  @override
+  String get sendFeedback => '傳送意見';
+
+  @override
+  String get sendFeedbackSubtitle => '寄電子郵件給開發者';
+
+  @override
+  String get help => '說明';
+
+  @override
+  String get helpSubtitle => '檢視專案頁面';
+
+  @override
   String get version => '版本';
 
   @override

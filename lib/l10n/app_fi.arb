@@ -56,6 +56,12 @@
 
   "donate": "Lahjoita",
   "donateSubtitle": "Tue Last Launcherin kehitystä",
+  "rateApp": "Arvostele Last Launcher",
+  "rateAppSubtitle": "Jätä arvio Play Kauppaan",
+  "sendFeedback": "Lähetä palautetta",
+  "sendFeedbackSubtitle": "Lähetä sähköpostia kehittäjälle",
+  "help": "Ohje",
+  "helpSubtitle": "Avaa projektisivu",
   "version": "Versio",
   "license": "Lisenssi",
   "openSourceLicenses": "Avoimen lähdekoodin lisenssit",

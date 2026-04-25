@@ -144,6 +144,24 @@ class AppLocalizationsHi extends AppLocalizations {
   String get donateSubtitle => 'Last Launcher के विकास का समर्थन करें';
 
   @override
+  String get rateApp => 'Last Launcher को रेट करें';
+
+  @override
+  String get rateAppSubtitle => 'Play Store पर समीक्षा छोड़ें';
+
+  @override
+  String get sendFeedback => 'प्रतिक्रिया भेजें';
+
+  @override
+  String get sendFeedbackSubtitle => 'डेवलपर को ईमेल करें';
+
+  @override
+  String get help => 'सहायता';
+
+  @override
+  String get helpSubtitle => 'प्रोजेक्ट पेज देखें';
+
+  @override
   String get version => 'संस्करण';
 
   @override

@@ -56,6 +56,12 @@
 
   "donate": "寄付",
   "donateSubtitle": "Last Launcherの開発を支援",
+  "rateApp": "Last Launcherを評価",
+  "rateAppSubtitle": "Playストアでレビューを残す",
+  "sendFeedback": "フィードバックを送信",
+  "sendFeedbackSubtitle": "開発者にメールを送る",
+  "help": "ヘルプ",
+  "helpSubtitle": "プロジェクトページを表示",
   "version": "バージョン",
   "license": "ライセンス",
   "openSourceLicenses": "オープンソースライセンス",
