@@ -175,10 +175,11 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
   }
 
   void _onSubmit() {
+    if (widget.appListState.query.isEmpty) return;
     final visible = _visibleApps;
-    if (visible.length == 1) {
+    if (visible.isNotEmpty) {
       widget.onLaunch(visible.first.packageName);
-    } else if (visible.isEmpty && widget.appListState.query.isNotEmpty) {
+    } else {
       widget.onCloseDrawer();
     }
   }

@@ -40,11 +40,35 @@ class AppListState extends ChangeNotifier {
         : _allApps.where((a) => !_hiddenApps.contains(a.packageName));
     if (query.isEmpty) return source.toList();
     final lower = query.toLowerCase();
-    return source.where((app) {
-      if (displayLabel(app).toLowerCase().contains(lower)) return true;
-      if (matchOriginal && app.label.toLowerCase().contains(lower)) return true;
-      return false;
-    }).toList();
+
+    final displayStart = <AppInfo>[];
+    final originalStart = <AppInfo>[];
+    final displayContain = <AppInfo>[];
+    final originalContain = <AppInfo>[];
+
+    for (final app in source) {
+      final display = displayLabel(app).toLowerCase();
+      final original = app.label.toLowerCase();
+      final renamed = display != original;
+      final checkOriginal = matchOriginal && renamed;
+
+      if (display.startsWith(lower)) {
+        displayStart.add(app);
+      } else if (checkOriginal && original.startsWith(lower)) {
+        originalStart.add(app);
+      } else if (display.contains(lower)) {
+        displayContain.add(app);
+      } else if (checkOriginal && original.contains(lower)) {
+        originalContain.add(app);
+      }
+    }
+
+    return [
+      ...displayStart,
+      ...originalStart,
+      ...displayContain,
+      ...originalContain,
+    ];
   }
 
   Future<void> loadApps() async {
