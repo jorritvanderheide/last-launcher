@@ -39,7 +39,7 @@
   "noHiddenApps": "Ei piilotettuja sovelluksia",
 
   "lockLayout": "Lukitse asettelu",
-  "lockLayoutSubtitle": "Poista pitkä painallus käytöstä aloitus- ja tehtävänäytöltä",
+  "lockLayoutSubtitle": "Poista kiinnittäminen ja pitkä painallus käytöstä aloitus- ja tehtävänäytöltä",
   "searchOnlyMode": "Vain haku",
   "searchOnlyModeSubtitle": "Piilota sovellusten nimet, käynnistä hakemalla",
   "autoShowKeyboard": "Näytä näppäimistö",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "Pyyhkäise oikealle nähdäksesi tehtävät",
   "removeOnComplete": "Poista valmistuttua",
   "removeOnCompleteSubtitle": "Poista tehtävät, kun ne merkitään valmiiksi",
+  "clearCompletedDaily": "Tyhjennä valmiit päivittäin",
+  "clearCompletedDailySubtitle": "Poista valmiit tehtävät päivän päätteeksi",
   "taskOptionDisabled": "Ota tehtävänäyttö käyttöön määrittääksesi",
 
   "donate": "Lahjoita",

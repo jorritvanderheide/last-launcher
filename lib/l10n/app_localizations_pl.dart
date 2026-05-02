@@ -101,7 +101,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Wyłącz długie naciśnięcie na ekranie głównym i zadań';
+      'Wyłącz przypinanie i długie naciśnięcie na ekranie głównym i zadań';
 
   @override
   String get searchOnlyMode => 'Tylko wyszukiwanie';
@@ -139,6 +139,13 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Usuń zadania po oznaczeniu jako wykonane';
+
+  @override
+  String get clearCompletedDaily => 'Codziennie usuwaj ukończone';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'Usuń ukończone zadania pod koniec dnia';
 
   @override
   String get taskOptionDisabled => 'Włącz ekran zadań, aby skonfigurować';

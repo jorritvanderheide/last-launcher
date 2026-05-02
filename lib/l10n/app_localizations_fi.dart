@@ -99,7 +99,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Poista pitkä painallus käytöstä aloitus- ja tehtävänäytöltä';
+      'Poista kiinnittäminen ja pitkä painallus käytöstä aloitus- ja tehtävänäytöltä';
 
   @override
   String get searchOnlyMode => 'Vain haku';
@@ -137,6 +137,13 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Poista tehtävät, kun ne merkitään valmiiksi';
+
+  @override
+  String get clearCompletedDaily => 'Tyhjennä valmiit päivittäin';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'Poista valmiit tehtävät päivän päätteeksi';
 
   @override
   String get taskOptionDisabled => 'Ota tehtävänäyttö käyttöön määrittääksesi';

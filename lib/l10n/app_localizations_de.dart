@@ -99,7 +99,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Langes Drücken auf Start- und Aufgabenbildschirm deaktivieren';
+      'Anheften und langes Drücken auf Start- und Aufgabenbildschirm deaktivieren';
 
   @override
   String get searchOnlyMode => 'Nur Suche';
@@ -139,6 +139,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Aufgaben entfernen, wenn sie als erledigt markiert werden';
+
+  @override
+  String get clearCompletedDaily => 'Erledigte täglich löschen';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'Erledigte Aufgaben am Tagesende entfernen';
 
   @override
   String get taskOptionDisabled =>

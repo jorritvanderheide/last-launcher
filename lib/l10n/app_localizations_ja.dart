@@ -95,7 +95,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lockLayout => 'レイアウトをロック';
 
   @override
-  String get lockLayoutSubtitle => 'ホームとタスク画面の長押しを無効化';
+  String get lockLayoutSubtitle => 'ピン留めとホーム・タスク画面の長押しを無効化';
 
   @override
   String get searchOnlyMode => '検索のみ';
@@ -129,6 +129,12 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get removeOnCompleteSubtitle => '完了したタスクを削除';
+
+  @override
+  String get clearCompletedDaily => '完了タスクを毎日クリア';
+
+  @override
+  String get clearCompletedDailySubtitle => '1日の終わりに完了タスクを削除';
 
   @override
   String get taskOptionDisabled => '設定するにはタスク画面を有効にしてください';

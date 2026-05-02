@@ -39,7 +39,7 @@
   "noHiddenApps": "숨긴 앱 없음",
 
   "lockLayout": "레이아웃 잠금",
-  "lockLayoutSubtitle": "홈 및 할 일 화면의 길게 누르기 비활성화",
+  "lockLayoutSubtitle": "고정 및 홈/할 일 화면의 길게 누르기 비활성화",
   "searchOnlyMode": "검색 전용",
   "searchOnlyModeSubtitle": "앱 이름을 숨기고 검색으로 실행",
   "autoShowKeyboard": "키보드 표시",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "홈에서 오른쪽으로 스와이프하여 할 일 보기",
   "removeOnComplete": "완료 시 제거",
   "removeOnCompleteSubtitle": "완료된 할 일 제거",
+  "clearCompletedDaily": "완료 항목 매일 비우기",
+  "clearCompletedDailySubtitle": "하루가 끝날 때 완료된 할 일 제거",
   "taskOptionDisabled": "작업 화면을 활성화하여 구성하세요",
 
   "donate": "기부",

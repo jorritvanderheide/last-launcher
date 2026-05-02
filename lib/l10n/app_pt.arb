@@ -39,7 +39,7 @@
   "noHiddenApps": "Nenhuma aplicação oculta",
 
   "lockLayout": "Bloquear disposição",
-  "lockLayoutSubtitle": "Desativar toque longo nos ecrãs inicial e de tarefas",
+  "lockLayoutSubtitle": "Desativar fixar e o toque longo nos ecrãs inicial e de tarefas",
   "searchOnlyMode": "Apenas pesquisa",
   "searchOnlyModeSubtitle": "Ocultar nomes das aplicações, pesquisar para abrir",
   "autoShowKeyboard": "Mostrar teclado",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "Desliza para a direita para ver as tarefas",
   "removeOnComplete": "Remover ao concluir",
   "removeOnCompleteSubtitle": "Remover tarefas quando marcadas como concluídas",
+  "clearCompletedDaily": "Limpar concluídas diariamente",
+  "clearCompletedDailySubtitle": "Remover tarefas concluídas no fim do dia",
   "taskOptionDisabled": "Ativa o ecrã de tarefas para configurar",
 
   "donate": "Doar",

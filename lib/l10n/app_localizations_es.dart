@@ -100,7 +100,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Desactivar pulsación larga en pantallas de inicio y tareas';
+      'Desactivar fijar apps y la pulsación larga en pantallas de inicio y tareas';
 
   @override
   String get searchOnlyMode => 'Solo búsqueda';
@@ -139,6 +139,13 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Eliminar tareas cuando se marcan como hechas';
+
+  @override
+  String get clearCompletedDaily => 'Borrar completadas a diario';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'Eliminar las tareas completadas al final del día';
 
   @override
   String get taskOptionDisabled =>

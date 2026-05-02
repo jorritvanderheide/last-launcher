@@ -25,6 +25,7 @@ class SettingsState extends ChangeNotifier {
   static const _includeHiddenInSearchKey = 'include_hidden_in_search';
   static const _matchOriginalNameKey = 'match_original_name';
   static const _lockedKey = 'locked';
+  static const _clearCompletedDailyKey = 'clear_completed_daily';
   final SharedPreferences _prefs;
   ThemeMode _themeMode = ThemeMode.system;
   bool _extraTheme = false;
@@ -40,6 +41,7 @@ class SettingsState extends ChangeNotifier {
   bool _includeHiddenInSearch = false;
   bool _matchOriginalName = true;
   bool _locked = false;
+  bool _clearCompletedDaily = false;
   ThemeMode get themeMode => _extraTheme ? ThemeMode.dark : _themeMode;
   bool get isExtra => _extraTheme;
   bool get autoKeyboard => _autoKeyboard;
@@ -54,6 +56,7 @@ class SettingsState extends ChangeNotifier {
   bool get includeHiddenInSearch => _includeHiddenInSearch;
   bool get matchOriginalName => _matchOriginalName;
   bool get locked => _locked;
+  bool get clearCompletedDaily => _clearCompletedDaily;
 
   void _load() {
     final value = _prefs.getString(_themeKey);
@@ -75,6 +78,7 @@ class SettingsState extends ChangeNotifier {
     _includeHiddenInSearch = _prefs.getBool(_includeHiddenInSearchKey) ?? false;
     _matchOriginalName = _prefs.getBool(_matchOriginalNameKey) ?? true;
     _locked = _prefs.getBool(_lockedKey) ?? false;
+    _clearCompletedDaily = _prefs.getBool(_clearCompletedDailyKey) ?? false;
   }
 
   Future<void> setTheme(String value) async {
@@ -170,5 +174,11 @@ class SettingsState extends ChangeNotifier {
     _locked = enabled;
     notifyListeners();
     await _prefs.setBool(_lockedKey, enabled);
+  }
+
+  Future<void> setClearCompletedDaily(bool enabled) async {
+    _clearCompletedDaily = enabled;
+    notifyListeners();
+    await _prefs.setBool(_clearCompletedDailyKey, enabled);
   }
 }

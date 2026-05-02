@@ -95,7 +95,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lockLayout => '鎖定版面';
 
   @override
-  String get lockLayoutSubtitle => '停用主畫面和任務畫面的長按';
+  String get lockLayoutSubtitle => '停用釘選和主畫面/任務畫面的長按';
 
   @override
   String get searchOnlyMode => '僅搜尋';
@@ -129,6 +129,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get removeOnCompleteSubtitle => '標記為完成後移除任務';
+
+  @override
+  String get clearCompletedDaily => '每日清除已完成';
+
+  @override
+  String get clearCompletedDailySubtitle => '在一天結束時移除已完成的任務';
 
   @override
   String get taskOptionDisabled => '啟用任務畫面以進行設定';

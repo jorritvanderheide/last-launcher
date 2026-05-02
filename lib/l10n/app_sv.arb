@@ -39,7 +39,7 @@
   "noHiddenApps": "Inga dolda appar",
 
   "lockLayout": "Lås layout",
-  "lockLayoutSubtitle": "Inaktivera långtryckning på hem- och uppgiftsskärmen",
+  "lockLayoutSubtitle": "Inaktivera fästning och långtryckning på hem- och uppgiftsskärmen",
   "searchOnlyMode": "Enbart sökning",
   "searchOnlyModeSubtitle": "Dölj appnamn, sök för att starta",
   "autoShowKeyboard": "Visa tangentbord",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "Svep höger från hemskärmen för uppgifter",
   "removeOnComplete": "Ta bort vid slutförande",
   "removeOnCompleteSubtitle": "Ta bort uppgifter när de markeras som klara",
+  "clearCompletedDaily": "Rensa klara dagligen",
+  "clearCompletedDailySubtitle": "Ta bort klara uppgifter i slutet av dagen",
   "taskOptionDisabled": "Aktivera uppgiftsskärmen för att konfigurera",
 
   "donate": "Donera",

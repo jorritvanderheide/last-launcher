@@ -39,7 +39,7 @@
   "noHiddenApps": "कोई छुपे हुए ऐप्स नहीं",
 
   "lockLayout": "लेआउट लॉक करें",
-  "lockLayoutSubtitle": "होम और कार्य स्क्रीन पर लंबा दबाना अक्षम करें",
+  "lockLayoutSubtitle": "होम और कार्य स्क्रीन पर पिन करना और लंबा दबाना अक्षम करें",
   "searchOnlyMode": "केवल खोज",
   "searchOnlyModeSubtitle": "ऐप के नाम छुपाएँ, खोजकर खोलें",
   "autoShowKeyboard": "कीबोर्ड दिखाएँ",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "कार्य देखने के लिए होम से दाएँ स्वाइप करें",
   "removeOnComplete": "पूरा होने पर हटाएँ",
   "removeOnCompleteSubtitle": "पूर्ण होने पर कार्य हटाएँ",
+  "clearCompletedDaily": "रोज़ाना पूर्ण कार्य हटाएँ",
+  "clearCompletedDailySubtitle": "दिन के अंत में पूर्ण कार्य हटा दें",
   "taskOptionDisabled": "कॉन्फ़िगर करने के लिए कार्य स्क्रीन सक्षम करें",
 
   "donate": "दान करें",

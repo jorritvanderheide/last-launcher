@@ -98,7 +98,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Zakázat dlouhé stisknutí na domovské obrazovce a obrazovce úkolů';
+      'Zakázat připínání a dlouhé stisknutí na domovské obrazovce a obrazovce úkolů';
 
   @override
   String get searchOnlyMode => 'Pouze hledání';
@@ -137,6 +137,13 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Odstranit úkoly po označení jako hotové';
+
+  @override
+  String get clearCompletedDaily => 'Denně mazat dokončené';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'Odstranit dokončené úkoly na konci dne';
 
   @override
   String get taskOptionDisabled => 'Povolte obrazovku úkolů pro konfiguraci';

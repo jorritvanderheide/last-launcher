@@ -95,7 +95,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get lockLayout => '레이아웃 잠금';
 
   @override
-  String get lockLayoutSubtitle => '홈 및 할 일 화면의 길게 누르기 비활성화';
+  String get lockLayoutSubtitle => '고정 및 홈/할 일 화면의 길게 누르기 비활성화';
 
   @override
   String get searchOnlyMode => '검색 전용';
@@ -129,6 +129,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get removeOnCompleteSubtitle => '완료된 할 일 제거';
+
+  @override
+  String get clearCompletedDaily => '완료 항목 매일 비우기';
+
+  @override
+  String get clearCompletedDailySubtitle => '하루가 끝날 때 완료된 할 일 제거';
 
   @override
   String get taskOptionDisabled => '작업 화면을 활성화하여 구성하세요';

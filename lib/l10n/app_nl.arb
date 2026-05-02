@@ -39,7 +39,7 @@
   "noHiddenApps": "Geen verborgen apps",
 
   "lockLayout": "Lay-out vergrendelen",
-  "lockLayoutSubtitle": "Lang indrukken op start- en takenscherm uitschakelen",
+  "lockLayoutSubtitle": "Vastmaken en lang indrukken op start- en takenscherm uitschakelen",
   "searchOnlyMode": "Alleen zoeken",
   "searchOnlyModeSubtitle": "Appnamen verbergen, zoeken om te starten",
   "autoShowKeyboard": "Toetsenbord tonen",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "Veeg naar rechts vanaf het startscherm om taken te bekijken",
   "removeOnComplete": "Verwijderen bij voltooiing",
   "removeOnCompleteSubtitle": "Taken verwijderen wanneer ze zijn afgerond",
+  "clearCompletedDaily": "Voltooide dagelijks wissen",
+  "clearCompletedDailySubtitle": "Voltooide taken aan het einde van de dag verwijderen",
   "taskOptionDisabled": "Schakel Takenscherm in om te configureren",
 
   "donate": "Doneren",

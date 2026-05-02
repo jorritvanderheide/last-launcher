@@ -99,7 +99,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Desativar toque longo nos ecrãs inicial e de tarefas';
+      'Desativar fixar e o toque longo nos ecrãs inicial e de tarefas';
 
   @override
   String get searchOnlyMode => 'Apenas pesquisa';
@@ -138,6 +138,13 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Remover tarefas quando marcadas como concluídas';
+
+  @override
+  String get clearCompletedDaily => 'Limpar concluídas diariamente';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'Remover tarefas concluídas no fim do dia';
 
   @override
   String get taskOptionDisabled => 'Ativa o ecrã de tarefas para configurar';

@@ -39,7 +39,7 @@
   "noHiddenApps": "No hidden apps",
 
   "lockLayout": "Lock layout",
-  "lockLayoutSubtitle": "Disable long press on the home and task screens",
+  "lockLayoutSubtitle": "Disable pinning and long press on the home and task screens",
   "searchOnlyMode": "Search only",
   "searchOnlyModeSubtitle": "Hide app names, search to launch",
   "autoShowKeyboard": "Show keyboard",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "Swipe right from home to view tasks",
   "removeOnComplete": "Remove on complete",
   "removeOnCompleteSubtitle": "Remove tasks when marked as done",
+  "clearCompletedDaily": "Clear completed daily",
+  "clearCompletedDailySubtitle": "Remove completed tasks at the end of the day",
   "taskOptionDisabled": "Enable Task screen to configure",
 
   "donate": "Donate",

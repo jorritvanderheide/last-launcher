@@ -293,7 +293,7 @@ abstract class AppLocalizations {
   /// No description provided for @lockLayoutSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Disable long press on the home and task screens'**
+  /// **'Disable pinning and long press on the home and task screens'**
   String get lockLayoutSubtitle;
 
   /// No description provided for @searchOnlyMode.
@@ -361,6 +361,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Remove tasks when marked as done'**
   String get removeOnCompleteSubtitle;
+
+  /// No description provided for @clearCompletedDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear completed daily'**
+  String get clearCompletedDaily;
+
+  /// No description provided for @clearCompletedDailySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove completed tasks at the end of the day'**
+  String get clearCompletedDailySubtitle;
 
   /// No description provided for @taskOptionDisabled.
   ///

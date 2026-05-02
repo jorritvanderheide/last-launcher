@@ -98,7 +98,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Inaktivera långtryckning på hem- och uppgiftsskärmen';
+      'Inaktivera fästning och långtryckning på hem- och uppgiftsskärmen';
 
   @override
   String get searchOnlyMode => 'Enbart sökning';
@@ -135,6 +135,13 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Ta bort uppgifter när de markeras som klara';
+
+  @override
+  String get clearCompletedDaily => 'Rensa klara dagligen';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'Ta bort klara uppgifter i slutet av dagen';
 
   @override
   String get taskOptionDisabled =>

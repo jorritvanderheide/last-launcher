@@ -8,6 +8,7 @@ class TaskState extends ChangeNotifier {
   }
 
   static const _key = 'tasks';
+  static const _lastClearKey = 'tasks_last_clear_date';
 
   final SharedPreferences _prefs;
   List<Task> _tasks = [];
@@ -59,6 +60,24 @@ class TaskState extends ChangeNotifier {
     _tasks.removeWhere((t) => t.id == id);
     notifyListeners();
     await _save();
+  }
+
+  Future<void> clearCompletedIfNewDay() async {
+    final today = _todayKey();
+    if (_prefs.getString(_lastClearKey) == today) return;
+    await _prefs.setString(_lastClearKey, today);
+    if (_tasks.any((t) => t.done)) {
+      _tasks.removeWhere((t) => t.done);
+      notifyListeners();
+      await _save();
+    }
+  }
+
+  String _todayKey() {
+    final now = DateTime.now();
+    return '${now.year.toString().padLeft(4, '0')}-'
+        '${now.month.toString().padLeft(2, '0')}-'
+        '${now.day.toString().padLeft(2, '0')}';
   }
 
   Future<void> reorderInGroup(

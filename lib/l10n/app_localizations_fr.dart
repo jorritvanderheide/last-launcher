@@ -101,7 +101,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Désactiver l\'appui long sur les écrans d\'accueil et de tâches';
+      'Désactiver l\'épinglage et l\'appui long sur les écrans d\'accueil et de tâches';
 
   @override
   String get searchOnlyMode => 'Recherche uniquement';
@@ -141,6 +141,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Supprimer les tâches quand elles sont terminées';
+
+  @override
+  String get clearCompletedDaily => 'Effacer les terminées chaque jour';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'Supprimer les tâches terminées à la fin de la journée';
 
   @override
   String get taskOptionDisabled =>

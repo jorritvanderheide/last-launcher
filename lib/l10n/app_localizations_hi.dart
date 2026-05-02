@@ -98,7 +98,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'होम और कार्य स्क्रीन पर लंबा दबाना अक्षम करें';
+      'होम और कार्य स्क्रीन पर पिन करना और लंबा दबाना अक्षम करें';
 
   @override
   String get searchOnlyMode => 'केवल खोज';
@@ -132,6 +132,13 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get removeOnCompleteSubtitle => 'पूर्ण होने पर कार्य हटाएँ';
+
+  @override
+  String get clearCompletedDaily => 'रोज़ाना पूर्ण कार्य हटाएँ';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'दिन के अंत में पूर्ण कार्य हटा दें';
 
   @override
   String get taskOptionDisabled =>

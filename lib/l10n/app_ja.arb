@@ -39,7 +39,7 @@
   "noHiddenApps": "非表示のアプリはありません",
 
   "lockLayout": "レイアウトをロック",
-  "lockLayoutSubtitle": "ホームとタスク画面の長押しを無効化",
+  "lockLayoutSubtitle": "ピン留めとホーム・タスク画面の長押しを無効化",
   "searchOnlyMode": "検索のみ",
   "searchOnlyModeSubtitle": "アプリ名を非表示にし、検索で起動",
   "autoShowKeyboard": "キーボードを表示",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "ホームから右にスワイプしてタスクを表示",
   "removeOnComplete": "完了時に削除",
   "removeOnCompleteSubtitle": "完了したタスクを削除",
+  "clearCompletedDaily": "完了タスクを毎日クリア",
+  "clearCompletedDailySubtitle": "1日の終わりに完了タスクを削除",
   "taskOptionDisabled": "設定するにはタスク画面を有効にしてください",
 
   "donate": "寄付",

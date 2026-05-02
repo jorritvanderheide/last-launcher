@@ -39,7 +39,7 @@
   "noHiddenApps": "沒有已隱藏的應用程式",
 
   "lockLayout": "鎖定版面",
-  "lockLayoutSubtitle": "停用主畫面和任務畫面的長按",
+  "lockLayoutSubtitle": "停用釘選和主畫面/任務畫面的長按",
   "searchOnlyMode": "僅搜尋",
   "searchOnlyModeSubtitle": "隱藏應用程式名稱，以搜尋開啟",
   "autoShowKeyboard": "顯示鍵盤",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "從主畫面向右滑動以查看任務",
   "removeOnComplete": "完成後移除",
   "removeOnCompleteSubtitle": "標記為完成後移除任務",
+  "clearCompletedDaily": "每日清除已完成",
+  "clearCompletedDailySubtitle": "在一天結束時移除已完成的任務",
   "taskOptionDisabled": "啟用任務畫面以進行設定",
 
   "donate": "贊助",

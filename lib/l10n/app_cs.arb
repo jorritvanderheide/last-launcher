@@ -39,7 +39,7 @@
   "noHiddenApps": "Žádné skryté aplikace",
 
   "lockLayout": "Uzamknout rozložení",
-  "lockLayoutSubtitle": "Zakázat dlouhé stisknutí na domovské obrazovce a obrazovce úkolů",
+  "lockLayoutSubtitle": "Zakázat připínání a dlouhé stisknutí na domovské obrazovce a obrazovce úkolů",
   "searchOnlyMode": "Pouze hledání",
   "searchOnlyModeSubtitle": "Skrýt názvy aplikací, spustit vyhledáváním",
   "autoShowKeyboard": "Zobrazit klávesnici",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "Přejetím doprava zobrazíte úkoly",
   "removeOnComplete": "Odstranit po dokončení",
   "removeOnCompleteSubtitle": "Odstranit úkoly po označení jako hotové",
+  "clearCompletedDaily": "Denně mazat dokončené",
+  "clearCompletedDailySubtitle": "Odstranit dokončené úkoly na konci dne",
   "taskOptionDisabled": "Povolte obrazovku úkolů pro konfiguraci",
 
   "donate": "Přispět",

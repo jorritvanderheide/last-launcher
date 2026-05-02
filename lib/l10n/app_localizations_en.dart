@@ -98,7 +98,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Disable long press on the home and task screens';
+      'Disable pinning and long press on the home and task screens';
 
   @override
   String get searchOnlyMode => 'Search only';
@@ -132,6 +132,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get removeOnCompleteSubtitle => 'Remove tasks when marked as done';
+
+  @override
+  String get clearCompletedDaily => 'Clear completed daily';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'Remove completed tasks at the end of the day';
 
   @override
   String get taskOptionDisabled => 'Enable Task screen to configure';

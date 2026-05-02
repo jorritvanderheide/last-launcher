@@ -99,7 +99,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Lang indrukken op start- en takenscherm uitschakelen';
+      'Vastmaken en lang indrukken op start- en takenscherm uitschakelen';
 
   @override
   String get searchOnlyMode => 'Alleen zoeken';
@@ -138,6 +138,13 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get removeOnCompleteSubtitle =>
       'Taken verwijderen wanneer ze zijn afgerond';
+
+  @override
+  String get clearCompletedDaily => 'Voltooide dagelijks wissen';
+
+  @override
+  String get clearCompletedDailySubtitle =>
+      'Voltooide taken aan het einde van de dag verwijderen';
 
   @override
   String get taskOptionDisabled => 'Schakel Takenscherm in om te configureren';

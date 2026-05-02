@@ -155,6 +155,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _maybeClearCompleted();
   }
 
   @override
@@ -167,6 +168,13 @@ class _LastLauncherAppState extends State<LastLauncherApp>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       widget.appListState.loadApps();
+      _maybeClearCompleted();
+    }
+  }
+
+  void _maybeClearCompleted() {
+    if (widget.settingsState.clearCompletedDaily) {
+      widget.taskState.clearCompletedIfNewDay();
     }
   }
 

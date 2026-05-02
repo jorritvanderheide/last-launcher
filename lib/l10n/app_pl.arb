@@ -39,7 +39,7 @@
   "noHiddenApps": "Brak ukrytych aplikacji",
 
   "lockLayout": "Zablokuj układ",
-  "lockLayoutSubtitle": "Wyłącz długie naciśnięcie na ekranie głównym i zadań",
+  "lockLayoutSubtitle": "Wyłącz przypinanie i długie naciśnięcie na ekranie głównym i zadań",
   "searchOnlyMode": "Tylko wyszukiwanie",
   "searchOnlyModeSubtitle": "Ukryj nazwy aplikacji, uruchamiaj przez wyszukiwanie",
   "autoShowKeyboard": "Pokaż klawiaturę",
@@ -52,6 +52,8 @@
   "taskScreenSubtitle": "Przesuń w prawo, aby zobaczyć zadania",
   "removeOnComplete": "Usuń po ukończeniu",
   "removeOnCompleteSubtitle": "Usuń zadania po oznaczeniu jako wykonane",
+  "clearCompletedDaily": "Codziennie usuwaj ukończone",
+  "clearCompletedDailySubtitle": "Usuń ukończone zadania pod koniec dnia",
   "taskOptionDisabled": "Włącz ekran zadań, aby skonfigurować",
 
   "donate": "Wspomóż",

@@ -174,6 +174,18 @@ class SettingsScreen extends StatelessWidget {
                       ? settingsState.setRemoveOnComplete
                       : null,
                 ),
+                SwitchListTile(
+                  title: Text(l10n.clearCompletedDaily),
+                  subtitle: Text(
+                    settingsState.tasksEnabled
+                        ? l10n.clearCompletedDailySubtitle
+                        : l10n.taskOptionDisabled,
+                  ),
+                  value: settingsState.clearCompletedDaily,
+                  onChanged: settingsState.tasksEnabled
+                      ? settingsState.setClearCompletedDaily
+                      : null,
+                ),
                 _SectionHeader(title: l10n.sectionSupport),
                 if (_store == 'playstore')
                   ListTile(
