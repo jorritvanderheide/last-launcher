@@ -161,7 +161,7 @@ class HomeScreenState extends State<HomeScreen> {
                       ),
                       onTap: () => widget.onLaunch(app.packageName),
                       onLongPress: widget.settingsState.locked
-                          ? null
+                          ? () {}
                           : () => setState(
                               () => _activeAppPackage =
                                   _activeAppPackage == app.packageName

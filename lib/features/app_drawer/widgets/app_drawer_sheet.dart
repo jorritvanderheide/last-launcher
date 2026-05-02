@@ -326,12 +326,14 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
                               key: ValueKey(app.packageName),
                               label: widget.appListState.displayLabel(app),
                               onTap: () => widget.onLaunch(app.packageName),
-                              onLongPress: () => setState(
-                                () => _activeAppPackage =
-                                    _activeAppPackage == app.packageName
-                                    ? null
-                                    : app.packageName,
-                              ),
+                              onLongPress: widget.settingsState.locked
+                                  ? () {}
+                                  : () => setState(
+                                      () => _activeAppPackage =
+                                          _activeAppPackage == app.packageName
+                                          ? null
+                                          : app.packageName,
+                                    ),
                               opacity: opacity,
                             );
                           },

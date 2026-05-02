@@ -214,7 +214,7 @@ class TaskScreenState extends State<TaskScreen> {
           label: task.title,
           onTap: task.done ? null : () => _renameTask(context, task),
           onLongPress: widget.settingsState.locked
-              ? null
+              ? () {}
               : () => setState(
                   () =>
                       _activeTaskId = _activeTaskId == task.id ? null : task.id,
