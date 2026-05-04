@@ -1,0 +1,5 @@
+• Painéis laterais configuráveis: escolha o que aparece à esquerda ou direita do ecrã inicial
+• Definições reorganizadas: Aparência, Ecrã inicial, Gaveta de aplicações, Módulos
+• Pesquisa mais inteligente: correspondências que começam com a pesquisa primeiro
+• Novas entradas nas Definições: Avaliar, Enviar comentários, Ajuda
+• Corrigido: tocar perto de um puxador já não lança a aplicação

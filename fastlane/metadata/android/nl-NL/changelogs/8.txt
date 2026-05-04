@@ -1,0 +1,5 @@
+• Configureerbare zijpanelen: kies wat links of rechts van start verschijnt
+• Instellingen opnieuw ingedeeld: Uiterlijk, Startscherm, App-lade, Modules
+• Slimmere zoekvolgorde: matches die met je zoekterm beginnen staan bovenaan
+• Nieuwe instellingen: Beoordelen, Feedback sturen, Help
+• Opgelost: tikken naast een sleephendel start de app niet meer

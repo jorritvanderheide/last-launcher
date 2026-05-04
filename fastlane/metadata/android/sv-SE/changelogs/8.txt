@@ -1,0 +1,5 @@
+• Konfigurerbara sidopaneler: välj vad som visas till vänster eller höger om hem
+• Omorganiserade inställningar: Utseende, Hem, Applåda, Moduler
+• Smartare söksortering: träffar som börjar med din sökning först
+• Nya alternativ i Inställningar: Betygsätt, Skicka feedback, Hjälp
+• Korrigerat: tryck nära ett draghandtag startar inte längre appen

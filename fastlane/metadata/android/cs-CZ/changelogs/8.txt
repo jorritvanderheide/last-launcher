@@ -1,0 +1,5 @@
+• Konfigurovatelné boční panely: vyberte, co je vlevo nebo vpravo od domovské
+• Reorganizovaná nastavení: Vzhled, Domovská, Šuplík aplikací, Moduly
+• Chytřejší vyhledávání: shody začínající dotazem jsou nahoře
+• Nové položky v Nastavení: Hodnotit, Poslat zpětnou vazbu, Nápověda
+• Opraveno: klepnutí poblíž úchytu přetažení už nespouští aplikaci

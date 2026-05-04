@@ -1,0 +1,5 @@
+• Mukautettavat sivupaneelit: valitse mitä on aloitusnäytön vasemmalla tai oikealla
+• Asetukset järjestetty uudelleen: Ulkoasu, Aloitusnäyttö, Sovellusvalikko, Moduulit
+• Älykkäämpi haku: hakulausekkeella alkavat osumat ensin
+• Uudet asetuskohteet: Arvostele, Lähetä palautetta, Ohje
+• Korjattu: veto-kahvan vieressä napauttaminen ei enää käynnistä sovellusta

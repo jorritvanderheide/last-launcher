@@ -1,0 +1,5 @@
+• Paneles laterales configurables: elige qué aparece a la izquierda o derecha del inicio
+• Ajustes reorganizados: Apariencia, Inicio, Cajón de aplicaciones, Módulos
+• Búsqueda más inteligente: las coincidencias que empiezan con la consulta van primero
+• Nuevas entradas en Ajustes: Valorar, Enviar comentarios, Ayuda
+• Corregido: tocar cerca de un asidero ya no lanza la app

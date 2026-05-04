@@ -1,0 +1,5 @@
+• Configurable side panels: choose what's on the left or right of home
+• Settings reorganized: Appearance, Home, App drawer, Modules
+• Smarter search: matches starting with your query rank first
+• New Settings entries: Rate, Send feedback, Help
+• Fix: tapping near a drag handle no longer launches the app

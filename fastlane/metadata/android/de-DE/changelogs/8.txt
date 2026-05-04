@@ -1,0 +1,5 @@
+• Konfigurierbare Seitenpanele: wähle, was links oder rechts vom Start ist
+• Einstellungen neu gegliedert: Darstellung, Startbildschirm, App-Schublade, Module
+• Klügere Suche: Treffer, die mit der Suche beginnen, stehen oben
+• Neue Einträge in den Einstellungen: Bewerten, Feedback senden, Hilfe
+• Behoben: Tippen neben einem Drag-Griff startet keine App mehr

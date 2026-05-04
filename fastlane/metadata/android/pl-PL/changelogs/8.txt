@@ -1,0 +1,5 @@
+• Konfigurowalne panele boczne: wybierz, co pojawia się po lewej lub prawej od ekranu głównego
+• Zreorganizowane ustawienia: Wygląd, Ekran główny, Szuflada aplikacji, Moduły
+• Inteligentniejsze wyszukiwanie: dopasowania zaczynające się od zapytania na górze
+• Nowe pozycje w Ustawieniach: Oceń, Wyślij opinię, Pomoc
+• Poprawka: dotknięcie obok uchwytu już nie uruchamia aplikacji

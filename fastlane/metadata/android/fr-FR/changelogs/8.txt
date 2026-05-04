@@ -1,0 +1,5 @@
+• Panneaux latéraux configurables : choisissez ce qui s'affiche à gauche ou à droite de l'accueil
+• Réglages réorganisés : Apparence, Accueil, Tiroir d'applications, Modules
+• Recherche plus intelligente : les résultats commençant par votre requête en premier
+• Nouvelles entrées dans les Réglages : Noter, Envoyer un retour, Aide
+• Correction : appuyer près d'une poignée ne lance plus l'application
