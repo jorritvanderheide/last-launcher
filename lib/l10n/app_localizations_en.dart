@@ -30,6 +30,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sectionTasks => 'Tasks';
 
   @override
+  String get sectionModules => 'Modules';
+
+  @override
   String get sectionSupport => 'Support';
 
   @override

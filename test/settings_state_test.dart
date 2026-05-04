@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:last_launcher/features/home/launcher_panel.dart';
+import 'package:last_launcher/features/modules/launcher_panel.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

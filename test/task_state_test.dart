@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:last_launcher/features/tasks/task_state.dart';
+import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {

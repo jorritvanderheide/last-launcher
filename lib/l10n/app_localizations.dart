@@ -164,6 +164,12 @@ abstract class AppLocalizations {
   /// **'Tasks'**
   String get sectionTasks;
 
+  /// No description provided for @sectionModules.
+  ///
+  /// In en, this message translates to:
+  /// **'Modules'**
+  String get sectionModules;
+
   /// No description provided for @sectionSupport.
   ///
   /// In en, this message translates to:

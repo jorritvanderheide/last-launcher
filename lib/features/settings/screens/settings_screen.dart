@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
-import 'package:last_launcher/features/home/launcher_panel.dart';
+import 'package:last_launcher/features/modules/launcher_panel.dart';
 import 'package:last_launcher/features/settings/screens/about_screen.dart';
 import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
+import 'package:last_launcher/features/settings/screens/task_settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
@@ -154,24 +155,20 @@ class SettingsScreen extends StatelessWidget {
                   onChanged: searchOnly ? null : settingsState.setAutoLaunch,
                 ),
                 if (settingsState.tasksEnabled) ...[
-                  _SectionHeader(title: l10n.sectionTasks),
-                  SwitchListTile(
-                    title: Text(l10n.autoShowKeyboard),
-                    subtitle: Text(l10n.autoShowKeyboardTasksSubtitle),
-                    value: settingsState.autoKeyboardTasks,
-                    onChanged: settingsState.setAutoKeyboardTasks,
-                  ),
-                  SwitchListTile(
-                    title: Text(l10n.removeOnComplete),
-                    subtitle: Text(l10n.removeOnCompleteSubtitle),
-                    value: settingsState.removeOnComplete,
-                    onChanged: settingsState.setRemoveOnComplete,
-                  ),
-                  SwitchListTile(
-                    title: Text(l10n.clearCompletedDaily),
-                    subtitle: Text(l10n.clearCompletedDailySubtitle),
-                    value: settingsState.clearCompletedDaily,
-                    onChanged: settingsState.setClearCompletedDaily,
+                  _SectionHeader(title: l10n.sectionModules),
+                  ListTile(
+                    title: Text(l10n.sectionTasks),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder<void>(
+                          pageBuilder: (_, _, _) => TaskSettingsScreen(
+                            settingsState: settingsState,
+                          ),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
+                    },
                   ),
                 ],
                 _SectionHeader(title: l10n.sectionSupport),

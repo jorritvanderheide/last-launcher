@@ -30,6 +30,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get sectionTasks => 'Taken';
 
   @override
+  String get sectionModules => 'Modules';
+
+  @override
   String get sectionSupport => 'Ondersteuning';
 
   @override

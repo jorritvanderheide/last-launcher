@@ -30,6 +30,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sectionTasks => '任務';
 
   @override
+  String get sectionModules => '模組';
+
+  @override
   String get sectionSupport => '支援';
 
   @override

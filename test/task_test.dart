@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:last_launcher/features/tasks/task.dart';
+import 'package:last_launcher/features/modules/tasks/task.dart';
 
 void main() {
   group('Task', () {

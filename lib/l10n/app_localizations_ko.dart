@@ -30,6 +30,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sectionTasks => '할 일';
 
   @override
+  String get sectionModules => '모듈';
+
+  @override
   String get sectionSupport => '지원';
 
   @override

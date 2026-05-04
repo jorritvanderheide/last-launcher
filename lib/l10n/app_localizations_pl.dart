@@ -31,6 +31,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get sectionTasks => 'Zadania';
 
   @override
+  String get sectionModules => 'Moduły';
+
+  @override
   String get sectionSupport => 'Wsparcie';
 
   @override

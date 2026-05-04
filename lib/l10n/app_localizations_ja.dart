@@ -30,6 +30,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sectionTasks => 'タスク';
 
   @override
+  String get sectionModules => 'モジュール';
+
+  @override
   String get sectionSupport => 'サポート';
 
   @override

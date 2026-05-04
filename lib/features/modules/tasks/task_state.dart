@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:last_launcher/features/tasks/task.dart';
+import 'package:last_launcher/features/modules/tasks/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskState extends ChangeNotifier {

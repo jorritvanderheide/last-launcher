@@ -30,6 +30,9 @@ class AppLocalizationsSv extends AppLocalizations {
   String get sectionTasks => 'Uppgifter';
 
   @override
+  String get sectionModules => 'Moduler';
+
+  @override
   String get sectionSupport => 'Stöd';
 
   @override

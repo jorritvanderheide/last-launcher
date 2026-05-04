@@ -30,6 +30,9 @@ class AppLocalizationsFi extends AppLocalizations {
   String get sectionTasks => 'Tehtävät';
 
   @override
+  String get sectionModules => 'Moduulit';
+
+  @override
   String get sectionSupport => 'Tuki';
 
   @override

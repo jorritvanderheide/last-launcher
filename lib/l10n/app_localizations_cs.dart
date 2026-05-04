@@ -30,6 +30,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get sectionTasks => 'Úkoly';
 
   @override
+  String get sectionModules => 'Moduly';
+
+  @override
   String get sectionSupport => 'Podpora';
 
   @override

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_drawer_sheet.dart';
 import 'package:last_launcher/features/home/home_state.dart';
-import 'package:last_launcher/features/home/launcher_panel.dart';
+import 'package:last_launcher/features/modules/launcher_panel.dart';
 import 'package:last_launcher/features/home/screens/home_screen.dart';
 import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
-import 'package:last_launcher/features/tasks/screens/task_screen.dart';
-import 'package:last_launcher/features/tasks/task_state.dart';
+import 'package:last_launcher/features/modules/tasks/screens/task_screen.dart';
+import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 
 const _maxSheetFraction = 0.9;
