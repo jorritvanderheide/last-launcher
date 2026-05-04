@@ -18,7 +18,10 @@ class AppLocalizationsCs extends AppLocalizations {
   String get settings => 'Nastavení';
 
   @override
-  String get sectionGeneral => 'Obecné';
+  String get sectionAppearance => 'Vzhled';
+
+  @override
+  String get sectionHome => 'Domovská';
 
   @override
   String get sectionAppDrawer => 'Šuplík aplikací';
@@ -92,6 +95,15 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get noHiddenApps => 'Žádné skryté aplikace';
+
+  @override
+  String get leftOfHome => 'Vlevo od domovské';
+
+  @override
+  String get rightOfHome => 'Vpravo od domovské';
+
+  @override
+  String get panelNone => 'Žádný';
 
   @override
   String get lockLayout => 'Uzamknout rozložení';

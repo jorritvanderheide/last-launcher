@@ -18,7 +18,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get settings => 'Instellingen';
 
   @override
-  String get sectionGeneral => 'Algemeen';
+  String get sectionAppearance => 'Uiterlijk';
+
+  @override
+  String get sectionHome => 'Startscherm';
 
   @override
   String get sectionAppDrawer => 'App-lade';
@@ -93,6 +96,15 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get noHiddenApps => 'Geen verborgen apps';
+
+  @override
+  String get leftOfHome => 'Links van start';
+
+  @override
+  String get rightOfHome => 'Rechts van start';
+
+  @override
+  String get panelNone => 'Geen';
 
   @override
   String get lockLayout => 'Lay-out vergrendelen';

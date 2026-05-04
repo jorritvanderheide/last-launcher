@@ -4,7 +4,8 @@
   "appTagline": "마지막으로 필요한 런처",
 
   "settings": "설정",
-  "sectionGeneral": "일반",
+  "sectionAppearance": "외관",
+  "sectionHome": "홈",
   "sectionAppDrawer": "앱 서랍",
   "sectionTasks": "할 일",
   "sectionSupport": "지원",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "숨긴 앱 없음",
 
+  "leftOfHome": "홈 왼쪽",
+  "rightOfHome": "홈 오른쪽",
+  "panelNone": "없음",
   "lockLayout": "레이아웃 잠금",
   "lockLayoutSubtitle": "고정 및 홈 화면의 길게 누르기 비활성화",
   "searchOnlyMode": "검색 전용",

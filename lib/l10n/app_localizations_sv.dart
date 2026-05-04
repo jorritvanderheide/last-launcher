@@ -18,7 +18,10 @@ class AppLocalizationsSv extends AppLocalizations {
   String get settings => 'Inställningar';
 
   @override
-  String get sectionGeneral => 'Allmänt';
+  String get sectionAppearance => 'Utseende';
+
+  @override
+  String get sectionHome => 'Hem';
 
   @override
   String get sectionAppDrawer => 'Applåda';
@@ -92,6 +95,15 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get noHiddenApps => 'Inga dolda appar';
+
+  @override
+  String get leftOfHome => 'Till vänster om hem';
+
+  @override
+  String get rightOfHome => 'Till höger om hem';
+
+  @override
+  String get panelNone => 'Ingen';
 
   @override
   String get lockLayout => 'Lås layout';

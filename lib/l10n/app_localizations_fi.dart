@@ -18,7 +18,10 @@ class AppLocalizationsFi extends AppLocalizations {
   String get settings => 'Asetukset';
 
   @override
-  String get sectionGeneral => 'Yleiset';
+  String get sectionAppearance => 'Ulkoasu';
+
+  @override
+  String get sectionHome => 'Aloitusnäyttö';
 
   @override
   String get sectionAppDrawer => 'Sovellusvalikko';
@@ -93,6 +96,15 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get noHiddenApps => 'Ei piilotettuja sovelluksia';
+
+  @override
+  String get leftOfHome => 'Aloitusnäytön vasemmalla';
+
+  @override
+  String get rightOfHome => 'Aloitusnäytön oikealla';
+
+  @override
+  String get panelNone => 'Ei mitään';
 
   @override
   String get lockLayout => 'Lukitse asettelu';

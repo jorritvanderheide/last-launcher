@@ -18,7 +18,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get settings => 'Definições';
 
   @override
-  String get sectionGeneral => 'Geral';
+  String get sectionAppearance => 'Aparência';
+
+  @override
+  String get sectionHome => 'Ecrã inicial';
 
   @override
   String get sectionAppDrawer => 'Gaveta de aplicações';
@@ -93,6 +96,15 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get noHiddenApps => 'Nenhuma aplicação oculta';
+
+  @override
+  String get leftOfHome => 'À esquerda do ecrã inicial';
+
+  @override
+  String get rightOfHome => 'À direita do ecrã inicial';
+
+  @override
+  String get panelNone => 'Nenhum';
 
   @override
   String get lockLayout => 'Bloquear disposição';

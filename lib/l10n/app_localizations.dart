@@ -140,11 +140,17 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settings;
 
-  /// No description provided for @sectionGeneral.
+  /// No description provided for @sectionAppearance.
   ///
   /// In en, this message translates to:
-  /// **'General'**
-  String get sectionGeneral;
+  /// **'Appearance'**
+  String get sectionAppearance;
+
+  /// No description provided for @sectionHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get sectionHome;
 
   /// No description provided for @sectionAppDrawer.
   ///
@@ -283,6 +289,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No hidden apps'**
   String get noHiddenApps;
+
+  /// No description provided for @leftOfHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Left of home'**
+  String get leftOfHome;
+
+  /// No description provided for @rightOfHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Right of home'**
+  String get rightOfHome;
+
+  /// No description provided for @panelNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None'**
+  String get panelNone;
 
   /// No description provided for @lockLayout.
   ///

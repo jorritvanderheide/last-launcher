@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_drawer_sheet.dart';
 import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/home/launcher_panel.dart';
 import 'package:last_launcher/features/home/screens/home_screen.dart';
 import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
@@ -46,12 +47,12 @@ class _LauncherShellState extends State<LauncherShell>
   double _sheetAnimFrom = 0;
   double _sheetAnimTo = 0;
 
-  // Page (horizontal: 0 = tasks, 1 = home).
-  double _pageFraction = 1;
-  bool get _onHomePage => _pageFraction > 0.5;
+  // Page (horizontal: -1 = left panel, 0 = home, +1 = right panel).
+  double _pageFraction = 0;
+  bool get _onHomePage => _pageFraction.abs() < 0.5;
   late final AnimationController _pageAnim;
-  double _pageAnimFrom = 1;
-  double _pageAnimTo = 1;
+  double _pageAnimFrom = 0;
+  double _pageAnimTo = 0;
 
   // Pointer tracking.
   int? _activePointer;
@@ -135,8 +136,8 @@ class _LauncherShellState extends State<LauncherShell>
     setState(() {
       _sheetFraction = 0;
       _sheetAnimTo = 0;
-      _pageFraction = 1;
-      _pageAnimTo = 1;
+      _pageFraction = 0;
+      _pageAnimTo = 0;
     });
     widget.appListState.clearFilter();
     _homeKey.currentState?.dismissActions();
@@ -213,16 +214,20 @@ class _LauncherShellState extends State<LauncherShell>
     if (!_isDraggingSheet && !_isDraggingPage) {
       if (absDx < _dragStartThreshold && absDy < _dragStartThreshold) return;
 
+      final hasLeft = widget.settingsState.leftPanel != LauncherPanel.none;
+      final hasRight = widget.settingsState.rightPanel != LauncherPanel.none;
       if (absDx > absDy &&
           !_drawerOpen &&
-          widget.settingsState.tasksEnabled &&
+          (hasLeft || hasRight) &&
           !_isReorderingTasks &&
           !_isReorderingHome) {
         // Horizontal drag — page navigation.
-        // Don't start if already at the edge in the drag direction.
-        final wouldGoLeft = dx > 0;
-        if (wouldGoLeft && _pageFraction >= 1) return;
-        if (!wouldGoLeft && _pageFraction <= 0) return;
+        // dx > 0: finger moved leftward → fraction increases (toward right).
+        // dx < 0: finger moved rightward → fraction decreases (toward left).
+        final lowerBound = hasLeft ? -1.0 : 0.0;
+        final upperBound = hasRight ? 1.0 : 0.0;
+        if (dx > 0 && _pageFraction >= upperBound) return;
+        if (dx < 0 && _pageFraction <= lowerBound) return;
         _isDraggingPage = true;
         _dragStartFraction = _pageFraction;
       } else if (absDy > absDx) {
@@ -253,7 +258,12 @@ class _LauncherShellState extends State<LauncherShell>
       final screenWidth = MediaQuery.sizeOf(context).width;
       final threshold = dx >= 0 ? _dragStartThreshold : -_dragStartThreshold;
       final delta = (dx - threshold) / screenWidth;
-      final fraction = (_dragStartFraction + delta).clamp(0.0, 1.0);
+      final hasLeft = widget.settingsState.leftPanel != LauncherPanel.none;
+      final hasRight = widget.settingsState.rightPanel != LauncherPanel.none;
+      final fraction = (_dragStartFraction + delta).clamp(
+        hasLeft ? -1.0 : 0.0,
+        hasRight ? 1.0 : 0.0,
+      );
       setState(() => _pageFraction = fraction);
     } else if (_isDraggingSheet) {
       final screenHeight = MediaQuery.sizeOf(context).height;
@@ -276,15 +286,16 @@ class _LauncherShellState extends State<LauncherShell>
     if (_isDraggingPage) {
       _isDraggingPage = false;
       final vx = _velocity(start?.dx, event.position.dx, startTime);
-      if (_pageFraction < _dragStartFraction - 0.05 ||
-          vx < -_swipeVelocityThreshold) {
-        _animatePageTo(0); // snap to tasks
-      } else if (_pageFraction > _dragStartFraction + 0.05 ||
-          vx > _swipeVelocityThreshold) {
-        _animatePageTo(1); // snap to home
-      } else {
-        _animatePageTo(_dragStartFraction);
+      final delta = _pageFraction - _dragStartFraction;
+      double target = _dragStartFraction;
+      if (delta > 0.05 || vx > _swipeVelocityThreshold) {
+        // Forward (toward right panel): snap to next slot.
+        target = (_dragStartFraction + 1).clamp(-1.0, 1.0);
+      } else if (delta < -0.05 || vx < -_swipeVelocityThreshold) {
+        // Backward (toward left panel): snap to previous slot.
+        target = (_dragStartFraction - 1).clamp(-1.0, 1.0);
       }
+      _animatePageTo(target);
       return;
     }
 
@@ -318,7 +329,7 @@ class _LauncherShellState extends State<LauncherShell>
     }
     if (_isDraggingPage) {
       _isDraggingPage = false;
-      _animatePageTo(_dragStartFraction > 0.5 ? 1 : 0);
+      _animatePageTo(_dragStartFraction);
     }
     _resetPointer();
   }
@@ -337,12 +348,32 @@ class _LauncherShellState extends State<LauncherShell>
     _pointerStartTime = null;
   }
 
+  Widget _buildPanel(
+    LauncherPanel panel, {
+    required bool isVisible,
+    required bool isLeftSide,
+  }) {
+    return switch (panel) {
+      LauncherPanel.none => const SizedBox.shrink(),
+      LauncherPanel.tasks => TaskScreen(
+        key: _taskKey,
+        taskState: widget.taskState,
+        settingsState: widget.settingsState,
+        isVisible: isVisible,
+        onReorderStart: () => _isReorderingTasks = true,
+        onReorderEnd: () => _isReorderingTasks = false,
+        scrollLocked: _isDraggingPage,
+        swipeRight: isLeftSide,
+      ),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
     final screenHeight = MediaQuery.sizeOf(context).height;
     final sheetHeight = screenHeight * _sheetFraction;
-    final pageOffset = -_pageFraction * screenWidth;
+    final pageOffset = -screenWidth * (1 + _pageFraction);
 
     return PopScope(
       canPop: false,
@@ -353,7 +384,7 @@ class _LauncherShellState extends State<LauncherShell>
         if (_drawerOpen) {
           _closeDrawer();
         } else if (!_onHomePage) {
-          _animatePageTo(1);
+          _animatePageTo(0);
         }
       },
       child: Listener(
@@ -365,28 +396,22 @@ class _LauncherShellState extends State<LauncherShell>
         child: SizedBox.expand(
           child: Stack(
             children: [
-              // Pages: [Tasks, Home] sliding horizontally.
+              // Pages: [Left, Home, Right] sliding horizontally.
               Positioned(
                 left: pageOffset,
                 top: 0,
                 bottom: 0,
-                width: screenWidth * 2,
+                width: screenWidth * 3,
                 child: Row(
                   children: [
                     SizedBox(
                       width: screenWidth,
                       height: screenHeight,
-                      child: widget.settingsState.tasksEnabled
-                          ? TaskScreen(
-                              key: _taskKey,
-                              taskState: widget.taskState,
-                              settingsState: widget.settingsState,
-                              isVisible: !_onHomePage,
-                              onReorderStart: () => _isReorderingTasks = true,
-                              onReorderEnd: () => _isReorderingTasks = false,
-                              scrollLocked: _isDraggingPage,
-                            )
-                          : const SizedBox.shrink(),
+                      child: _buildPanel(
+                        widget.settingsState.leftPanel,
+                        isVisible: _pageFraction < -0.5,
+                        isLeftSide: true,
+                      ),
                     ),
                     SizedBox(
                       width: screenWidth,
@@ -404,6 +429,15 @@ class _LauncherShellState extends State<LauncherShell>
                           onReorderEnd: () => _isReorderingHome = false,
                           isActive: _onHomePage && !_drawerOpen,
                         ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: screenWidth,
+                      height: screenHeight,
+                      child: _buildPanel(
+                        widget.settingsState.rightPanel,
+                        isVisible: _pageFraction > 0.5,
+                        isLeftSide: false,
                       ),
                     ),
                   ],

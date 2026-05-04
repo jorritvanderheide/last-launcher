@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:last_launcher/features/home/launcher_panel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsState extends ChangeNotifier {
@@ -18,6 +19,8 @@ class SettingsState extends ChangeNotifier {
   static const _searchOnlyKey = 'search_only';
   static const _autoLaunchKey = 'auto_launch';
   static const _tasksEnabledKey = 'tasks_enabled';
+  static const _leftPanelKey = 'left_panel';
+  static const _rightPanelKey = 'right_panel';
   static const _showHintsKey = 'show_hints';
   static const _removeOnCompleteKey = 'remove_on_complete';
   static const _hideStatusBarKey = 'hide_status_bar';
@@ -33,7 +36,8 @@ class SettingsState extends ChangeNotifier {
   bool _autoKeyboardTasks = true;
   bool _searchOnly = false;
   bool _autoLaunch = true;
-  bool _tasksEnabled = false;
+  LauncherPanel _leftPanel = LauncherPanel.none;
+  LauncherPanel _rightPanel = LauncherPanel.none;
   bool _showHints = true;
   bool _removeOnComplete = false;
   bool _hideStatusBar = false;
@@ -48,7 +52,11 @@ class SettingsState extends ChangeNotifier {
   bool get autoKeyboardTasks => _autoKeyboardTasks;
   bool get searchOnly => _searchOnly;
   bool get autoLaunch => _autoLaunch;
-  bool get tasksEnabled => _tasksEnabled;
+  LauncherPanel get leftPanel => _leftPanel;
+  LauncherPanel get rightPanel => _rightPanel;
+  bool get tasksEnabled =>
+      _leftPanel == LauncherPanel.tasks ||
+      _rightPanel == LauncherPanel.tasks;
   bool get showHints => _showHints;
   bool get removeOnComplete => _removeOnComplete;
   bool get hideStatusBar => _hideStatusBar;
@@ -70,7 +78,17 @@ class SettingsState extends ChangeNotifier {
     _autoKeyboardTasks = _prefs.getBool(_autoKeyboardTasksKey) ?? true;
     _searchOnly = _prefs.getBool(_searchOnlyKey) ?? false;
     _autoLaunch = _prefs.getBool(_autoLaunchKey) ?? true;
-    _tasksEnabled = _prefs.getBool(_tasksEnabledKey) ?? false;
+    final leftId = _prefs.getString(_leftPanelKey);
+    final rightId = _prefs.getString(_rightPanelKey);
+    if (leftId == null && rightId == null) {
+      // Migrate legacy tasks_enabled flag.
+      final legacyTasks = _prefs.getBool(_tasksEnabledKey) ?? false;
+      _leftPanel = legacyTasks ? LauncherPanel.tasks : LauncherPanel.none;
+      _rightPanel = LauncherPanel.none;
+    } else {
+      _leftPanel = LauncherPanel.parse(leftId);
+      _rightPanel = LauncherPanel.parse(rightId);
+    }
     _showHints = _prefs.getBool(_showHintsKey) ?? true;
     _removeOnComplete = _prefs.getBool(_removeOnCompleteKey) ?? false;
     _hideStatusBar = _prefs.getBool(_hideStatusBarKey) ?? false;
@@ -127,10 +145,24 @@ class SettingsState extends ChangeNotifier {
     await _prefs.setBool(_autoLaunchKey, enabled);
   }
 
-  Future<void> setTasksEnabled(bool enabled) async {
-    _tasksEnabled = enabled;
+  Future<void> setLeftPanel(LauncherPanel panel) async {
+    _leftPanel = panel;
+    if (panel != LauncherPanel.none && _rightPanel == panel) {
+      _rightPanel = LauncherPanel.none;
+      await _prefs.setString(_rightPanelKey, LauncherPanel.none.name);
+    }
     notifyListeners();
-    await _prefs.setBool(_tasksEnabledKey, enabled);
+    await _prefs.setString(_leftPanelKey, panel.name);
+  }
+
+  Future<void> setRightPanel(LauncherPanel panel) async {
+    _rightPanel = panel;
+    if (panel != LauncherPanel.none && _leftPanel == panel) {
+      _leftPanel = LauncherPanel.none;
+      await _prefs.setString(_leftPanelKey, LauncherPanel.none.name);
+    }
+    notifyListeners();
+    await _prefs.setString(_rightPanelKey, panel.name);
   }
 
   Future<void> setShowHints(bool enabled) async {

@@ -17,6 +17,7 @@ class TaskScreen extends StatefulWidget {
     required this.onReorderStart,
     required this.onReorderEnd,
     this.scrollLocked = false,
+    this.swipeRight = true,
     super.key,
   });
 
@@ -26,6 +27,7 @@ class TaskScreen extends StatefulWidget {
   final VoidCallback onReorderStart;
   final VoidCallback onReorderEnd;
   final bool scrollLocked;
+  final bool swipeRight;
 
   @override
   State<TaskScreen> createState() => TaskScreenState();
@@ -209,6 +211,7 @@ class TaskScreenState extends State<TaskScreen> {
     return KeyedSubtree(
       key: ValueKey(task.id),
       child: _SwipeToDismiss(
+        swipeRight: widget.swipeRight,
         onDismissed: () => widget.taskState.removeTask(task.id),
         child: AppLabel(
           label: task.title,
@@ -345,10 +348,15 @@ class TaskScreenState extends State<TaskScreen> {
 }
 
 class _SwipeToDismiss extends StatefulWidget {
-  const _SwipeToDismiss({required this.onDismissed, required this.child});
+  const _SwipeToDismiss({
+    required this.onDismissed,
+    required this.child,
+    this.swipeRight = true,
+  });
 
   final VoidCallback onDismissed;
   final Widget child;
+  final bool swipeRight;
 
   @override
   State<_SwipeToDismiss> createState() => _SwipeToDismissState();
@@ -357,10 +365,13 @@ class _SwipeToDismiss extends StatefulWidget {
 class _SwipeToDismissState extends State<_SwipeToDismiss>
     with SingleTickerProviderStateMixin {
   Offset? _start;
-  double _dx = 0;
+  // Distance swiped past the threshold in the dismiss direction (always >= 0).
+  double _progress = 0;
   double _snapFrom = 0;
   bool _tracking = false;
   late final AnimationController _snapBack;
+
+  int get _sign => widget.swipeRight ? 1 : -1;
 
   @override
   void initState() {
@@ -371,7 +382,7 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
           duration: const Duration(milliseconds: 150),
         )..addListener(() {
           final t = Curves.easeOut.transform(_snapBack.value);
-          setState(() => _dx = _snapFrom * (1 - t));
+          setState(() => _progress = _snapFrom * (1 - t));
         });
   }
 
@@ -382,7 +393,7 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
   }
 
   void _animateSnapBack() {
-    _snapFrom = _dx;
+    _snapFrom = _progress;
     _snapBack.forward(from: 0);
   }
 
@@ -392,13 +403,13 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
       onPointerDown: (e) {
         _snapBack.stop();
         _start = e.position;
-        _dx = 0;
+        _progress = 0;
         _tracking = false;
       },
       onPointerMove: (e) {
         final start = _start;
         if (start == null) return;
-        final dx = e.position.dx - start.dx;
+        final dx = (e.position.dx - start.dx) * _sign;
         final dy = (e.position.dy - start.dy).abs();
         if (!_tracking) {
           if (dx.abs() < 20) return;
@@ -409,12 +420,12 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
             return;
           }
         }
-        setState(() => _dx = (dx - 20).clamp(0.0, double.infinity));
+        setState(() => _progress = (dx - 20).clamp(0.0, double.infinity));
       },
       onPointerUp: (_) {
         if (_tracking) {
           final screenWidth = MediaQuery.sizeOf(context).width;
-          if (_dx > screenWidth * 0.3) {
+          if (_progress > screenWidth * 0.3) {
             widget.onDismissed();
           } else {
             _animateSnapBack();
@@ -429,10 +440,13 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
         _tracking = false;
       },
       child: Transform.translate(
-        offset: Offset(_dx, 0),
+        offset: Offset(_progress * _sign, 0),
         child: Opacity(
-          opacity: _dx > 0
-              ? (1 - _dx / MediaQuery.sizeOf(context).width).clamp(0.3, 1.0)
+          opacity: _progress > 0
+              ? (1 - _progress / MediaQuery.sizeOf(context).width).clamp(
+                  0.3,
+                  1.0,
+                )
               : 1.0,
           child: widget.child,
         ),

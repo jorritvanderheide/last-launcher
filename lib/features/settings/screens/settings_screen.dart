@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/home/launcher_panel.dart';
 import 'package:last_launcher/features/settings/screens/about_screen.dart';
 import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
@@ -41,7 +42,7 @@ class SettingsScreen extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                _SectionHeader(title: l10n.sectionGeneral),
+                _SectionHeader(title: l10n.sectionAppearance),
                 _ThemeListTile(
                   themeValue: settingsState.themeValue,
                   onChanged: settingsState.setTheme,
@@ -58,11 +59,22 @@ class SettingsScreen extends StatelessWidget {
                   value: settingsState.showHints,
                   onChanged: settingsState.setShowHints,
                 ),
+                _SectionHeader(title: l10n.sectionHome),
                 SwitchListTile(
                   title: Text(l10n.lockLayout),
                   subtitle: Text(l10n.lockLayoutSubtitle),
                   value: settingsState.locked,
                   onChanged: settingsState.setLocked,
+                ),
+                _PanelListTile(
+                  title: l10n.leftOfHome,
+                  current: settingsState.leftPanel,
+                  onChanged: settingsState.setLeftPanel,
+                ),
+                _PanelListTile(
+                  title: l10n.rightOfHome,
+                  current: settingsState.rightPanel,
+                  onChanged: settingsState.setRightPanel,
                 ),
                 _SectionHeader(title: l10n.sectionAppDrawer),
                 ListenableBuilder(
@@ -141,49 +153,27 @@ class SettingsScreen extends StatelessWidget {
                   value: searchOnly || settingsState.autoLaunch,
                   onChanged: searchOnly ? null : settingsState.setAutoLaunch,
                 ),
-                _SectionHeader(title: l10n.sectionTasks),
-                SwitchListTile(
-                  title: Text(l10n.taskScreen),
-                  subtitle: Text(l10n.taskScreenSubtitle),
-                  value: settingsState.tasksEnabled,
-                  onChanged: settingsState.setTasksEnabled,
-                ),
-                SwitchListTile(
-                  title: Text(l10n.autoShowKeyboard),
-                  subtitle: Text(
-                    settingsState.tasksEnabled
-                        ? l10n.autoShowKeyboardTasksSubtitle
-                        : l10n.taskOptionDisabled,
+                if (settingsState.tasksEnabled) ...[
+                  _SectionHeader(title: l10n.sectionTasks),
+                  SwitchListTile(
+                    title: Text(l10n.autoShowKeyboard),
+                    subtitle: Text(l10n.autoShowKeyboardTasksSubtitle),
+                    value: settingsState.autoKeyboardTasks,
+                    onChanged: settingsState.setAutoKeyboardTasks,
                   ),
-                  value: settingsState.autoKeyboardTasks,
-                  onChanged: settingsState.tasksEnabled
-                      ? settingsState.setAutoKeyboardTasks
-                      : null,
-                ),
-                SwitchListTile(
-                  title: Text(l10n.removeOnComplete),
-                  subtitle: Text(
-                    settingsState.tasksEnabled
-                        ? l10n.removeOnCompleteSubtitle
-                        : l10n.taskOptionDisabled,
+                  SwitchListTile(
+                    title: Text(l10n.removeOnComplete),
+                    subtitle: Text(l10n.removeOnCompleteSubtitle),
+                    value: settingsState.removeOnComplete,
+                    onChanged: settingsState.setRemoveOnComplete,
                   ),
-                  value: settingsState.removeOnComplete,
-                  onChanged: settingsState.tasksEnabled
-                      ? settingsState.setRemoveOnComplete
-                      : null,
-                ),
-                SwitchListTile(
-                  title: Text(l10n.clearCompletedDaily),
-                  subtitle: Text(
-                    settingsState.tasksEnabled
-                        ? l10n.clearCompletedDailySubtitle
-                        : l10n.taskOptionDisabled,
+                  SwitchListTile(
+                    title: Text(l10n.clearCompletedDaily),
+                    subtitle: Text(l10n.clearCompletedDailySubtitle),
+                    value: settingsState.clearCompletedDaily,
+                    onChanged: settingsState.setClearCompletedDaily,
                   ),
-                  value: settingsState.clearCompletedDaily,
-                  onChanged: settingsState.tasksEnabled
-                      ? settingsState.setClearCompletedDaily
-                      : null,
-                ),
+                ],
                 _SectionHeader(title: l10n.sectionSupport),
                 if (_store == 'playstore')
                   ListTile(
@@ -299,6 +289,51 @@ class _ThemeListTile extends StatelessWidget {
                       RadioListTile<String>(
                         value: option,
                         title: Text(_label(context, option)),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+        if (result != null) onChanged(result);
+      },
+    );
+  }
+}
+
+class _PanelListTile extends StatelessWidget {
+  const _PanelListTile({
+    required this.title,
+    required this.current,
+    required this.onChanged,
+  });
+
+  final String title;
+  final LauncherPanel current;
+  final ValueChanged<LauncherPanel> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(title),
+      subtitle: Text(current.localizedName(context)),
+      onTap: () async {
+        final result = await showDialog<LauncherPanel>(
+          context: context,
+          builder: (context) => SimpleDialog(
+            title: Text(title),
+            children: [
+              RadioGroup<LauncherPanel>(
+                groupValue: current,
+                onChanged: (value) => Navigator.pop(context, value),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (final option in LauncherPanel.values)
+                      RadioListTile<LauncherPanel>(
+                        value: option,
+                        title: Text(option.localizedName(context)),
                       ),
                   ],
                 ),

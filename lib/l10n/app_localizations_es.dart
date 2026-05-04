@@ -18,7 +18,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get settings => 'Ajustes';
 
   @override
-  String get sectionGeneral => 'General';
+  String get sectionAppearance => 'Apariencia';
+
+  @override
+  String get sectionHome => 'Inicio';
 
   @override
   String get sectionAppDrawer => 'Cajón de aplicaciones';
@@ -94,6 +97,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get noHiddenApps => 'No hay aplicaciones ocultas';
+
+  @override
+  String get leftOfHome => 'A la izquierda del inicio';
+
+  @override
+  String get rightOfHome => 'A la derecha del inicio';
+
+  @override
+  String get panelNone => 'Ninguno';
 
   @override
   String get lockLayout => 'Bloquear diseño';

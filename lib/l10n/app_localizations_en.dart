@@ -18,7 +18,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings => 'Settings';
 
   @override
-  String get sectionGeneral => 'General';
+  String get sectionAppearance => 'Appearance';
+
+  @override
+  String get sectionHome => 'Home';
 
   @override
   String get sectionAppDrawer => 'App drawer';
@@ -92,6 +95,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get noHiddenApps => 'No hidden apps';
+
+  @override
+  String get leftOfHome => 'Left of home';
+
+  @override
+  String get rightOfHome => 'Right of home';
+
+  @override
+  String get panelNone => 'None';
 
   @override
   String get lockLayout => 'Lock layout';

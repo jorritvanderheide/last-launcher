@@ -18,7 +18,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get settings => '설정';
 
   @override
-  String get sectionGeneral => '일반';
+  String get sectionAppearance => '외관';
+
+  @override
+  String get sectionHome => '홈';
 
   @override
   String get sectionAppDrawer => '앱 서랍';
@@ -90,6 +93,15 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get noHiddenApps => '숨긴 앱 없음';
+
+  @override
+  String get leftOfHome => '홈 왼쪽';
+
+  @override
+  String get rightOfHome => '홈 오른쪽';
+
+  @override
+  String get panelNone => '없음';
 
   @override
   String get lockLayout => '레이아웃 잠금';

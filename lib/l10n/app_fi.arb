@@ -4,7 +4,8 @@
   "appTagline": "Viimeinen laukaisija, jonka koskaan tarvitset",
 
   "settings": "Asetukset",
-  "sectionGeneral": "Yleiset",
+  "sectionAppearance": "Ulkoasu",
+  "sectionHome": "Aloitusnäyttö",
   "sectionAppDrawer": "Sovellusvalikko",
   "sectionTasks": "Tehtävät",
   "sectionSupport": "Tuki",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "Ei piilotettuja sovelluksia",
 
+  "leftOfHome": "Aloitusnäytön vasemmalla",
+  "rightOfHome": "Aloitusnäytön oikealla",
+  "panelNone": "Ei mitään",
   "lockLayout": "Lukitse asettelu",
   "lockLayoutSubtitle": "Poista kiinnittäminen ja pitkä painallus käytöstä aloitusnäytöllä",
   "searchOnlyMode": "Vain haku",

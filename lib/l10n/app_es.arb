@@ -4,7 +4,8 @@
   "appTagline": "El último lanzador que necesitarás",
 
   "settings": "Ajustes",
-  "sectionGeneral": "General",
+  "sectionAppearance": "Apariencia",
+  "sectionHome": "Inicio",
   "sectionAppDrawer": "Cajón de aplicaciones",
   "sectionTasks": "Tareas",
   "sectionSupport": "Apoyo",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "No hay aplicaciones ocultas",
 
+  "leftOfHome": "A la izquierda del inicio",
+  "rightOfHome": "A la derecha del inicio",
+  "panelNone": "Ninguno",
   "lockLayout": "Bloquear diseño",
   "lockLayoutSubtitle": "Desactivar fijar apps y la pulsación larga en la pantalla de inicio",
   "searchOnlyMode": "Solo búsqueda",

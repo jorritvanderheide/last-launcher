@@ -18,7 +18,10 @@ class AppLocalizationsHi extends AppLocalizations {
   String get settings => 'सेटिंग्स';
 
   @override
-  String get sectionGeneral => 'सामान्य';
+  String get sectionAppearance => 'दिखावट';
+
+  @override
+  String get sectionHome => 'होम';
 
   @override
   String get sectionAppDrawer => 'ऐप ड्रॉअर';
@@ -92,6 +95,15 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get noHiddenApps => 'कोई छुपे हुए ऐप्स नहीं';
+
+  @override
+  String get leftOfHome => 'होम के बाएं';
+
+  @override
+  String get rightOfHome => 'होम के दाएं';
+
+  @override
+  String get panelNone => 'कोई नहीं';
 
   @override
   String get lockLayout => 'लेआउट लॉक करें';

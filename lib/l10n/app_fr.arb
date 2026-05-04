@@ -4,7 +4,8 @@
   "appTagline": "Le dernier lanceur dont vous aurez besoin",
 
   "settings": "Paramètres",
-  "sectionGeneral": "Général",
+  "sectionAppearance": "Apparence",
+  "sectionHome": "Accueil",
   "sectionAppDrawer": "Tiroir d'applications",
   "sectionTasks": "Tâches",
   "sectionSupport": "Soutien",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "Aucune application masquée",
 
+  "leftOfHome": "À gauche de l'accueil",
+  "rightOfHome": "À droite de l'accueil",
+  "panelNone": "Aucun",
   "lockLayout": "Verrouiller la disposition",
   "lockLayoutSubtitle": "Désactiver l'épinglage et l'appui long sur l'écran d'accueil",
   "searchOnlyMode": "Recherche uniquement",

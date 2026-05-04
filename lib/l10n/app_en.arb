@@ -4,7 +4,8 @@
   "appTagline": "The last launcher you'll ever need",
 
   "settings": "Settings",
-  "sectionGeneral": "General",
+  "sectionAppearance": "Appearance",
+  "sectionHome": "Home",
   "sectionAppDrawer": "App drawer",
   "sectionTasks": "Tasks",
   "sectionSupport": "Support",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "No hidden apps",
 
+  "leftOfHome": "Left of home",
+  "rightOfHome": "Right of home",
+  "panelNone": "None",
   "lockLayout": "Lock layout",
   "lockLayoutSubtitle": "Disable pinning and long press on the home screen",
   "searchOnlyMode": "Search only",

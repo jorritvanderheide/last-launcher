@@ -4,7 +4,8 @@
   "appTagline": "你需要的最後一個啟動器",
 
   "settings": "設定",
-  "sectionGeneral": "一般",
+  "sectionAppearance": "外觀",
+  "sectionHome": "主畫面",
   "sectionAppDrawer": "應用程式抽屜",
   "sectionTasks": "任務",
   "sectionSupport": "支援",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "沒有已隱藏的應用程式",
 
+  "leftOfHome": "主畫面左側",
+  "rightOfHome": "主畫面右側",
+  "panelNone": "無",
   "lockLayout": "鎖定版面",
   "lockLayoutSubtitle": "停用釘選和主畫面的長按",
   "searchOnlyMode": "僅搜尋",

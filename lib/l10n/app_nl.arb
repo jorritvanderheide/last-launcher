@@ -4,7 +4,8 @@
   "appTagline": "De laatste launcher die je ooit nodig hebt",
 
   "settings": "Instellingen",
-  "sectionGeneral": "Algemeen",
+  "sectionAppearance": "Uiterlijk",
+  "sectionHome": "Startscherm",
   "sectionAppDrawer": "App-lade",
   "sectionTasks": "Taken",
   "sectionSupport": "Ondersteuning",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "Geen verborgen apps",
 
+  "leftOfHome": "Links van start",
+  "rightOfHome": "Rechts van start",
+  "panelNone": "Geen",
   "lockLayout": "Lay-out vergrendelen",
   "lockLayoutSubtitle": "Vastmaken en lang indrukken op startscherm uitschakelen",
   "searchOnlyMode": "Alleen zoeken",

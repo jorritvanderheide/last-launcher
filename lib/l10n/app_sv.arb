@@ -4,7 +4,8 @@
   "appTagline": "Den sista launchern du någonsin behöver",
 
   "settings": "Inställningar",
-  "sectionGeneral": "Allmänt",
+  "sectionAppearance": "Utseende",
+  "sectionHome": "Hem",
   "sectionAppDrawer": "Applåda",
   "sectionTasks": "Uppgifter",
   "sectionSupport": "Stöd",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "Inga dolda appar",
 
+  "leftOfHome": "Till vänster om hem",
+  "rightOfHome": "Till höger om hem",
+  "panelNone": "Ingen",
   "lockLayout": "Lås layout",
   "lockLayoutSubtitle": "Inaktivera fästning och långtryckning på hemskärmen",
   "searchOnlyMode": "Enbart sökning",

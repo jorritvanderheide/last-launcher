@@ -18,7 +18,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get settings => '設定';
 
   @override
-  String get sectionGeneral => '一般';
+  String get sectionAppearance => '外觀';
+
+  @override
+  String get sectionHome => '主畫面';
 
   @override
   String get sectionAppDrawer => '應用程式抽屜';
@@ -90,6 +93,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get noHiddenApps => '沒有已隱藏的應用程式';
+
+  @override
+  String get leftOfHome => '主畫面左側';
+
+  @override
+  String get rightOfHome => '主畫面右側';
+
+  @override
+  String get panelNone => '無';
 
   @override
   String get lockLayout => '鎖定版面';

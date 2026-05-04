@@ -4,7 +4,8 @@
   "appTagline": "Ostatni launcher, jakiego kiedykolwiek będziesz potrzebować",
 
   "settings": "Ustawienia",
-  "sectionGeneral": "Ogólne",
+  "sectionAppearance": "Wygląd",
+  "sectionHome": "Ekran główny",
   "sectionAppDrawer": "Szuflada aplikacji",
   "sectionTasks": "Zadania",
   "sectionSupport": "Wsparcie",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "Brak ukrytych aplikacji",
 
+  "leftOfHome": "Po lewej od ekranu głównego",
+  "rightOfHome": "Po prawej od ekranu głównego",
+  "panelNone": "Brak",
   "lockLayout": "Zablokuj układ",
   "lockLayoutSubtitle": "Wyłącz przypinanie i długie naciśnięcie na ekranie głównym",
   "searchOnlyMode": "Tylko wyszukiwanie",

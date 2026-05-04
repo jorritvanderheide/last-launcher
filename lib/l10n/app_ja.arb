@@ -4,7 +4,8 @@
   "appTagline": "これが最後のランチャー",
 
   "settings": "設定",
-  "sectionGeneral": "全般",
+  "sectionAppearance": "外観",
+  "sectionHome": "ホーム",
   "sectionAppDrawer": "アプリドロワー",
   "sectionTasks": "タスク",
   "sectionSupport": "サポート",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "非表示のアプリはありません",
 
+  "leftOfHome": "ホームの左",
+  "rightOfHome": "ホームの右",
+  "panelNone": "なし",
   "lockLayout": "レイアウトをロック",
   "lockLayoutSubtitle": "ピン留めとホーム画面の長押しを無効化",
   "searchOnlyMode": "検索のみ",

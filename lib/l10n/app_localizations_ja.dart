@@ -18,7 +18,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get settings => '設定';
 
   @override
-  String get sectionGeneral => '全般';
+  String get sectionAppearance => '外観';
+
+  @override
+  String get sectionHome => 'ホーム';
 
   @override
   String get sectionAppDrawer => 'アプリドロワー';
@@ -90,6 +93,15 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get noHiddenApps => '非表示のアプリはありません';
+
+  @override
+  String get leftOfHome => 'ホームの左';
+
+  @override
+  String get rightOfHome => 'ホームの右';
+
+  @override
+  String get panelNone => 'なし';
 
   @override
   String get lockLayout => 'レイアウトをロック';

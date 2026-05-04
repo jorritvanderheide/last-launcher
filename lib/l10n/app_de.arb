@@ -4,7 +4,8 @@
   "appTagline": "Der letzte Launcher, den du je brauchst",
 
   "settings": "Einstellungen",
-  "sectionGeneral": "Allgemein",
+  "sectionAppearance": "Darstellung",
+  "sectionHome": "Startbildschirm",
   "sectionAppDrawer": "App-Schublade",
   "sectionTasks": "Aufgaben",
   "sectionSupport": "Unterstützung",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "Keine versteckten Apps",
 
+  "leftOfHome": "Links vom Start",
+  "rightOfHome": "Rechts vom Start",
+  "panelNone": "Keiner",
   "lockLayout": "Layout sperren",
   "lockLayoutSubtitle": "Anheften und langes Drücken auf dem Startbildschirm deaktivieren",
   "searchOnlyMode": "Nur Suche",

@@ -4,7 +4,8 @@
   "appTagline": "Poslední spouštěč, který kdy budete potřebovat",
 
   "settings": "Nastavení",
-  "sectionGeneral": "Obecné",
+  "sectionAppearance": "Vzhled",
+  "sectionHome": "Domovská",
   "sectionAppDrawer": "Šuplík aplikací",
   "sectionTasks": "Úkoly",
   "sectionSupport": "Podpora",
@@ -38,6 +39,9 @@
   },
   "noHiddenApps": "Žádné skryté aplikace",
 
+  "leftOfHome": "Vlevo od domovské",
+  "rightOfHome": "Vpravo od domovské",
+  "panelNone": "Žádný",
   "lockLayout": "Uzamknout rozložení",
   "lockLayoutSubtitle": "Zakázat připínání a dlouhé stisknutí na domovské obrazovce",
   "searchOnlyMode": "Pouze hledání",
