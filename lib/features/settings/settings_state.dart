@@ -55,8 +55,7 @@ class SettingsState extends ChangeNotifier {
   LauncherPanel get leftPanel => _leftPanel;
   LauncherPanel get rightPanel => _rightPanel;
   bool get tasksEnabled =>
-      _leftPanel == LauncherPanel.tasks ||
-      _rightPanel == LauncherPanel.tasks;
+      _leftPanel == LauncherPanel.tasks || _rightPanel == LauncherPanel.tasks;
   bool get showHints => _showHints;
   bool get removeOnComplete => _removeOnComplete;
   bool get hideStatusBar => _hideStatusBar;

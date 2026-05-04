@@ -161,9 +161,8 @@ class SettingsScreen extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).push(
                         PageRouteBuilder<void>(
-                          pageBuilder: (_, _, _) => TaskSettingsScreen(
-                            settingsState: settingsState,
-                          ),
+                          pageBuilder: (_, _, _) =>
+                              TaskSettingsScreen(settingsState: settingsState),
                           transitionDuration: Duration.zero,
                           reverseTransitionDuration: Duration.zero,
                         ),
