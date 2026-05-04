@@ -95,7 +95,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lockLayout => '鎖定版面';
 
   @override
-  String get lockLayoutSubtitle => '停用釘選和主畫面/任務畫面的長按';
+  String get lockLayoutSubtitle => '停用釘選和主畫面的長按';
 
   @override
   String get searchOnlyMode => '僅搜尋';

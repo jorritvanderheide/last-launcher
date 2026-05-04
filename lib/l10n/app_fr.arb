@@ -39,7 +39,7 @@
   "noHiddenApps": "Aucune application masquée",
 
   "lockLayout": "Verrouiller la disposition",
-  "lockLayoutSubtitle": "Désactiver l'épinglage et l'appui long sur les écrans d'accueil et de tâches",
+  "lockLayoutSubtitle": "Désactiver l'épinglage et l'appui long sur l'écran d'accueil",
   "searchOnlyMode": "Recherche uniquement",
   "searchOnlyModeSubtitle": "Masquer les noms d'apps, rechercher pour lancer",
   "autoShowKeyboard": "Afficher le clavier",

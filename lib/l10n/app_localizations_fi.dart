@@ -99,7 +99,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Poista kiinnittäminen ja pitkä painallus käytöstä aloitus- ja tehtävänäytöltä';
+      'Poista kiinnittäminen ja pitkä painallus käytöstä aloitusnäytöllä';
 
   @override
   String get searchOnlyMode => 'Vain haku';

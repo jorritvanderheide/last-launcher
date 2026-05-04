@@ -203,7 +203,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
           }
         },
       ),
-      if (!isPinned)
+      if (!isPinned && !widget.settingsState.locked)
         ActionItem(
           icon: Icons.add_circle_outline,
           label: widget.homeState.isFull ? l10n.actionPinFull : l10n.actionPin,
@@ -326,14 +326,12 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
                               key: ValueKey(app.packageName),
                               label: widget.appListState.displayLabel(app),
                               onTap: () => widget.onLaunch(app.packageName),
-                              onLongPress: widget.settingsState.locked
-                                  ? () {}
-                                  : () => setState(
-                                      () => _activeAppPackage =
-                                          _activeAppPackage == app.packageName
-                                          ? null
-                                          : app.packageName,
-                                    ),
+                              onLongPress: () => setState(
+                                () => _activeAppPackage =
+                                    _activeAppPackage == app.packageName
+                                    ? null
+                                    : app.packageName,
+                              ),
                               opacity: opacity,
                             );
                           },

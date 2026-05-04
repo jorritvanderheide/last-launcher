@@ -98,7 +98,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Zakázat připínání a dlouhé stisknutí na domovské obrazovce a obrazovce úkolů';
+      'Zakázat připínání a dlouhé stisknutí na domovské obrazovce';
 
   @override
   String get searchOnlyMode => 'Pouze hledání';

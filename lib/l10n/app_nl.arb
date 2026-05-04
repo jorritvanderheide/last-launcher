@@ -39,7 +39,7 @@
   "noHiddenApps": "Geen verborgen apps",
 
   "lockLayout": "Lay-out vergrendelen",
-  "lockLayoutSubtitle": "Vastmaken en lang indrukken op start- en takenscherm uitschakelen",
+  "lockLayoutSubtitle": "Vastmaken en lang indrukken op startscherm uitschakelen",
   "searchOnlyMode": "Alleen zoeken",
   "searchOnlyModeSubtitle": "Appnamen verbergen, zoeken om te starten",
   "autoShowKeyboard": "Toetsenbord tonen",

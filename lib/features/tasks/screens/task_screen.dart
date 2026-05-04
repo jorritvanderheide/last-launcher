@@ -213,12 +213,9 @@ class TaskScreenState extends State<TaskScreen> {
         child: AppLabel(
           label: task.title,
           onTap: task.done ? null : () => _renameTask(context, task),
-          onLongPress: widget.settingsState.locked
-              ? () {}
-              : () => setState(
-                  () =>
-                      _activeTaskId = _activeTaskId == task.id ? null : task.id,
-                ),
+          onLongPress: () => setState(
+            () => _activeTaskId = _activeTaskId == task.id ? null : task.id,
+          ),
           opacity: task.done ? 0.6 : 1.0,
           textDecoration: task.done ? TextDecoration.lineThrough : null,
           decorationThickness: task.done ? 1.5 : null,

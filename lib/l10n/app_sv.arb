@@ -39,7 +39,7 @@
   "noHiddenApps": "Inga dolda appar",
 
   "lockLayout": "Lås layout",
-  "lockLayoutSubtitle": "Inaktivera fästning och långtryckning på hem- och uppgiftsskärmen",
+  "lockLayoutSubtitle": "Inaktivera fästning och långtryckning på hemskärmen",
   "searchOnlyMode": "Enbart sökning",
   "searchOnlyModeSubtitle": "Dölj appnamn, sök för att starta",
   "autoShowKeyboard": "Visa tangentbord",

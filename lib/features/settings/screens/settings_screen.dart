@@ -111,9 +111,7 @@ class SettingsScreen extends StatelessWidget {
                           title: Text(l10n.includeHiddenInSearch),
                           subtitle: Text(l10n.includeHiddenInSearchSubtitle),
                           value: settingsState.includeHiddenInSearch,
-                          onChanged: count == 0
-                              ? null
-                              : settingsState.setIncludeHiddenInSearch,
+                          onChanged: settingsState.setIncludeHiddenInSearch,
                         ),
                         SwitchListTile(
                           title: Text(l10n.matchOriginalName),

@@ -101,7 +101,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Désactiver l\'épinglage et l\'appui long sur les écrans d\'accueil et de tâches';
+      'Désactiver l\'épinglage et l\'appui long sur l\'écran d\'accueil';
 
   @override
   String get searchOnlyMode => 'Recherche uniquement';

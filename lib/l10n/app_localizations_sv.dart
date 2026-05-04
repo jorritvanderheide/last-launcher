@@ -98,7 +98,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Inaktivera fästning och långtryckning på hem- och uppgiftsskärmen';
+      'Inaktivera fästning och långtryckning på hemskärmen';
 
   @override
   String get searchOnlyMode => 'Enbart sökning';

@@ -99,7 +99,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Anheften und langes Drücken auf Start- und Aufgabenbildschirm deaktivieren';
+      'Anheften und langes Drücken auf dem Startbildschirm deaktivieren';
 
   @override
   String get searchOnlyMode => 'Nur Suche';

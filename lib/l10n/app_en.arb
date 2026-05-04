@@ -39,7 +39,7 @@
   "noHiddenApps": "No hidden apps",
 
   "lockLayout": "Lock layout",
-  "lockLayoutSubtitle": "Disable pinning and long press on the home and task screens",
+  "lockLayoutSubtitle": "Disable pinning and long press on the home screen",
   "searchOnlyMode": "Search only",
   "searchOnlyModeSubtitle": "Hide app names, search to launch",
   "autoShowKeyboard": "Show keyboard",

@@ -98,7 +98,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'होम और कार्य स्क्रीन पर पिन करना और लंबा दबाना अक्षम करें';
+      'होम स्क्रीन पर पिन करना और लंबा दबाना अक्षम करें';
 
   @override
   String get searchOnlyMode => 'केवल खोज';

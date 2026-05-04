@@ -39,7 +39,7 @@
   "noHiddenApps": "Brak ukrytych aplikacji",
 
   "lockLayout": "Zablokuj układ",
-  "lockLayoutSubtitle": "Wyłącz przypinanie i długie naciśnięcie na ekranie głównym i zadań",
+  "lockLayoutSubtitle": "Wyłącz przypinanie i długie naciśnięcie na ekranie głównym",
   "searchOnlyMode": "Tylko wyszukiwanie",
   "searchOnlyModeSubtitle": "Ukryj nazwy aplikacji, uruchamiaj przez wyszukiwanie",
   "autoShowKeyboard": "Pokaż klawiaturę",

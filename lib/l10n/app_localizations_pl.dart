@@ -101,7 +101,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Wyłącz przypinanie i długie naciśnięcie na ekranie głównym i zadań';
+      'Wyłącz przypinanie i długie naciśnięcie na ekranie głównym';
 
   @override
   String get searchOnlyMode => 'Tylko wyszukiwanie';

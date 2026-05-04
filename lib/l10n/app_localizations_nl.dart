@@ -99,7 +99,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Vastmaken en lang indrukken op start- en takenscherm uitschakelen';
+      'Vastmaken en lang indrukken op startscherm uitschakelen';
 
   @override
   String get searchOnlyMode => 'Alleen zoeken';

@@ -100,7 +100,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Desactivar fijar apps y la pulsación larga en pantallas de inicio y tareas';
+      'Desactivar fijar apps y la pulsación larga en la pantalla de inicio';
 
   @override
   String get searchOnlyMode => 'Solo búsqueda';

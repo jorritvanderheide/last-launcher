@@ -98,7 +98,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Disable pinning and long press on the home and task screens';
+      'Disable pinning and long press on the home screen';
 
   @override
   String get searchOnlyMode => 'Search only';

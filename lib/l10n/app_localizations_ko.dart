@@ -95,7 +95,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get lockLayout => '레이아웃 잠금';
 
   @override
-  String get lockLayoutSubtitle => '고정 및 홈/할 일 화면의 길게 누르기 비활성화';
+  String get lockLayoutSubtitle => '고정 및 홈 화면의 길게 누르기 비활성화';
 
   @override
   String get searchOnlyMode => '검색 전용';

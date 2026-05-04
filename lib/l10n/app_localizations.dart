@@ -293,7 +293,7 @@ abstract class AppLocalizations {
   /// No description provided for @lockLayoutSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Disable pinning and long press on the home and task screens'**
+  /// **'Disable pinning and long press on the home screen'**
   String get lockLayoutSubtitle;
 
   /// No description provided for @searchOnlyMode.

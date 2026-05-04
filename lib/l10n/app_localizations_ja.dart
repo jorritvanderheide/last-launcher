@@ -95,7 +95,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lockLayout => 'レイアウトをロック';
 
   @override
-  String get lockLayoutSubtitle => 'ピン留めとホーム・タスク画面の長押しを無効化';
+  String get lockLayoutSubtitle => 'ピン留めとホーム画面の長押しを無効化';
 
   @override
   String get searchOnlyMode => '検索のみ';

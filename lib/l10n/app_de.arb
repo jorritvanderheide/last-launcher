@@ -39,7 +39,7 @@
   "noHiddenApps": "Keine versteckten Apps",
 
   "lockLayout": "Layout sperren",
-  "lockLayoutSubtitle": "Anheften und langes Drücken auf Start- und Aufgabenbildschirm deaktivieren",
+  "lockLayoutSubtitle": "Anheften und langes Drücken auf dem Startbildschirm deaktivieren",
   "searchOnlyMode": "Nur Suche",
   "searchOnlyModeSubtitle": "App-Namen ausblenden, zum Starten suchen",
   "autoShowKeyboard": "Tastatur anzeigen",

@@ -99,7 +99,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get lockLayoutSubtitle =>
-      'Desativar fixar e o toque longo nos ecrãs inicial e de tarefas';
+      'Desativar fixar e o toque longo no ecrã inicial';
 
   @override
   String get searchOnlyMode => 'Apenas pesquisa';

@@ -39,7 +39,7 @@
   "noHiddenApps": "कोई छुपे हुए ऐप्स नहीं",
 
   "lockLayout": "लेआउट लॉक करें",
-  "lockLayoutSubtitle": "होम और कार्य स्क्रीन पर पिन करना और लंबा दबाना अक्षम करें",
+  "lockLayoutSubtitle": "होम स्क्रीन पर पिन करना और लंबा दबाना अक्षम करें",
   "searchOnlyMode": "केवल खोज",
   "searchOnlyModeSubtitle": "ऐप के नाम छुपाएँ, खोजकर खोलें",
   "autoShowKeyboard": "कीबोर्ड दिखाएँ",
