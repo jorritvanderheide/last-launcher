@@ -42,16 +42,7 @@ class AppLabel extends StatelessWidget {
       child: _GlitchText(label: label, style: style),
     );
 
-    final content = leading == null
-        ? text
-        : Row(
-            children: [
-              leading!,
-              Expanded(child: text),
-            ],
-          );
-
-    return Semantics(
+    final tappable = Semantics(
       button: true,
       child: InkWell(
         onTap: onTap,
@@ -59,11 +50,20 @@ class AppLabel extends StatelessWidget {
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
         focusColor: Theme.of(context).colorScheme.onSurface.withAlpha(30),
-        child: opacity < 1.0
-            ? Opacity(opacity: opacity, child: content)
-            : content,
+        child: text,
       ),
     );
+
+    final content = leading == null
+        ? tappable
+        : Row(
+            children: [
+              leading!,
+              Expanded(child: tappable),
+            ],
+          );
+
+    return opacity < 1.0 ? Opacity(opacity: opacity, child: content) : content;
   }
 }
 
