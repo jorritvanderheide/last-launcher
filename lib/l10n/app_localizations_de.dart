@@ -206,7 +206,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get hintSwipeUp => 'Nach oben wischen zum Suchen';
 
   @override
-  String get hintSwipeRight => 'Nach rechts wischen für Aufgaben';
+  String hintSwipeRightFor(String module) {
+    return 'Nach rechts wischen für $module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return 'Nach links wischen für $module';
+  }
 
   @override
   String get hintLongPress => 'Lange drücken für Einstellungen';

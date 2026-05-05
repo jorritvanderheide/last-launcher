@@ -75,7 +75,8 @@
   "aboutSubtitle": "버전 및 라이선스",
 
   "hintSwipeUp": "위로 스와이프하여 검색",
-  "hintSwipeRight": "오른쪽으로 스와이프하여 할 일",
+  "hintSwipeRightFor": "오른쪽으로 스와이프: {module}",
+  "hintSwipeLeftFor": "왼쪽으로 스와이프: {module}",
   "hintLongPress": "길게 눌러 설정",
 
   "noResults": "결과 없음",

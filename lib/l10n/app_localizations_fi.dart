@@ -203,7 +203,14 @@ class AppLocalizationsFi extends AppLocalizations {
   String get hintSwipeUp => 'Pyyhkäise ylös hakeaksesi';
 
   @override
-  String get hintSwipeRight => 'Pyyhkäise oikealle tehtäviin';
+  String hintSwipeRightFor(String module) {
+    return 'Pyyhkäise oikealle: $module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return 'Pyyhkäise vasemmalle: $module';
+  }
 
   @override
   String get hintLongPress => 'Paina pitkään asetuksiin';

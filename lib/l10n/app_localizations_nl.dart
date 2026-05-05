@@ -204,7 +204,14 @@ class AppLocalizationsNl extends AppLocalizations {
   String get hintSwipeUp => 'Veeg omhoog om te zoeken';
 
   @override
-  String get hintSwipeRight => 'Veeg naar rechts voor taken';
+  String hintSwipeRightFor(String module) {
+    return 'Veeg naar rechts voor $module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return 'Veeg naar links voor $module';
+  }
 
   @override
   String get hintLongPress => 'Lang drukken voor instellingen';

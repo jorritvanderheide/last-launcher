@@ -75,7 +75,8 @@
   "aboutSubtitle": "Version och licenser",
 
   "hintSwipeUp": "Svep uppåt för att söka",
-  "hintSwipeRight": "Svep höger för uppgifter",
+  "hintSwipeRightFor": "Svep höger för {module}",
+  "hintSwipeLeftFor": "Svep vänster för {module}",
   "hintLongPress": "Tryck länge för inställningar",
 
   "noResults": "Inga resultat",

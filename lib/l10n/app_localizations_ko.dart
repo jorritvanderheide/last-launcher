@@ -194,7 +194,14 @@ class AppLocalizationsKo extends AppLocalizations {
   String get hintSwipeUp => '위로 스와이프하여 검색';
 
   @override
-  String get hintSwipeRight => '오른쪽으로 스와이프하여 할 일';
+  String hintSwipeRightFor(String module) {
+    return '오른쪽으로 스와이프: $module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return '왼쪽으로 스와이프: $module';
+  }
 
   @override
   String get hintLongPress => '길게 눌러 설정';

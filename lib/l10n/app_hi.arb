@@ -75,7 +75,8 @@
   "aboutSubtitle": "संस्करण और लाइसेंस",
 
   "hintSwipeUp": "खोजने के लिए ऊपर स्वाइप करें",
-  "hintSwipeRight": "कार्यों के लिए दाएँ स्वाइप करें",
+  "hintSwipeRightFor": "{module} के लिए दाएँ स्वाइप करें",
+  "hintSwipeLeftFor": "{module} के लिए बाएँ स्वाइप करें",
   "hintLongPress": "सेटिंग्स के लिए लंबा दबाएँ",
 
   "noResults": "कोई परिणाम नहीं",

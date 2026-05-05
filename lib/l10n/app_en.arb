@@ -75,7 +75,18 @@
   "aboutSubtitle": "Version and licenses",
 
   "hintSwipeUp": "Swipe up to search",
-  "hintSwipeRight": "Swipe right for tasks",
+  "hintSwipeRightFor": "Swipe right for {module}",
+  "@hintSwipeRightFor": {
+    "placeholders": {
+      "module": {"type": "String"}
+    }
+  },
+  "hintSwipeLeftFor": "Swipe left for {module}",
+  "@hintSwipeLeftFor": {
+    "placeholders": {
+      "module": {"type": "String"}
+    }
+  },
   "hintLongPress": "Long press for settings",
 
   "noResults": "No results",

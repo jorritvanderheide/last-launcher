@@ -75,7 +75,8 @@
   "aboutSubtitle": "Versie en licenties",
 
   "hintSwipeUp": "Veeg omhoog om te zoeken",
-  "hintSwipeRight": "Veeg naar rechts voor taken",
+  "hintSwipeRightFor": "Veeg naar rechts voor {module}",
+  "hintSwipeLeftFor": "Veeg naar links voor {module}",
   "hintLongPress": "Lang drukken voor instellingen",
 
   "noResults": "Geen resultaten",

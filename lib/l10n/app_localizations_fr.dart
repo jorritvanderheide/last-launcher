@@ -208,7 +208,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get hintSwipeUp => 'Glisser vers le haut pour rechercher';
 
   @override
-  String get hintSwipeRight => 'Glisser vers la droite pour les tâches';
+  String hintSwipeRightFor(String module) {
+    return 'Glissez à droite pour $module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return 'Glissez à gauche pour $module';
+  }
 
   @override
   String get hintLongPress => 'Appui long pour les paramètres';

@@ -75,7 +75,8 @@
   "aboutSubtitle": "版本與授權",
 
   "hintSwipeUp": "向上滑動以搜尋",
-  "hintSwipeRight": "向右滑動以查看任務",
+  "hintSwipeRightFor": "向右滑動：{module}",
+  "hintSwipeLeftFor": "向左滑動：{module}",
   "hintLongPress": "長按以開啟設定",
 
   "noResults": "沒有結果",

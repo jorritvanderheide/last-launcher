@@ -202,7 +202,14 @@ class AppLocalizationsSv extends AppLocalizations {
   String get hintSwipeUp => 'Svep uppåt för att söka';
 
   @override
-  String get hintSwipeRight => 'Svep höger för uppgifter';
+  String hintSwipeRightFor(String module) {
+    return 'Svep höger för $module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return 'Svep vänster för $module';
+  }
 
   @override
   String get hintLongPress => 'Tryck länge för inställningar';

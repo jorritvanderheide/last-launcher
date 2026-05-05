@@ -199,7 +199,14 @@ class AppLocalizationsHi extends AppLocalizations {
   String get hintSwipeUp => 'खोजने के लिए ऊपर स्वाइप करें';
 
   @override
-  String get hintSwipeRight => 'कार्यों के लिए दाएँ स्वाइप करें';
+  String hintSwipeRightFor(String module) {
+    return '$module के लिए दाएँ स्वाइप करें';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return '$module के लिए बाएँ स्वाइप करें';
+  }
 
   @override
   String get hintLongPress => 'सेटिंग्स के लिए लंबा दबाएँ';

@@ -194,7 +194,14 @@ class AppLocalizationsJa extends AppLocalizations {
   String get hintSwipeUp => '上にスワイプして検索';
 
   @override
-  String get hintSwipeRight => '右にスワイプしてタスク';
+  String hintSwipeRightFor(String module) {
+    return '右にスワイプで$module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return '左にスワイプで$module';
+  }
 
   @override
   String get hintLongPress => '長押しで設定';

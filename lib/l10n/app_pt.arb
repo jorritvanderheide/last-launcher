@@ -75,7 +75,8 @@
   "aboutSubtitle": "Versão e licenças",
 
   "hintSwipeUp": "Desliza para cima para pesquisar",
-  "hintSwipeRight": "Desliza para a direita para as tarefas",
+  "hintSwipeRightFor": "Desliza para a direita para {module}",
+  "hintSwipeLeftFor": "Desliza para a esquerda para {module}",
   "hintLongPress": "Prime longamente para as definições",
 
   "noResults": "Sem resultados",

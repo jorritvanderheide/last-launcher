@@ -75,7 +75,8 @@
   "aboutSubtitle": "Wersja i licencje",
 
   "hintSwipeUp": "Przesuń w górę, aby szukać",
-  "hintSwipeRight": "Przesuń w prawo, aby zobaczyć zadania",
+  "hintSwipeRightFor": "Przesuń w prawo, aby otworzyć {module}",
+  "hintSwipeLeftFor": "Przesuń w lewo, aby otworzyć {module}",
   "hintLongPress": "Przytrzymaj, aby otworzyć ustawienia",
 
   "noResults": "Brak wyników",

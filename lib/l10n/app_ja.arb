@@ -75,7 +75,8 @@
   "aboutSubtitle": "バージョンとライセンス",
 
   "hintSwipeUp": "上にスワイプして検索",
-  "hintSwipeRight": "右にスワイプしてタスク",
+  "hintSwipeRightFor": "右にスワイプで{module}",
+  "hintSwipeLeftFor": "左にスワイプで{module}",
   "hintLongPress": "長押しで設定",
 
   "noResults": "結果なし",

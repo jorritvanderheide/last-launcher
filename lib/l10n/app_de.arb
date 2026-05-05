@@ -75,7 +75,8 @@
   "aboutSubtitle": "Version und Lizenzen",
 
   "hintSwipeUp": "Nach oben wischen zum Suchen",
-  "hintSwipeRight": "Nach rechts wischen für Aufgaben",
+  "hintSwipeRightFor": "Nach rechts wischen für {module}",
+  "hintSwipeLeftFor": "Nach links wischen für {module}",
   "hintLongPress": "Lange drücken für Einstellungen",
 
   "noResults": "Keine Ergebnisse",

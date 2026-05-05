@@ -204,7 +204,14 @@ class AppLocalizationsPt extends AppLocalizations {
   String get hintSwipeUp => 'Desliza para cima para pesquisar';
 
   @override
-  String get hintSwipeRight => 'Desliza para a direita para as tarefas';
+  String hintSwipeRightFor(String module) {
+    return 'Desliza para a direita para $module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return 'Desliza para a esquerda para $module';
+  }
 
   @override
   String get hintLongPress => 'Prime longamente para as definições';

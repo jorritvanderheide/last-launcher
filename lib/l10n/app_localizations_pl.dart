@@ -205,7 +205,14 @@ class AppLocalizationsPl extends AppLocalizations {
   String get hintSwipeUp => 'Przesuń w górę, aby szukać';
 
   @override
-  String get hintSwipeRight => 'Przesuń w prawo, aby zobaczyć zadania';
+  String hintSwipeRightFor(String module) {
+    return 'Przesuń w prawo, aby otworzyć $module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return 'Przesuń w lewo, aby otworzyć $module';
+  }
 
   @override
   String get hintLongPress => 'Przytrzymaj, aby otworzyć ustawienia';

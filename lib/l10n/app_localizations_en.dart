@@ -198,7 +198,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hintSwipeUp => 'Swipe up to search';
 
   @override
-  String get hintSwipeRight => 'Swipe right for tasks';
+  String hintSwipeRightFor(String module) {
+    return 'Swipe right for $module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return 'Swipe left for $module';
+  }
 
   @override
   String get hintLongPress => 'Long press for settings';

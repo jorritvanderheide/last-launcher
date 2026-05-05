@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/modules/launcher_panel.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
@@ -99,9 +100,14 @@ class HomeScreenState extends State<HomeScreen> {
                 final apps = widget.homeState.pinnedApps;
                 if (apps.isEmpty && widget.settingsState.showHints) {
                   final l10n = AppLocalizations.of(context)!;
+                  final left = widget.settingsState.leftPanel;
+                  final right = widget.settingsState.rightPanel;
                   final lines = [
                     l10n.hintSwipeUp,
-                    if (widget.settingsState.tasksEnabled) l10n.hintSwipeRight,
+                    if (left != LauncherPanel.none)
+                      l10n.hintSwipeRightFor(left.localizedName(context)),
+                    if (right != LauncherPanel.none)
+                      l10n.hintSwipeLeftFor(right.localizedName(context)),
                     l10n.hintLongPress,
                   ];
                   final style = Theme.of(context).textTheme.titleLarge

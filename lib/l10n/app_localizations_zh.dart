@@ -194,7 +194,14 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hintSwipeUp => '向上滑動以搜尋';
 
   @override
-  String get hintSwipeRight => '向右滑動以查看任務';
+  String hintSwipeRightFor(String module) {
+    return '向右滑動：$module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return '向左滑動：$module';
+  }
 
   @override
   String get hintLongPress => '長按以開啟設定';

@@ -75,7 +75,8 @@
   "aboutSubtitle": "Verze a licence",
 
   "hintSwipeUp": "Přejetím nahoru vyhledávejte",
-  "hintSwipeRight": "Přejetím doprava zobrazíte úkoly",
+  "hintSwipeRightFor": "Přejeďte vpravo pro {module}",
+  "hintSwipeLeftFor": "Přejeďte vlevo pro {module}",
   "hintLongPress": "Dlouhým stiskem otevřete nastavení",
 
   "noResults": "Žádné výsledky",

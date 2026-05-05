@@ -75,7 +75,8 @@
   "aboutSubtitle": "Versio ja lisenssit",
 
   "hintSwipeUp": "Pyyhkäise ylös hakeaksesi",
-  "hintSwipeRight": "Pyyhkäise oikealle tehtäviin",
+  "hintSwipeRightFor": "Pyyhkäise oikealle: {module}",
+  "hintSwipeLeftFor": "Pyyhkäise vasemmalle: {module}",
   "hintLongPress": "Paina pitkään asetuksiin",
 
   "noResults": "Ei tuloksia",

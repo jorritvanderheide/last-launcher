@@ -203,7 +203,14 @@ class AppLocalizationsCs extends AppLocalizations {
   String get hintSwipeUp => 'Přejetím nahoru vyhledávejte';
 
   @override
-  String get hintSwipeRight => 'Přejetím doprava zobrazíte úkoly';
+  String hintSwipeRightFor(String module) {
+    return 'Přejeďte vpravo pro $module';
+  }
+
+  @override
+  String hintSwipeLeftFor(String module) {
+    return 'Přejeďte vlevo pro $module';
+  }
 
   @override
   String get hintLongPress => 'Dlouhým stiskem otevřete nastavení';
