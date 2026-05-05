@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "Automatické spuštění při shodě",
   "autoLaunchOnMatchSubtitle": "Spustit, když odpovídá jedna aplikace",
 
-  "taskScreen": "Obrazovka úkolů",
-  "taskScreenSubtitle": "Přejetím doprava zobrazíte úkoly",
+  "panelTasks": "úkoly",
   "removeOnComplete": "Odstranit po dokončení",
   "removeOnCompleteSubtitle": "Odstranit úkoly po označení jako hotové",
   "clearCompletedDaily": "Denně mazat dokončené",
@@ -74,7 +73,7 @@
   "openSourceLicenses": "Open source licence",
   "aboutSubtitle": "Verze a licence",
 
-  "hintSwipeUp": "Přejetím nahoru vyhledávejte",
+  "hintSwipeUp": "Přejeďte nahoru pro aplikace",
   "hintSwipeRightFor": "Přejeďte vpravo pro {module}",
   "hintSwipeLeftFor": "Přejeďte vlevo pro {module}",
   "hintLongPress": "Dlouhým stiskem otevřete nastavení",

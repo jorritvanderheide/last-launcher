@@ -12,11 +12,22 @@ enum LauncherPanel {
     );
   }
 
-  String localizedName(BuildContext context) {
+  /// Title-case name shown in pickers and section headers.
+  String displayName(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return switch (this) {
       LauncherPanel.none => l10n.panelNone,
-      LauncherPanel.tasks => l10n.taskScreen,
+      LauncherPanel.tasks => l10n.sectionTasks,
+    };
+  }
+
+  /// In-sentence form used inside hint strings (lowercase in English,
+  /// follows the language's grammar in others).
+  String hintName(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return switch (this) {
+      LauncherPanel.none => l10n.panelNone,
+      LauncherPanel.tasks => l10n.panelTasks,
     };
   }
 }

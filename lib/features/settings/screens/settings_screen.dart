@@ -313,7 +313,7 @@ class _PanelListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(title),
-      subtitle: Text(current.localizedName(context)),
+      subtitle: Text(current.displayName(context)),
       onTap: () async {
         final result = await showDialog<LauncherPanel>(
           context: context,
@@ -329,7 +329,7 @@ class _PanelListTile extends StatelessWidget {
                     for (final option in LauncherPanel.values)
                       RadioListTile<LauncherPanel>(
                         value: option,
-                        title: Text(option.localizedName(context)),
+                        title: Text(option.displayName(context)),
                       ),
                   ],
                 ),

@@ -137,10 +137,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get autoLaunchOnMatchSubtitle => 'Launch when one app matches';
 
   @override
-  String get taskScreen => 'Task screen';
-
-  @override
-  String get taskScreenSubtitle => 'Swipe right from home to view tasks';
+  String get panelTasks => 'tasks';
 
   @override
   String get removeOnComplete => 'Remove on complete';
@@ -195,7 +192,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutSubtitle => 'Version and licenses';
 
   @override
-  String get hintSwipeUp => 'Swipe up to search';
+  String get hintSwipeUp => 'Swipe up for apps';
 
   @override
   String hintSwipeRightFor(String module) {

@@ -134,10 +134,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get autoLaunchOnMatchSubtitle => '當只有一個應用程式符合時自動開啟';
 
   @override
-  String get taskScreen => '任務畫面';
-
-  @override
-  String get taskScreenSubtitle => '從主畫面向右滑動以查看任務';
+  String get panelTasks => '任務';
 
   @override
   String get removeOnComplete => '完成後移除';
@@ -191,7 +188,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get aboutSubtitle => '版本與授權';
 
   @override
-  String get hintSwipeUp => '向上滑動以搜尋';
+  String get hintSwipeUp => '向上滑動：應用程式';
 
   @override
   String hintSwipeRightFor(String module) {

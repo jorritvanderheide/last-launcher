@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "一致時に自動起動",
   "autoLaunchOnMatchSubtitle": "一つのアプリが一致したら起動",
 
-  "taskScreen": "タスク画面",
-  "taskScreenSubtitle": "ホームから右にスワイプしてタスクを表示",
+  "panelTasks": "タスク",
   "removeOnComplete": "完了時に削除",
   "removeOnCompleteSubtitle": "完了したタスクを削除",
   "clearCompletedDaily": "完了タスクを毎日クリア",
@@ -74,7 +73,7 @@
   "openSourceLicenses": "オープンソースライセンス",
   "aboutSubtitle": "バージョンとライセンス",
 
-  "hintSwipeUp": "上にスワイプして検索",
+  "hintSwipeUp": "上にスワイプでアプリ",
   "hintSwipeRightFor": "右にスワイプで{module}",
   "hintSwipeLeftFor": "左にスワイプで{module}",
   "hintLongPress": "長押しで設定",

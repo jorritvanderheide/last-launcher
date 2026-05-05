@@ -143,10 +143,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get autoLaunchOnMatchSubtitle => 'Uruchom, gdy pasuje jedna aplikacja';
 
   @override
-  String get taskScreen => 'Ekran zadań';
-
-  @override
-  String get taskScreenSubtitle => 'Przesuń w prawo, aby zobaczyć zadania';
+  String get panelTasks => 'zadania';
 
   @override
   String get removeOnComplete => 'Usuń po ukończeniu';
@@ -202,16 +199,16 @@ class AppLocalizationsPl extends AppLocalizations {
   String get aboutSubtitle => 'Wersja i licencje';
 
   @override
-  String get hintSwipeUp => 'Przesuń w górę, aby szukać';
+  String get hintSwipeUp => 'Przesuń w górę dla aplikacji';
 
   @override
   String hintSwipeRightFor(String module) {
-    return 'Przesuń w prawo, aby otworzyć $module';
+    return 'Przesuń w prawo dla $module';
   }
 
   @override
   String hintSwipeLeftFor(String module) {
-    return 'Przesuń w lewo, aby otworzyć $module';
+    return 'Przesuń w lewo dla $module';
   }
 
   @override

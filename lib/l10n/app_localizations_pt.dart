@@ -142,10 +142,7 @@ class AppLocalizationsPt extends AppLocalizations {
       'Abrir quando apenas uma aplicação corresponder';
 
   @override
-  String get taskScreen => 'Ecrã de tarefas';
-
-  @override
-  String get taskScreenSubtitle => 'Desliza para a direita para ver as tarefas';
+  String get panelTasks => 'tarefas';
 
   @override
   String get removeOnComplete => 'Remover ao concluir';
@@ -201,16 +198,16 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aboutSubtitle => 'Versão e licenças';
 
   @override
-  String get hintSwipeUp => 'Desliza para cima para pesquisar';
+  String get hintSwipeUp => 'Desliza para cima para apps';
 
   @override
   String hintSwipeRightFor(String module) {
-    return 'Desliza para a direita para $module';
+    return 'Desliza à direita para $module';
   }
 
   @override
   String hintSwipeLeftFor(String module) {
-    return 'Desliza para a esquerda para $module';
+    return 'Desliza à esquerda para $module';
   }
 
   @override

@@ -141,10 +141,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get autoLaunchOnMatchSubtitle => 'Käynnistä, kun yksi sovellus täsmää';
 
   @override
-  String get taskScreen => 'Tehtävänäkymä';
-
-  @override
-  String get taskScreenSubtitle => 'Pyyhkäise oikealle nähdäksesi tehtävät';
+  String get panelTasks => 'tehtävät';
 
   @override
   String get removeOnComplete => 'Poista valmistuttua';
@@ -200,7 +197,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get aboutSubtitle => 'Versio ja lisenssit';
 
   @override
-  String get hintSwipeUp => 'Pyyhkäise ylös hakeaksesi';
+  String get hintSwipeUp => 'Pyyhkäise ylös sovelluksiin';
 
   @override
   String hintSwipeRightFor(String module) {

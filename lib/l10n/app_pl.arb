@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "Automatyczne uruchamianie",
   "autoLaunchOnMatchSubtitle": "Uruchom, gdy pasuje jedna aplikacja",
 
-  "taskScreen": "Ekran zadań",
-  "taskScreenSubtitle": "Przesuń w prawo, aby zobaczyć zadania",
+  "panelTasks": "zadania",
   "removeOnComplete": "Usuń po ukończeniu",
   "removeOnCompleteSubtitle": "Usuń zadania po oznaczeniu jako wykonane",
   "clearCompletedDaily": "Codziennie usuwaj ukończone",
@@ -74,9 +73,9 @@
   "openSourceLicenses": "Licencje open source",
   "aboutSubtitle": "Wersja i licencje",
 
-  "hintSwipeUp": "Przesuń w górę, aby szukać",
-  "hintSwipeRightFor": "Przesuń w prawo, aby otworzyć {module}",
-  "hintSwipeLeftFor": "Przesuń w lewo, aby otworzyć {module}",
+  "hintSwipeUp": "Przesuń w górę dla aplikacji",
+  "hintSwipeRightFor": "Przesuń w prawo dla {module}",
+  "hintSwipeLeftFor": "Przesuń w lewo dla {module}",
   "hintLongPress": "Przytrzymaj, aby otworzyć ustawienia",
 
   "noResults": "Brak wyników",

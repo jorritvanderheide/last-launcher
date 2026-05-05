@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "Lancement auto à la correspondance",
   "autoLaunchOnMatchSubtitle": "Lancer quand une seule app correspond",
 
-  "taskScreen": "Écran des tâches",
-  "taskScreenSubtitle": "Glisser vers la droite depuis l'accueil pour voir les tâches",
+  "panelTasks": "les tâches",
   "removeOnComplete": "Supprimer à l'achèvement",
   "removeOnCompleteSubtitle": "Supprimer les tâches quand elles sont terminées",
   "clearCompletedDaily": "Effacer les terminées chaque jour",
@@ -74,7 +73,7 @@
   "openSourceLicenses": "Licences open source",
   "aboutSubtitle": "Version et licences",
 
-  "hintSwipeUp": "Glisser vers le haut pour rechercher",
+  "hintSwipeUp": "Glissez vers le haut pour les apps",
   "hintSwipeRightFor": "Glissez à droite pour {module}",
   "hintSwipeLeftFor": "Glissez à gauche pour {module}",
   "hintLongPress": "Appui long pour les paramètres",

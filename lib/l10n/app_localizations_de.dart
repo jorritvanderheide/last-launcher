@@ -142,11 +142,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Starten, wenn eine App übereinstimmt';
 
   @override
-  String get taskScreen => 'Aufgabenbildschirm';
-
-  @override
-  String get taskScreenSubtitle =>
-      'Vom Startbildschirm nach rechts wischen, um Aufgaben anzuzeigen';
+  String get panelTasks => 'Aufgaben';
 
   @override
   String get removeOnComplete => 'Bei Erledigung entfernen';
@@ -203,7 +199,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get aboutSubtitle => 'Version und Lizenzen';
 
   @override
-  String get hintSwipeUp => 'Nach oben wischen zum Suchen';
+  String get hintSwipeUp => 'Nach oben wischen für Apps';
 
   @override
   String hintSwipeRightFor(String module) {

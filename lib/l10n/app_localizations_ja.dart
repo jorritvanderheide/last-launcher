@@ -134,10 +134,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get autoLaunchOnMatchSubtitle => '一つのアプリが一致したら起動';
 
   @override
-  String get taskScreen => 'タスク画面';
-
-  @override
-  String get taskScreenSubtitle => 'ホームから右にスワイプしてタスクを表示';
+  String get panelTasks => 'タスク';
 
   @override
   String get removeOnComplete => '完了時に削除';
@@ -191,7 +188,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get aboutSubtitle => 'バージョンとライセンス';
 
   @override
-  String get hintSwipeUp => '上にスワイプして検索';
+  String get hintSwipeUp => '上にスワイプでアプリ';
 
   @override
   String hintSwipeRightFor(String module) {

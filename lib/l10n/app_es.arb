@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "Abrir automáticamente al coincidir",
   "autoLaunchOnMatchSubtitle": "Abrir cuando solo una app coincide",
 
-  "taskScreen": "Pantalla de tareas",
-  "taskScreenSubtitle": "Deslizar a la derecha desde el inicio para ver tareas",
+  "panelTasks": "tareas",
   "removeOnComplete": "Eliminar al completar",
   "removeOnCompleteSubtitle": "Eliminar tareas cuando se marcan como hechas",
   "clearCompletedDaily": "Borrar completadas a diario",
@@ -74,9 +73,9 @@
   "openSourceLicenses": "Licencias de código abierto",
   "aboutSubtitle": "Versión y licencias",
 
-  "hintSwipeUp": "Deslizar hacia arriba para buscar",
-  "hintSwipeRightFor": "Desliza a la derecha para {module}",
-  "hintSwipeLeftFor": "Desliza a la izquierda para {module}",
+  "hintSwipeUp": "Desliza arriba para apps",
+  "hintSwipeRightFor": "Desliza derecha para {module}",
+  "hintSwipeLeftFor": "Desliza izquierda para {module}",
   "hintLongPress": "Mantener pulsado para ajustes",
 
   "noResults": "Sin resultados",

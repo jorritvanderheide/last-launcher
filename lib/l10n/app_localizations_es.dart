@@ -142,11 +142,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get autoLaunchOnMatchSubtitle => 'Abrir cuando solo una app coincide';
 
   @override
-  String get taskScreen => 'Pantalla de tareas';
-
-  @override
-  String get taskScreenSubtitle =>
-      'Deslizar a la derecha desde el inicio para ver tareas';
+  String get panelTasks => 'tareas';
 
   @override
   String get removeOnComplete => 'Eliminar al completar';
@@ -203,16 +199,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get aboutSubtitle => 'Versión y licencias';
 
   @override
-  String get hintSwipeUp => 'Deslizar hacia arriba para buscar';
+  String get hintSwipeUp => 'Desliza arriba para apps';
 
   @override
   String hintSwipeRightFor(String module) {
-    return 'Desliza a la derecha para $module';
+    return 'Desliza derecha para $module';
   }
 
   @override
   String hintSwipeLeftFor(String module) {
-    return 'Desliza a la izquierda para $module';
+    return 'Desliza izquierda para $module';
   }
 
   @override

@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "Abrir ao corresponder",
   "autoLaunchOnMatchSubtitle": "Abrir quando apenas uma aplicação corresponder",
 
-  "taskScreen": "Ecrã de tarefas",
-  "taskScreenSubtitle": "Desliza para a direita para ver as tarefas",
+  "panelTasks": "tarefas",
   "removeOnComplete": "Remover ao concluir",
   "removeOnCompleteSubtitle": "Remover tarefas quando marcadas como concluídas",
   "clearCompletedDaily": "Limpar concluídas diariamente",
@@ -74,9 +73,9 @@
   "openSourceLicenses": "Licenças de código aberto",
   "aboutSubtitle": "Versão e licenças",
 
-  "hintSwipeUp": "Desliza para cima para pesquisar",
-  "hintSwipeRightFor": "Desliza para a direita para {module}",
-  "hintSwipeLeftFor": "Desliza para a esquerda para {module}",
+  "hintSwipeUp": "Desliza para cima para apps",
+  "hintSwipeRightFor": "Desliza à direita para {module}",
+  "hintSwipeLeftFor": "Desliza à esquerda para {module}",
   "hintLongPress": "Prime longamente para as definições",
 
   "noResults": "Sem resultados",

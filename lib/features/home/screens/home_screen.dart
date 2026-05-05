@@ -105,9 +105,9 @@ class HomeScreenState extends State<HomeScreen> {
                   final lines = [
                     l10n.hintSwipeUp,
                     if (left != LauncherPanel.none)
-                      l10n.hintSwipeRightFor(left.localizedName(context)),
+                      l10n.hintSwipeRightFor(left.hintName(context)),
                     if (right != LauncherPanel.none)
-                      l10n.hintSwipeLeftFor(right.localizedName(context)),
+                      l10n.hintSwipeLeftFor(right.hintName(context)),
                     l10n.hintLongPress,
                   ];
                   final style = Theme.of(context).textTheme.titleLarge

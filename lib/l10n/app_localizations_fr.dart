@@ -144,11 +144,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Lancer quand une seule app correspond';
 
   @override
-  String get taskScreen => 'Écran des tâches';
-
-  @override
-  String get taskScreenSubtitle =>
-      'Glisser vers la droite depuis l\'accueil pour voir les tâches';
+  String get panelTasks => 'les tâches';
 
   @override
   String get removeOnComplete => 'Supprimer à l\'achèvement';
@@ -205,7 +201,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aboutSubtitle => 'Version et licences';
 
   @override
-  String get hintSwipeUp => 'Glisser vers le haut pour rechercher';
+  String get hintSwipeUp => 'Glissez vers le haut pour les apps';
 
   @override
   String hintSwipeRightFor(String module) {

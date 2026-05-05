@@ -137,10 +137,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get autoLaunchOnMatchSubtitle => 'एक ऐप मिलने पर लॉन्च करें';
 
   @override
-  String get taskScreen => 'कार्य स्क्रीन';
-
-  @override
-  String get taskScreenSubtitle => 'कार्य देखने के लिए होम से दाएँ स्वाइप करें';
+  String get panelTasks => 'कार्य';
 
   @override
   String get removeOnComplete => 'पूरा होने पर हटाएँ';
@@ -196,7 +193,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get aboutSubtitle => 'संस्करण और लाइसेंस';
 
   @override
-  String get hintSwipeUp => 'खोजने के लिए ऊपर स्वाइप करें';
+  String get hintSwipeUp => 'ऐप्स के लिए ऊपर स्वाइप करें';
 
   @override
   String hintSwipeRightFor(String module) {

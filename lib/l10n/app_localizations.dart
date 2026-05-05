@@ -368,17 +368,11 @@ abstract class AppLocalizations {
   /// **'Launch when one app matches'**
   String get autoLaunchOnMatchSubtitle;
 
-  /// No description provided for @taskScreen.
+  /// No description provided for @panelTasks.
   ///
   /// In en, this message translates to:
-  /// **'Task screen'**
-  String get taskScreen;
-
-  /// No description provided for @taskScreenSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Swipe right from home to view tasks'**
-  String get taskScreenSubtitle;
+  /// **'tasks'**
+  String get panelTasks;
 
   /// No description provided for @removeOnComplete.
   ///
@@ -485,7 +479,7 @@ abstract class AppLocalizations {
   /// No description provided for @hintSwipeUp.
   ///
   /// In en, this message translates to:
-  /// **'Swipe up to search'**
+  /// **'Swipe up for apps'**
   String get hintSwipeUp;
 
   /// No description provided for @hintSwipeRightFor.

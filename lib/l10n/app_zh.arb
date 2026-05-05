@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "符合時自動開啟",
   "autoLaunchOnMatchSubtitle": "當只有一個應用程式符合時自動開啟",
 
-  "taskScreen": "任務畫面",
-  "taskScreenSubtitle": "從主畫面向右滑動以查看任務",
+  "panelTasks": "任務",
   "removeOnComplete": "完成後移除",
   "removeOnCompleteSubtitle": "標記為完成後移除任務",
   "clearCompletedDaily": "每日清除已完成",
@@ -74,7 +73,7 @@
   "openSourceLicenses": "開放原始碼授權",
   "aboutSubtitle": "版本與授權",
 
-  "hintSwipeUp": "向上滑動以搜尋",
+  "hintSwipeUp": "向上滑動：應用程式",
   "hintSwipeRightFor": "向右滑動：{module}",
   "hintSwipeLeftFor": "向左滑動：{module}",
   "hintLongPress": "長按以開啟設定",

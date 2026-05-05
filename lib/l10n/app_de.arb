@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "Automatisch starten bei Treffer",
   "autoLaunchOnMatchSubtitle": "Starten, wenn eine App übereinstimmt",
 
-  "taskScreen": "Aufgabenbildschirm",
-  "taskScreenSubtitle": "Vom Startbildschirm nach rechts wischen, um Aufgaben anzuzeigen",
+  "panelTasks": "Aufgaben",
   "removeOnComplete": "Bei Erledigung entfernen",
   "removeOnCompleteSubtitle": "Aufgaben entfernen, wenn sie als erledigt markiert werden",
   "clearCompletedDaily": "Erledigte täglich löschen",
@@ -74,7 +73,7 @@
   "openSourceLicenses": "Open-Source-Lizenzen",
   "aboutSubtitle": "Version und Lizenzen",
 
-  "hintSwipeUp": "Nach oben wischen zum Suchen",
+  "hintSwipeUp": "Nach oben wischen für Apps",
   "hintSwipeRightFor": "Nach rechts wischen für {module}",
   "hintSwipeLeftFor": "Nach links wischen für {module}",
   "hintLongPress": "Lange drücken für Einstellungen",

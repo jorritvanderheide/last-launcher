@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "मिलान पर ऑटो-लॉन्च",
   "autoLaunchOnMatchSubtitle": "एक ऐप मिलने पर लॉन्च करें",
 
-  "taskScreen": "कार्य स्क्रीन",
-  "taskScreenSubtitle": "कार्य देखने के लिए होम से दाएँ स्वाइप करें",
+  "panelTasks": "कार्य",
   "removeOnComplete": "पूरा होने पर हटाएँ",
   "removeOnCompleteSubtitle": "पूर्ण होने पर कार्य हटाएँ",
   "clearCompletedDaily": "रोज़ाना पूर्ण कार्य हटाएँ",
@@ -74,7 +73,7 @@
   "openSourceLicenses": "ओपन सोर्स लाइसेंस",
   "aboutSubtitle": "संस्करण और लाइसेंस",
 
-  "hintSwipeUp": "खोजने के लिए ऊपर स्वाइप करें",
+  "hintSwipeUp": "ऐप्स के लिए ऊपर स्वाइप करें",
   "hintSwipeRightFor": "{module} के लिए दाएँ स्वाइप करें",
   "hintSwipeLeftFor": "{module} के लिए बाएँ स्वाइप करें",
   "hintLongPress": "सेटिंग्स के लिए लंबा दबाएँ",

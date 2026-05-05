@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "Auto-launch on match",
   "autoLaunchOnMatchSubtitle": "Launch when one app matches",
 
-  "taskScreen": "Task screen",
-  "taskScreenSubtitle": "Swipe right from home to view tasks",
+  "panelTasks": "tasks",
   "removeOnComplete": "Remove on complete",
   "removeOnCompleteSubtitle": "Remove tasks when marked as done",
   "clearCompletedDaily": "Clear completed daily",
@@ -74,7 +73,7 @@
   "openSourceLicenses": "Open source licenses",
   "aboutSubtitle": "Version and licenses",
 
-  "hintSwipeUp": "Swipe up to search",
+  "hintSwipeUp": "Swipe up for apps",
   "hintSwipeRightFor": "Swipe right for {module}",
   "@hintSwipeRightFor": {
     "placeholders": {

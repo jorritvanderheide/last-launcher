@@ -139,10 +139,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get autoLaunchOnMatchSubtitle => 'Starta när en app matchar';
 
   @override
-  String get taskScreen => 'Uppgiftsskärm';
-
-  @override
-  String get taskScreenSubtitle => 'Svep höger från hemskärmen för uppgifter';
+  String get panelTasks => 'uppgifter';
 
   @override
   String get removeOnComplete => 'Ta bort vid slutförande';
@@ -199,7 +196,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get aboutSubtitle => 'Version och licenser';
 
   @override
-  String get hintSwipeUp => 'Svep uppåt för att söka';
+  String get hintSwipeUp => 'Svep uppåt för appar';
 
   @override
   String hintSwipeRightFor(String module) {

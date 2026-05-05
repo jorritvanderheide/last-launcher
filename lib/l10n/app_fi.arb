@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "Käynnistä automaattisesti",
   "autoLaunchOnMatchSubtitle": "Käynnistä, kun yksi sovellus täsmää",
 
-  "taskScreen": "Tehtävänäkymä",
-  "taskScreenSubtitle": "Pyyhkäise oikealle nähdäksesi tehtävät",
+  "panelTasks": "tehtävät",
   "removeOnComplete": "Poista valmistuttua",
   "removeOnCompleteSubtitle": "Poista tehtävät, kun ne merkitään valmiiksi",
   "clearCompletedDaily": "Tyhjennä valmiit päivittäin",
@@ -74,7 +73,7 @@
   "openSourceLicenses": "Avoimen lähdekoodin lisenssit",
   "aboutSubtitle": "Versio ja lisenssit",
 
-  "hintSwipeUp": "Pyyhkäise ylös hakeaksesi",
+  "hintSwipeUp": "Pyyhkäise ylös sovelluksiin",
   "hintSwipeRightFor": "Pyyhkäise oikealle: {module}",
   "hintSwipeLeftFor": "Pyyhkäise vasemmalle: {module}",
   "hintLongPress": "Paina pitkään asetuksiin",

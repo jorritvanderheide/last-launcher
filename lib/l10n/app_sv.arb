@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "Starta automatiskt vid träff",
   "autoLaunchOnMatchSubtitle": "Starta när en app matchar",
 
-  "taskScreen": "Uppgiftsskärm",
-  "taskScreenSubtitle": "Svep höger från hemskärmen för uppgifter",
+  "panelTasks": "uppgifter",
   "removeOnComplete": "Ta bort vid slutförande",
   "removeOnCompleteSubtitle": "Ta bort uppgifter när de markeras som klara",
   "clearCompletedDaily": "Rensa klara dagligen",
@@ -74,7 +73,7 @@
   "openSourceLicenses": "Licenser för öppen källkod",
   "aboutSubtitle": "Version och licenser",
 
-  "hintSwipeUp": "Svep uppåt för att söka",
+  "hintSwipeUp": "Svep uppåt för appar",
   "hintSwipeRightFor": "Svep höger för {module}",
   "hintSwipeLeftFor": "Svep vänster för {module}",
   "hintLongPress": "Tryck länge för inställningar",

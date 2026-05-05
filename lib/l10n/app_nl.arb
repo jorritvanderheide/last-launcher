@@ -53,8 +53,7 @@
   "autoLaunchOnMatch": "Automatisch starten bij overeenkomst",
   "autoLaunchOnMatchSubtitle": "Starten wanneer één app overeenkomt",
 
-  "taskScreen": "Takenscherm",
-  "taskScreenSubtitle": "Veeg naar rechts vanaf het startscherm om taken te bekijken",
+  "panelTasks": "taken",
   "removeOnComplete": "Verwijderen bij voltooiing",
   "removeOnCompleteSubtitle": "Taken verwijderen wanneer ze zijn afgerond",
   "clearCompletedDaily": "Voltooide dagelijks wissen",
@@ -74,9 +73,9 @@
   "openSourceLicenses": "Opensourcelicenties",
   "aboutSubtitle": "Versie en licenties",
 
-  "hintSwipeUp": "Veeg omhoog om te zoeken",
-  "hintSwipeRightFor": "Veeg naar rechts voor {module}",
-  "hintSwipeLeftFor": "Veeg naar links voor {module}",
+  "hintSwipeUp": "Veeg omhoog voor apps",
+  "hintSwipeRightFor": "Veeg rechts voor {module}",
+  "hintSwipeLeftFor": "Veeg links voor {module}",
   "hintLongPress": "Lang drukken voor instellingen",
 
   "noResults": "Geen resultaten",

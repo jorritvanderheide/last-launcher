@@ -134,10 +134,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get autoLaunchOnMatchSubtitle => '하나의 앱이 일치하면 실행';
 
   @override
-  String get taskScreen => '할 일 화면';
-
-  @override
-  String get taskScreenSubtitle => '홈에서 오른쪽으로 스와이프하여 할 일 보기';
+  String get panelTasks => '할 일';
 
   @override
   String get removeOnComplete => '완료 시 제거';
@@ -191,7 +188,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get aboutSubtitle => '버전 및 라이선스';
 
   @override
-  String get hintSwipeUp => '위로 스와이프하여 검색';
+  String get hintSwipeUp => '위로 스와이프: 앱';
 
   @override
   String hintSwipeRightFor(String module) {

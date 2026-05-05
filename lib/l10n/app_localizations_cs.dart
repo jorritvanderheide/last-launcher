@@ -141,10 +141,7 @@ class AppLocalizationsCs extends AppLocalizations {
       'Spustit, když odpovídá jedna aplikace';
 
   @override
-  String get taskScreen => 'Obrazovka úkolů';
-
-  @override
-  String get taskScreenSubtitle => 'Přejetím doprava zobrazíte úkoly';
+  String get panelTasks => 'úkoly';
 
   @override
   String get removeOnComplete => 'Odstranit po dokončení';
@@ -200,7 +197,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get aboutSubtitle => 'Verze a licence';
 
   @override
-  String get hintSwipeUp => 'Přejetím nahoru vyhledávejte';
+  String get hintSwipeUp => 'Přejeďte nahoru pro aplikace';
 
   @override
   String hintSwipeRightFor(String module) {

@@ -141,11 +141,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get autoLaunchOnMatchSubtitle => 'Starten wanneer één app overeenkomt';
 
   @override
-  String get taskScreen => 'Takenscherm';
-
-  @override
-  String get taskScreenSubtitle =>
-      'Veeg naar rechts vanaf het startscherm om taken te bekijken';
+  String get panelTasks => 'taken';
 
   @override
   String get removeOnComplete => 'Verwijderen bij voltooiing';
@@ -201,16 +197,16 @@ class AppLocalizationsNl extends AppLocalizations {
   String get aboutSubtitle => 'Versie en licenties';
 
   @override
-  String get hintSwipeUp => 'Veeg omhoog om te zoeken';
+  String get hintSwipeUp => 'Veeg omhoog voor apps';
 
   @override
   String hintSwipeRightFor(String module) {
-    return 'Veeg naar rechts voor $module';
+    return 'Veeg rechts voor $module';
   }
 
   @override
   String hintSwipeLeftFor(String module) {
-    return 'Veeg naar links voor $module';
+    return 'Veeg links voor $module';
   }
 
   @override
