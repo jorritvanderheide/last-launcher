@@ -1,0 +1,1 @@
+• Opraveno: nápovědy bočních panelů nyní odpovídají straně, na které je každý modul

@@ -1,0 +1,1 @@
+• Korjattu: sivupaneelien vihjeet vastaavat nyt kunkin moduulin sijaintia

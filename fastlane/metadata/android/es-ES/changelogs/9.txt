@@ -1,0 +1,1 @@
+• Corregido: las pistas de los paneles laterales ahora reflejan en qué lado está cada módulo

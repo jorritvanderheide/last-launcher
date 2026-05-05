@@ -1,0 +1,1 @@
+• Korrigerat: sidopanelernas tips speglar nu vilken sida varje modul ligger på

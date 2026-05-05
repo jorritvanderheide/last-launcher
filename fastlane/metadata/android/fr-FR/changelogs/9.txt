@@ -1,0 +1,1 @@
+• Correction : les indications des panneaux latéraux reflètent maintenant le côté configuré pour chaque module

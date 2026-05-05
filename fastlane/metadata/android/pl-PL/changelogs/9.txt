@@ -1,0 +1,1 @@
+• Poprawka: wskazówki paneli bocznych odzwierciedlają teraz stronę, na której jest każdy moduł

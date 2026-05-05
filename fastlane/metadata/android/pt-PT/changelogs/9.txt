@@ -1,0 +1,1 @@
+• Corrigido: as dicas dos painéis laterais refletem agora o lado configurado para cada módulo
