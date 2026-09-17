@@ -47,10 +47,17 @@ class MainActivity : FlutterActivity() {
         // Re-hide system bars whenever they reappear (soft IME dismiss, OEM
         // overlays, etc). Predictive back is disabled at the manifest level
         // so the back gesture never reveals bars to begin with.
+        //
+        // Skipped while the IME is showing: the keyboard brings the navigation
+        // bar back with it, and changing window flags mid-IME-animation puts
+        // this listener in the middle of the app drawer's keyboard handling
+        // (see SearchFocusController) for no visible gain. The bars are hidden
+        // again by the same listener once the IME goes away.
         ViewCompat.setOnApplyWindowInsetsListener(window.decorView) { v, insets ->
             if (fullscreenEnabled &&
                 !isFinishing &&
-                insets.isVisible(WindowInsetsCompat.Type.systemBars())
+                insets.isVisible(WindowInsetsCompat.Type.systemBars()) &&
+                !insets.isVisible(WindowInsetsCompat.Type.ime())
             ) {
                 v.post { if (!isFinishing) applyFullscreen() }
             }

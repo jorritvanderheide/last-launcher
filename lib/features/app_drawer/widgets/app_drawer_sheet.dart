@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/search.dart';
+import 'package:last_launcher/shared/search_focus_controller.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
@@ -58,9 +58,10 @@ class AppDrawerSheet extends StatefulWidget {
 
 class _AppDrawerSheetState extends State<AppDrawerSheet>
     with WidgetsBindingObserver {
-  final _focusNode = FocusNode();
   final _scrollController = ScrollController();
   final _textController = TextEditingController();
+  late final _focus = SearchFocusController(autoKeyboard: () => _autoKeyboard);
+
   String? _activeAppKey;
   String? _prevMatchKey;
   SubstringHint? _stableHint;
@@ -87,11 +88,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state != AppLifecycleState.resumed) return;
-    if (!widget.isOpen || !_autoKeyboard) return;
-    // A fast swipe-up after returning to the launcher can process the drag
-    // before Android marks the window as resumed, causing the IME to ignore
-    // the focus request. Retry once we're resumed.
-    _requestKeyboardReliably();
+    _focus.appResumed();
   }
 
   @override
@@ -100,7 +97,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     if (widget.isOpen && !oldWidget.isOpen) {
       _handleOpened();
     } else if (!widget.isOpen && oldWidget.isOpen) {
-      _focusNode.unfocus();
+      _focus.panelClosed();
       _textController.clear();
       _activeAppKey = null;
       _prevMatchKey = null;
@@ -113,24 +110,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
       _scrollController.jumpTo(0);
     }
     widget.isAtTop.value = true;
-    if (_autoKeyboard) {
-      _requestKeyboardReliably();
-    }
-  }
-
-  void _requestKeyboardReliably() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      _focusNode.requestFocus();
-      // After app switch or device unlock the platform sometimes grants focus
-      // but suppresses the keyboard. Ask for it again rather than bouncing
-      // focus: this is a no-op when the IME is already up or animating in, so
-      // a keyboard that was on its way never gets torn down and re-shown.
-      Future.delayed(const Duration(milliseconds: 300), () {
-        if (!mounted || !widget.isOpen || !_focusNode.hasFocus) return;
-        SystemChannels.textInput.invokeMethod('TextInput.show');
-      });
-    });
+    _focus.panelOpened();
   }
 
   @override
@@ -139,7 +119,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     _textController.dispose();
-    _focusNode.dispose();
+    _focus.dispose();
     super.dispose();
   }
 
@@ -171,20 +151,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     if (!_scrollController.hasClients) return;
     if (_activeAppKey != null) setState(() => _activeAppKey = null);
     widget.isAtTop.value = _scrollController.offset <= 0;
-    if (_scrollController.offset > 20 && _focusNode.hasFocus) {
-      _focusNode.unfocus();
-    } else if (_scrollController.offset <= 0 &&
-        !_focusNode.hasFocus &&
-        _autoKeyboard) {
-      _focusNode.requestFocus();
-    }
-  }
-
-  void _onOverscroll(OverscrollNotification notification) {
-    // Only hide keyboard on downward overscroll (scrolling past bottom).
-    if (notification.overscroll > 0 && _focusNode.hasFocus) {
-      _focusNode.unfocus();
-    }
+    _focus.scrolled(_scrollController.offset);
   }
 
   List<AppInfo> get _visibleApps {
@@ -434,7 +401,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
             SliverToBoxAdapter(
               child: AppSearchField(
                 controller: _textController,
-                focusNode: _focusNode,
+                focusNode: _focus.node,
                 onChanged: _onSearchChanged,
                 onSubmit: _onSubmit,
               ),
@@ -455,7 +422,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
               SliverFillRemaining(
                 child: NotificationListener<OverscrollNotification>(
                   onNotification: (notification) {
-                    _onOverscroll(notification);
+                    _focus.overscrolled(notification.overscroll);
                     return false;
                   },
                   child: FadeOverflow(

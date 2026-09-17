@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
+import 'package:last_launcher/shared/search_focus_controller.dart';
 import 'package:last_launcher/shared/widgets/search_field.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/modules/tasks/task.dart';
@@ -8,6 +9,21 @@ import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 import 'package:last_launcher/shared/widgets/rename_dialog.dart';
+
+/// Opacity of completed tasks.
+const _doneOpacity = 0.6;
+
+/// Alpha of the empty-state hint text.
+const _emptyTextAlpha = 130;
+
+/// Horizontal travel before a swipe starts dragging a row.
+const _swipeSlop = 20.0;
+
+/// Fraction of the screen a row must travel to be dismissed.
+const _swipeDismissFraction = 0.3;
+
+/// Opacity a row can fade to while being swiped away.
+const _swipeMinOpacity = 0.3;
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({
@@ -35,9 +51,11 @@ class TaskScreen extends StatefulWidget {
 
 class TaskScreenState extends State<TaskScreen> {
   final _controller = TextEditingController();
-  final _focusNode = FocusNode();
   final _scrollController = ScrollController();
-  double _cumulativeOverscroll = 0;
+  late final _focus = SearchFocusController(
+    autoKeyboard: () => _autoKeyboard,
+    overscrollPolicy: OverscrollPolicy.cumulative,
+  );
 
   late final Listenable _mergedState = Listenable.merge([
     widget.taskState,
@@ -65,11 +83,9 @@ class TaskScreenState extends State<TaskScreen> {
   void didUpdateWidget(TaskScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.isVisible && !oldWidget.isVisible) {
-      if (_autoKeyboard) {
-        _focusNode.requestFocus();
-      }
+      _focus.panelOpened();
     } else if (!widget.isVisible && oldWidget.isVisible) {
-      _focusNode.unfocus();
+      _focus.panelClosed();
       _controller.clear();
       _activeTaskId = null;
       if (_scrollController.hasClients) {
@@ -83,7 +99,7 @@ class TaskScreenState extends State<TaskScreen> {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     _controller.dispose();
-    _focusNode.dispose();
+    _focus.dispose();
     super.dispose();
   }
 
@@ -91,26 +107,7 @@ class TaskScreenState extends State<TaskScreen> {
     if (!_scrollController.hasClients) return;
     if (_isReordering) return;
     if (_activeTaskId != null) setState(() => _activeTaskId = null);
-    if (_scrollController.offset > 20 && _focusNode.hasFocus) {
-      _focusNode.unfocus();
-    } else if (_scrollController.offset <= 0 &&
-        !_focusNode.hasFocus &&
-        _autoKeyboard) {
-      _focusNode.requestFocus();
-    }
-  }
-
-  void _onOverscroll(OverscrollNotification notification) {
-    _cumulativeOverscroll += notification.overscroll;
-    if (_cumulativeOverscroll > 20 && _focusNode.hasFocus) {
-      _focusNode.unfocus();
-      _cumulativeOverscroll = 0;
-    } else if (_cumulativeOverscroll < -20) {
-      if (!_focusNode.hasFocus && _autoKeyboard) {
-        _focusNode.requestFocus();
-      }
-      _cumulativeOverscroll = 0;
-    }
+    _focus.scrolled(_scrollController.offset);
   }
 
   void _onSubmit() {
@@ -132,7 +129,7 @@ class TaskScreenState extends State<TaskScreen> {
     }
 
     _controller.clear();
-    _focusNode.requestFocus();
+    _focus.submitted();
   }
 
   void _completeTask(Task task) {
@@ -203,7 +200,7 @@ class TaskScreenState extends State<TaskScreen> {
           onClose: () => setState(() => _activeTaskId = null),
           textDecoration: task.done ? TextDecoration.lineThrough : null,
           decorationThickness: task.done ? 1.5 : null,
-          opacity: task.done ? 0.6 : 1.0,
+          opacity: task.done ? _doneOpacity : 1.0,
           leading: leading,
         ),
       );
@@ -219,7 +216,7 @@ class TaskScreenState extends State<TaskScreen> {
           onLongPress: () => setState(
             () => _activeTaskId = _activeTaskId == task.id ? null : task.id,
           ),
-          opacity: task.done ? 0.6 : 1.0,
+          opacity: task.done ? _doneOpacity : 1.0,
           textDecoration: task.done ? TextDecoration.lineThrough : null,
           decorationThickness: task.done ? 1.5 : null,
           leading: leading,
@@ -243,7 +240,7 @@ class TaskScreenState extends State<TaskScreen> {
           ),
           AppSearchField(
             controller: _controller,
-            focusNode: _focusNode,
+            focusNode: _focus.node,
             onSubmit: _onSubmit,
           ),
           Expanded(
@@ -280,9 +277,8 @@ class TaskScreenState extends State<TaskScreen> {
                           style: Theme.of(context).textTheme.titleLarge
                               ?.copyWith(
                                 fontSize: AppLabel.fontSize,
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurface.withAlpha(130),
+                                color: Theme.of(context).colorScheme.onSurface
+                                    .withAlpha(_emptyTextAlpha),
                               ),
                         );
                       },
@@ -292,9 +288,9 @@ class TaskScreenState extends State<TaskScreen> {
                 return NotificationListener<ScrollNotification>(
                   onNotification: (notification) {
                     if (notification is ScrollStartNotification) {
-                      _cumulativeOverscroll = 0;
+                      _focus.scrollStarted();
                     } else if (notification is OverscrollNotification) {
-                      _onOverscroll(notification);
+                      _focus.overscrolled(notification.overscroll);
                     }
                     return false;
                   },
@@ -412,7 +408,7 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
         final dx = (e.position.dx - start.dx) * _sign;
         final dy = (e.position.dy - start.dy).abs();
         if (!_tracking) {
-          if (dx.abs() < 20) return;
+          if (dx.abs() < _swipeSlop) return;
           if (dx.abs() > dy * 2 && dx > 0) {
             _tracking = true;
           } else {
@@ -420,12 +416,14 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
             return;
           }
         }
-        setState(() => _progress = (dx - 20).clamp(0.0, double.infinity));
+        setState(
+          () => _progress = (dx - _swipeSlop).clamp(0.0, double.infinity),
+        );
       },
       onPointerUp: (_) {
         if (_tracking) {
           final screenWidth = MediaQuery.sizeOf(context).width;
-          if (_progress > screenWidth * 0.3) {
+          if (_progress > screenWidth * _swipeDismissFraction) {
             widget.onDismissed();
           } else {
             _animateSnapBack();
@@ -444,7 +442,7 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
         child: Opacity(
           opacity: _progress > 0
               ? (1 - _progress / MediaQuery.sizeOf(context).width).clamp(
-                  0.3,
+                  _swipeMinOpacity,
                   1.0,
                 )
               : 1.0,
