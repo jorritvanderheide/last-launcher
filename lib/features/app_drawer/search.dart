@@ -11,7 +11,6 @@ class SearchQuery {
   final bool? requireWorkApp;
 
   String get needle => foldForSearch(searchTerm);
-  String get needleClean => needle;
 
   SearchQuery._(this.raw, this.searchTerm, this.requireWorkApp);
 
@@ -86,17 +85,16 @@ class DisplayCleanStartsWith extends SearchMatcher {
   const DisplayCleanStartsWith();
   @override
   bool matches(AppSearchContext ctx, SearchQuery query) =>
-      query.needleClean.length >= 2 &&
-      ctx.displayClean.startsWith(query.needleClean);
+      query.needle.length >= 2 && ctx.displayClean.startsWith(query.needle);
 }
 
 class OriginalCleanStartsWith extends SearchMatcher {
   const OriginalCleanStartsWith();
   @override
   bool matches(AppSearchContext ctx, SearchQuery query) =>
-      query.needleClean.length >= 2 &&
+      query.needle.length >= 2 &&
       ctx.checkOriginal &&
-      ctx.originalClean.startsWith(query.needleClean);
+      ctx.originalClean.startsWith(query.needle);
 }
 
 class DisplayContains extends SearchMatcher {
@@ -110,8 +108,7 @@ class DisplayCleanContains extends SearchMatcher {
   const DisplayCleanContains();
   @override
   bool matches(AppSearchContext ctx, SearchQuery query) =>
-      query.needleClean.length >= 2 &&
-      ctx.displayClean.contains(query.needleClean);
+      query.needle.length >= 2 && ctx.displayClean.contains(query.needle);
 }
 
 class OriginalContains extends SearchMatcher {
@@ -125,9 +122,9 @@ class OriginalCleanContains extends SearchMatcher {
   const OriginalCleanContains();
   @override
   bool matches(AppSearchContext ctx, SearchQuery query) =>
-      query.needleClean.length >= 2 &&
+      query.needle.length >= 2 &&
       ctx.checkOriginal &&
-      ctx.originalClean.contains(query.needleClean);
+      ctx.originalClean.contains(query.needle);
 }
 
 // --- Priority-ordered matcher pipeline ---
