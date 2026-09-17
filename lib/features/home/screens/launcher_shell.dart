@@ -92,11 +92,13 @@ class _LauncherShellState extends State<LauncherShell>
   bool _isReorderingHome = false;
 
   late final VoidCallback _onOpenSettingsHandler;
+  late final VoidCallback _onGoHomeHandler;
 
   @override
   void initState() {
     super.initState();
     _onOpenSettingsHandler = _openSettings;
+    _onGoHomeHandler = _goHome;
     WidgetsBinding.instance.addObserver(this);
     _sheetAnim = AnimationController(vsync: this, duration: Duration.zero)
       ..addListener(() {
@@ -113,6 +115,7 @@ class _LauncherShellState extends State<LauncherShell>
         });
       });
     widget.appChannel.onOpenSettings = _onOpenSettingsHandler;
+    widget.appChannel.onGoHome = _onGoHomeHandler;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
       if (await widget.appChannel.consumePendingOpenSettings()) {
@@ -144,6 +147,27 @@ class _LauncherShellState extends State<LauncherShell>
     }
   }
 
+  /// The user pressed home. Unwind to the home page in one step, wherever
+  /// they were: a pushed route, a side panel or the app drawer. Deliberately
+  /// takes the same route as the back gesture rather than [_resetToHome],
+  /// which snaps rather than animates because nothing is on screen to see it.
+  void _goHome() {
+    final navigator = Navigator.of(context);
+    if (navigator.canPop()) {
+      navigator.popUntil((route) => route.isFirst);
+    }
+    _dismissPanelActions();
+    if (_drawerOpen) _closeDrawer();
+    if (!_onHomePage) _animatePageTo(0);
+  }
+
+  /// Closes any open row action bar on the home grid and both side panels.
+  void _dismissPanelActions() {
+    _homeKey.currentState?.dismissActions();
+    widget.settingsState.leftPanel.dismissActions();
+    widget.settingsState.rightPanel.dismissActions();
+  }
+
   void _resetToHome() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
@@ -166,15 +190,16 @@ class _LauncherShellState extends State<LauncherShell>
     _isReorderingHome = false;
     _isReorderingTasks = false;
     widget.appListState.clearFilter();
-    _homeKey.currentState?.dismissActions();
-    widget.settingsState.leftPanel.dismissActions();
-    widget.settingsState.rightPanel.dismissActions();
+    _dismissPanelActions();
   }
 
   @override
   void dispose() {
     if (widget.appChannel.onOpenSettings == _onOpenSettingsHandler) {
       widget.appChannel.onOpenSettings = null;
+    }
+    if (widget.appChannel.onGoHome == _onGoHomeHandler) {
+      widget.appChannel.onGoHome = null;
     }
     WidgetsBinding.instance.removeObserver(this);
     _sheetAnim.dispose();

@@ -8,11 +8,14 @@ class AppChannel {
   static const _channel = MethodChannel('nl.bw20.last_launcher/apps');
 
   VoidCallback? onOpenSettings;
+  VoidCallback? onGoHome;
 
   void initialize() {
     _channel.setMethodCallHandler((call) async {
       if (call.method == 'openSettings') {
         onOpenSettings?.call();
+      } else if (call.method == 'goHome') {
+        onGoHome?.call();
       }
       return null;
     });

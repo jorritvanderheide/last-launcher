@@ -77,6 +77,15 @@ class MainActivity : FlutterActivity() {
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        // Pressing home while this launcher is already the foreground task
+        // arrives here rather than starting anything, so it is our only cue
+        // that the user asked to be taken back to the home page.
+        if (intent.action == Intent.ACTION_MAIN &&
+            intent.hasCategory(Intent.CATEGORY_HOME)
+        ) {
+            methodChannel?.invokeMethod("goHome", null)
+            return
+        }
         if (intent.action == Intent.ACTION_APPLICATION_PREFERENCES) {
             // Set a fallback flag in case Flutter's handler isn't attached yet;
             // clear it once Dart acknowledges the direct invoke.
