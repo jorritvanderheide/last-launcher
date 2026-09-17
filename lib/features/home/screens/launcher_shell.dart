@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_drawer_sheet.dart';
@@ -15,6 +16,23 @@ const _maxSheetFraction = 0.9;
 const _dragStartThreshold = 20.0;
 const _swipeVelocityThreshold = 300.0;
 const _pageAnimDuration = Duration(milliseconds: 100);
+
+/// Fraction a drag must cover to snap forward instead of back.
+const _snapDeltaFraction = 0.05;
+
+/// Sheet fractions within this of 0 or [_maxSheetFraction] count as settled.
+const _sheetSettledEpsilon = 0.01;
+
+/// How long after a tap a second tap still counts as a double tap.
+const _doubleTapWindow = Duration(milliseconds: 300);
+
+/// How far the second tap may land from the first.
+const _doubleTapSlop = 40.0;
+
+/// Which of the two drags a pointer has committed to, if any. A pointer can
+/// only ever drive one of them, so this replaces a pair of booleans that could
+/// otherwise both be set.
+enum _DragMode { none, sheet, page }
 
 class LauncherShell extends StatefulWidget {
   const LauncherShell({
@@ -42,7 +60,7 @@ class _LauncherShellState extends State<LauncherShell>
 
   // Sheet (vertical drawer).
   double _sheetFraction = 0;
-  bool get _drawerOpen => _sheetFraction > 0.01;
+  bool get _drawerOpen => _sheetFraction > _sheetSettledEpsilon;
   late final AnimationController _sheetAnim;
   double _sheetAnimFrom = 0;
   double _sheetAnimTo = 0;
@@ -57,9 +75,8 @@ class _LauncherShellState extends State<LauncherShell>
   // Pointer tracking.
   int? _activePointer;
   Offset? _pointerStart;
-  DateTime? _pointerStartTime;
-  bool _isDraggingSheet = false;
-  bool _isDraggingPage = false;
+  VelocityTracker? _velocityTracker;
+  _DragMode _dragMode = _DragMode.none;
   double _dragStartFraction = 0;
   bool _listWasAtTopOnDown = true;
 
@@ -205,9 +222,9 @@ class _LauncherShellState extends State<LauncherShell>
     _sheetAnim.stop();
     _pageAnim.stop();
     _pointerStart = event.position;
-    _pointerStartTime = DateTime.now();
-    _isDraggingSheet = false;
-    _isDraggingPage = false;
+    _velocityTracker = VelocityTracker.withKind(event.kind)
+      ..addPosition(event.timeStamp, event.position);
+    _dragMode = _DragMode.none;
     _listWasAtTopOnDown = _listIsAtTop.value;
 
     // Double-tap detection (outside gesture arena, no tap delay).
@@ -219,10 +236,10 @@ class _LauncherShellState extends State<LauncherShell>
       final now = DateTime.now();
       final samePosition =
           _lastTapPosition != null &&
-          (event.position - _lastTapPosition!).distance < 40;
+          (event.position - _lastTapPosition!).distance < _doubleTapSlop;
       if (_lastTapTime != null &&
           samePosition &&
-          now.difference(_lastTapTime!) < const Duration(milliseconds: 300)) {
+          now.difference(_lastTapTime!) < _doubleTapWindow) {
         _lastTapTime = null;
         _lastTapPosition = null;
         _handleDoubleTap();
@@ -237,13 +254,14 @@ class _LauncherShellState extends State<LauncherShell>
     if (event.pointer != _activePointer) return;
     final start = _pointerStart;
     if (start == null) return;
+    _velocityTracker?.addPosition(event.timeStamp, event.position);
 
     final dy = start.dy - event.position.dy; // positive = upward
     final dx = start.dx - event.position.dx; // positive = left
     final absDx = dx.abs();
     final absDy = dy.abs();
 
-    if (!_isDraggingSheet && !_isDraggingPage) {
+    if (_dragMode == _DragMode.none) {
       if (absDx < _dragStartThreshold && absDy < _dragStartThreshold) return;
 
       final hasLeft = widget.settingsState.leftPanel is! NoneModule;
@@ -260,7 +278,7 @@ class _LauncherShellState extends State<LauncherShell>
         final upperBound = hasRight ? 1.0 : 0.0;
         if (dx > 0 && _pageFraction >= upperBound) return;
         if (dx < 0 && _pageFraction <= lowerBound) return;
-        _isDraggingPage = true;
+        _dragMode = _DragMode.page;
         _cancelDoubleTap();
         _dragStartFraction = _pageFraction;
       } else if (absDy > absDx) {
@@ -269,13 +287,13 @@ class _LauncherShellState extends State<LauncherShell>
         if (!_onHomePage || _isReorderingHome) return;
         if (dy > 0 && !_drawerOpen) {
           // Upward drag with drawer closed — open sheet.
-          _isDraggingSheet = true;
+          _dragMode = _DragMode.sheet;
           _cancelDoubleTap();
           _dragStartFraction = _sheetFraction;
         } else if (_drawerOpen) {
           if (dy > 0) return;
           if (dy < 0 && !_listWasAtTopOnDown) return;
-          _isDraggingSheet = true;
+          _dragMode = _DragMode.sheet;
           _cancelDoubleTap();
           _dragStartFraction = _sheetFraction;
         } else {
@@ -290,7 +308,7 @@ class _LauncherShellState extends State<LauncherShell>
       }
     }
 
-    if (_isDraggingPage) {
+    if (_dragMode == _DragMode.page) {
       final screenWidth = MediaQuery.sizeOf(context).width;
       final threshold = dx >= 0 ? _dragStartThreshold : -_dragStartThreshold;
       final delta = (dx - threshold) / screenWidth;
@@ -301,7 +319,7 @@ class _LauncherShellState extends State<LauncherShell>
         hasRight ? 1.0 : 0.0,
       );
       setState(() => _pageFraction = fraction);
-    } else if (_isDraggingSheet) {
+    } else if (_dragMode == _DragMode.sheet) {
       final screenHeight = MediaQuery.sizeOf(context).height;
       final threshold = dy >= 0 ? _dragStartThreshold : -_dragStartThreshold;
       final delta = (dy - threshold) / screenHeight;
@@ -315,24 +333,27 @@ class _LauncherShellState extends State<LauncherShell>
 
   void _onPointerUp(PointerUpEvent event) {
     if (event.pointer != _activePointer) return;
-    final start = _pointerStart;
-    final startTime = _pointerStartTime;
+    _velocityTracker?.addPosition(event.timeStamp, event.position);
+    // Flutter reports velocity along the screen axes; the fractions below grow
+    // as the finger moves up and to the left, so flip the sign.
+    final velocity =
+        -(_velocityTracker?.getVelocity().pixelsPerSecond ?? Offset.zero);
+    final mode = _dragMode;
     _resetPointer();
 
-    if (_isDraggingPage) {
-      _isDraggingPage = false;
-      final vx = _velocity(start?.dx, event.position.dx, startTime);
+    if (mode == _DragMode.page) {
+      final vx = velocity.dx;
       final delta = _pageFraction - _dragStartFraction;
       final hasLeft = widget.settingsState.leftPanel is! NoneModule;
       final hasRight = widget.settingsState.rightPanel is! NoneModule;
       final lower = hasLeft ? -1.0 : 0.0;
       final upper = hasRight ? 1.0 : 0.0;
-      double target = _dragStartFraction;
-      if (delta > 0.05 || vx > _swipeVelocityThreshold) {
+      var target = _dragStartFraction;
+      if (delta > _snapDeltaFraction || vx > _swipeVelocityThreshold) {
         // Forward (toward right panel): snap to next slot, bounded by what
         // is configured.
         target = (_dragStartFraction + 1).clamp(lower, upper);
-      } else if (delta < -0.05 || vx < -_swipeVelocityThreshold) {
+      } else if (delta < -_snapDeltaFraction || vx < -_swipeVelocityThreshold) {
         // Backward (toward left panel): snap to previous slot, bounded.
         target = (_dragStartFraction - 1).clamp(lower, upper);
       }
@@ -340,13 +361,12 @@ class _LauncherShellState extends State<LauncherShell>
       return;
     }
 
-    if (_isDraggingSheet) {
-      _isDraggingSheet = false;
-      final vy = _velocity(start?.dy, event.position.dy, startTime);
-      if (_sheetFraction > _dragStartFraction + 0.05 ||
+    if (mode == _DragMode.sheet) {
+      final vy = velocity.dy;
+      if (_sheetFraction > _dragStartFraction + _snapDeltaFraction ||
           vy > _swipeVelocityThreshold) {
         _animateSheetTo(_maxSheetFraction);
-      } else if (_sheetFraction < _dragStartFraction - 0.05 ||
+      } else if (_sheetFraction < _dragStartFraction - _snapDeltaFraction ||
           vy < -_swipeVelocityThreshold) {
         _closeDrawer();
       } else {
@@ -356,7 +376,8 @@ class _LauncherShellState extends State<LauncherShell>
     }
 
     // Resume interrupted sheet animation.
-    if (_sheetFraction > 0.01 && _sheetFraction < _maxSheetFraction - 0.01) {
+    if (_sheetFraction > _sheetSettledEpsilon &&
+        _sheetFraction < _maxSheetFraction - _sheetSettledEpsilon) {
       _animateSheetTo(_sheetAnimTo > 0 ? _maxSheetFraction : 0);
       return;
     }
@@ -364,30 +385,23 @@ class _LauncherShellState extends State<LauncherShell>
 
   void _onPointerCancel(PointerCancelEvent event) {
     if (event.pointer != _activePointer) return;
-    if (_isDraggingSheet) {
-      _isDraggingSheet = false;
-      _closeDrawer();
-    }
-    if (_isDraggingPage) {
-      _isDraggingPage = false;
-      _animatePageTo(_dragStartFraction);
+    switch (_dragMode) {
+      case _DragMode.sheet:
+        _closeDrawer();
+      case _DragMode.page:
+        _animatePageTo(_dragStartFraction);
+      case _DragMode.none:
+        break;
     }
     _cancelDoubleTap();
     _resetPointer();
   }
 
-  /// Single-axis velocity in px/s (positive = start→end direction).
-  double _velocity(double? startV, double endV, DateTime? startTime) {
-    if (startV == null || startTime == null) return 0;
-    final micros = DateTime.now().difference(startTime).inMicroseconds;
-    if (micros < 1000) return 0;
-    return (startV - endV) / (micros / 1000000);
-  }
-
   void _resetPointer() {
     _activePointer = null;
     _pointerStart = null;
-    _pointerStartTime = null;
+    _velocityTracker = null;
+    _dragMode = _DragMode.none;
   }
 
   void _cancelDoubleTap() {
@@ -437,7 +451,7 @@ class _LauncherShellState extends State<LauncherShell>
         taskState: widget.taskState,
         settingsState: widget.settingsState,
         isVisible: isVisible,
-        scrollLocked: _isDraggingPage,
+        scrollLocked: _dragMode == _DragMode.page,
         swipeRight: isLeftSide,
         onReorderStart: () => _isReorderingTasks = true,
         onReorderEnd: () => _isReorderingTasks = false,
@@ -540,7 +554,8 @@ class _LauncherShellState extends State<LauncherShell>
                     homeState: widget.homeState,
                     settingsState: widget.settingsState,
                     isOpen:
-                        _sheetAnimTo == _maxSheetFraction && !_isDraggingSheet,
+                        _sheetAnimTo == _maxSheetFraction &&
+                        _dragMode != _DragMode.sheet,
                     isAtTop: _listIsAtTop,
                     onLaunch: _launchApp,
                     onOpenAppInfo: _openAppInfo,
