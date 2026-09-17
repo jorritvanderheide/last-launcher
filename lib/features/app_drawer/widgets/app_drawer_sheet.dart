@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/search.dart';
@@ -89,14 +90,8 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     if (!widget.isOpen || !_autoKeyboard) return;
     // A fast swipe-up after returning to the launcher can process the drag
     // before Android marks the window as resumed, causing the IME to ignore
-    // the focus request. When we finally resume, retry if the keyboard
-    // hasn't appeared yet.
-    if (MediaQuery.viewInsetsOf(context).bottom > 0) return;
-    _focusNode.unfocus();
-    Future.delayed(const Duration(milliseconds: 50), () {
-      if (!mounted || !widget.isOpen) return;
-      _requestKeyboardReliably();
-    });
+    // the focus request. Retry once we're resumed.
+    _requestKeyboardReliably();
   }
 
   @override
@@ -127,17 +122,13 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _focusNode.requestFocus();
-      // After app switch or device unlock the platform sometimes grants
-      // focus but suppresses the keyboard. Detect that and bounce focus.
-      Future.delayed(const Duration(milliseconds: 200), () {
-        if (!mounted || !_focusNode.hasFocus) return;
-        final insets = MediaQuery.viewInsetsOf(context);
-        if (insets.bottom == 0) {
-          _focusNode.unfocus();
-          Future.delayed(const Duration(milliseconds: 50), () {
-            if (mounted) _focusNode.requestFocus();
-          });
-        }
+      // After app switch or device unlock the platform sometimes grants focus
+      // but suppresses the keyboard. Ask for it again rather than bouncing
+      // focus: this is a no-op when the IME is already up or animating in, so
+      // a keyboard that was on its way never gets torn down and re-shown.
+      Future.delayed(const Duration(milliseconds: 300), () {
+        if (!mounted || !widget.isOpen || !_focusNode.hasFocus) return;
+        SystemChannels.textInput.invokeMethod('TextInput.show');
       });
     });
   }
