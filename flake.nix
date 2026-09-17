@@ -63,6 +63,9 @@
         ];
 
         shellHook = ''
+          # adb and the rest of platform-tools, from the same SDK Gradle uses,
+          # so a client here can never disagree with the server Gradle starts.
+          export PATH="$ANDROID_HOME/platform-tools:$PATH"
           echo "Last Launcher dev shell"
         '';
       };
