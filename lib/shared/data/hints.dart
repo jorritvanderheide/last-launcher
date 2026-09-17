@@ -7,6 +7,12 @@ class SubstringHint {
 
   final int start;
   final int length;
+
+  /// This hint grown by [by] characters, never running past [maxLength].
+  SubstringHint extendedBy(int by, int maxLength) => SubstringHint(
+    start: start,
+    length: (start + length + by).clamp(0, maxLength) - start,
+  );
 }
 
 /// Returns the shortest unique substring of each display label.

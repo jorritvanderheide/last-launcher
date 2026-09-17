@@ -10,6 +10,10 @@ class AppInfo {
   final String packageName;
   final String label;
   final bool isWorkApp;
+
+  /// Identifies this app across state maps: the personal and work copies of a
+  /// package are distinct entries everywhere.
+  String get key => '$packageName|$isWorkApp';
 }
 
 class PinnedApp {

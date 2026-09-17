@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
+import 'package:last_launcher/features/app_drawer/ranking.dart';
 import 'package:last_launcher/features/app_drawer/search.dart';
 import 'package:last_launcher/shared/search_focus_controller.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
@@ -14,21 +15,15 @@ import 'package:last_launcher/shared/data/fold_for_search.dart';
 import 'package:last_launcher/shared/data/hints.dart';
 import 'package:last_launcher/shared/data/models.dart';
 
-class _SortEntry {
-  final AppInfo app;
-  final String folded;
-  final bool startsWith;
-  final bool contains;
-  final SubstringHint? hint;
+/// Opacity of rows the user can't quick-launch: hidden apps, pinned apps when
+/// they're kept out of the drawer, and apps without a hint.
+const _dimmedOpacity = 0.6;
 
-  _SortEntry({
-    required this.app,
-    required this.folded,
-    required this.startsWith,
-    required this.contains,
-    required this.hint,
-  });
-}
+/// Opacity of the work-profile dot relative to the row's own opacity.
+const _workDotOpacity = 0.6;
+
+/// Alpha of the "no results" / empty-state text.
+const _emptyTextAlpha = 130;
 
 class AppDrawerSheet extends StatefulWidget {
   const AppDrawerSheet({
@@ -65,7 +60,10 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
   String? _activeAppKey;
   String? _prevMatchKey;
   SubstringHint? _stableHint;
-  String _appKey(AppInfo app) => '${app.packageName}|${app.isWorkApp}';
+
+  /// Ranked results for the current query, rebuilt lazily whenever any of the
+  /// states feeding them notifies. See [_results].
+  DrawerResults? _cachedResults;
 
   late final Listenable _mergedState = Listenable.merge([
     widget.appListState,
@@ -81,6 +79,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    _mergedState.addListener(_invalidateResults);
     WidgetsBinding.instance.addObserver(this);
     if (widget.isOpen) _handleOpened();
   }
@@ -105,6 +104,17 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     }
   }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _mergedState.removeListener(_invalidateResults);
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
+    _textController.dispose();
+    _focus.dispose();
+    super.dispose();
+  }
+
   void _handleOpened() {
     if (_scrollController.hasClients) {
       _scrollController.jumpTo(0);
@@ -113,39 +123,57 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     _focus.panelOpened();
   }
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    _scrollController.removeListener(_onScroll);
-    _scrollController.dispose();
-    _textController.dispose();
-    _focus.dispose();
-    super.dispose();
-  }
+  // ------------------------------------------------------------------
+  // Results
+  // ------------------------------------------------------------------
 
-  Widget _withWorkDot(Widget child, AppInfo app, double opacity) {
-    if (!app.isWorkApp || !widget.settingsState.showWorkAppDot) return child;
-    final dotColor = Theme.of(
-      context,
-    ).textTheme.titleLarge?.color?.withAlpha((0.6 * 255).round());
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        child,
-        Positioned(
-          left: -5,
-          top: 0,
-          bottom: 0,
-          child: IgnorePointer(
-            child: Opacity(
-              opacity: opacity,
-              child: Icon(Icons.circle, size: 10, color: dotColor),
+  /// The one list everything reads: what's drawn, what auto-launch fires on
+  /// and what submitting launches. Recomputed at most once per change to the
+  /// app list, the settings or the pinned apps.
+  DrawerResults get _results => _cachedResults ??= _buildResults();
+
+  void _invalidateResults() => _cachedResults = null;
+
+  DrawerResults _buildResults() {
+    final appList = widget.appListState;
+    final settings = widget.settingsState;
+    final query = appList.query;
+    final expandSearch = query.isNotEmpty && settings.includeHiddenInSearch;
+    var matches = appList.search(
+      query,
+      includeHidden: expandSearch,
+      matchOriginal: settings.matchOriginalName,
+    );
+    if (!expandSearch && settings.hidePinnedFromDrawer) {
+      matches = matches
+          .where(
+            (a) => !widget.homeState.isPinned(
+              a.packageName,
+              isWorkApp: a.isWorkApp,
             ),
-          ),
-        ),
-      ],
+          )
+          .toList();
+    }
+    final searchTerm = SearchQuery.parse(
+      query,
+      allowProfileFilter: appList.profilePrefixEnabled,
+    ).searchTerm;
+    return DrawerResults(
+      apps: rankApps(
+        apps: matches,
+        searchTerm: searchTerm,
+        hints: appList.hints,
+        sortByHint: searchTerm.isNotEmpty && settings.quickLaunchHints,
+        searchLabel: (app) => appList.displayLabelForSearch(app, query),
+      ),
+      query: query,
+      searchTerm: searchTerm,
     );
   }
+
+  // ------------------------------------------------------------------
+  // Input
+  // ------------------------------------------------------------------
 
   void _onScroll() {
     if (!_scrollController.hasClients) return;
@@ -154,26 +182,38 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     _focus.scrolled(_scrollController.offset);
   }
 
-  List<AppInfo> get _visibleApps {
-    final query = widget.appListState.query;
-    final searching = query.isNotEmpty;
-    final expandSearch =
-        searching && widget.settingsState.includeHiddenInSearch;
-    final base = widget.appListState.search(
-      query,
-      includeHidden: expandSearch,
-      matchOriginal: widget.settingsState.matchOriginalName,
-    );
-    if (expandSearch || !widget.settingsState.hidePinnedFromDrawer) {
-      return base;
+  void _onSearchChanged(String query) {
+    widget.appListState.filter(query);
+    final only = _autoLaunch ? _results.onlyMatch : null;
+    if (only == null) {
+      _prevMatchKey = null;
+      _stableHint = null;
+      return;
     }
-    return base
-        .where(
-          (a) =>
-              !widget.homeState.isPinned(a.packageName, isWorkApp: a.isWorkApp),
-        )
-        .toList();
+    // With extraChar on, the single match has to survive one more keystroke
+    // before it launches, so a match that appears mid-word can't run away.
+    if (!widget.settingsState.extraChar || _prevMatchKey == only.key) {
+      widget.onLaunch(only.packageName, isWorkApp: only.isWorkApp);
+      return;
+    }
+    _prevMatchKey = only.key;
+    _stableHint = _queryMatchHint(only, query);
   }
+
+  void _onSubmit() {
+    final results = _results;
+    if (!results.isSearching) return;
+    final best = results.best;
+    if (best == null) {
+      widget.onCloseDrawer();
+      return;
+    }
+    widget.onLaunch(best.packageName, isWorkApp: best.isWorkApp);
+  }
+
+  // ------------------------------------------------------------------
+  // Hints
+  // ------------------------------------------------------------------
 
   SubstringHint? _queryMatchHint(AppInfo app, String query) {
     final searchTerm = SearchQuery.parse(
@@ -192,55 +232,46 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     return SubstringHint(start: start, length: foldedTerm.length);
   }
 
-  void _onSearchChanged(String query) {
-    widget.appListState.filter(query);
-    final visible = _visibleApps;
-    if (_autoLaunch && query.isNotEmpty && visible.length == 1) {
-      if (!widget.settingsState.extraChar) {
-        widget.onLaunch(
-          visible.first.packageName,
-          isWorkApp: visible.first.isWorkApp,
-        );
-      } else if (_prevMatchKey == _appKey(visible.first)) {
-        widget.onLaunch(
-          visible.first.packageName,
-          isWorkApp: visible.first.isWorkApp,
-        );
-      } else {
-        _prevMatchKey = _appKey(visible.first);
-        _stableHint = _queryMatchHint(visible.first, query);
-      }
-    } else {
-      _prevMatchKey = null;
-      _stableHint = null;
+  /// The hint to underline on [app]'s row. With extraChar on it covers one
+  /// character more than was matched, showing which key launches the app.
+  SubstringHint? _displayHint({
+    required AppInfo app,
+    required String searchLabel,
+    required SubstringHint? hint,
+  }) {
+    if (!widget.settingsState.extraChar) return hint;
+    if (_stableHint != null && _prevMatchKey == app.key) {
+      return _stableHint!.extendedBy(1, searchLabel.length);
     }
+    return hint?.extendedBy(1, searchLabel.length);
   }
 
-  void _onSubmit() {
-    if (widget.appListState.query.isEmpty) return;
-    final visible = _visibleApps;
-    if (visible.isNotEmpty) {
-      final query = widget.appListState.query;
-      final searchTerm = SearchQuery.parse(
-        query,
-        allowProfileFilter: widget.appListState.profilePrefixEnabled,
-      ).searchTerm;
-      final sortByHint =
-          searchTerm.isNotEmpty && widget.settingsState.quickLaunchHints;
-      final sorted = _sortedApps(
-        visible,
-        query,
-        searchTerm,
-        widget.appListState.hints,
-        sortByHint,
-      );
-      widget.onLaunch(
-        sorted.first.packageName,
-        isWorkApp: sorted.first.isWorkApp,
-      );
-    } else {
-      widget.onCloseDrawer();
-    }
+  // ------------------------------------------------------------------
+  // Rows
+  // ------------------------------------------------------------------
+
+  Widget _withWorkDot(Widget child, AppInfo app, double opacity) {
+    if (!app.isWorkApp || !widget.settingsState.showWorkAppDot) return child;
+    final dotColor = Theme.of(
+      context,
+    ).textTheme.titleLarge?.color?.withAlpha((_workDotOpacity * 255).round());
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        child,
+        Positioned(
+          left: -5,
+          top: 0,
+          bottom: 0,
+          child: IgnorePointer(
+            child: Opacity(
+              opacity: opacity,
+              child: Icon(Icons.circle, size: 10, color: dotColor),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   List<ActionItem> _appActions(BuildContext context, AppInfo app) {
@@ -310,80 +341,72 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     ];
   }
 
-  List<AppInfo> _sortedApps(
-    List<AppInfo> apps,
-    String query,
-    String searchTerm,
-    Map<String, SubstringHint?> hints,
-    bool sortByHint,
-  ) {
-    if (apps.isEmpty) return apps;
-    final needle = searchTerm.isNotEmpty ? foldForSearch(searchTerm) : '';
-    final entries = apps.map((app) {
-      final label = widget.appListState.displayLabelForSearch(app, query);
-      final folded = foldForSearch(label);
-      bool startsWith = false;
-      bool contains = false;
-      if (searchTerm.isNotEmpty) {
-        startsWith = folded.startsWith(needle);
-        contains = !startsWith && folded.contains(needle);
-      }
-      return _SortEntry(
-        app: app,
-        folded: folded,
-        startsWith: startsWith,
-        contains: contains,
-        hint: hints[_appKey(app)],
+  Widget _buildRow(BuildContext context, AppInfo app, DrawerResults results) {
+    final dimmed =
+        widget.appListState.isHidden(
+          app.packageName,
+          isWorkApp: app.isWorkApp,
+        ) ||
+        (widget.settingsState.hidePinnedFromDrawer &&
+            widget.homeState.isPinned(
+              app.packageName,
+              isWorkApp: app.isWorkApp,
+            ));
+    final showHint = widget.settingsState.quickLaunchHints;
+    final searchLabel = widget.appListState.displayLabelForSearch(
+      app,
+      results.query,
+    );
+    final hint = showHint ? widget.appListState.hints[app.key] : null;
+    final opacity = showHint && (dimmed || hint == null) ? _dimmedOpacity : 1.0;
+
+    if (_activeAppKey == app.key) {
+      return _withWorkDot(
+        ActionRow(
+          key: ValueKey(app.key),
+          label: searchLabel,
+          actions: _appActions(context, app),
+          onClose: () => setState(() => _activeAppKey = null),
+          opacity: opacity,
+        ),
+        app,
+        opacity,
       );
-    }).toList();
-
-    entries.sort((a, b) {
-      if (sortByHint) {
-        if (a.hint == null && b.hint != null) return 1;
-        if (a.hint != null && b.hint == null) return -1;
-        if (a.hint != null && a.hint!.length != b.hint!.length) {
-          return a.hint!.length.compareTo(b.hint!.length);
-        }
-      }
-      if (searchTerm.isNotEmpty) {
-        if (a.startsWith != b.startsWith) return a.startsWith ? -1 : 1;
-        if (!sortByHint) {
-          if (a.contains != b.contains) return a.contains ? -1 : 1;
-        }
-      }
-      return a.folded.compareTo(b.folded);
-    });
-
-    return entries.map((e) => e.app).toList();
+    }
+    return _withWorkDot(
+      AppLabel(
+        key: ValueKey(app.key),
+        label: searchLabel,
+        hint: _displayHint(app: app, searchLabel: searchLabel, hint: hint),
+        hintAlphaOnly: !RegExp(r'[^a-zA-Z]').hasMatch(results.query),
+        onTap: () => widget.onLaunch(app.packageName, isWorkApp: app.isWorkApp),
+        onLongPress: () => setState(
+          () => _activeAppKey = _activeAppKey == app.key ? null : app.key,
+        ),
+        opacity: opacity,
+      ),
+      app,
+      opacity,
+    );
   }
 
-  SubstringHint? _displayHint({
-    required AppInfo app,
-    required String searchLabel,
-    required SubstringHint? hint,
-  }) {
-    if (_stableHint != null &&
-        _prevMatchKey == _appKey(app) &&
-        widget.settingsState.extraChar) {
-      return SubstringHint(
-        start: _stableHint!.start,
-        length:
-            (_stableHint!.start + _stableHint!.length + 1).clamp(
-              0,
-              searchLabel.length,
-            ) -
-            _stableHint!.start,
-      );
-    }
-    if (hint != null && widget.settingsState.extraChar) {
-      return SubstringHint(
-        start: hint.start,
-        length:
-            (hint.start + hint.length + 1).clamp(0, searchLabel.length) -
-            hint.start,
-      );
-    }
-    return hint;
+  Widget _buildEmptyState(BuildContext context) {
+    if (!widget.settingsState.showHints) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 20,
+        top: 8 + AppLabel.verticalPadding,
+      ),
+      child: Text(
+        AppLocalizations.of(context)!.noResults,
+        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+          fontSize: AppLabel.fontSize,
+          color: Theme.of(
+            context,
+          ).colorScheme.onSurface.withAlpha(_emptyTextAlpha),
+        ),
+      ),
+    );
   }
 
   @override
@@ -429,116 +452,17 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
                     child: ListenableBuilder(
                       listenable: _mergedState,
                       builder: (context, _) {
-                        final apps = _visibleApps;
-                        final query = widget.appListState.query;
-                        final searchTerm = SearchQuery.parse(
-                          query,
-                          allowProfileFilter:
-                              widget.appListState.profilePrefixEnabled,
-                        ).searchTerm;
-                        final sortByHint =
-                            query.isNotEmpty &&
-                            searchTerm.isNotEmpty &&
-                            widget.settingsState.quickLaunchHints;
-                        final sorted = _sortedApps(
-                          apps,
-                          query,
-                          searchTerm,
-                          widget.appListState.hints,
-                          sortByHint,
-                        );
-                        if (sorted.isEmpty &&
-                            widget.appListState.query.isNotEmpty) {
-                          if (!widget.settingsState.showHints) {
-                            return const SizedBox.shrink();
-                          }
-                          return Padding(
-                            padding: const EdgeInsets.only(
-                              left: 20,
-                              top: 8 + AppLabel.verticalPadding,
-                            ),
-                            child: Text(
-                              AppLocalizations.of(context)!.noResults,
-                              style: Theme.of(context).textTheme.titleLarge
-                                  ?.copyWith(
-                                    fontSize: AppLabel.fontSize,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.onSurface.withAlpha(130),
-                                  ),
-                            ),
-                          );
+                        final results = _results;
+                        if (results.isEmpty && results.isSearching) {
+                          return _buildEmptyState(context);
                         }
                         return ListView.builder(
                           controller: _scrollController,
                           physics: const AlwaysScrollableScrollPhysics(),
                           padding: const EdgeInsets.only(top: 8, bottom: 32),
-                          itemCount: sorted.length,
-                          itemBuilder: (context, index) {
-                            final app = sorted[index];
-                            final dimmed =
-                                widget.appListState.isHidden(
-                                  app.packageName,
-                                  isWorkApp: app.isWorkApp,
-                                ) ||
-                                (widget.settingsState.hidePinnedFromDrawer &&
-                                    widget.homeState.isPinned(
-                                      app.packageName,
-                                      isWorkApp: app.isWorkApp,
-                                    ));
-                            final showHint =
-                                widget.settingsState.quickLaunchHints;
-                            final searchLabel = widget.appListState
-                                .displayLabelForSearch(app, query);
-                            final hint = showHint
-                                ? widget.appListState.hints[_appKey(app)]
-                                : null;
-                            final displayHint = _displayHint(
-                              app: app,
-                              searchLabel: searchLabel,
-                              hint: hint,
-                            );
-                            final opacity = showHint && (dimmed || hint == null)
-                                ? 0.6
-                                : 1.0;
-                            final key = _appKey(app);
-                            if (_activeAppKey == key) {
-                              return _withWorkDot(
-                                ActionRow(
-                                  key: ValueKey(key),
-                                  label: searchLabel,
-                                  actions: _appActions(context, app),
-                                  onClose: () =>
-                                      setState(() => _activeAppKey = null),
-                                  opacity: opacity,
-                                ),
-                                app,
-                                opacity,
-                              );
-                            }
-                            return _withWorkDot(
-                              AppLabel(
-                                key: ValueKey(key),
-                                label: searchLabel,
-                                hint: displayHint,
-                                hintAlphaOnly: !RegExp(
-                                  r'[^a-zA-Z]',
-                                ).hasMatch(query),
-                                onTap: () => widget.onLaunch(
-                                  app.packageName,
-                                  isWorkApp: app.isWorkApp,
-                                ),
-                                onLongPress: () => setState(
-                                  () => _activeAppKey = _activeAppKey == key
-                                      ? null
-                                      : key,
-                                ),
-                                opacity: opacity,
-                              ),
-                              app,
-                              opacity,
-                            );
-                          },
+                          itemCount: results.apps.length,
+                          itemBuilder: (context, index) =>
+                              _buildRow(context, results.apps[index], results),
                         );
                       },
                     ),
