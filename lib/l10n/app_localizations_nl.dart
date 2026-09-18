@@ -184,10 +184,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get noHiddenApps => 'Geen verborgen apps';
 
   @override
-  String get leftOfHome => 'Linkermodule';
+  String get leftOfHome => 'Linker module';
 
   @override
-  String get rightOfHome => 'Rechtermodule';
+  String get rightOfHome => 'Rechter module';
 
   @override
   String get panelNone => 'Geen';
@@ -373,10 +373,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get launchAppChoose => 'Kies een app';
 
   @override
-  String get launchAppOnlyLeft => 'Alleen als dit de linkermodule is';
+  String get launchAppOnlyLeft => 'Alleen als dit de linker module is';
 
   @override
-  String get launchAppOnlyRight => 'Alleen als dit de rechtermodule is';
+  String get launchAppOnlyRight => 'Alleen als dit de rechter module is';
 
   @override
   String get removeOnComplete => 'Verwijderen bij voltooiing';
