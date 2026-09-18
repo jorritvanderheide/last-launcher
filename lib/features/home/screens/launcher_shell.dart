@@ -9,6 +9,7 @@ import 'package:last_launcher/features/modules/none_module.dart';
 import 'package:last_launcher/features/home/screens/home_screen.dart';
 import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
+import 'package:last_launcher/features/settings/widgets/settings_tiles.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/data/models.dart';
@@ -147,17 +148,14 @@ class _LauncherShellState extends State<LauncherShell>
   }
 
   void _openSettings() {
-    Navigator.of(context).push(
-      PageRouteBuilder<void>(
-        pageBuilder: (_, _, _) => SettingsScreen(
-          settingsState: widget.settingsState,
-          appListState: widget.appListState,
-          homeState: widget.homeState,
-          appChannel: widget.appChannel,
-          onRestored: _reloadAfterRestore,
-        ),
-        transitionDuration: Duration.zero,
-        reverseTransitionDuration: Duration.zero,
+    pushSettingsPage(
+      context,
+      SettingsScreen(
+        settingsState: widget.settingsState,
+        appListState: widget.appListState,
+        homeState: widget.homeState,
+        appChannel: widget.appChannel,
+        onRestored: _reloadAfterRestore,
       ),
     );
   }

@@ -9,15 +9,23 @@ import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:last_launcher/shared/widgets/scanline_overlay.dart';
+import 'package:last_launcher/shared/widgets/settings_theme.dart';
 
 /// The parts of the look that end up in [ThemeData]. A record, so equal
 /// looks compare equal and each theme is only ever built once.
-typedef _ThemeSpec = ({bool mono, bool glow, AccentColors? accent});
+typedef ThemeSpec = ({bool mono, bool glow, AccentColors? accent});
 
-final _themes = <(Brightness, _ThemeSpec), ThemeData>{};
+final _themes = <(Brightness, ThemeSpec, bool), ThemeData>{};
 
-ThemeData _themeFor(Brightness brightness, _ThemeSpec spec) => _themes
-    .putIfAbsent((brightness, spec), () => _buildTheme(brightness, spec));
+ThemeData _themeFor(
+  Brightness brightness,
+  ThemeSpec spec, {
+  bool settings = false,
+}) => _themes.putIfAbsent((
+  brightness,
+  spec,
+  settings,
+), () => buildLauncherTheme(brightness, spec, settings: settings));
 
 /// How strongly each scanline level draws, relative to the original look.
 double _scanlineStrength(ScanlineLevel level) => switch (level) {
@@ -27,24 +35,35 @@ double _scanlineStrength(ScanlineLevel level) => switch (level) {
   ScanlineLevel.strong => 2,
 };
 
-ThemeData _buildTheme(Brightness brightness, _ThemeSpec spec) {
+/// The app's theme. With [settings] set, the variant for settings pages:
+/// text, icons and backgrounds stay plain, and only the highlights
+/// (headings, switches, sliders, focused fields) take the accent.
+@visibleForTesting
+ThemeData buildLauncherTheme(
+  Brightness brightness,
+  ThemeSpec spec, {
+  bool settings = false,
+}) {
   final isDark = brightness == Brightness.dark;
   final accent = spec.accent;
-  final textColor = accent == null
-      ? (isDark ? Colors.white : Colors.black)
+  final plain = isDark ? Colors.white : Colors.black;
+  final highlight = accent == null
+      ? plain
       : (isDark ? accent.onDark : accent.onLight);
+  final textColor = settings ? plain : highlight;
   final glowColor = textColor;
 
-  // With the accent on, backgrounds take on a faint tint of it.
-  Color tinted(Color background) => accent == null
+  // With the accent on, the launcher's backgrounds take on a faint tint of
+  // it; settings pages stay plain.
+  Color tinted(Color background) => accent == null || settings
       ? background
       : Color.alphaBlend(accent.tint.withAlpha(isDark ? 20 : 26), background);
 
   final colorScheme = ColorScheme(
     brightness: brightness,
-    primary: textColor,
+    primary: highlight,
     onPrimary: isDark ? Colors.black : Colors.white,
-    secondary: textColor,
+    secondary: highlight,
     onSecondary: isDark ? Colors.black : Colors.white,
     surface: tinted(isDark ? Colors.black : Colors.white),
     onSurface: textColor,
@@ -124,21 +143,21 @@ ThemeData _buildTheme(Brightness brightness, _ThemeSpec spec) {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.zero,
-        borderSide: BorderSide(color: textColor, width: 1.5),
+        borderSide: BorderSide(color: highlight, width: 1.5),
       ),
     ),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith((states) {
         final selected = states.contains(WidgetState.selected);
         final disabled = states.contains(WidgetState.disabled);
-        final base = selected ? textColor : colorScheme.outline;
+        final base = selected ? highlight : colorScheme.outline;
         return disabled ? base.withAlpha(80) : base;
       }),
       trackColor: WidgetStateProperty.resolveWith((states) {
         final selected = states.contains(WidgetState.selected);
         final disabled = states.contains(WidgetState.disabled);
         if (selected) {
-          return textColor.withAlpha(disabled ? 30 : 60);
+          return highlight.withAlpha(disabled ? 30 : 60);
         }
         return colorScheme.surface;
       }),
@@ -260,19 +279,22 @@ class _LastLauncherAppState extends State<LastLauncherApp>
           themeMode: settings.themeMode.value,
           theme: _themeFor(Brightness.light, spec),
           darkTheme: _themeFor(Brightness.dark, spec),
-          builder: (context, child) => AppearanceScope(
-            labelFontSize: settings.textSize.value,
-            labelAlign: switch (settings.labelAlignment.value) {
-              LabelAlignment.left => TextAlign.left,
-              LabelAlignment.center => TextAlign.center,
-              LabelAlignment.right => TextAlign.right,
-            },
-            accentAvailable: _accent != null,
-            terminalPrompt: settings.terminalPrompt.value,
-            animate:
-                settings.animations.value &&
-                !MediaQuery.disableAnimationsOf(context),
-            child: child!,
+          builder: (context, child) => SettingsTheme(
+            data: _themeFor(Theme.of(context).brightness, spec, settings: true),
+            child: AppearanceScope(
+              labelFontSize: settings.textSize.value,
+              labelAlign: switch (settings.labelAlignment.value) {
+                LabelAlignment.left => TextAlign.left,
+                LabelAlignment.center => TextAlign.center,
+                LabelAlignment.right => TextAlign.right,
+              },
+              accentAvailable: _accent != null,
+              terminalPrompt: settings.terminalPrompt.value,
+              animate:
+                  settings.animations.value &&
+                  !MediaQuery.disableAnimationsOf(context),
+              child: child!,
+            ),
           ),
           home: ScanlineOverlay(
             strength: _scanlineStrength(settings.scanlines.value),

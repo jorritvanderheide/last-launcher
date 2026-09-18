@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
+import 'package:last_launcher/shared/widgets/settings_theme.dart';
 
-/// Opens a settings page. Pages switch instantly, like the rest of the
-/// launcher.
+/// Opens a settings page, in the settings theme. Pages switch instantly,
+/// like the rest of the launcher.
 Future<void> pushSettingsPage(BuildContext context, Widget page) {
   return Navigator.of(context).push(
     PageRouteBuilder<void>(
-      pageBuilder: (_, _, _) => page,
+      pageBuilder: (_, _, _) => SettingsThemed(child: page),
       transitionDuration: Duration.zero,
       reverseTransitionDuration: Duration.zero,
     ),
