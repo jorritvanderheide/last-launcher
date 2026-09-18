@@ -34,6 +34,11 @@ void main() {
       expect(settings.colorScheme.surface, Colors.black);
     });
 
+    test('settings pages theme their titles, not the icons beside them', () {
+      expect(settings.appBarTheme.titleTextStyle?.color, _accent.onDark);
+      expect(settings.appBarTheme.foregroundColor, Colors.white);
+    });
+
     test('settings still theme their highlights', () {
       // Section headings and sliders use the primary colour.
       expect(settings.colorScheme.primary, _accent.onDark);

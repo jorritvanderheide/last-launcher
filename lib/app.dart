@@ -36,8 +36,9 @@ double _scanlineStrength(ScanlineLevel level) => switch (level) {
 };
 
 /// The app's theme. With [settings] set, the variant for settings pages:
-/// text, icons and backgrounds stay plain, and only the highlights
-/// (headings, switches, sliders, focused fields) take the accent.
+/// text, icons and backgrounds stay plain, and only the highlights (page
+/// titles and section headings, switches, sliders, focused fields) take the
+/// accent.
 @visibleForTesting
 ThemeData buildLauncherTheme(
   Brightness brightness,
@@ -116,6 +117,8 @@ ThemeData buildLauncherTheme(
       scrolledUnderElevation: 0,
       backgroundColor: colorScheme.surface,
       foregroundColor: textColor,
+      // Page titles are headings: they take the accent, the icons don't.
+      titleTextStyle: textTheme.titleLarge?.copyWith(color: highlight),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: colorScheme.surface,
