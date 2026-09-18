@@ -60,6 +60,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get themeExtra => 'Extra';
 
   @override
+  String get themeStyleTitle => 'スタイル';
+
+  @override
+  String get themeStyleStandard => '標準';
+
+  @override
+  String get themeExtraAlwaysDark => 'Extra は常にダークです';
+
+  @override
   String get hideStatusBar => 'フルスクリーン';
 
   @override

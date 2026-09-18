@@ -60,6 +60,15 @@ class AppLocalizationsCs extends AppLocalizations {
   String get themeExtra => 'Extra';
 
   @override
+  String get themeStyleTitle => 'Styl';
+
+  @override
+  String get themeStyleStandard => 'Standardní';
+
+  @override
+  String get themeExtraAlwaysDark => 'Extra je vždy tmavý';
+
+  @override
   String get hideStatusBar => 'Celá obrazovka';
 
   @override

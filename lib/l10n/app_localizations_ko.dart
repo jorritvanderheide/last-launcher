@@ -60,6 +60,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get themeExtra => 'Extra';
 
   @override
+  String get themeStyleTitle => '스타일';
+
+  @override
+  String get themeStyleStandard => '기본';
+
+  @override
+  String get themeExtraAlwaysDark => 'Extra는 항상 다크입니다';
+
+  @override
   String get hideStatusBar => '전체 화면';
 
   @override

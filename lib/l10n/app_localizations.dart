@@ -224,6 +224,24 @@ abstract class AppLocalizations {
   /// **'Extra'**
   String get themeExtra;
 
+  /// No description provided for @themeStyleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Style'**
+  String get themeStyleTitle;
+
+  /// No description provided for @themeStyleStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get themeStyleStandard;
+
+  /// No description provided for @themeExtraAlwaysDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra is always dark'**
+  String get themeExtraAlwaysDark;
+
   /// No description provided for @hideStatusBar.
   ///
   /// In en, this message translates to:

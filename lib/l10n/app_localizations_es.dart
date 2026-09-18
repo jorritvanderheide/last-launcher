@@ -60,6 +60,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get themeExtra => 'Extra';
 
   @override
+  String get themeStyleTitle => 'Estilo';
+
+  @override
+  String get themeStyleStandard => 'Estándar';
+
+  @override
+  String get themeExtraAlwaysDark => 'Extra siempre es oscuro';
+
+  @override
   String get hideStatusBar => 'Pantalla completa';
 
   @override

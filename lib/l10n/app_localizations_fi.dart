@@ -60,6 +60,15 @@ class AppLocalizationsFi extends AppLocalizations {
   String get themeExtra => 'Extra';
 
   @override
+  String get themeStyleTitle => 'Tyyli';
+
+  @override
+  String get themeStyleStandard => 'Vakio';
+
+  @override
+  String get themeExtraAlwaysDark => 'Extra on aina tumma';
+
+  @override
   String get hideStatusBar => 'Koko näyttö';
 
   @override

@@ -82,7 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen>
         ListTile(
           leading: const Icon(Icons.palette_outlined),
           title: Text(l10n.sectionAppearance),
-          subtitle: Text(themeLabel(context, s.theme.value)),
+          subtitle: Text(appearanceSummary(context, s)),
           onTap: () => pushSettingsPage(
             context,
             AppearanceSettingsScreen(settingsState: s),

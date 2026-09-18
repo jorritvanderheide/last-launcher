@@ -60,6 +60,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themeExtra => 'Extra';
 
   @override
+  String get themeStyleTitle => '風格';
+
+  @override
+  String get themeStyleStandard => '標準';
+
+  @override
+  String get themeExtraAlwaysDark => 'Extra 一律為深色';
+
+  @override
   String get hideStatusBar => '全螢幕';
 
   @override

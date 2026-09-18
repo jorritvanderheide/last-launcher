@@ -127,6 +127,26 @@ void main() {
     expect(autoKeyboard.value, isTrue);
   });
 
+  testWidgets('appearance locks the mode while the extra style is on', (
+    tester,
+  ) async {
+    final settings = await _pumpSettings(tester);
+    await tester.tap(find.text(l10n.sectionAppearance));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text(l10n.themeStyleTitle));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(l10n.themeExtra).last);
+    await tester.pumpAndSettle();
+
+    expect(settings.isExtra, isTrue);
+    final mode = tester.widget<ListTile>(
+      find.widgetWithText(ListTile, l10n.themeTitle),
+    );
+    expect(mode.enabled, isFalse);
+    expect(find.text(l10n.themeExtraAlwaysDark), findsOneWidget);
+  });
+
   testWidgets('home page picks a module by id', (tester) async {
     final settings = await _pumpSettings(tester);
     await tester.tap(find.text(l10n.sectionHome));

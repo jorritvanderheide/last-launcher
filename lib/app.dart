@@ -196,7 +196,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
     return ListenableBuilder(
       listenable: widget.settingsState.appearanceChanged,
       builder: (context, _) {
-        final brightness = switch (widget.settingsState.themeMode) {
+        final brightness = switch (widget.settingsState.effectiveThemeMode) {
           ThemeMode.light => Brightness.light,
           ThemeMode.dark => Brightness.dark,
           ThemeMode.system => MediaQuery.platformBrightnessOf(context),
@@ -217,7 +217,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
           title: 'Last Launcher',
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          themeMode: widget.settingsState.themeMode,
+          themeMode: widget.settingsState.effectiveThemeMode,
           theme: _lightTheme,
           darkTheme: widget.settingsState.isExtra ? _extraTheme : _darkTheme,
           home: widget.settingsState.isExtra

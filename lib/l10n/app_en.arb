@@ -19,6 +19,9 @@
   "themeLight": "Light",
   "themeDark": "Dark",
   "themeExtra": "Extra",
+  "themeStyleTitle": "Style",
+  "themeStyleStandard": "Standard",
+  "themeExtraAlwaysDark": "Extra is always dark",
 
   "hideStatusBar": "Fullscreen",
   "hideStatusBarSubtitle": "Hide status bar and navigation",

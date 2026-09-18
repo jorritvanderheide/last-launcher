@@ -7,6 +7,9 @@ import 'package:last_launcher/features/modules/none_module.dart';
 import 'package:last_launcher/features/modules/tasks_module.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// The look layered on top of the light/dark mode.
+enum ThemeStyle { standard, extra }
+
 class SearchPrefs {
   const SearchPrefs({
     required this.matchOriginal,
@@ -54,8 +57,16 @@ class SettingsState extends ChangeNotifier {
 
   // --- Appearance --------------------------------------------------------
 
-  /// One of system, light, dark or extra.
-  late final theme = _string('theme_mode', 'system');
+  late final themeMode = _enum(
+    'theme_mode',
+    ThemeMode.values,
+    ThemeMode.system,
+  );
+  late final themeStyle = _enum(
+    'theme_style',
+    ThemeStyle.values,
+    ThemeStyle.standard,
+  );
   late final hideStatusBar = _bool('hide_status_bar', false);
   late final showHints = _bool('show_hints', true);
 
@@ -94,13 +105,13 @@ class SettingsState extends ChangeNotifier {
 
   // --- Derived: what is actually in effect -------------------------------
 
-  ThemeMode get themeMode => switch (theme.value) {
-    'light' => ThemeMode.light,
-    'dark' || 'extra' => ThemeMode.dark,
-    _ => ThemeMode.system,
-  };
+  bool get isExtra => themeStyle.value == ThemeStyle.extra;
 
-  bool get isExtra => theme.value == 'extra';
+  /// Extra has only been designed in dark, so for now it decides the mode.
+  bool get themeModeAvailable => !isExtra;
+
+  ThemeMode get effectiveThemeMode =>
+      themeModeAvailable ? themeMode.value : ThemeMode.dark;
 
   /// Search-only mode has no list to scroll, so the keyboard is always up.
   bool get autoKeyboardActive => searchOnly.value || autoKeyboard.value;
@@ -141,7 +152,8 @@ class SettingsState extends ChangeNotifier {
   /// Fires when anything that needs the whole [MaterialApp] rebuilt changes,
   /// so routine settings don't rebuild the entire app.
   late final Listenable appearanceChanged = Listenable.merge([
-    theme,
+    themeMode,
+    themeStyle,
     hideStatusBar,
   ]);
 
@@ -175,6 +187,13 @@ class SettingsState extends ChangeNotifier {
   /// Settings are created lazily, so doing this up front keeps each one's
   /// initial value independent of which was created first.
   void _migrate() {
+    // Extra used to be a fourth theme mode next to system, light and dark.
+    // It is now a style, and was always shown dark.
+    if (_prefs.getString('theme_mode') == 'extra') {
+      unawaited(_prefs.setString('theme_mode', ThemeMode.dark.name));
+      unawaited(_prefs.setString('theme_style', ThemeStyle.extra.name));
+    }
+
     // Before either side was configurable there was only a tasks_enabled
     // flag, which meant tasks on the left.
     final panelsNeverChosen =
@@ -195,13 +214,16 @@ class SettingsState extends ChangeNotifier {
     ),
   );
 
-  Setting<String> _string(String key, String fallback) => _track(
-    Setting(
-      key,
-      _prefs.getString(key) ?? fallback,
-      (v) => _prefs.setString(key, v),
-    ),
-  );
+  /// Stored by name, so reordering an enum's values is safe; renaming one is
+  /// not.
+  Setting<T> _enum<T extends Enum>(String key, List<T> values, T fallback) =>
+      _track(
+        Setting(
+          key,
+          values.asNameMap()[_prefs.getString(key)] ?? fallback,
+          (v) => _prefs.setString(key, v.name),
+        ),
+      );
 
   Setting<LauncherModule> _module(String key) => _track(
     Setting(

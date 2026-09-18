@@ -61,6 +61,15 @@ class AppLocalizationsPl extends AppLocalizations {
   String get themeExtra => 'Extra';
 
   @override
+  String get themeStyleTitle => 'Styl';
+
+  @override
+  String get themeStyleStandard => 'Standardowy';
+
+  @override
+  String get themeExtraAlwaysDark => 'Extra jest zawsze ciemny';
+
+  @override
   String get hideStatusBar => 'Pełny ekran';
 
   @override

@@ -60,6 +60,15 @@ class AppLocalizationsSv extends AppLocalizations {
   String get themeExtra => 'Extra';
 
   @override
+  String get themeStyleTitle => 'Stil';
+
+  @override
+  String get themeStyleStandard => 'Standard';
+
+  @override
+  String get themeExtraAlwaysDark => 'Extra är alltid mörkt';
+
+  @override
   String get hideStatusBar => 'Helskärm';
 
   @override
