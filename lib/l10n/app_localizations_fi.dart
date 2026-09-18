@@ -237,6 +237,15 @@ class AppLocalizationsFi extends AppLocalizations {
       'Piilota sovellusten nimet, käynnistä hakemalla';
 
   @override
+  String get prefixNoApp => 'Mikään sovellus ei voi avata tätä';
+
+  @override
+  String get prefixTypeWork => 'Työsovellukset';
+
+  @override
+  String get prefixTypePersonal => 'Henkilökohtaiset sovellukset';
+
+  @override
   String get autoShowKeyboard => 'Näytä näppäimistö';
 
   @override

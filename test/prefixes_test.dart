@@ -76,6 +76,20 @@ void main() {
     });
   });
 
+  group('prefixes being typed', () {
+    test('the start of a longer trigger may become a prefix', () {
+      expect(mayBecomePrefix('g', _mine), isTrue);
+      expect(mayBecomePrefix('G', _mine), isTrue);
+      expect(mayBecomePrefix('gm', _mine), isTrue);
+    });
+
+    test('anything else may not', () {
+      expect(mayBecomePrefix('ga', _mine), isFalse);
+      expect(mayBecomePrefix('g ', _mine), isFalse);
+      expect(mayBecomePrefix('', _mine), isFalse);
+    });
+  });
+
   group('links', () {
     test('the query is encoded into the link', () {
       const link = OpenLink('https://duckduckgo.com/?q=%s');

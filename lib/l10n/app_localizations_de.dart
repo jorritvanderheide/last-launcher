@@ -237,6 +237,15 @@ class AppLocalizationsDe extends AppLocalizations {
       'App-Namen ausblenden, zum Starten suchen';
 
   @override
+  String get prefixNoApp => 'Keine App kann das öffnen';
+
+  @override
+  String get prefixTypeWork => 'Arbeits-Apps';
+
+  @override
+  String get prefixTypePersonal => 'Private Apps';
+
+  @override
   String get autoShowKeyboard => 'Tastatur anzeigen';
 
   @override

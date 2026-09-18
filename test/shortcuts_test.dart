@@ -149,6 +149,21 @@ void main() {
       expect(apps.map((a) => a.shortcutId), [null, 'web-news']);
     });
 
+    test('opens links and searches in apps', () async {
+      await AppChannel().openLink('geo:0,0?q=Dam%201', package: 'app.maps');
+      await AppChannel().openLink('https://example.org');
+      await AppChannel().searchInApp('com.music', 'jazz');
+      final args = calls.map((c) => c.arguments as Map).toList();
+      expect(calls.map((c) => c.method), [
+        'openLink',
+        'openLink',
+        'searchInApp',
+      ]);
+      expect(args[0], {'uri': 'geo:0,0?q=Dam%201', 'package': 'app.maps'});
+      expect(args[1].containsKey('package'), isFalse);
+      expect(args[2], {'package': 'com.music', 'query': 'jazz'});
+    });
+
     test('launches a shortcut by id, an app without one', () async {
       await AppChannel().launchApp('org.browser', shortcutId: 'web-news');
       await AppChannel().launchApp('org.browser');

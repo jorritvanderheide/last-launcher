@@ -229,6 +229,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String get searchOnlyModeSubtitle => '隱藏應用程式名稱，以搜尋開啟';
 
   @override
+  String get prefixNoApp => '沒有應用程式可以開啟此項目';
+
+  @override
+  String get prefixTypeWork => '工作應用程式';
+
+  @override
+  String get prefixTypePersonal => '個人應用程式';
+
+  @override
   String get autoShowKeyboard => '顯示鍵盤';
 
   @override

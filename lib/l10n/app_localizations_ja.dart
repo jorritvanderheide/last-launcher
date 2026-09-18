@@ -229,6 +229,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get searchOnlyModeSubtitle => 'アプリ名を非表示にし、検索で起動';
 
   @override
+  String get prefixNoApp => '開けるアプリがありません';
+
+  @override
+  String get prefixTypeWork => '仕事用アプリ';
+
+  @override
+  String get prefixTypePersonal => '個人用アプリ';
+
+  @override
   String get autoShowKeyboard => 'キーボードを表示';
 
   @override

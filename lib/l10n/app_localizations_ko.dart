@@ -229,6 +229,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get searchOnlyModeSubtitle => '앱 이름을 숨기고 검색으로 실행';
 
   @override
+  String get prefixNoApp => '열 수 있는 앱이 없습니다';
+
+  @override
+  String get prefixTypeWork => '업무용 앱';
+
+  @override
+  String get prefixTypePersonal => '개인 앱';
+
+  @override
   String get autoShowKeyboard => '키보드 표시';
 
   @override

@@ -554,6 +554,24 @@ abstract class AppLocalizations {
   /// **'Hide app names, search to launch'**
   String get searchOnlyModeSubtitle;
 
+  /// No description provided for @prefixNoApp.
+  ///
+  /// In en, this message translates to:
+  /// **'No app can open this'**
+  String get prefixNoApp;
+
+  /// No description provided for @prefixTypeWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Work apps'**
+  String get prefixTypeWork;
+
+  /// No description provided for @prefixTypePersonal.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal apps'**
+  String get prefixTypePersonal;
+
   /// No description provided for @autoShowKeyboard.
   ///
   /// In en, this message translates to:

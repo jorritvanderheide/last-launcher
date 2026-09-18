@@ -235,6 +235,15 @@ class AppLocalizationsSv extends AppLocalizations {
   String get searchOnlyModeSubtitle => 'Dölj appnamn, sök för att starta';
 
   @override
+  String get prefixNoApp => 'Ingen app kan öppna detta';
+
+  @override
+  String get prefixTypeWork => 'Jobbappar';
+
+  @override
+  String get prefixTypePersonal => 'Personliga appar';
+
+  @override
   String get autoShowKeyboard => 'Visa tangentbord';
 
   @override

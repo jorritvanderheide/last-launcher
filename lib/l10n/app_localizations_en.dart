@@ -235,6 +235,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get searchOnlyModeSubtitle => 'Hide app names, search to launch';
 
   @override
+  String get prefixNoApp => 'No app can open this';
+
+  @override
+  String get prefixTypeWork => 'Work apps';
+
+  @override
+  String get prefixTypePersonal => 'Personal apps';
+
+  @override
   String get autoShowKeyboard => 'Show keyboard';
 
   @override

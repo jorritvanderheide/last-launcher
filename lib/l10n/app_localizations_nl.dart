@@ -237,6 +237,15 @@ class AppLocalizationsNl extends AppLocalizations {
       'Appnamen verbergen, zoeken om te starten';
 
   @override
+  String get prefixNoApp => 'Geen app kan dit openen';
+
+  @override
+  String get prefixTypeWork => 'Werk-apps';
+
+  @override
+  String get prefixTypePersonal => 'Persoonlijke apps';
+
+  @override
   String get autoShowKeyboard => 'Toetsenbord tonen';
 
   @override

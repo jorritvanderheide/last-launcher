@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
+import 'package:last_launcher/features/app_drawer/prefix_names.dart';
+import 'package:last_launcher/features/app_drawer/prefixes.dart';
 import 'package:last_launcher/features/app_drawer/ranking.dart';
 import 'package:last_launcher/shared/search_focus_controller.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
@@ -34,6 +36,7 @@ class AppDrawerSheet extends StatefulWidget {
     required this.onLaunch,
     required this.onOpenAppInfo,
     required this.onRemoveShortcut,
+    required this.onRunAction,
     required this.onCloseDrawer,
     required this.isAtTop,
     super.key,
@@ -47,6 +50,9 @@ class AppDrawerSheet extends StatefulWidget {
   onLaunch;
   final void Function(String packageName) onOpenAppInfo;
   final void Function(AppInfo shortcut) onRemoveShortcut;
+
+  /// Runs a prefix action (a link, an app's own search) on its argument.
+  final void Function(PrefixMatch action) onRunAction;
   final VoidCallback onCloseDrawer;
   final ValueNotifier<bool> isAtTop;
 
@@ -141,6 +147,15 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     final appList = widget.appListState;
     final settings = widget.settingsState;
     final query = appList.query;
+    // An action prefix is offered on its own, in place of apps.
+    if (appList.parseQuery(query).action case final action?) {
+      return DrawerResults(
+        apps: const [],
+        query: query,
+        searchTerm: '',
+        action: action,
+      );
+    }
     final expandSearch =
         query.isNotEmpty && settings.includeHiddenInSearch.value;
     var matches = appList.search(
@@ -180,7 +195,10 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
 
   void _onSearchChanged(String query) {
     widget.appListState.filter(query);
-    final only = _autoLaunch ? _results.onlyMatch : null;
+    // Hold off while the query may still become a prefix ("g" on the way to
+    // "g "), or its first letter would launch an app.
+    final waiting = widget.appListState.mayBecomePrefix(query);
+    final only = _autoLaunch && !waiting ? _results.onlyMatch : null;
     if (only == null) {
       _prevMatchKey = null;
       _stableHint = null;
@@ -203,6 +221,10 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
   void _onSubmit() {
     final results = _results;
     if (!results.isSearching) return;
+    if (results.action case final action?) {
+      _runAction(action);
+      return;
+    }
     final best = results.best;
     if (best == null) {
       widget.onCloseDrawer();
@@ -213,6 +235,13 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
       isWorkApp: best.isWorkApp,
       shortcutId: best.shortcutId,
     );
+  }
+
+  /// Actions only ever run when asked for, by a tap or Enter, and only once
+  /// there's something to act on.
+  void _runAction(PrefixMatch action) {
+    if (action.argument.trim().isEmpty) return;
+    widget.onRunAction(action);
   }
 
   // ------------------------------------------------------------------
@@ -385,6 +414,19 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     );
   }
 
+  /// The one row an action prefix shows: "DuckDuckGo: cats". Dimmed until
+  /// something follows the prefix.
+  Widget _buildActionRow(BuildContext context, PrefixMatch action) {
+    final name = prefixName(context, action.prefix, widget.appListState);
+    final argument = action.argument.trim();
+    return AppLabel(
+      key: const ValueKey('prefix-action'),
+      label: argument.isEmpty ? '$name: …' : '$name: $argument',
+      opacity: argument.isEmpty ? _dimmedOpacity : 1.0,
+      onTap: argument.isEmpty ? null : () => _runAction(action),
+    );
+  }
+
   Widget _buildEmptyState(BuildContext context) {
     if (!widget.settingsState.showHints.value) return const SizedBox.shrink();
     return Padding(
@@ -429,13 +471,28 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
             const SliverToBoxAdapter(child: SizedBox(height: 32)),
             if (_searchOnly)
               SliverFillRemaining(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onVerticalDragEnd: (details) {
-                    if (details.velocity.pixelsPerSecond.dy > 100) {
-                      widget.onCloseDrawer();
-                    }
-                  },
+                child: Column(
+                  children: [
+                    // Search-only mode shows no list, but an action is only
+                    // run by tapping it, so its row still appears.
+                    ListenableBuilder(
+                      listenable: _mergedState,
+                      builder: (context, _) => switch (_results.action) {
+                        final action? => _buildActionRow(context, action),
+                        null => const SizedBox.shrink(),
+                      },
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onVerticalDragEnd: (details) {
+                          if (details.velocity.pixelsPerSecond.dy > 100) {
+                            widget.onCloseDrawer();
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               )
             else
@@ -450,6 +507,14 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
                       listenable: _mergedState,
                       builder: (context, _) {
                         final results = _results;
+                        if (results.action case final action?) {
+                          return ListView(
+                            controller: _scrollController,
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            padding: const EdgeInsets.only(top: 8, bottom: 32),
+                            children: [_buildActionRow(context, action)],
+                          );
+                        }
                         if (results.isEmpty && results.isSearching) {
                           return _buildEmptyState(context);
                         }

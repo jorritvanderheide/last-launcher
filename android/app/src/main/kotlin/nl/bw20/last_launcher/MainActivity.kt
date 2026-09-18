@@ -1,6 +1,8 @@
 package nl.bw20.last_launcher
 
 import android.app.Activity
+import android.app.SearchManager
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
@@ -187,6 +189,23 @@ class MainActivity : FlutterActivity() {
                     result.success(profiles.any { it != Process.myUserHandle() })
                 }
                 "getAccentColors" -> result.success(accentColors())
+                "openLink" -> {
+                    val uri = call.argument<String>("uri")
+                    if (uri == null) {
+                        result.error("INVALID_ARGUMENT", "uri is required", null)
+                    } else {
+                        result.success(openLink(uri, call.argument<String>("package")))
+                    }
+                }
+                "searchInApp" -> {
+                    val pkg = call.argument<String>("package")
+                    val query = call.argument<String>("query")
+                    if (pkg == null || query == null) {
+                        result.error("INVALID_ARGUMENT", "package and query are required", null)
+                    } else {
+                        result.success(searchInApp(pkg, query))
+                    }
+                }
                 "removeShortcut" -> {
                     val packageName = call.argument<String>("packageName")
                     val shortcutId = call.argument<String>("shortcutId")
@@ -487,6 +506,36 @@ class MainActivity : FlutterActivity() {
         } catch (e: Exception) {
             result.error("FILE_FAILED", e.message ?: "File access failed", null)
         }
+    }
+
+    // ------------------------------------------------------------------
+    // Search prefix actions
+    // ------------------------------------------------------------------
+
+    /** Opens [uri] like any link, in [pkg] if given. False if nothing can. */
+    private fun openLink(uri: String, pkg: String?): Boolean {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        if (pkg != null) intent.setPackage(pkg)
+        return startIfPossible(intent)
+    }
+
+    /** Hands [query] to [pkg]'s own search. False if it has none. */
+    private fun searchInApp(pkg: String, query: String): Boolean {
+        val intent = Intent(Intent.ACTION_SEARCH)
+            .setPackage(pkg)
+            .putExtra(SearchManager.QUERY, query)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        return startIfPossible(intent)
+    }
+
+    private fun startIfPossible(intent: Intent): Boolean = try {
+        startActivity(intent)
+        true
+    } catch (_: ActivityNotFoundException) {
+        false
+    } catch (_: SecurityException) {
+        false
     }
 
     // ------------------------------------------------------------------

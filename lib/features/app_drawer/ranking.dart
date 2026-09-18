@@ -1,3 +1,4 @@
+import 'package:last_launcher/features/app_drawer/prefixes.dart';
 import 'package:last_launcher/shared/data/fold_for_search.dart';
 import 'package:last_launcher/shared/data/hints.dart';
 import 'package:last_launcher/shared/data/models.dart';
@@ -12,9 +13,14 @@ class DrawerResults {
     required this.apps,
     required this.query,
     required this.searchTerm,
+    this.action,
   });
 
   static const empty = DrawerResults(apps: [], query: '', searchTerm: '');
+
+  /// Set when the query starts with an action prefix. The drawer then shows
+  /// that action alone, in place of apps.
+  final PrefixMatch? action;
 
   /// Apps to show, best match first.
   final List<AppInfo> apps;

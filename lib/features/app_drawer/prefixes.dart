@@ -140,6 +140,20 @@ const defaultPrefixes = [
   SearchPrefix(trigger: ' ', action: FilterApps(work: false)),
 ];
 
+/// Whether [query] is the start of a longer enabled trigger: "g" on the
+/// way to "g ". Auto-launch waits then, or it would launch the only app
+/// starting with "g" before the prefix is finished.
+bool mayBecomePrefix(String query, List<SearchPrefix> prefixes) {
+  if (query.isEmpty) return false;
+  final lower = query.toLowerCase();
+  return prefixes.any(
+    (prefix) =>
+        prefix.enabled &&
+        prefix.trigger.length > query.length &&
+        prefix.trigger.toLowerCase().startsWith(lower),
+  );
+}
+
 /// A prefix found at the start of a query, with the text after it.
 class PrefixMatch {
   const PrefixMatch(this.prefix, this.argument);

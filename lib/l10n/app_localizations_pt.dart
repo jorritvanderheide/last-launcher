@@ -238,6 +238,15 @@ class AppLocalizationsPt extends AppLocalizations {
       'Ocultar nomes das aplicações, pesquisar para abrir';
 
   @override
+  String get prefixNoApp => 'Nenhuma aplicação consegue abrir isto';
+
+  @override
+  String get prefixTypeWork => 'Aplicações de trabalho';
+
+  @override
+  String get prefixTypePersonal => 'Aplicações pessoais';
+
+  @override
   String get autoShowKeyboard => 'Mostrar teclado';
 
   @override

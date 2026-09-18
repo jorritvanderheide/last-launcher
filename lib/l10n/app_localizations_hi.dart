@@ -234,6 +234,15 @@ class AppLocalizationsHi extends AppLocalizations {
   String get searchOnlyModeSubtitle => 'ऐप के नाम छुपाएँ, खोजकर खोलें';
 
   @override
+  String get prefixNoApp => 'कोई ऐप इसे नहीं खोल सकता';
+
+  @override
+  String get prefixTypeWork => 'कार्य ऐप';
+
+  @override
+  String get prefixTypePersonal => 'निजी ऐप';
+
+  @override
   String get autoShowKeyboard => 'कीबोर्ड दिखाएँ';
 
   @override

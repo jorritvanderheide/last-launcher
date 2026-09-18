@@ -239,6 +239,15 @@ class AppLocalizationsPl extends AppLocalizations {
       'Ukryj nazwy aplikacji, uruchamiaj przez wyszukiwanie';
 
   @override
+  String get prefixNoApp => 'Żadna aplikacja nie może tego otworzyć';
+
+  @override
+  String get prefixTypeWork => 'Aplikacje służbowe';
+
+  @override
+  String get prefixTypePersonal => 'Aplikacje osobiste';
+
+  @override
   String get autoShowKeyboard => 'Pokaż klawiaturę';
 
   @override

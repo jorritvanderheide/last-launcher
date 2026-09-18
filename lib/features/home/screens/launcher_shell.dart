@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
+import 'package:last_launcher/features/app_drawer/prefixes.dart';
 import 'package:last_launcher/features/app_drawer/widgets/app_drawer_sheet.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/modules/launcher_module.dart';
@@ -274,6 +275,31 @@ class _LauncherShellState extends State<LauncherShell>
       shortcutId: shortcutId,
     );
     _closeDrawer();
+  }
+
+  /// Runs a prefix action from the drawer. When no app can take it, says so
+  /// and leaves the drawer open with the query intact.
+  Future<void> _runAction(PrefixMatch match) async {
+    final query = match.argument.trim();
+    final opened = await switch (match.prefix.action) {
+      final OpenLink link => widget.appChannel.openLink(
+        link.linkFor(query),
+        package: link.openWith,
+      ),
+      SearchInApp(:final package) => widget.appChannel.searchInApp(
+        package,
+        query,
+      ),
+      FilterApps() => Future.value(false),
+    };
+    if (!mounted) return;
+    if (opened) {
+      _closeDrawer();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.prefixNoApp)),
+      );
+    }
   }
 
   /// Unpins a shortcut from the launcher, and from home if it was there.
@@ -653,6 +679,7 @@ class _LauncherShellState extends State<LauncherShell>
                     onLaunch: _launchApp,
                     onOpenAppInfo: _openAppInfo,
                     onRemoveShortcut: _removeShortcut,
+                    onRunAction: _runAction,
                     onCloseDrawer: _closeDrawer,
                   ),
                 ),

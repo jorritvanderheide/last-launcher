@@ -97,6 +97,35 @@ class AppChannel {
     }
   }
 
+  /// Opens [uri] like any link, in [package] if given. False when no app
+  /// can open it.
+  Future<bool> openLink(String uri, {String? package}) async {
+    try {
+      final opened = await _channel.invokeMethod<bool>('openLink', {
+        'uri': uri,
+        'package': ?package,
+      });
+      return opened ?? false;
+    } on PlatformException catch (e) {
+      debugPrint('Failed to open $uri: $e');
+      return false;
+    }
+  }
+
+  /// Hands [query] to [package]'s own search. False when it has none.
+  Future<bool> searchInApp(String package, String query) async {
+    try {
+      final opened = await _channel.invokeMethod<bool>('searchInApp', {
+        'package': package,
+        'query': query,
+      });
+      return opened ?? false;
+    } on PlatformException catch (e) {
+      debugPrint('Failed to search in $package: $e');
+      return false;
+    }
+  }
+
   /// Unpins a shortcut from the launcher; the app that made it keeps it.
   Future<void> removeShortcut(AppInfo shortcut) async {
     try {

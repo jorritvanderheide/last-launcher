@@ -236,6 +236,15 @@ class AppLocalizationsCs extends AppLocalizations {
       'Skrýt názvy aplikací, spustit vyhledáváním';
 
   @override
+  String get prefixNoApp => 'Žádná aplikace to neotevře';
+
+  @override
+  String get prefixTypeWork => 'Pracovní aplikace';
+
+  @override
+  String get prefixTypePersonal => 'Osobní aplikace';
+
+  @override
   String get autoShowKeyboard => 'Zobrazit klávesnici';
 
   @override

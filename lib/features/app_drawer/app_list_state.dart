@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:last_launcher/features/app_drawer/prefixes.dart'
+    as prefixes_lib;
 import 'package:last_launcher/features/app_drawer/search.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
@@ -68,6 +70,10 @@ class AppListState extends ChangeNotifier {
     prefixes: _searchPrefs.prefixes,
     allowProfileFilter: profilePrefixEnabled,
   );
+
+  /// See [mayBecomePrefix].
+  bool mayBecomePrefix(String query) =>
+      prefixes_lib.mayBecomePrefix(query, _searchPrefs.prefixes);
 
   List<AppInfo> search(
     String query, {
@@ -210,6 +216,17 @@ class AppListState extends ChangeNotifier {
 
   String displayLabelFor(String key, String fallback) =>
       _customLabels[key] ?? fallback;
+
+  /// The name of the app in [package], as shown in the drawer; null when
+  /// it isn't installed.
+  String? labelForPackage(String package) {
+    for (final app in _allApps) {
+      if (app.packageName == package && !app.isShortcut) {
+        return displayLabel(app);
+      }
+    }
+    return null;
+  }
 
   String displayLabel(AppInfo app) {
     return displayLabelFor(app.key, app.label);
