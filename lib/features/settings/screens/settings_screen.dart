@@ -25,6 +25,7 @@ class SettingsScreen extends StatefulWidget {
     required this.appListState,
     required this.homeState,
     required this.appChannel,
+    required this.moduleDeps,
     required this.onRestored,
     super.key,
   });
@@ -33,6 +34,9 @@ class SettingsScreen extends StatefulWidget {
   final AppListState appListState;
   final HomeState homeState;
   final AppChannel appChannel;
+
+  /// For the modules' own settings pages.
+  final ModuleDeps moduleDeps;
 
   /// Re-reads every state after a backup was restored.
   final VoidCallback onRestored;
@@ -105,10 +109,7 @@ class _SettingsScreenState extends State<SettingsScreen>
         for (final module in {
           for (final m in [s.leftPanel.value, s.rightPanel.value]) m.id: m,
         }.values)
-          if (module.settingsPage(
-                ModuleDeps(settingsState: s, appListState: widget.appListState),
-              )
-              case final page?)
+          if (module.settingsPage(widget.moduleDeps) case final page?)
             // Indented under Home, where the module is picked, and saying
             // which side it's on.
             ListTile(

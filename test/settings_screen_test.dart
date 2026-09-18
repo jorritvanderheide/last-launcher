@@ -5,6 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/modules/launch_app_module.dart';
+import 'package:last_launcher/features/modules/launcher_module.dart';
+import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/features/modules/tasks_module.dart';
 import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/screens/task_settings_screen.dart';
@@ -89,6 +91,11 @@ Future<SettingsState> _pumpSettings(
         appListState: appList,
         homeState: HomeState(prefs),
         appChannel: channel,
+        moduleDeps: ModuleDeps(
+          settingsState: settings,
+          appListState: appList,
+          taskState: TaskState(prefs),
+        ),
         onRestored: settings.reload,
       ),
     ),

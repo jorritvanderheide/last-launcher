@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
     required this.homeState,
     required this.appListState,
     required this.settingsState,
+    required this.moduleDeps,
     required this.onLaunch,
     required this.onReorderStart,
     required this.onReorderEnd,
@@ -26,6 +27,9 @@ class HomeScreen extends StatefulWidget {
   final HomeState homeState;
   final AppListState appListState;
   final SettingsState settingsState;
+
+  /// For the modules' hints ("Swipe right for Spotify").
+  final ModuleDeps moduleDeps;
   final void Function(String packageName, {bool isWorkApp, String? shortcutId})
   onLaunch;
   final VoidCallback onReorderStart;
@@ -177,10 +181,7 @@ class HomeScreenState extends State<HomeScreen> {
                   }
 
                   addHint(l10n.hintSwipeUp);
-                  final deps = ModuleDeps(
-                    settingsState: widget.settingsState,
-                    appListState: widget.appListState,
-                  );
+                  final deps = widget.moduleDeps;
                   if (left is! NoneModule) {
                     addHint(
                       l10n.hintSwipeRightFor(

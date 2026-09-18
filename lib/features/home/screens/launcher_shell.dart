@@ -155,6 +155,7 @@ class _LauncherShellState extends State<LauncherShell>
         appListState: widget.appListState,
         homeState: widget.homeState,
         appChannel: widget.appChannel,
+        moduleDeps: _moduleDeps,
         onRestored: _reloadAfterRestore,
       ),
     );
@@ -552,9 +553,10 @@ class _LauncherShellState extends State<LauncherShell>
     }
   }
 
-  ModuleDeps get _moduleDeps => ModuleDeps(
+  late final _moduleDeps = ModuleDeps(
     settingsState: widget.settingsState,
     appListState: widget.appListState,
+    taskState: widget.taskState,
   );
 
   Widget _buildPanel(
@@ -566,7 +568,6 @@ class _LauncherShellState extends State<LauncherShell>
       context,
       LauncherModuleProps(
         deps: _moduleDeps,
-        taskState: widget.taskState,
         side: side,
         isVisible: isVisible,
         scrollLocked: _dragMode == _DragMode.page,
@@ -640,6 +641,7 @@ class _LauncherShellState extends State<LauncherShell>
                           homeState: widget.homeState,
                           appListState: widget.appListState,
                           settingsState: widget.settingsState,
+                          moduleDeps: _moduleDeps,
                           onLaunch: _launchApp,
                           onReorderStart: () => _isReorderingHome = true,
                           onReorderEnd: () => _isReorderingHome = false,

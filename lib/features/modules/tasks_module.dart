@@ -31,8 +31,8 @@ class TasksModule extends LauncherModule {
   Widget build(BuildContext context, LauncherModuleProps props) {
     return TaskScreen(
       key: _key,
-      taskState: props.taskState,
-      settingsState: props.settingsState,
+      taskState: props.deps.taskState,
+      settingsState: props.deps.settingsState,
       isVisible: props.isVisible,
       onReorderStart: props.onReorderStart,
       onReorderEnd: props.onReorderEnd,

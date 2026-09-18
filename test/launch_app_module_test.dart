@@ -34,7 +34,11 @@ Future<ModuleDeps> _deps() async {
   final prefs = await SharedPreferences.getInstance();
   final apps = AppListState(_FakeAppChannel(), prefs);
   await apps.loadApps();
-  return ModuleDeps(settingsState: SettingsState(prefs), appListState: apps);
+  return ModuleDeps(
+    settingsState: SettingsState(prefs),
+    appListState: apps,
+    taskState: TaskState(prefs),
+  );
 }
 
 void main() {
@@ -169,8 +173,6 @@ void main() {
   ) async {
     final deps = await _deps();
     deps.settingsState.setLeftPanel(_module);
-    SharedPreferences.setMockInitialValues({});
-    final tasks = TaskState(await SharedPreferences.getInstance());
     await tester.pumpWidget(
       MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -180,7 +182,6 @@ void main() {
             context,
             LauncherModuleProps(
               deps: deps,
-              taskState: tasks,
               side: ModuleSide.left,
               isVisible: true,
               scrollLocked: false,

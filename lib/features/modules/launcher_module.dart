@@ -9,13 +9,18 @@ import 'package:last_launcher/shared/data/models.dart';
 
 enum ModuleSide { left, right }
 
-/// The launcher state a module can see outside its own panel: in the hints
-/// on home and on its settings page.
+/// The launcher state a module can see: in its panel, in the hints on home
+/// and on its settings page. Built once by the shell and handed down.
 class ModuleDeps {
-  const ModuleDeps({required this.settingsState, required this.appListState});
+  const ModuleDeps({
+    required this.settingsState,
+    required this.appListState,
+    required this.taskState,
+  });
 
   final SettingsState settingsState;
   final AppListState appListState;
+  final TaskState taskState;
 }
 
 /// A side panel that the user can pick for the left or right slot of home.
@@ -71,12 +76,11 @@ abstract class LauncherModule {
   bool dismissActions() => false;
 }
 
-/// Props the shell passes to [LauncherModule.build]. Module-specific deps
-/// are accessed through the relevant state object.
+/// Props the shell passes to [LauncherModule.build]: where the panel is and
+/// what it's doing, plus the launcher state in [deps].
 class LauncherModuleProps {
   const LauncherModuleProps({
     required this.deps,
-    required this.taskState,
     required this.side,
     required this.isVisible,
     required this.scrollLocked,
@@ -85,14 +89,11 @@ class LauncherModuleProps {
   });
 
   final ModuleDeps deps;
-  final TaskState taskState;
   final ModuleSide side;
   final bool isVisible;
   final bool scrollLocked;
   final VoidCallback onReorderStart;
   final VoidCallback onReorderEnd;
-
-  SettingsState get settingsState => deps.settingsState;
 
   /// The panel on the left is reached by swiping right, and vice versa.
   bool get swipeRight => side == ModuleSide.left;
