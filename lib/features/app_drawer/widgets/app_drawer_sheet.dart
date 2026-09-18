@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/app_drawer/ranking.dart';
-import 'package:last_launcher/features/app_drawer/search.dart';
 import 'package:last_launcher/shared/search_focus_controller.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:last_launcher/shared/widgets/appearance_scope.dart';
@@ -154,10 +153,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
           .where((a) => !widget.homeState.isPinned(a.key))
           .toList();
     }
-    final searchTerm = SearchQuery.parse(
-      query,
-      allowProfileFilter: appList.profilePrefixEnabled,
-    ).searchTerm;
+    final searchTerm = appList.parseQuery(query).searchTerm;
     return DrawerResults(
       apps: rankApps(
         apps: matches,
@@ -224,10 +220,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
   // ------------------------------------------------------------------
 
   SubstringHint? _queryMatchHint(AppInfo app, String query) {
-    final searchTerm = SearchQuery.parse(
-      query,
-      allowProfileFilter: widget.appListState.profilePrefixEnabled,
-    ).searchTerm;
+    final searchTerm = widget.appListState.parseQuery(query).searchTerm;
     if (searchTerm.isEmpty) return null;
     final foldedTerm = foldForSearch(searchTerm);
     final label = widget.appListState.displayLabelForSearch(app, query);

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:last_launcher/features/app_drawer/prefixes.dart';
 import 'package:last_launcher/features/modules/launcher_module.dart';
 import 'package:last_launcher/features/modules/none_module.dart';
 import 'package:last_launcher/features/modules/tasks_module.dart';
@@ -22,11 +23,13 @@ class SearchPrefs {
     required this.matchOriginal,
     required this.includeHidden,
     required this.hidePersonalWhenWorkActive,
+    this.prefixes = defaultPrefixes,
   });
 
   final bool matchOriginal;
   final bool includeHidden;
   final bool hidePersonalWhenWorkActive;
+  final List<SearchPrefix> prefixes;
 }
 
 /// One persisted setting. Assigning [value] stores it and notifies.
@@ -122,6 +125,18 @@ class SettingsState extends ChangeNotifier {
   late final autoLaunch = _bool('auto_launch', true);
   late final extraChar = _bool('extra_char', false);
   late final quickLaunchHints = _bool('quick_launch_hints', false);
+
+  /// Prefixes typed at the start of a search: profile filters, links and
+  /// app searches. Absent means the defaults; an empty list is a choice.
+  late final searchPrefixes = _track(
+    Setting<List<SearchPrefix>>(
+      'search_prefixes',
+      () =>
+          SearchPrefix.decodeList(_stored<String>('search_prefixes')) ??
+          defaultPrefixes,
+      (v) => _prefs.setString('search_prefixes', SearchPrefix.encodeList(v)),
+    ),
+  );
 
   // --- Work profile ------------------------------------------------------
 
@@ -219,6 +234,7 @@ class SettingsState extends ChangeNotifier {
     matchOriginal: matchOriginalName.value,
     includeHidden: includeHiddenInSearch.value,
     hidePersonalWhenWorkActive: hidePersonalWhenWorkActive.value,
+    prefixes: searchPrefixes.value,
   );
 
   /// Fires when anything in [searchPrefs] changes.
@@ -226,6 +242,7 @@ class SettingsState extends ChangeNotifier {
     matchOriginalName,
     includeHiddenInSearch,
     hidePersonalWhenWorkActive,
+    searchPrefixes,
   ]);
 
   /// Fires when anything that needs the whole [MaterialApp] rebuilt changes,

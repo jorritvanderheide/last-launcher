@@ -61,6 +61,14 @@ class AppListState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// [query] split into its prefix, if any, and the rest, under the
+  /// current prefixes.
+  SearchQuery parseQuery(String query) => SearchQuery.parse(
+    query,
+    prefixes: _searchPrefs.prefixes,
+    allowProfileFilter: profilePrefixEnabled,
+  );
+
   List<AppInfo> search(
     String query, {
     bool includeHidden = false,
@@ -78,6 +86,7 @@ class AppListState extends ChangeNotifier {
       matchOriginal: matchOriginal,
       displayLabel: displayLabel,
       allowProfileFilter: profilePrefixEnabled,
+      prefixes: _searchPrefs.prefixes,
     );
   }
 
@@ -254,10 +263,7 @@ class AppListState extends ChangeNotifier {
       visible = visible.where((a) => a.isWorkApp);
     }
     if (_query.isNotEmpty) {
-      final searchTerm = SearchQuery.parse(
-        _query,
-        allowProfileFilter: profilePrefixEnabled,
-      ).searchTerm;
+      final searchTerm = parseQuery(_query).searchTerm;
       final matching = search(
         _query,
         includeHidden: _searchPrefs.includeHidden,
