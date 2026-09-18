@@ -35,7 +35,8 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget list(BuildContext context) => FadeOverflow(
       child: ListView(
-        padding: EdgeInsets.zero,
+        // Starts below the fade, so the first row isn't dimmed at rest.
+        padding: const EdgeInsets.only(top: FadeOverflow.defaultSize),
         children: [
           ...children(context),
           SizedBox(height: MediaQuery.of(context).viewPadding.bottom + 8),

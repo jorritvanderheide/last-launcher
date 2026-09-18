@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+/// Fades the top and bottom [size] pixels of [child] to transparent, so
+/// scrolling content dissolves at the edges instead of being cut off.
 class FadeOverflow extends StatelessWidget {
-  const FadeOverflow({required this.child, this.size = 24.0, super.key});
+  const FadeOverflow({required this.child, this.size = defaultSize, super.key});
+
+  static const defaultSize = 24.0;
 
   final Widget child;
   final double size;

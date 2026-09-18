@@ -13,6 +13,7 @@ import 'package:last_launcher/l10n/app_localizations_en.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/shared/widgets/appearance_scope.dart';
+import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class _FakeAppChannel extends AppChannel {
@@ -271,6 +272,18 @@ void main() {
       expect(prefs.containsKey('tasks'), isFalse);
       expect(find.text(l10n.backupSaved), findsOneWidget);
     });
+  });
+
+  testWidgets('first row of a page sits below the top fade', (tester) async {
+    await _pumpSettings(tester);
+    await tester.tap(find.text(l10n.sectionHome));
+    await tester.pumpAndSettle();
+
+    final list = tester.getTopLeft(find.byType(ListView)).dy;
+    final firstRow = tester.getTopLeft(
+      find.widgetWithText(SwitchListTile, l10n.lockLayout),
+    );
+    expect(firstRow.dy - list, greaterThanOrEqualTo(FadeOverflow.defaultSize));
   });
 
   testWidgets('home page picks a module by id', (tester) async {
