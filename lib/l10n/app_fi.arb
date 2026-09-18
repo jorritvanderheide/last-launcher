@@ -78,7 +78,7 @@
   "prefixTypeWork": "Työsovellukset",
   "prefixTypePersonal": "Henkilökohtaiset sovellukset",
   "searchPrefixes": "Hakuetuliitteet",
-  "searchPrefixesSubtitle": "Hae verkosta, kartalta tai sovelluksesta hakukentän kautta",
+  "searchPrefixesSubtitle": "Hae verkosta tai sovelluksesta hakukentän kautta",
   "prefixAdd": "Lisää etuliite",
   "prefixRestoreDefaults": "Palauta työ- ja henkilökohtainen etuliite",
   "prefixTrigger": "Etuliite",

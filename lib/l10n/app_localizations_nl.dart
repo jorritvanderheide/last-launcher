@@ -250,7 +250,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get searchPrefixesSubtitle =>
-      'Zoek op het web, op een kaart of in een app vanuit het zoekveld';
+      'Zoek op het web of in een app vanuit het zoekveld';
 
   @override
   String get prefixAdd => 'Voorvoegsel toevoegen';

@@ -248,7 +248,7 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get searchPrefixesSubtitle =>
-      'Sök på webben, på en karta eller i en app från sökfältet';
+      'Sök på webben eller i en app från sökfältet';
 
   @override
   String get prefixAdd => 'Lägg till prefix';

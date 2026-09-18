@@ -241,7 +241,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get searchPrefixes => '搜尋前綴';
 
   @override
-  String get searchPrefixesSubtitle => '從搜尋欄搜尋網頁、地圖或應用程式';
+  String get searchPrefixesSubtitle => '從搜尋欄搜尋網頁或應用程式';
 
   @override
   String get prefixAdd => '新增前綴';

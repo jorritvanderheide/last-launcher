@@ -250,7 +250,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get searchPrefixesSubtitle =>
-      'Hae verkosta, kartalta tai sovelluksesta hakukentän kautta';
+      'Hae verkosta tai sovelluksesta hakukentän kautta';
 
   @override
   String get prefixAdd => 'Lisää etuliite';

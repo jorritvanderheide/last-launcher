@@ -78,7 +78,7 @@
   "prefixTypeWork": "Pracovní aplikace",
   "prefixTypePersonal": "Osobní aplikace",
   "searchPrefixes": "Vyhledávací předpony",
-  "searchPrefixesSubtitle": "Hledat na webu, v mapě nebo v aplikaci přímo z vyhledávání",
+  "searchPrefixesSubtitle": "Hledat na webu nebo v aplikaci přímo z vyhledávání",
   "prefixAdd": "Přidat předponu",
   "prefixRestoreDefaults": "Obnovit pracovní a osobní předponu",
   "prefixTrigger": "Předpona",

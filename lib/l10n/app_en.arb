@@ -87,7 +87,7 @@
   "prefixTypeWork": "Work apps",
   "prefixTypePersonal": "Personal apps",
   "searchPrefixes": "Search prefixes",
-  "searchPrefixesSubtitle": "Search the web, a map or an app from the search field",
+  "searchPrefixesSubtitle": "Search the web or an app from the search field",
   "prefixAdd": "Add prefix",
   "prefixRestoreDefaults": "Restore work and personal prefixes",
   "prefixTrigger": "Prefix",

@@ -249,7 +249,7 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get searchPrefixesSubtitle =>
-      'Hledat na webu, v mapě nebo v aplikaci přímo z vyhledávání';
+      'Hledat na webu nebo v aplikaci přímo z vyhledávání';
 
   @override
   String get prefixAdd => 'Přidat předponu';

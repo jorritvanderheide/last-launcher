@@ -581,7 +581,7 @@ abstract class AppLocalizations {
   /// No description provided for @searchPrefixesSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Search the web, a map or an app from the search field'**
+  /// **'Search the web or an app from the search field'**
   String get searchPrefixesSubtitle;
 
   /// No description provided for @prefixAdd.

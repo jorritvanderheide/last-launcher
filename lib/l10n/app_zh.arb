@@ -78,7 +78,7 @@
   "prefixTypeWork": "工作應用程式",
   "prefixTypePersonal": "個人應用程式",
   "searchPrefixes": "搜尋前綴",
-  "searchPrefixesSubtitle": "從搜尋欄搜尋網頁、地圖或應用程式",
+  "searchPrefixesSubtitle": "從搜尋欄搜尋網頁或應用程式",
   "prefixAdd": "新增前綴",
   "prefixRestoreDefaults": "還原工作與個人前綴",
   "prefixTrigger": "前綴",

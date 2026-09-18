@@ -78,7 +78,7 @@
   "prefixTypeWork": "Arbeits-Apps",
   "prefixTypePersonal": "Private Apps",
   "searchPrefixes": "Suchpräfixe",
-  "searchPrefixesSubtitle": "Im Web, in einer Karte oder in einer App direkt aus der Suche suchen",
+  "searchPrefixesSubtitle": "Im Web oder in einer App direkt aus der Suche suchen",
   "prefixAdd": "Präfix hinzufügen",
   "prefixRestoreDefaults": "Arbeits- und Privat-Präfix wiederherstellen",
   "prefixTrigger": "Präfix",

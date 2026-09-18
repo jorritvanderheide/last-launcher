@@ -252,7 +252,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get searchPrefixesSubtitle =>
-      'Busca en la web, un mapa o una app desde el campo de búsqueda';
+      'Busca en la web o en una app desde el campo de búsqueda';
 
   @override
   String get prefixAdd => 'Añadir prefijo';

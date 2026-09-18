@@ -78,7 +78,7 @@
   "prefixTypeWork": "Aplikacje służbowe",
   "prefixTypePersonal": "Aplikacje osobiste",
   "searchPrefixes": "Prefiksy wyszukiwania",
-  "searchPrefixesSubtitle": "Szukaj w sieci, na mapie lub w aplikacji z pola wyszukiwania",
+  "searchPrefixesSubtitle": "Szukaj w sieci lub w aplikacji z pola wyszukiwania",
   "prefixAdd": "Dodaj prefiks",
   "prefixRestoreDefaults": "Przywróć prefiksy służbowy i osobisty",
   "prefixTrigger": "Prefiks",

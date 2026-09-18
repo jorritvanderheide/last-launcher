@@ -78,7 +78,7 @@
   "prefixTypeWork": "仕事用アプリ",
   "prefixTypePersonal": "個人用アプリ",
   "searchPrefixes": "検索プレフィックス",
-  "searchPrefixesSubtitle": "検索欄からウェブ、地図、アプリ内を検索",
+  "searchPrefixesSubtitle": "検索欄からウェブやアプリ内を検索",
   "prefixAdd": "プレフィックスを追加",
   "prefixRestoreDefaults": "仕事用と個人用のプレフィックスを復元",
   "prefixTrigger": "プレフィックス",

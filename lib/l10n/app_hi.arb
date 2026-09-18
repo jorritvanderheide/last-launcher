@@ -78,7 +78,7 @@
   "prefixTypeWork": "कार्य ऐप",
   "prefixTypePersonal": "निजी ऐप",
   "searchPrefixes": "खोज प्रीफ़िक्स",
-  "searchPrefixesSubtitle": "खोज फ़ील्ड से वेब, मैप या किसी ऐप में खोजें",
+  "searchPrefixesSubtitle": "खोज फ़ील्ड से वेब या किसी ऐप में खोजें",
   "prefixAdd": "प्रीफ़िक्स जोड़ें",
   "prefixRestoreDefaults": "कार्य और निजी प्रीफ़िक्स वापस लाएँ",
   "prefixTrigger": "प्रीफ़िक्स",

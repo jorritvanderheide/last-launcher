@@ -252,7 +252,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get searchPrefixesSubtitle =>
-      'Szukaj w sieci, na mapie lub w aplikacji z pola wyszukiwania';
+      'Szukaj w sieci lub w aplikacji z pola wyszukiwania';
 
   @override
   String get prefixAdd => 'Dodaj prefiks';

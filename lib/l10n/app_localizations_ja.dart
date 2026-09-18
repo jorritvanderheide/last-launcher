@@ -241,7 +241,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get searchPrefixes => '検索プレフィックス';
 
   @override
-  String get searchPrefixesSubtitle => '検索欄からウェブ、地図、アプリ内を検索';
+  String get searchPrefixesSubtitle => '検索欄からウェブやアプリ内を検索';
 
   @override
   String get prefixAdd => 'プレフィックスを追加';

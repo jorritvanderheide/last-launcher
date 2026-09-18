@@ -78,7 +78,7 @@
   "prefixTypeWork": "Jobbappar",
   "prefixTypePersonal": "Personliga appar",
   "searchPrefixes": "Sökprefix",
-  "searchPrefixesSubtitle": "Sök på webben, på en karta eller i en app från sökfältet",
+  "searchPrefixesSubtitle": "Sök på webben eller i en app från sökfältet",
   "prefixAdd": "Lägg till prefix",
   "prefixRestoreDefaults": "Återställ jobb- och personligt prefix",
   "prefixTrigger": "Prefix",

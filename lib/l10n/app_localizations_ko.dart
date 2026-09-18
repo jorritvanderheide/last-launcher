@@ -241,7 +241,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get searchPrefixes => '검색 접두어';
 
   @override
-  String get searchPrefixesSubtitle => '검색창에서 웹, 지도 또는 앱 검색';
+  String get searchPrefixesSubtitle => '검색창에서 웹 또는 앱 검색';
 
   @override
   String get prefixAdd => '접두어 추가';

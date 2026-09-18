@@ -246,8 +246,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get searchPrefixes => 'खोज प्रीफ़िक्स';
 
   @override
-  String get searchPrefixesSubtitle =>
-      'खोज फ़ील्ड से वेब, मैप या किसी ऐप में खोजें';
+  String get searchPrefixesSubtitle => 'खोज फ़ील्ड से वेब या किसी ऐप में खोजें';
 
   @override
   String get prefixAdd => 'प्रीफ़िक्स जोड़ें';

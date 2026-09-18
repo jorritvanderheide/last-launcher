@@ -78,7 +78,7 @@
   "prefixTypeWork": "업무용 앱",
   "prefixTypePersonal": "개인 앱",
   "searchPrefixes": "검색 접두어",
-  "searchPrefixesSubtitle": "검색창에서 웹, 지도 또는 앱 검색",
+  "searchPrefixesSubtitle": "검색창에서 웹 또는 앱 검색",
   "prefixAdd": "접두어 추가",
   "prefixRestoreDefaults": "업무용 및 개인 접두어 복원",
   "prefixTrigger": "접두어",

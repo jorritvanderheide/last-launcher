@@ -253,7 +253,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get searchPrefixesSubtitle =>
-      'Rechercher sur le web, sur une carte ou dans une application depuis le champ de recherche';
+      'Rechercher sur le web ou dans une application depuis le champ de recherche';
 
   @override
   String get prefixAdd => 'Ajouter un préfixe';

@@ -248,7 +248,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get searchPrefixesSubtitle =>
-      'Search the web, a map or an app from the search field';
+      'Search the web or an app from the search field';
 
   @override
   String get prefixAdd => 'Add prefix';
