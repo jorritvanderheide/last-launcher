@@ -41,7 +41,6 @@ class _SideTile extends StatelessWidget {
     final setting = deps.settingsState.launchApp(side);
 
     return ListTile(
-      leading: Icon(left ? Icons.west : Icons.east),
       title: Text(left ? l10n.launchAppLeft : l10n.launchAppRight),
       subtitle: Text(
         !onThisSide

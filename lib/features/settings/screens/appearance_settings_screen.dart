@@ -70,7 +70,6 @@ class AppearanceSettingsScreen extends StatelessWidget {
       children: (context) => [
         // Custom is what the options add up to, never something to pick.
         ChoiceTile<ThemePreset>(
-          leading: const Icon(Icons.palette_outlined),
           title: l10n.themeStyleTitle,
           value: s.preset,
           options: const [ThemePreset.standard, ThemePreset.extra],
@@ -78,7 +77,6 @@ class AppearanceSettingsScreen extends StatelessWidget {
           onChanged: s.applyPreset,
         ),
         ChoiceTile<ThemeMode>(
-          leading: const Icon(Icons.brightness_6_outlined),
           title: l10n.themeTitle,
           value: s.themeMode.value,
           options: ThemeMode.values,
@@ -86,7 +84,6 @@ class AppearanceSettingsScreen extends StatelessWidget {
           onChanged: (mode) => s.themeMode.value = mode,
         ),
         ChoiceTile<FontChoice>(
-          leading: const Icon(Icons.text_fields),
           title: l10n.fontTitle,
           value: s.font.value,
           options: FontChoice.values,
@@ -94,7 +91,6 @@ class AppearanceSettingsScreen extends StatelessWidget {
           onChanged: (font) => s.font.value = font,
         ),
         SettingSlider(
-          leading: const Icon(Icons.format_size),
           setting: s.textSize,
           title: l10n.textSizeTitle,
           min: SettingsState.textSizeMin,
@@ -102,7 +98,6 @@ class AppearanceSettingsScreen extends StatelessWidget {
           step: SettingsState.textSizeStep,
         ),
         ChoiceTile<LabelAlignment>(
-          leading: const Icon(Icons.format_align_left),
           title: l10n.textAlignTitle,
           value: s.labelAlignment.value,
           options: LabelAlignment.values,

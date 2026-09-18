@@ -45,13 +45,8 @@ class AboutScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
+              ListTile(title: Text(l10n.version), subtitle: Text(version)),
               ListTile(
-                leading: const Icon(Icons.info_outline),
-                title: Text(l10n.version),
-                subtitle: Text(version),
-              ),
-              ListTile(
-                leading: const Icon(Icons.gavel),
                 title: Text(l10n.license),
                 subtitle: const Text('EUPL-1.2'),
               ),

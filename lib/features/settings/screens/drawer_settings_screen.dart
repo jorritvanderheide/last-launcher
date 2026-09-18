@@ -55,11 +55,11 @@ class DrawerSettingsScreen extends StatelessWidget {
     return SettingsPage(
       title: l10n.sectionAppDrawer,
       listenable: Listenable.merge([s, appListState, homeState]),
+      reserveIconSpace: true,
       children: (context) => [
         // A mode rather than a switch: it decides what the drawer is, and
         // with it which of the rows below apply at all.
         ChoiceTile<bool>(
-          leading: const Icon(Icons.view_list_outlined),
           title: l10n.drawerMode,
           value: s.searchOnly.value,
           options: const [false, true],

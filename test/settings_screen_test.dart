@@ -326,6 +326,33 @@ void main() {
     expect(firstRow.dy - list, greaterThanOrEqualTo(FadeOverflow.defaultSize));
   });
 
+  testWidgets('on a page mixing icons and settings, titles line up', (
+    tester,
+  ) async {
+    await _pumpSettings(tester);
+    await tester.tap(find.text(l10n.sectionAppDrawer));
+    await tester.pumpAndSettle();
+
+    double left(String text) => tester.getTopLeft(find.text(text)).dx;
+    final withIcon = left(l10n.hiddenApps);
+    expect(left(l10n.hidePinnedApps), withIcon);
+    expect(left(l10n.drawerMode), withIcon);
+    expect(left(l10n.sectionSearch), withIcon);
+  });
+
+  testWidgets('settings that hold a value have no icon', (tester) async {
+    await _pumpSettings(tester);
+    await tester.tap(find.text(l10n.sectionAppearance));
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.widgetWithText(ListTile, l10n.themeStyleTitle),
+        matching: find.byType(Icon),
+      ),
+      findsNothing,
+    );
+  });
+
   testWidgets('home page picks a module by id', (tester) async {
     final settings = await _pumpSettings(tester);
     await tester.tap(find.text(l10n.sectionHome));

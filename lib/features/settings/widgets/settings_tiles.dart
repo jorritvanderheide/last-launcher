@@ -20,16 +20,23 @@ Future<void> pushSettingsPage(BuildContext context, Widget page) {
 ///
 /// Rows are rebuilt whenever [listenable] fires, if given, since whether a
 /// row is enabled often depends on other settings.
+///
+/// Icons mark places and actions: rows that open something or do something
+/// once. Rows holding a value (switches, choices, sliders) have none. On a
+/// page with both, set [reserveIconSpace] so the rows without an icon keep
+/// its space and every title starts on the same line.
 class SettingsPage extends StatelessWidget {
   const SettingsPage({
     required this.title,
     required this.children,
     this.listenable,
+    this.reserveIconSpace = false,
     super.key,
   });
 
   final String title;
   final Listenable? listenable;
+  final bool reserveIconSpace;
   final List<Widget> Function(BuildContext context) children;
 
   @override
@@ -48,15 +55,38 @@ class SettingsPage extends StatelessWidget {
     final listenable = this.listenable;
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: listenable == null
-          ? Builder(builder: list)
-          : ListenableBuilder(
-              listenable: listenable,
-              builder: (context, _) => list(context),
-            ),
+      body: _IconSpace(
+        reserved: reserveIconSpace,
+        child: listenable == null
+            ? Builder(builder: list)
+            : ListenableBuilder(
+                listenable: listenable,
+                builder: (context, _) => list(context),
+              ),
+      ),
     );
   }
 }
+
+/// Whether the page reserves icon space; see [SettingsPage.reserveIconSpace].
+class _IconSpace extends InheritedWidget {
+  const _IconSpace({required this.reserved, required super.child});
+
+  final bool reserved;
+
+  static bool of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<_IconSpace>()?.reserved ??
+      false;
+
+  @override
+  bool updateShouldNotify(_IconSpace oldWidget) =>
+      reserved != oldWidget.reserved;
+}
+
+/// A row's leading widget: its own icon, or on a page that reserves icon
+/// space an empty one of the same width, so titles line up.
+Widget? _leading(BuildContext context, Widget? icon) =>
+    icon ?? (_IconSpace.of(context) ? const SizedBox(width: 24) : null);
 
 class SettingsSectionHeader extends StatelessWidget {
   const SettingsSectionHeader({required this.title, super.key});
@@ -65,8 +95,11 @@ class SettingsSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Lines up with the row titles, which start after the icon space when
+    // the page reserves it.
+    final start = _IconSpace.of(context) ? 56.0 : 16.0;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
+      padding: EdgeInsets.fromLTRB(start, 24, 16, 8),
       child: Text(
         title,
         style: Theme.of(context).textTheme.titleSmall?.copyWith(
@@ -107,6 +140,7 @@ class SettingSwitch extends StatelessWidget {
       contentPadding: indent
           ? const EdgeInsetsDirectional.only(start: 40, end: 24)
           : null,
+      secondary: _leading(context, null),
       title: Text(title),
       subtitle: subtitle == null ? null : Text(subtitle!),
       value: effective ?? setting.value,
@@ -151,7 +185,7 @@ class _SettingSliderState extends State<SettingSlider> {
     final value = _dragging ?? widget.setting.value;
     final shown = value.round().toString();
     return ListTile(
-      leading: widget.leading,
+      leading: _leading(context, widget.leading),
       title: Text(widget.title),
       trailing: Text(shown, style: Theme.of(context).textTheme.bodyLarge),
       subtitle: Slider(
@@ -198,7 +232,7 @@ class ChoiceTile<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final onChanged = this.onChanged;
     return ListTile(
-      leading: leading,
+      leading: _leading(context, leading),
       title: Text(title),
       subtitle: Text(subtitle ?? label(context, value)),
       enabled: onChanged != null,
