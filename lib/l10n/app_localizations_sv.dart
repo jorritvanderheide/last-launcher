@@ -30,9 +30,6 @@ class AppLocalizationsSv extends AppLocalizations {
   String get sectionTasks => 'Uppgifter';
 
   @override
-  String get sectionModules => 'Moduler';
-
-  @override
   String get sectionSupport => 'Stöd';
 
   @override
@@ -213,10 +210,6 @@ class AppLocalizationsSv extends AppLocalizations {
       'This uses the AccessibilityService API to lock the screen when you double-tap. It does nothing else. You will be redirected to system settings to turn it on.';
 
   @override
-  String get doubleTapToSleepPrivacy =>
-      'We do not collect, store, or share any personal or sensitive user data through the AccessibilityService API.';
-
-  @override
   String get setAsDefault => 'Ange som standard hem-app';
 
   @override
@@ -230,9 +223,6 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get searchOnlyMode => 'Enbart sökning';
-
-  @override
-  String get searchOnlyModeSubtitle => 'Dölj appnamn, sök för att starta';
 
   @override
   String get prefixNoApp => 'Ingen app kan öppna detta';

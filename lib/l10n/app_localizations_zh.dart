@@ -30,9 +30,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sectionTasks => '任務';
 
   @override
-  String get sectionModules => '模組';
-
-  @override
   String get sectionSupport => '支援';
 
   @override
@@ -207,10 +204,6 @@ class AppLocalizationsZh extends AppLocalizations {
       'This uses the AccessibilityService API to lock the screen when you double-tap. It does nothing else. You will be redirected to system settings to turn it on.';
 
   @override
-  String get doubleTapToSleepPrivacy =>
-      'We do not collect, store, or share any personal or sensitive user data through the AccessibilityService API.';
-
-  @override
   String get setAsDefault => '設為預設主畫面應用程式';
 
   @override
@@ -224,9 +217,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get searchOnlyMode => '僅搜尋';
-
-  @override
-  String get searchOnlyModeSubtitle => '隱藏應用程式名稱，以搜尋開啟';
 
   @override
   String get prefixNoApp => '沒有應用程式可以開啟此項目';

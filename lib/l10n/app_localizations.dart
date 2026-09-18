@@ -164,12 +164,6 @@ abstract class AppLocalizations {
   /// **'Tasks'**
   String get sectionTasks;
 
-  /// No description provided for @sectionModules.
-  ///
-  /// In en, this message translates to:
-  /// **'Modules'**
-  String get sectionModules;
-
   /// No description provided for @sectionSupport.
   ///
   /// In en, this message translates to:
@@ -512,12 +506,6 @@ abstract class AppLocalizations {
   /// **'This uses the AccessibilityService API to lock the screen when you double-tap. It does nothing else. You will be redirected to system settings to turn it on.'**
   String get doubleTapToSleepDialog;
 
-  /// No description provided for @doubleTapToSleepPrivacy.
-  ///
-  /// In en, this message translates to:
-  /// **'We do not collect, store, or share any personal or sensitive user data through the AccessibilityService API.'**
-  String get doubleTapToSleepPrivacy;
-
   /// No description provided for @setAsDefault.
   ///
   /// In en, this message translates to:
@@ -547,12 +535,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search only'**
   String get searchOnlyMode;
-
-  /// No description provided for @searchOnlyModeSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Hide app names, search to launch'**
-  String get searchOnlyModeSubtitle;
 
   /// No description provided for @prefixNoApp.
   ///
