@@ -8,7 +8,8 @@ import 'package:last_launcher/features/settings/settings_state.dart';
 ///
 /// Adding a new panel: implement this interface, add an instance to
 /// [launcherModules], and add the relevant `panelXxx` strings in app_en.arb.
-/// No other site needs to be updated.
+/// No other site needs to be updated, settings included: a module with a
+/// [settingsPage] gets its own row there while it's on either side of home.
 abstract class LauncherModule {
   const LauncherModule();
 
@@ -25,6 +26,9 @@ abstract class LauncherModule {
 
   /// Build the panel widget. The shell passes layout/lifecycle props.
   Widget build(BuildContext context, LauncherModuleProps props);
+
+  /// This module's own settings page. Default: none.
+  Widget? settingsPage(SettingsState settings) => null;
 
   /// Hook for back-gesture / lifecycle reset paths. Return true if the
   /// module consumed the action and the shell should not continue

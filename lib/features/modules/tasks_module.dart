@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:last_launcher/features/modules/launcher_module.dart';
 import 'package:last_launcher/features/modules/tasks/screens/task_screen.dart';
+import 'package:last_launcher/features/settings/screens/task_settings_screen.dart';
+import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 
 /// Task list panel. Owns its own [GlobalKey] so the shell can reach into
@@ -35,6 +37,10 @@ class TasksModule extends LauncherModule {
       swipeRight: props.swipeRight,
     );
   }
+
+  @override
+  Widget settingsPage(SettingsState settings) =>
+      TaskSettingsScreen(settingsState: settings);
 
   @override
   bool dismissActions() => _key.currentState?.dismissActions() ?? false;

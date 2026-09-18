@@ -35,6 +35,9 @@ class PinnedApp {
   final String label;
   final bool isWorkApp;
 
+  /// Same format as [AppInfo.key], so the two can be compared directly.
+  String get key => '$packageName|$isWorkApp';
+
   Map<String, dynamic> toJson() {
     return {
       'packageName': packageName,

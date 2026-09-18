@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
+import 'package:last_launcher/features/settings/widgets/settings_tiles.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
-import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 
 class TaskSettingsScreen extends StatelessWidget {
   const TaskSettingsScreen({required this.settingsState, super.key});
@@ -11,40 +11,28 @@ class TaskSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final s = settingsState;
 
-    return Scaffold(
-      appBar: AppBar(title: Text(l10n.sectionTasks)),
-      body: ListenableBuilder(
-        listenable: settingsState,
-        builder: (context, _) {
-          return FadeOverflow(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                SwitchListTile(
-                  title: Text(l10n.autoShowKeyboard),
-                  subtitle: Text(l10n.autoShowKeyboardTasksSubtitle),
-                  value: settingsState.autoKeyboardTasks.value,
-                  onChanged: (v) => settingsState.autoKeyboardTasks.value = v,
-                ),
-                SwitchListTile(
-                  title: Text(l10n.removeOnComplete),
-                  subtitle: Text(l10n.removeOnCompleteSubtitle),
-                  value: settingsState.removeOnComplete.value,
-                  onChanged: (v) => settingsState.removeOnComplete.value = v,
-                ),
-                SwitchListTile(
-                  title: Text(l10n.clearCompletedDaily),
-                  subtitle: Text(l10n.clearCompletedDailySubtitle),
-                  value: settingsState.clearCompletedDaily.value,
-                  onChanged: (v) => settingsState.clearCompletedDaily.value = v,
-                ),
-                SizedBox(height: MediaQuery.of(context).viewPadding.bottom + 8),
-              ],
-            ),
-          );
-        },
-      ),
+    return SettingsPage(
+      title: l10n.sectionTasks,
+      listenable: s,
+      children: (context) => [
+        SettingSwitch(
+          setting: s.autoKeyboardTasks,
+          title: l10n.autoShowKeyboard,
+          subtitle: l10n.autoShowKeyboardTasksSubtitle,
+        ),
+        SettingSwitch(
+          setting: s.removeOnComplete,
+          title: l10n.removeOnComplete,
+          subtitle: l10n.removeOnCompleteSubtitle,
+        ),
+        SettingSwitch(
+          setting: s.clearCompletedDaily,
+          title: l10n.clearCompletedDaily,
+          subtitle: l10n.clearCompletedDailySubtitle,
+        ),
+      ],
     );
   }
 }

@@ -1,0 +1,132 @@
+import 'package:flutter/material.dart';
+import 'package:last_launcher/features/app_drawer/app_list_state.dart';
+import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
+import 'package:last_launcher/features/settings/settings_state.dart';
+import 'package:last_launcher/features/settings/widgets/settings_tiles.dart';
+import 'package:last_launcher/l10n/app_localizations.dart';
+import 'package:last_launcher/shared/data/app_channel.dart';
+
+/// How many apps the drawer leaves out, among the profiles it shows.
+int hiddenAppCount(
+  AppListState appListState,
+  HomeState homeState,
+  SettingsState settingsState,
+) {
+  final isWorkByKey = <String, bool>{
+    for (final app in appListState.hiddenApps) app.key: app.isWorkApp,
+    if (settingsState.hidePinnedFromDrawer.value)
+      for (final app in homeState.pinnedApps) app.key: app.isWorkApp,
+  };
+  final hasWorkApps = appListState.workPackages.isNotEmpty;
+  final hidePersonal =
+      settingsState.hidePersonalWhenWorkActive.value && hasWorkApps;
+  return isWorkByKey.values
+      .where((isWork) => hidePersonal ? isWork : hasWorkApps || !isWork)
+      .length;
+}
+
+/// Summary for a hidden-app count, as shown under the rows that lead here.
+String hiddenAppSummary(BuildContext context, int count) {
+  final l10n = AppLocalizations.of(context)!;
+  return count == 0 ? l10n.hiddenAppsNone : l10n.hiddenAppsCount(count);
+}
+
+class DrawerSettingsScreen extends StatelessWidget {
+  const DrawerSettingsScreen({
+    required this.settingsState,
+    required this.appListState,
+    required this.homeState,
+    required this.appChannel,
+    super.key,
+  });
+
+  final SettingsState settingsState;
+  final AppListState appListState;
+  final HomeState homeState;
+  final AppChannel appChannel;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final s = settingsState;
+
+    return SettingsPage(
+      title: l10n.sectionAppDrawer,
+      listenable: Listenable.merge([s, appListState, homeState]),
+      children: (context) => [
+        ListTile(
+          leading: const Icon(Icons.visibility_off_outlined),
+          title: Text(l10n.hiddenApps),
+          subtitle: Text(
+            hiddenAppSummary(
+              context,
+              hiddenAppCount(appListState, homeState, s),
+            ),
+          ),
+          onTap: () => pushSettingsPage(
+            context,
+            HiddenAppsScreen(
+              appListState: appListState,
+              homeState: homeState,
+              settingsState: s,
+              onLaunch: appChannel.launchApp,
+              onOpenAppInfo: appChannel.openAppInfo,
+            ),
+          ),
+        ),
+        SettingSwitch(
+          setting: s.hidePinnedFromDrawer,
+          title: l10n.hidePinnedApps,
+          subtitle: l10n.hidePinnedAppsSubtitle,
+        ),
+        SettingsSectionHeader(title: l10n.sectionSearch),
+        SettingSwitch(
+          setting: s.includeHiddenInSearch,
+          title: l10n.includeHiddenInSearch,
+          subtitle: l10n.includeHiddenInSearchSubtitle,
+        ),
+        SettingSwitch(
+          setting: s.matchOriginalName,
+          title: l10n.matchOriginalName,
+          subtitle: l10n.matchOriginalNameSubtitle,
+        ),
+        SettingSwitch(
+          setting: s.searchOnly,
+          title: l10n.searchOnlyMode,
+          subtitle: l10n.searchOnlyModeSubtitle,
+        ),
+        SettingSwitch(
+          setting: s.autoKeyboard,
+          title: l10n.autoShowKeyboard,
+          subtitle: l10n.autoShowKeyboardAppsSubtitle,
+          enabled: !s.searchOnly.value,
+          effective: s.autoKeyboardActive,
+        ),
+        SettingSwitch(
+          setting: s.autoLaunch,
+          title: l10n.autoLaunchOnMatch,
+          subtitle: l10n.autoLaunchOnMatchSubtitle,
+          enabled: !s.searchOnly.value,
+          effective: s.autoLaunchActive,
+        ),
+        SettingSwitch(
+          setting: s.extraChar,
+          title: l10n.extraChar,
+          subtitle: l10n.extraCharSubtitle,
+          enabled: s.quickLaunchOptionsAvailable,
+          effective: s.extraCharActive,
+          indent: true,
+        ),
+        SettingSwitch(
+          setting: s.quickLaunchHints,
+          title: l10n.quickLaunchHints,
+          subtitle: l10n.quickLaunchHintsSubtitle,
+          enabled: s.quickLaunchOptionsAvailable,
+          effective: s.quickLaunchHintsActive,
+          indent: true,
+        ),
+      ],
+    );
+  }
+}
