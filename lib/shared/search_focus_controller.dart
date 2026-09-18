@@ -55,10 +55,6 @@ class SearchFocusController {
 
   bool get hasFocus => node.hasFocus;
 
-  /// Whether the panel owning the field is showing. Nothing auto-focuses while
-  /// this is false, so an off-screen panel can't hold the keyboard open.
-  bool get panelOpen => _panelOpen;
-
   /// The panel holding the search field became visible.
   void panelOpened() {
     _panelOpen = true;
