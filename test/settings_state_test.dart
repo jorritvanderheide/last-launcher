@@ -134,20 +134,27 @@ void main() {
       expect(state.autoLaunch.value, false);
     });
 
-    test('quick-launch options need auto-launch and the list', () {
+    test('quick-launch options need auto-launch', () {
       state.extraChar.value = true;
       state.quickLaunchHints.value = true;
       expect(state.extraCharActive, true);
       expect(state.quickLaunchHintsActive, true);
 
       state.autoLaunch.value = false;
-      expect(state.quickLaunchOptionsAvailable, false);
+      expect(state.extraCharAvailable, false);
+      expect(state.quickLaunchHintsAvailable, false);
       expect(state.extraCharActive, false);
       expect(state.quickLaunchHintsActive, false);
+    });
 
-      state.autoLaunch.value = true;
+    test('search-only keeps extra character but has no hints', () {
+      state.extraChar.value = true;
+      state.quickLaunchHints.value = true;
+      state.autoLaunch.value = false;
       state.searchOnly.value = true;
-      expect(state.extraCharActive, false);
+      // Search-only launches on its own, so extra character applies.
+      expect(state.extraCharAvailable, true);
+      expect(state.extraCharActive, true);
       expect(state.quickLaunchHintsActive, false);
     });
 

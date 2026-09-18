@@ -146,13 +146,15 @@ void main() {
     await tester.tap(find.text(l10n.searchOnlyMode).last);
     await tester.pumpAndSettle();
 
-    // Search-only takes over those rows, so they're gone, not greyed out.
+    // Search-only takes over these, so they're gone, not greyed out.
     expect(settings.searchOnly.value, isTrue);
     expect(find.text(l10n.autoShowKeyboard), findsNothing);
     expect(find.text(l10n.autoLaunchOnMatch), findsNothing);
-    expect(find.text(l10n.extraChar), findsNothing);
     expect(find.text(l10n.quickLaunchHints), findsNothing);
-    // The rows that still apply stay.
+    // Extra character still applies, and can still be changed.
+    final extraChar = _switch(tester, l10n.extraChar);
+    expect(extraChar.value, isTrue);
+    expect(extraChar.onChanged, isNotNull);
     expect(find.text(l10n.includeHiddenInSearch), findsOneWidget);
 
     await tester.tap(find.text(l10n.drawerMode));
@@ -160,8 +162,8 @@ void main() {
     await tester.tap(find.text(l10n.drawerModeList).last);
     await tester.pumpAndSettle();
 
-    // Back in list mode, the kept choice comes back.
     expect(settings.searchOnly.value, isFalse);
+    expect(find.text(l10n.quickLaunchHints), findsOneWidget);
     expect(_switch(tester, l10n.extraChar).value, isTrue);
   });
 

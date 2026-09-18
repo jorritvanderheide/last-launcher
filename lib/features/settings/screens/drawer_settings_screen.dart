@@ -103,8 +103,8 @@ class DrawerSettingsScreen extends StatelessWidget {
           subtitle: l10n.matchOriginalNameSubtitle,
         ),
         // Search-only mode always shows the keyboard and launches the single
-        // match, and has no list for the quick-launch refinements, so these
-        // only apply to the list.
+        // match, so those two only apply to the list, as do hints, which
+        // underline letters in it.
         if (!s.searchOnly.value) ...[
           SettingSwitch(
             setting: s.autoKeyboard,
@@ -116,23 +116,25 @@ class DrawerSettingsScreen extends StatelessWidget {
             title: l10n.autoLaunchOnMatch,
             subtitle: l10n.autoLaunchOnMatchSubtitle,
           ),
-          SettingSwitch(
-            setting: s.extraChar,
-            title: l10n.extraChar,
-            subtitle: l10n.extraCharSubtitle,
-            enabled: s.quickLaunchOptionsAvailable,
-            effective: s.extraCharActive,
-            indent: true,
-          ),
+        ],
+        SettingSwitch(
+          setting: s.extraChar,
+          title: l10n.extraChar,
+          subtitle: l10n.extraCharSubtitle,
+          enabled: s.extraCharAvailable,
+          effective: s.extraCharActive,
+          // Refines auto-launch, which only has a row of its own in the list.
+          indent: !s.searchOnly.value,
+        ),
+        if (!s.searchOnly.value)
           SettingSwitch(
             setting: s.quickLaunchHints,
             title: l10n.quickLaunchHints,
             subtitle: l10n.quickLaunchHintsSubtitle,
-            enabled: s.quickLaunchOptionsAvailable,
+            enabled: s.quickLaunchHintsAvailable,
             effective: s.quickLaunchHintsActive,
             indent: true,
           ),
-        ],
       ],
     );
   }

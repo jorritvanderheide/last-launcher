@@ -168,14 +168,18 @@ class SettingsState extends ChangeNotifier {
   /// Search-only mode always launches the single remaining match.
   bool get autoLaunchActive => searchOnly.value || autoLaunch.value;
 
-  /// The quick-launch refinements build on auto-launch in the drawer's list,
-  /// which search-only mode doesn't show.
-  bool get quickLaunchOptionsAvailable => !searchOnly.value && autoLaunch.value;
+  /// Extra character refines auto-launch, in either drawer mode. It matters
+  /// most in search-only mode, where no list shows what's been matched.
+  bool get extraCharAvailable => autoLaunchActive;
 
-  bool get extraCharActive => quickLaunchOptionsAvailable && extraChar.value;
+  bool get extraCharActive => extraCharAvailable && extraChar.value;
+
+  /// Hints underline letters in the drawer's list, which search-only mode
+  /// doesn't show, and only mean something while auto-launch is on.
+  bool get quickLaunchHintsAvailable => !searchOnly.value && autoLaunch.value;
 
   bool get quickLaunchHintsActive =>
-      quickLaunchOptionsAvailable && quickLaunchHints.value;
+      quickLaunchHintsAvailable && quickLaunchHints.value;
 
   /// With personal apps hidden there is nothing to tell work apps apart from.
   bool get workAppDotAvailable => !hidePersonalWhenWorkActive.value;
