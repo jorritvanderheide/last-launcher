@@ -305,6 +305,48 @@ class AppLocalizationsZh extends AppLocalizations {
   String get aboutSubtitle => '版本與授權';
 
   @override
+  String get backupTitle => '備份與還原';
+
+  @override
+  String get backupExport => '匯出備份';
+
+  @override
+  String get backupExportSubtitle => '將設定、名稱，以及隱藏和釘選的應用程式儲存到檔案';
+
+  @override
+  String get backupRestore => '還原備份';
+
+  @override
+  String get backupRestoreSubtitle => '以已儲存的備份取代全部內容';
+
+  @override
+  String get backupAlsoInclude => '一併包含';
+
+  @override
+  String get backupRestoreConfirm => '這會取代目前的設定、名稱，以及隱藏和釘選的應用程式。';
+
+  @override
+  String get backupExportAction => '匯出';
+
+  @override
+  String get backupRestoreAction => '還原';
+
+  @override
+  String get backupSaved => '已儲存備份';
+
+  @override
+  String get backupRestored => '已還原備份';
+
+  @override
+  String get backupInvalid => '此檔案不是 Last Launcher 備份';
+
+  @override
+  String get backupTooNew => '此備份來自較新版本的 Last Launcher';
+
+  @override
+  String get backupFailed => '無法讀取或寫入檔案';
+
+  @override
   String get hintSwipeUp => '向上滑動：應用程式';
 
   @override

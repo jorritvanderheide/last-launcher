@@ -319,6 +319,53 @@ class AppLocalizationsDe extends AppLocalizations {
   String get aboutSubtitle => 'Version und Lizenzen';
 
   @override
+  String get backupTitle => 'Sichern und wiederherstellen';
+
+  @override
+  String get backupExport => 'Sicherung exportieren';
+
+  @override
+  String get backupExportSubtitle =>
+      'Einstellungen, Namen, ausgeblendete und angeheftete Apps in einer Datei speichern';
+
+  @override
+  String get backupRestore => 'Sicherung wiederherstellen';
+
+  @override
+  String get backupRestoreSubtitle =>
+      'Alles durch eine gespeicherte Sicherung ersetzen';
+
+  @override
+  String get backupAlsoInclude => 'Außerdem einschließen';
+
+  @override
+  String get backupRestoreConfirm =>
+      'Dies ersetzt die aktuellen Einstellungen, Namen sowie ausgeblendete und angeheftete Apps.';
+
+  @override
+  String get backupExportAction => 'Exportieren';
+
+  @override
+  String get backupRestoreAction => 'Wiederherstellen';
+
+  @override
+  String get backupSaved => 'Sicherung gespeichert';
+
+  @override
+  String get backupRestored => 'Sicherung wiederhergestellt';
+
+  @override
+  String get backupInvalid => 'Diese Datei ist keine Last Launcher-Sicherung';
+
+  @override
+  String get backupTooNew =>
+      'Diese Sicherung stammt aus einer neueren Version von Last Launcher';
+
+  @override
+  String get backupFailed =>
+      'Datei konnte nicht gelesen oder geschrieben werden';
+
+  @override
   String get hintSwipeUp => 'Nach oben wischen für Apps';
 
   @override

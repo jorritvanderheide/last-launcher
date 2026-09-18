@@ -318,6 +318,51 @@ class AppLocalizationsCs extends AppLocalizations {
   String get aboutSubtitle => 'Verze a licence';
 
   @override
+  String get backupTitle => 'Záloha a obnovení';
+
+  @override
+  String get backupExport => 'Exportovat zálohu';
+
+  @override
+  String get backupExportSubtitle =>
+      'Uložit nastavení, názvy, skryté a připnuté aplikace do souboru';
+
+  @override
+  String get backupRestore => 'Obnovit zálohu';
+
+  @override
+  String get backupRestoreSubtitle => 'Nahradit vše uloženou zálohou';
+
+  @override
+  String get backupAlsoInclude => 'Zahrnout také';
+
+  @override
+  String get backupRestoreConfirm =>
+      'Tímto se nahradí současná nastavení, názvy, skryté a připnuté aplikace.';
+
+  @override
+  String get backupExportAction => 'Exportovat';
+
+  @override
+  String get backupRestoreAction => 'Obnovit';
+
+  @override
+  String get backupSaved => 'Záloha uložena';
+
+  @override
+  String get backupRestored => 'Záloha obnovena';
+
+  @override
+  String get backupInvalid => 'Tento soubor není záloha Last Launcher';
+
+  @override
+  String get backupTooNew =>
+      'Tato záloha pochází z novější verze Last Launcher';
+
+  @override
+  String get backupFailed => 'Soubor nelze přečíst ani zapsat';
+
+  @override
   String get hintSwipeUp => 'Přejeďte nahoru pro aplikace';
 
   @override

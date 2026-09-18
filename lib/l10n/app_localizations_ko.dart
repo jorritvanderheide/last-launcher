@@ -305,6 +305,48 @@ class AppLocalizationsKo extends AppLocalizations {
   String get aboutSubtitle => '버전 및 라이선스';
 
   @override
+  String get backupTitle => '백업 및 복원';
+
+  @override
+  String get backupExport => '백업 내보내기';
+
+  @override
+  String get backupExportSubtitle => '설정, 이름, 숨긴 앱과 고정한 앱을 파일로 저장';
+
+  @override
+  String get backupRestore => '백업 복원';
+
+  @override
+  String get backupRestoreSubtitle => '저장된 백업으로 모두 대체';
+
+  @override
+  String get backupAlsoInclude => '함께 포함';
+
+  @override
+  String get backupRestoreConfirm => '현재 설정, 이름, 숨긴 앱과 고정한 앱이 대체됩니다.';
+
+  @override
+  String get backupExportAction => '내보내기';
+
+  @override
+  String get backupRestoreAction => '복원';
+
+  @override
+  String get backupSaved => '백업을 저장했습니다';
+
+  @override
+  String get backupRestored => '백업을 복원했습니다';
+
+  @override
+  String get backupInvalid => '이 파일은 Last Launcher 백업이 아닙니다';
+
+  @override
+  String get backupTooNew => '이 백업은 최신 버전의 Last Launcher에서 만들어졌습니다';
+
+  @override
+  String get backupFailed => '파일을 읽거나 쓸 수 없습니다';
+
+  @override
   String get hintSwipeUp => '위로 스와이프: 앱';
 
   @override

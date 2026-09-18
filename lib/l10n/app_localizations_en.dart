@@ -313,6 +313,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String get aboutSubtitle => 'Version and licenses';
 
   @override
+  String get backupTitle => 'Backup & restore';
+
+  @override
+  String get backupExport => 'Export backup';
+
+  @override
+  String get backupExportSubtitle =>
+      'Save settings, labels, hidden and pinned apps to a file';
+
+  @override
+  String get backupRestore => 'Restore backup';
+
+  @override
+  String get backupRestoreSubtitle => 'Replace everything with a saved backup';
+
+  @override
+  String get backupAlsoInclude => 'Also include';
+
+  @override
+  String get backupRestoreConfirm =>
+      'This replaces the current settings, labels, hidden and pinned apps.';
+
+  @override
+  String get backupExportAction => 'Export';
+
+  @override
+  String get backupRestoreAction => 'Restore';
+
+  @override
+  String get backupSaved => 'Backup saved';
+
+  @override
+  String get backupRestored => 'Backup restored';
+
+  @override
+  String get backupInvalid => 'This file isn\'t a Last Launcher backup';
+
+  @override
+  String get backupTooNew =>
+      'This backup is from a newer version of Last Launcher';
+
+  @override
+  String get backupFailed => 'Couldn\'t read or write the file';
+
+  @override
   String get hintSwipeUp => 'Swipe up for apps';
 
   @override

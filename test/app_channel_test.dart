@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
@@ -39,5 +41,18 @@ void main() {
     _answer((call) => {'onDark': 1, 'onLight': 2, 'tint': 3});
     final channel = AppChannel();
     expect(await channel.getAccentColors(), await channel.getAccentColors());
+  });
+
+  test('awaiting a file picker is flagged until it answers', () async {
+    final answer = Completer<Object?>();
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(_channel, (call) => answer.future);
+    final channel = AppChannel();
+
+    final opening = channel.openBackup();
+    expect(channel.awaitingResult, isTrue);
+    answer.complete('{}');
+    await opening;
+    expect(channel.awaitingResult, isFalse);
   });
 }

@@ -31,12 +31,16 @@ class SearchPrefs {
 
 /// One persisted setting. Assigning [value] stores it and notifies.
 class Setting<T> extends ValueNotifier<T> {
-  Setting(this.key, T initial, this._write) : super(initial);
+  Setting(this.key, this._read, this._write) : super(_read());
 
   /// SharedPreferences key the value lives under. Never rename one: it is
   /// where existing users' choices are stored.
   final String key;
+  final T Function() _read;
   final Future<bool> Function(T) _write;
+
+  /// Picks up a value stored behind this setting's back, e.g. by a restore.
+  void reload() => super.value = _read();
 
   @override
   set value(T newValue) {
@@ -269,7 +273,7 @@ class SettingsState extends ChangeNotifier {
   Setting<bool> _bool(String key, bool fallback) => _track(
     Setting(
       key,
-      _prefs.getBool(key) ?? fallback,
+      () => _prefs.getBool(key) ?? fallback,
       (v) => _prefs.setBool(key, v),
     ),
   );
@@ -280,7 +284,7 @@ class SettingsState extends ChangeNotifier {
       _track(
         Setting(
           key,
-          values.asNameMap()[_prefs.getString(key)] ?? fallback,
+          () => values.asNameMap()[_prefs.getString(key)] ?? fallback,
           (v) => _prefs.setString(key, v.name),
         ),
       );
@@ -288,13 +292,26 @@ class SettingsState extends ChangeNotifier {
   Setting<LauncherModule> _module(String key) => _track(
     Setting(
       key,
-      moduleById(_prefs.getString(key)),
+      () => moduleById(_prefs.getString(key)),
       (m) => _prefs.setString(key, m.id),
     ),
   );
 
   Setting<T> _track<T>(Setting<T> setting) {
     setting.addListener(notifyListeners);
+    _created.add(setting);
     return setting;
+  }
+
+  /// Settings are created on first use; these are the ones that exist.
+  final _created = <Setting<Object?>>[];
+
+  /// Re-reads everything from storage after it was replaced wholesale, e.g.
+  /// by restoring a backup. Settings not created yet read fresh anyway.
+  void reload() {
+    _migrate();
+    for (final setting in _created) {
+      setting.reload();
+    }
   }
 }

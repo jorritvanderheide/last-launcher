@@ -320,6 +320,51 @@ class AppLocalizationsEs extends AppLocalizations {
   String get aboutSubtitle => 'Versión y licencias';
 
   @override
+  String get backupTitle => 'Copia de seguridad';
+
+  @override
+  String get backupExport => 'Exportar copia';
+
+  @override
+  String get backupExportSubtitle =>
+      'Guardar ajustes, nombres y apps ocultas y fijadas en un archivo';
+
+  @override
+  String get backupRestore => 'Restaurar copia';
+
+  @override
+  String get backupRestoreSubtitle => 'Reemplazar todo con una copia guardada';
+
+  @override
+  String get backupAlsoInclude => 'Incluir también';
+
+  @override
+  String get backupRestoreConfirm =>
+      'Esto reemplaza los ajustes, nombres y apps ocultas y fijadas actuales.';
+
+  @override
+  String get backupExportAction => 'Exportar';
+
+  @override
+  String get backupRestoreAction => 'Restaurar';
+
+  @override
+  String get backupSaved => 'Copia guardada';
+
+  @override
+  String get backupRestored => 'Copia restaurada';
+
+  @override
+  String get backupInvalid => 'Este archivo no es una copia de Last Launcher';
+
+  @override
+  String get backupTooNew =>
+      'Esta copia es de una versión más reciente de Last Launcher';
+
+  @override
+  String get backupFailed => 'No se pudo leer ni escribir el archivo';
+
+  @override
   String get hintSwipeUp => 'Desliza arriba para apps';
 
   @override

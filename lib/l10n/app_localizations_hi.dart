@@ -312,6 +312,50 @@ class AppLocalizationsHi extends AppLocalizations {
   String get aboutSubtitle => 'संस्करण और लाइसेंस';
 
   @override
+  String get backupTitle => 'बैकअप और रीस्टोर';
+
+  @override
+  String get backupExport => 'बैकअप एक्सपोर्ट करें';
+
+  @override
+  String get backupExportSubtitle =>
+      'सेटिंग, नाम, छुपे और पिन किए गए ऐप फ़ाइल में सहेजें';
+
+  @override
+  String get backupRestore => 'बैकअप रीस्टोर करें';
+
+  @override
+  String get backupRestoreSubtitle => 'सब कुछ सहेजे गए बैकअप से बदलें';
+
+  @override
+  String get backupAlsoInclude => 'यह भी शामिल करें';
+
+  @override
+  String get backupRestoreConfirm =>
+      'इससे मौजूदा सेटिंग, नाम, छुपे और पिन किए गए ऐप बदल जाएँगे।';
+
+  @override
+  String get backupExportAction => 'एक्सपोर्ट';
+
+  @override
+  String get backupRestoreAction => 'रीस्टोर';
+
+  @override
+  String get backupSaved => 'बैकअप सहेजा गया';
+
+  @override
+  String get backupRestored => 'बैकअप रीस्टोर किया गया';
+
+  @override
+  String get backupInvalid => 'यह फ़ाइल Last Launcher बैकअप नहीं है';
+
+  @override
+  String get backupTooNew => 'यह बैकअप Last Launcher के नए संस्करण का है';
+
+  @override
+  String get backupFailed => 'फ़ाइल पढ़ी या लिखी नहीं जा सकी';
+
+  @override
   String get hintSwipeUp => 'ऐप्स के लिए ऊपर स्वाइप करें';
 
   @override

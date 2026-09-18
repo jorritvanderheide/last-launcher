@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
@@ -19,6 +21,21 @@ class _FakeAppChannel extends AppChannel {
   final bool isDefault;
   final bool workProfile;
 
+  /// What the file picker hands back when opening a backup.
+  String? backupToOpen;
+
+  /// What was last written through the file picker.
+  String? savedBackup;
+
+  @override
+  Future<bool> saveBackup(String fileName, String content) async {
+    savedBackup = content;
+    return true;
+  }
+
+  @override
+  Future<String?> openBackup() async => backupToOpen;
+
   @override
   Future<bool> isDefaultLauncher() async => isDefault;
 
@@ -31,8 +48,11 @@ class _FakeAppChannel extends AppChannel {
 
 final l10n = AppLocalizationsEn();
 
+late _FakeAppChannel _channel;
+
 Future<SettingsState> _pumpSettings(
   WidgetTester tester, {
+  Map<String, Object> stored = const {},
   bool isDefault = true,
   bool workProfile = false,
   bool accentAvailable = false,
@@ -41,9 +61,9 @@ Future<SettingsState> _pumpSettings(
   await tester.binding.setSurfaceSize(const Size(800, 2000));
   addTearDown(() => tester.binding.setSurfaceSize(null));
 
-  SharedPreferences.setMockInitialValues({});
+  SharedPreferences.setMockInitialValues(stored);
   final prefs = await SharedPreferences.getInstance();
-  final channel = _FakeAppChannel(
+  final channel = _channel = _FakeAppChannel(
     isDefault: isDefault,
     workProfile: workProfile,
   );
@@ -67,6 +87,7 @@ Future<SettingsState> _pumpSettings(
         appListState: appList,
         homeState: HomeState(prefs),
         appChannel: channel,
+        onRestored: settings.reload,
       ),
     ),
   );
@@ -190,6 +211,66 @@ void main() {
     await tester.tap(find.text(l10n.accentColor));
     await tester.pumpAndSettle();
     expect(settings.accentColor.value, isTrue);
+  });
+
+  group('backup', () {
+    Future<void> openBackupPage(WidgetTester tester) async {
+      await tester.tap(find.text(l10n.backupTitle));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('restore replaces settings without a restart', (tester) async {
+      final settings = await _pumpSettings(tester);
+      _channel.backupToOpen = jsonEncode({
+        'format': 'last-launcher-backup',
+        'version': 1,
+        'modules': [],
+        'prefs': {
+          'locked': {'type': 'bool', 'value': true},
+        },
+      });
+      await openBackupPage(tester);
+
+      await tester.tap(find.text(l10n.backupRestore));
+      await tester.pumpAndSettle();
+      expect(find.text(l10n.backupRestoreConfirm), findsOneWidget);
+      await tester.tap(find.text(l10n.backupRestoreAction));
+      await tester.pumpAndSettle();
+
+      expect(settings.locked.value, isTrue);
+      expect(find.text(l10n.backupRestored), findsOneWidget);
+    });
+
+    testWidgets('restore refuses a file that is not a backup', (tester) async {
+      final settings = await _pumpSettings(tester);
+      _channel.backupToOpen = '{"hello": "world"}';
+      await openBackupPage(tester);
+
+      await tester.tap(find.text(l10n.backupRestore));
+      await tester.pumpAndSettle();
+      expect(find.text(l10n.backupInvalid), findsOneWidget);
+      expect(settings.locked.value, isFalse);
+    });
+
+    testWidgets('export can leave the tasks out', (tester) async {
+      await _pumpSettings(tester, stored: {'locked': true, 'tasks': '[]'});
+      await openBackupPage(tester);
+
+      await tester.tap(find.text(l10n.backupExport));
+      await tester.pumpAndSettle();
+      await tester.tap(
+        find.widgetWithText(CheckboxListTile, l10n.sectionTasks),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(l10n.backupExportAction));
+      await tester.pumpAndSettle();
+
+      final saved = jsonDecode(_channel.savedBackup!) as Map<String, Object?>;
+      final prefs = saved['prefs']! as Map<String, Object?>;
+      expect(prefs.containsKey('locked'), isTrue);
+      expect(prefs.containsKey('tasks'), isFalse);
+      expect(find.text(l10n.backupSaved), findsOneWidget);
+    });
   });
 
   testWidgets('home page picks a module by id', (tester) async {

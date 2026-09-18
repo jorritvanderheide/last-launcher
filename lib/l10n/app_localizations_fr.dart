@@ -322,6 +322,53 @@ class AppLocalizationsFr extends AppLocalizations {
   String get aboutSubtitle => 'Version et licences';
 
   @override
+  String get backupTitle => 'Sauvegarde et restauration';
+
+  @override
+  String get backupExport => 'Exporter une sauvegarde';
+
+  @override
+  String get backupExportSubtitle =>
+      'Enregistrer paramètres, noms, applications masquées et épinglées dans un fichier';
+
+  @override
+  String get backupRestore => 'Restaurer une sauvegarde';
+
+  @override
+  String get backupRestoreSubtitle =>
+      'Tout remplacer par une sauvegarde enregistrée';
+
+  @override
+  String get backupAlsoInclude => 'Inclure aussi';
+
+  @override
+  String get backupRestoreConfirm =>
+      'Cela remplace les paramètres, noms, applications masquées et épinglées actuels.';
+
+  @override
+  String get backupExportAction => 'Exporter';
+
+  @override
+  String get backupRestoreAction => 'Restaurer';
+
+  @override
+  String get backupSaved => 'Sauvegarde enregistrée';
+
+  @override
+  String get backupRestored => 'Sauvegarde restaurée';
+
+  @override
+  String get backupInvalid =>
+      'Ce fichier n\'est pas une sauvegarde Last Launcher';
+
+  @override
+  String get backupTooNew =>
+      'Cette sauvegarde provient d\'une version plus récente de Last Launcher';
+
+  @override
+  String get backupFailed => 'Impossible de lire ou d\'écrire le fichier';
+
+  @override
   String get hintSwipeUp => 'Glissez vers le haut pour les apps';
 
   @override

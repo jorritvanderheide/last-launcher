@@ -320,6 +320,51 @@ class AppLocalizationsPt extends AppLocalizations {
   String get aboutSubtitle => 'Versão e licenças';
 
   @override
+  String get backupTitle => 'Cópia de segurança';
+
+  @override
+  String get backupExport => 'Exportar cópia';
+
+  @override
+  String get backupExportSubtitle =>
+      'Guardar definições, nomes e aplicações ocultas e fixadas num ficheiro';
+
+  @override
+  String get backupRestore => 'Restaurar cópia';
+
+  @override
+  String get backupRestoreSubtitle => 'Substituir tudo por uma cópia guardada';
+
+  @override
+  String get backupAlsoInclude => 'Incluir também';
+
+  @override
+  String get backupRestoreConfirm =>
+      'Isto substitui as definições, nomes e aplicações ocultas e fixadas atuais.';
+
+  @override
+  String get backupExportAction => 'Exportar';
+
+  @override
+  String get backupRestoreAction => 'Restaurar';
+
+  @override
+  String get backupSaved => 'Cópia guardada';
+
+  @override
+  String get backupRestored => 'Cópia restaurada';
+
+  @override
+  String get backupInvalid => 'Este ficheiro não é uma cópia do Last Launcher';
+
+  @override
+  String get backupTooNew =>
+      'Esta cópia é de uma versão mais recente do Last Launcher';
+
+  @override
+  String get backupFailed => 'Não foi possível ler ou escrever o ficheiro';
+
+  @override
   String get hintSwipeUp => 'Desliza para cima para apps';
 
   @override

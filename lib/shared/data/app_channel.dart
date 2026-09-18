@@ -14,6 +14,22 @@ class AppChannel {
   VoidCallback? onOpenSettings;
   VoidCallback? onGoHome;
 
+  int _awaitingResults = 0;
+
+  /// True while another app (a file picker) is open on the launcher's behalf
+  /// and will hand its answer back. Leaving for it isn't leaving the
+  /// launcher, so the usual reset to home on pause must not happen.
+  bool get awaitingResult => _awaitingResults > 0;
+
+  Future<T> _awaitResult<T>(Future<T> Function() run) async {
+    _awaitingResults++;
+    try {
+      return await run();
+    } finally {
+      _awaitingResults--;
+    }
+  }
+
   void initialize() {
     _channel.setMethodCallHandler((call) async {
       if (call.method == 'openSettings') {
@@ -131,6 +147,23 @@ class AppChannel {
       return false;
     }
   }
+
+  /// Asks the user where to save a backup and writes [content] there.
+  /// Returns false if they cancelled; throws [PlatformException] if writing
+  /// failed.
+  Future<bool> saveBackup(String fileName, String content) =>
+      _awaitResult(() async {
+        final saved = await _channel.invokeMethod<bool>('saveBackup', {
+          'fileName': fileName,
+          'content': content,
+        });
+        return saved ?? false;
+      });
+
+  /// Asks the user for a backup file and returns its text, or null if they
+  /// cancelled. Throws [PlatformException] if reading failed.
+  Future<String?> openBackup() =>
+      _awaitResult(() => _channel.invokeMethod<String>('openBackup'));
 
   /// Null where the system has no accent (before Android 12).
   Future<AccentColors?> getAccentColors() async {

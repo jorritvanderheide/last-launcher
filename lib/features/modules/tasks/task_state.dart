@@ -10,6 +10,10 @@ class TaskState extends ChangeNotifier {
   static const _key = 'tasks';
   static const _lastClearKey = 'tasks_last_clear_date';
 
+  /// Every key this state stores under, so a backup can include or leave
+  /// out the task list as a whole.
+  static const storageKeys = [_key, _lastClearKey];
+
   final SharedPreferences _prefs;
   List<Task> _tasks = [];
 
@@ -24,6 +28,14 @@ class TaskState extends ChangeNotifier {
       debugPrint('Corrupt tasks JSON, resetting');
       _prefs.remove(_key);
     }
+  }
+
+  /// Re-reads tasks after storage was replaced wholesale, e.g. by restoring
+  /// a backup.
+  void reload() {
+    _tasks = [];
+    _load();
+    notifyListeners();
   }
 
   Future<void> _save() async {

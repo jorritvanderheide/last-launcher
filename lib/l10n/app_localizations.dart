@@ -704,6 +704,90 @@ abstract class AppLocalizations {
   /// **'Version and licenses'**
   String get aboutSubtitle;
 
+  /// No description provided for @backupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup & restore'**
+  String get backupTitle;
+
+  /// No description provided for @backupExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export backup'**
+  String get backupExport;
+
+  /// No description provided for @backupExportSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Save settings, labels, hidden and pinned apps to a file'**
+  String get backupExportSubtitle;
+
+  /// No description provided for @backupRestore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore backup'**
+  String get backupRestore;
+
+  /// No description provided for @backupRestoreSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Replace everything with a saved backup'**
+  String get backupRestoreSubtitle;
+
+  /// No description provided for @backupAlsoInclude.
+  ///
+  /// In en, this message translates to:
+  /// **'Also include'**
+  String get backupAlsoInclude;
+
+  /// No description provided for @backupRestoreConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'This replaces the current settings, labels, hidden and pinned apps.'**
+  String get backupRestoreConfirm;
+
+  /// No description provided for @backupExportAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get backupExportAction;
+
+  /// No description provided for @backupRestoreAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get backupRestoreAction;
+
+  /// No description provided for @backupSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup saved'**
+  String get backupSaved;
+
+  /// No description provided for @backupRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Backup restored'**
+  String get backupRestored;
+
+  /// No description provided for @backupInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'This file isn\'t a Last Launcher backup'**
+  String get backupInvalid;
+
+  /// No description provided for @backupTooNew.
+  ///
+  /// In en, this message translates to:
+  /// **'This backup is from a newer version of Last Launcher'**
+  String get backupTooNew;
+
+  /// No description provided for @backupFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t read or write the file'**
+  String get backupFailed;
+
   /// No description provided for @hintSwipeUp.
   ///
   /// In en, this message translates to:

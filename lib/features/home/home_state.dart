@@ -25,6 +25,14 @@ class HomeState extends ChangeNotifier {
     }
   }
 
+  /// Re-reads pinned apps after storage was replaced wholesale, e.g. by
+  /// restoring a backup.
+  void reload() {
+    _pinnedApps = [];
+    _load();
+    notifyListeners();
+  }
+
   Future<void> _save() async {
     await _prefs.setString(_key, PinnedApp.encodeList(_pinnedApps));
   }

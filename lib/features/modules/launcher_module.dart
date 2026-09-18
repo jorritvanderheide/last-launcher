@@ -27,6 +27,11 @@ abstract class LauncherModule {
   /// Build the panel widget. The shell passes layout/lifecycle props.
   Widget build(BuildContext context, LauncherModuleProps props);
 
+  /// Keys this module keeps its own data under (not its settings, which
+  /// live with the rest). Backups list them per module, so the data can be
+  /// left out of a backup or a restore. Default: none.
+  List<String> get storageKeys => const [];
+
   /// This module's own settings page. Default: none.
   Widget? settingsPage(SettingsState settings) => null;
 

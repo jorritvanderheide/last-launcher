@@ -132,6 +132,7 @@ class _LauncherShellState extends State<LauncherShell>
           appListState: widget.appListState,
           homeState: widget.homeState,
           appChannel: widget.appChannel,
+          onRestored: _reloadAfterRestore,
         ),
         transitionDuration: Duration.zero,
         reverseTransitionDuration: Duration.zero,
@@ -139,8 +140,20 @@ class _LauncherShellState extends State<LauncherShell>
     );
   }
 
+  /// A restore replaced everything that's stored; have every state re-read
+  /// it rather than asking the user to restart the launcher.
+  void _reloadAfterRestore() {
+    widget.settingsState.reload();
+    widget.appListState.reload();
+    widget.homeState.reload();
+    widget.taskState.reload();
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    // A file picker opened from settings pauses the launcher too, but the
+    // user is coming straight back to where they were.
+    if (widget.appChannel.awaitingResult) return;
     if (state == AppLifecycleState.hidden ||
         state == AppLifecycleState.paused) {
       _resetToHome();

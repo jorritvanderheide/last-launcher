@@ -316,6 +316,53 @@ class AppLocalizationsSv extends AppLocalizations {
   String get aboutSubtitle => 'Version och licenser';
 
   @override
+  String get backupTitle => 'Säkerhetskopiering';
+
+  @override
+  String get backupExport => 'Exportera säkerhetskopia';
+
+  @override
+  String get backupExportSubtitle =>
+      'Spara inställningar, namn samt dolda och fästa appar i en fil';
+
+  @override
+  String get backupRestore => 'Återställ säkerhetskopia';
+
+  @override
+  String get backupRestoreSubtitle =>
+      'Ersätt allt med en sparad säkerhetskopia';
+
+  @override
+  String get backupAlsoInclude => 'Ta även med';
+
+  @override
+  String get backupRestoreConfirm =>
+      'Detta ersätter nuvarande inställningar, namn samt dolda och fästa appar.';
+
+  @override
+  String get backupExportAction => 'Exportera';
+
+  @override
+  String get backupRestoreAction => 'Återställ';
+
+  @override
+  String get backupSaved => 'Säkerhetskopian sparades';
+
+  @override
+  String get backupRestored => 'Säkerhetskopian återställdes';
+
+  @override
+  String get backupInvalid =>
+      'Filen är ingen säkerhetskopia från Last Launcher';
+
+  @override
+  String get backupTooNew =>
+      'Säkerhetskopian kommer från en nyare version av Last Launcher';
+
+  @override
+  String get backupFailed => 'Det gick inte att läsa eller skriva filen';
+
+  @override
   String get hintSwipeUp => 'Svep uppåt för appar';
 
   @override

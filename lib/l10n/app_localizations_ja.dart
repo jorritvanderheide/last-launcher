@@ -305,6 +305,48 @@ class AppLocalizationsJa extends AppLocalizations {
   String get aboutSubtitle => 'バージョンとライセンス';
 
   @override
+  String get backupTitle => 'バックアップと復元';
+
+  @override
+  String get backupExport => 'バックアップをエクスポート';
+
+  @override
+  String get backupExportSubtitle => '設定、名前、非表示とピン留めのアプリをファイルに保存';
+
+  @override
+  String get backupRestore => 'バックアップを復元';
+
+  @override
+  String get backupRestoreSubtitle => '保存したバックアップですべてを置き換え';
+
+  @override
+  String get backupAlsoInclude => '次も含める';
+
+  @override
+  String get backupRestoreConfirm => '現在の設定、名前、非表示とピン留めのアプリが置き換えられます。';
+
+  @override
+  String get backupExportAction => 'エクスポート';
+
+  @override
+  String get backupRestoreAction => '復元';
+
+  @override
+  String get backupSaved => 'バックアップを保存しました';
+
+  @override
+  String get backupRestored => 'バックアップを復元しました';
+
+  @override
+  String get backupInvalid => 'このファイルは Last Launcher のバックアップではありません';
+
+  @override
+  String get backupTooNew => 'このバックアップは新しいバージョンの Last Launcher で作成されています';
+
+  @override
+  String get backupFailed => 'ファイルを読み書きできませんでした';
+
+  @override
   String get hintSwipeUp => '上にスワイプでアプリ';
 
   @override

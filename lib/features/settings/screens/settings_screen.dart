@@ -3,6 +3,7 @@ import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/settings/screens/about_screen.dart';
 import 'package:last_launcher/features/settings/screens/appearance_settings_screen.dart';
+import 'package:last_launcher/features/settings/screens/backup_settings_screen.dart';
 import 'package:last_launcher/features/settings/screens/drawer_settings_screen.dart';
 import 'package:last_launcher/features/settings/screens/home_settings_screen.dart';
 import 'package:last_launcher/features/settings/screens/work_settings_screen.dart';
@@ -23,6 +24,7 @@ class SettingsScreen extends StatefulWidget {
     required this.appListState,
     required this.homeState,
     required this.appChannel,
+    required this.onRestored,
     super.key,
   });
 
@@ -30,6 +32,9 @@ class SettingsScreen extends StatefulWidget {
   final AppListState appListState;
   final HomeState homeState;
   final AppChannel appChannel;
+
+  /// Re-reads every state after a backup was restored.
+  final VoidCallback onRestored;
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -127,6 +132,17 @@ class _SettingsScreenState extends State<SettingsScreen>
             onTap: () =>
                 pushSettingsPage(context, WorkSettingsScreen(settingsState: s)),
           ),
+        ListTile(
+          leading: const Icon(Icons.settings_backup_restore),
+          title: Text(l10n.backupTitle),
+          onTap: () => pushSettingsPage(
+            context,
+            BackupSettingsScreen(
+              appChannel: widget.appChannel,
+              onRestored: widget.onRestored,
+            ),
+          ),
+        ),
         SettingsSectionHeader(title: l10n.sectionSupport),
         if (_store == 'playstore')
           ListTile(

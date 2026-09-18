@@ -104,6 +104,18 @@ class AppListState extends ChangeNotifier {
     }
   }
 
+  /// Re-reads labels and hidden apps after storage was replaced wholesale,
+  /// e.g. by restoring a backup.
+  void reload() {
+    _customLabels.clear();
+    _hiddenApps.clear();
+    _loadCustomLabels();
+    _loadHiddenApps();
+    _sortApps();
+    _computeHints();
+    notifyListeners();
+  }
+
   static String _compoundKey(String packageName, bool isWorkApp) =>
       '$packageName|$isWorkApp';
 

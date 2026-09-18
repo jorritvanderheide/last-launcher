@@ -318,6 +318,53 @@ class AppLocalizationsFi extends AppLocalizations {
   String get aboutSubtitle => 'Versio ja lisenssit';
 
   @override
+  String get backupTitle => 'Varmuuskopiointi';
+
+  @override
+  String get backupExport => 'Vie varmuuskopio';
+
+  @override
+  String get backupExportSubtitle =>
+      'Tallenna asetukset, nimet sekä piilotetut ja kiinnitetyt sovellukset tiedostoon';
+
+  @override
+  String get backupRestore => 'Palauta varmuuskopio';
+
+  @override
+  String get backupRestoreSubtitle =>
+      'Korvaa kaikki tallennetulla varmuuskopiolla';
+
+  @override
+  String get backupAlsoInclude => 'Sisällytä myös';
+
+  @override
+  String get backupRestoreConfirm =>
+      'Tämä korvaa nykyiset asetukset, nimet sekä piilotetut ja kiinnitetyt sovellukset.';
+
+  @override
+  String get backupExportAction => 'Vie';
+
+  @override
+  String get backupRestoreAction => 'Palauta';
+
+  @override
+  String get backupSaved => 'Varmuuskopio tallennettu';
+
+  @override
+  String get backupRestored => 'Varmuuskopio palautettu';
+
+  @override
+  String get backupInvalid =>
+      'Tämä tiedosto ei ole Last Launcherin varmuuskopio';
+
+  @override
+  String get backupTooNew =>
+      'Tämä varmuuskopio on Last Launcherin uudemmasta versiosta';
+
+  @override
+  String get backupFailed => 'Tiedostoa ei voitu lukea tai kirjoittaa';
+
+  @override
   String get hintSwipeUp => 'Pyyhkäise ylös sovelluksiin';
 
   @override

@@ -318,6 +318,52 @@ class AppLocalizationsNl extends AppLocalizations {
   String get aboutSubtitle => 'Versie en licenties';
 
   @override
+  String get backupTitle => 'Back-up en herstel';
+
+  @override
+  String get backupExport => 'Back-up exporteren';
+
+  @override
+  String get backupExportSubtitle =>
+      'Instellingen, namen en verborgen en vastgezette apps in een bestand opslaan';
+
+  @override
+  String get backupRestore => 'Back-up herstellen';
+
+  @override
+  String get backupRestoreSubtitle =>
+      'Alles vervangen door een opgeslagen back-up';
+
+  @override
+  String get backupAlsoInclude => 'Ook meenemen';
+
+  @override
+  String get backupRestoreConfirm =>
+      'Dit vervangt de huidige instellingen, namen en verborgen en vastgezette apps.';
+
+  @override
+  String get backupExportAction => 'Exporteren';
+
+  @override
+  String get backupRestoreAction => 'Herstellen';
+
+  @override
+  String get backupSaved => 'Back-up opgeslagen';
+
+  @override
+  String get backupRestored => 'Back-up hersteld';
+
+  @override
+  String get backupInvalid => 'Dit bestand is geen Last Launcher-back-up';
+
+  @override
+  String get backupTooNew =>
+      'Deze back-up komt van een nieuwere versie van Last Launcher';
+
+  @override
+  String get backupFailed => 'Kan het bestand niet lezen of schrijven';
+
+  @override
   String get hintSwipeUp => 'Veeg omhoog voor apps';
 
   @override

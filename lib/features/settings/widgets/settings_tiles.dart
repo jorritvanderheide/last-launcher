@@ -17,36 +17,41 @@ Future<void> pushSettingsPage(BuildContext context, Widget page) {
 /// The frame every settings page shares: a title bar, a fading list and room
 /// for the navigation bar at the end.
 ///
-/// Rows are rebuilt whenever [listenable] fires, since whether a row is
-/// enabled often depends on other settings.
+/// Rows are rebuilt whenever [listenable] fires, if given, since whether a
+/// row is enabled often depends on other settings.
 class SettingsPage extends StatelessWidget {
   const SettingsPage({
     required this.title,
-    required this.listenable,
     required this.children,
+    this.listenable,
     super.key,
   });
 
   final String title;
-  final Listenable listenable;
+  final Listenable? listenable;
   final List<Widget> Function(BuildContext context) children;
 
   @override
   Widget build(BuildContext context) {
+    Widget list(BuildContext context) => FadeOverflow(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          ...children(context),
+          SizedBox(height: MediaQuery.of(context).viewPadding.bottom + 8),
+        ],
+      ),
+    );
+
+    final listenable = this.listenable;
     return Scaffold(
       appBar: AppBar(title: Text(title)),
-      body: ListenableBuilder(
-        listenable: listenable,
-        builder: (context, _) => FadeOverflow(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              ...children(context),
-              SizedBox(height: MediaQuery.of(context).viewPadding.bottom + 8),
-            ],
-          ),
-        ),
-      ),
+      body: listenable == null
+          ? Builder(builder: list)
+          : ListenableBuilder(
+              listenable: listenable,
+              builder: (context, _) => list(context),
+            ),
     );
   }
 }

@@ -1,5 +1,6 @@
 package nl.bw20.last_launcher
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
@@ -24,6 +25,10 @@ class MainActivity : FlutterActivity() {
     private var methodChannel: MethodChannel? = null
     private var pendingOpenSettings = false
     private var fullscreenEnabled = false
+
+    // The file picker answers through onActivityResult; this is who's waiting.
+    private var pendingBackupResult: MethodChannel.Result? = null
+    private var pendingBackupContent: String? = null
 
     // ------------------------------------------------------------------
     // Lifecycle
@@ -176,6 +181,16 @@ class MainActivity : FlutterActivity() {
                     result.success(profiles.any { it != Process.myUserHandle() })
                 }
                 "getAccentColors" -> result.success(accentColors())
+                "saveBackup" -> {
+                    val fileName = call.argument<String>("fileName")
+                    val content = call.argument<String>("content")
+                    if (fileName == null || content == null) {
+                        result.error("INVALID_ARGUMENT", "fileName and content are required", null)
+                    } else {
+                        saveBackup(fileName, content, result)
+                    }
+                }
+                "openBackup" -> openBackup(result)
                 "isDefaultLauncher" -> result.success(isDefaultLauncher())
                 "requestDefaultLauncher" -> {
                     requestDefaultLauncher()
@@ -311,6 +326,78 @@ class MainActivity : FlutterActivity() {
     }
 
     // ------------------------------------------------------------------
+    // Backup files
+    // ------------------------------------------------------------------
+
+    // Through the system file picker, so no storage permission is needed.
+
+    private fun saveBackup(fileName: String, content: String, result: MethodChannel.Result) {
+        if (!claimBackupResult(result)) return
+        pendingBackupContent = content
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+            .addCategory(Intent.CATEGORY_OPENABLE)
+            .setType("application/json")
+            .putExtra(Intent.EXTRA_TITLE, fileName)
+        @Suppress("DEPRECATION")
+        startActivityForResult(intent, REQUEST_SAVE_BACKUP)
+    }
+
+    private fun openBackup(result: MethodChannel.Result) {
+        if (!claimBackupResult(result)) return
+        // Some file managers label .json files as plain text or generic data.
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+            .addCategory(Intent.CATEGORY_OPENABLE)
+            .setType("*/*")
+            .putExtra(
+                Intent.EXTRA_MIME_TYPES,
+                arrayOf("application/json", "text/plain", "application/octet-stream"),
+            )
+        @Suppress("DEPRECATION")
+        startActivityForResult(intent, REQUEST_OPEN_BACKUP)
+    }
+
+    private fun claimBackupResult(result: MethodChannel.Result): Boolean {
+        if (pendingBackupResult != null) {
+            result.error("BUSY", "A file picker is already open", null)
+            return false
+        }
+        pendingBackupResult = result
+        return true
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        @Suppress("DEPRECATION")
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != REQUEST_SAVE_BACKUP && requestCode != REQUEST_OPEN_BACKUP) return
+        val result = pendingBackupResult ?: return
+        val content = pendingBackupContent
+        pendingBackupResult = null
+        pendingBackupContent = null
+
+        val uri = data?.data
+        if (resultCode != Activity.RESULT_OK || uri == null) {
+            // Cancelled: saving reports false, opening reports no file.
+            result.success(if (requestCode == REQUEST_SAVE_BACKUP) false else null)
+            return
+        }
+        try {
+            if (requestCode == REQUEST_SAVE_BACKUP) {
+                val stream = contentResolver.openOutputStream(uri, "wt")
+                    ?: throw java.io.IOException("Could not open $uri for writing")
+                stream.use { it.write(content!!.toByteArray(Charsets.UTF_8)) }
+                result.success(true)
+            } else {
+                val stream = contentResolver.openInputStream(uri)
+                    ?: throw java.io.IOException("Could not open $uri for reading")
+                result.success(stream.use { it.readBytes().toString(Charsets.UTF_8) })
+            }
+        } catch (e: Exception) {
+            result.error("FILE_FAILED", e.message ?: "File access failed", null)
+        }
+    }
+
+    // ------------------------------------------------------------------
     // Accent colours
     // ------------------------------------------------------------------
 
@@ -370,5 +457,10 @@ class MainActivity : FlutterActivity() {
         } catch (_: Exception) {
             // Silently fail
         }
+    }
+
+    private companion object {
+        const val REQUEST_SAVE_BACKUP = 4001
+        const val REQUEST_OPEN_BACKUP = 4002
     }
 }
