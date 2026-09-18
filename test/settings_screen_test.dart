@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/modules/launch_app_module.dart';
 import 'package:last_launcher/features/modules/tasks_module.dart';
 import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/screens/task_settings_screen.dart';
@@ -131,6 +132,22 @@ void main() {
     double top(String text) => tester.getTopLeft(find.text(text)).dy;
     expect(top(l10n.sectionHome), lessThan(top(l10n.sectionTasks)));
     expect(top(l10n.sectionTasks), lessThan(top(l10n.sectionAppDrawer)));
+
+    // Indented under Home, and saying which side the module is on.
+    double left(String text) => tester.getTopLeft(find.text(text)).dx;
+    expect(left(l10n.sectionTasks), greaterThan(left(l10n.sectionHome)));
+    expect(find.text(l10n.leftOfHome), findsOneWidget);
+  });
+
+  testWidgets('a module on both sides says so', (tester) async {
+    final settings = await _pumpSettings(tester);
+    settings.setLeftPanel(const LaunchAppModule());
+    settings.setRightPanel(const LaunchAppModule());
+    await tester.pumpAndSettle();
+    expect(
+      find.text('${l10n.leftOfHome} · ${l10n.rightOfHome}'),
+      findsOneWidget,
+    );
   });
 
   testWidgets('a module on either side gets its settings row', (tester) async {

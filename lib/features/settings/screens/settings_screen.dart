@@ -109,9 +109,21 @@ class _SettingsScreenState extends State<SettingsScreen>
                 ModuleDeps(settingsState: s, appListState: widget.appListState),
               )
               case final page?)
+            // Indented under Home, where the module is picked, and saying
+            // which side it's on.
             ListTile(
+              contentPadding: const EdgeInsetsDirectional.only(
+                start: 40,
+                end: 24,
+              ),
               leading: Icon(module.icon),
               title: Text(module.displayName(context)),
+              subtitle: Text(
+                [
+                  if (s.leftPanel.value.id == module.id) l10n.leftOfHome,
+                  if (s.rightPanel.value.id == module.id) l10n.rightOfHome,
+                ].join(' · '),
+              ),
               onTap: () => pushSettingsPage(context, page),
             ),
         ListTile(
