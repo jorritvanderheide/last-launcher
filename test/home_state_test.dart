@@ -37,18 +37,18 @@ void main() {
     });
 
     test('isPinned returns correct value', () async {
-      expect(state.isPinned('com.test'), false);
+      expect(state.isPinned(AppInfo.keyFor('com.test')), false);
       await state.addApp(
         const PinnedApp(packageName: 'com.test', label: 'Test'),
       );
-      expect(state.isPinned('com.test'), true);
+      expect(state.isPinned(AppInfo.keyFor('com.test')), true);
     });
 
     test('removes app', () async {
       await state.addApp(
         const PinnedApp(packageName: 'com.test', label: 'Test'),
       );
-      await state.removeApp('com.test');
+      await state.removeApp(AppInfo.keyFor('com.test'));
       expect(state.pinnedApps, isEmpty);
     });
 

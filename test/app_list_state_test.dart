@@ -40,10 +40,16 @@ void main() {
 
       await state.loadApps();
 
-      expect(state.displayLabelFor('com.kept', 'fallback'), 'Kept Label');
-      expect(state.displayLabelFor('com.gone', 'fallback'), 'fallback');
-      expect(state.isHidden('com.kept'), true);
-      expect(state.isHidden('com.gone'), false);
+      expect(
+        state.displayLabelFor(AppInfo.keyFor('com.kept'), 'fallback'),
+        'Kept Label',
+      );
+      expect(
+        state.displayLabelFor(AppInfo.keyFor('com.gone'), 'fallback'),
+        'fallback',
+      );
+      expect(state.isHidden(AppInfo.keyFor('com.kept')), true);
+      expect(state.isHidden(AppInfo.keyFor('com.gone')), false);
     });
 
     test('preserves state when channel returns empty list', () async {
@@ -58,8 +64,11 @@ void main() {
       await state.loadApps();
 
       expect(state.allApps, isEmpty);
-      expect(state.displayLabelFor('com.kept', 'fallback'), 'Kept Label');
-      expect(state.isHidden('com.kept'), true);
+      expect(
+        state.displayLabelFor(AppInfo.keyFor('com.kept'), 'fallback'),
+        'Kept Label',
+      );
+      expect(state.isHidden(AppInfo.keyFor('com.kept')), true);
     });
 
     test('empty-list load does not persist a wipe', () async {
@@ -74,8 +83,11 @@ void main() {
       await state.loadApps();
 
       final restored = AppListState(channel, prefs);
-      expect(restored.displayLabelFor('com.kept', 'fallback'), 'Kept Label');
-      expect(restored.isHidden('com.kept'), true);
+      expect(
+        restored.displayLabelFor(AppInfo.keyFor('com.kept'), 'fallback'),
+        'Kept Label',
+      );
+      expect(restored.isHidden(AppInfo.keyFor('com.kept')), true);
     });
 
     test(
@@ -93,8 +105,11 @@ void main() {
 
         await state.loadApps();
 
-        expect(state.isHidden('com.work', isWorkApp: true), true);
-        expect(state.isHidden('com.gone'), false);
+        expect(
+          state.isHidden(AppInfo.keyFor('com.work', isWorkApp: true)),
+          true,
+        );
+        expect(state.isHidden(AppInfo.keyFor('com.gone')), false);
       },
     );
 
@@ -116,9 +131,12 @@ void main() {
 
         await state.loadApps();
 
-        expect(state.displayLabelFor('com.workapp', 'fallback'), 'Work Label');
         expect(
-          state.displayLabelFor('com.personal', 'fallback'),
+          state.displayLabelFor(AppInfo.keyFor('com.workapp'), 'fallback'),
+          'Work Label',
+        );
+        expect(
+          state.displayLabelFor(AppInfo.keyFor('com.personal'), 'fallback'),
           'Personal Label',
         );
       },
@@ -136,8 +154,8 @@ void main() {
 
       await state.loadApps();
 
-      expect(state.isHidden('com.work', isWorkApp: true), true);
-      expect(state.isHidden('com.gone'), false);
+      expect(state.isHidden(AppInfo.keyFor('com.work', isWorkApp: true)), true);
+      expect(state.isHidden(AppInfo.keyFor('com.gone')), false);
     });
   });
 
@@ -157,11 +175,11 @@ void main() {
       expect(state.hints['cam.a|false'], isNull);
 
       // Hide one Camera app.
-      state.hideApp('cam.b');
+      state.hideApp(AppInfo.keyFor('cam.b'));
       expect(state.hints['cam.a|false'], isNotNull);
 
       // Unhide it — hint is lost again.
-      state.unhideApp('cam.b');
+      state.unhideApp(AppInfo.keyFor('cam.b'));
       expect(state.hints['cam.a|false'], isNull);
     });
   });
@@ -180,7 +198,7 @@ void main() {
         final state = AppListState(channel, prefs);
         await state.loadApps();
 
-        state.setCustomLabel('app.b', 'Bee');
+        state.setCustomLabel(AppInfo.keyFor('app.b'), 'Bee');
 
         // Compound key is stable — doesn't change when the display label changes.
         expect(state.hints.containsKey('app.b|false'), true);
@@ -205,7 +223,7 @@ void main() {
         expect(state.hints['app.b|false']!.start, 0);
         expect(state.hints['app.b|false']!.length, 1);
 
-        state.setCustomLabel('app.b', 'Zeta');
+        state.setCustomLabel(AppInfo.keyFor('app.b'), 'Zeta');
 
         expect(state.hints['app.b|false'], isNotNull);
         expect(state.hints['app.b|false']!.start, 0);
@@ -545,7 +563,7 @@ void main() {
       final state = AppListState(channel, prefs);
       await state.loadApps();
 
-      state.hideApp('hid.b');
+      state.hideApp(AppInfo.keyFor('hid.b'));
 
       var result = state.search('tem');
       expect(result.length, 1);
@@ -568,8 +586,8 @@ void main() {
         final state = AppListState(channel, prefs);
         await state.loadApps();
 
-        state.hideApp('hid.a');
-        state.setCustomLabel('vis.b', 'Xyz');
+        state.hideApp(AppInfo.keyFor('hid.a'));
+        state.setCustomLabel(AppInfo.keyFor('vis.b'), 'Xyz');
 
         final result = state.search('oa', includeHidden: true);
         expect(result.length, 3);
@@ -587,7 +605,7 @@ void main() {
       final state = AppListState(channel, prefs);
       await state.loadApps();
 
-      state.setCustomLabel('a.a', 'Tools');
+      state.setCustomLabel(AppInfo.keyFor('a.a'), 'Tools');
 
       // "Tools" doesn't match "util", but original "Complex Utilities"
       // contains "util", so the renamed app is still found.
@@ -610,7 +628,7 @@ void main() {
         final state = AppListState(channel, prefs);
         await state.loadApps();
 
-        state.hideApp('hid.a');
+        state.hideApp(AppInfo.keyFor('hid.a'));
 
         final result = state.search('alp', includeHidden: true);
         expect(result.length, 2);

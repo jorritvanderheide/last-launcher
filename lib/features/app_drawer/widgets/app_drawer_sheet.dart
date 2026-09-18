@@ -147,12 +147,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     );
     if (!expandSearch && settings.hidePinnedFromDrawer.value) {
       matches = matches
-          .where(
-            (a) => !widget.homeState.isPinned(
-              a.packageName,
-              isWorkApp: a.isWorkApp,
-            ),
-          )
+          .where((a) => !widget.homeState.isPinned(a.key))
           .toList();
     }
     final searchTerm = SearchQuery.parse(
@@ -277,14 +272,8 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
 
   List<ActionItem> _appActions(BuildContext context, AppInfo app) {
     final l10n = AppLocalizations.of(context)!;
-    final isPinned = widget.homeState.isPinned(
-      app.packageName,
-      isWorkApp: app.isWorkApp,
-    );
-    final isHidden = widget.appListState.isHidden(
-      app.packageName,
-      isWorkApp: app.isWorkApp,
-    );
+    final isPinned = widget.homeState.isPinned(app.key);
+    final isHidden = widget.appListState.isHidden(app.key);
     return [
       ActionItem(
         icon: Icons.edit,
@@ -296,11 +285,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
             originalLabel: app.label,
           );
           if (newLabel != null) {
-            widget.appListState.setCustomLabel(
-              app.packageName,
-              newLabel,
-              isWorkApp: app.isWorkApp,
-            );
+            widget.appListState.setCustomLabel(app.key, newLabel);
           }
         },
       ),
@@ -329,10 +314,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
         ActionItem(
           icon: Icons.visibility_off,
           label: l10n.actionHide,
-          onTap: () => widget.appListState.hideApp(
-            app.packageName,
-            isWorkApp: app.isWorkApp,
-          ),
+          onTap: () => widget.appListState.hideApp(app.key),
         ),
       ActionItem(
         icon: Icons.info_outline,
@@ -344,15 +326,9 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
 
   Widget _buildRow(BuildContext context, AppInfo app, DrawerResults results) {
     final dimmed =
-        widget.appListState.isHidden(
-          app.packageName,
-          isWorkApp: app.isWorkApp,
-        ) ||
+        widget.appListState.isHidden(app.key) ||
         (widget.settingsState.hidePinnedFromDrawer.value &&
-            widget.homeState.isPinned(
-              app.packageName,
-              isWorkApp: app.isWorkApp,
-            ));
+            widget.homeState.isPinned(app.key));
     final showHint = widget.settingsState.quickLaunchHintsActive;
     final searchLabel = widget.appListState.displayLabelForSearch(
       app,

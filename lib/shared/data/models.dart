@@ -13,7 +13,20 @@ class AppInfo {
 
   /// Identifies this app across state maps: the personal and work copies of a
   /// package are distinct entries everywhere.
-  String get key => '$packageName|$isWorkApp';
+  String get key => keyFor(packageName, isWorkApp: isWorkApp);
+
+  /// The one definition of the key format, which is what hidden apps, custom
+  /// labels and pins are stored under. Changing it orphans users' data.
+  static String keyFor(String packageName, {bool isWorkApp = false}) =>
+      '$packageName|$isWorkApp';
+
+  /// Whether a stored key belongs to a work-profile entry.
+  static bool isWorkKey(String key) {
+    final parts = key.split('|');
+    return parts.length > 1 && parts[1] == 'true';
+  }
+
+  static String packageOfKey(String key) => key.split('|').first;
 }
 
 class PinnedApp {
@@ -36,7 +49,7 @@ class PinnedApp {
   final bool isWorkApp;
 
   /// Same format as [AppInfo.key], so the two can be compared directly.
-  String get key => '$packageName|$isWorkApp';
+  String get key => AppInfo.keyFor(packageName, isWorkApp: isWorkApp);
 
   Map<String, dynamic> toJson() {
     return {

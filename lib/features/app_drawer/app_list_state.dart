@@ -47,16 +47,13 @@ class AppListState extends ChangeNotifier {
       _hasWorkProfile && !_searchPrefs.hidePersonalWhenWorkActive;
   String get query => _query;
 
-  List<AppInfo> get hiddenApps => _allApps
-      .where(
-        (a) => _hiddenApps.contains(_compoundKey(a.packageName, a.isWorkApp)),
-      )
-      .toList();
+  List<AppInfo> get hiddenApps =>
+      _allApps.where((a) => _hiddenApps.contains(a.key)).toList();
 
   Map<String, SubstringHint?> get hints => _hints;
 
-  bool isHidden(String packageName, {bool isWorkApp = false}) =>
-      _hiddenApps.contains(_compoundKey(packageName, isWorkApp));
+  /// [key] is an entry's [AppInfo.key].
+  bool isHidden(String key) => _hiddenApps.contains(key);
 
   void applyPrefs(SearchPrefs prefs) {
     _searchPrefs = prefs;
@@ -71,10 +68,7 @@ class AppListState extends ChangeNotifier {
   }) {
     var source = includeHidden
         ? _allApps
-        : _allApps.where(
-            (a) =>
-                !_hiddenApps.contains(_compoundKey(a.packageName, a.isWorkApp)),
-          );
+        : _allApps.where((a) => !_hiddenApps.contains(a.key));
     if (_searchPrefs.hidePersonalWhenWorkActive && hasWorkApps) {
       source = source.where((a) => a.isWorkApp);
     }
@@ -116,34 +110,29 @@ class AppListState extends ChangeNotifier {
     notifyListeners();
   }
 
-  static String _compoundKey(String packageName, bool isWorkApp) =>
-      '$packageName|$isWorkApp';
-
   /// Drop entries from [_customLabels] and [_hiddenApps] for packages that are
   /// no longer installed. Saves and notifies if anything changed. Skipped when
   /// [_allApps] is empty (e.g. failed channel call), so a transient failure
   /// can't wipe valid state.
   ///
-  /// Work-app entries (compound keys ending in `|true`) are never pruned
+  /// Work-app entries are never pruned
   /// because the work profile can be paused temporarily, making those apps
   /// disappear from the installed list. Pruning them would lose user state
   /// (hidden status, custom labels) across a pause/unpause cycle.
   void _pruneOrphanedState() {
     if (_allApps.isEmpty) return;
-    final installedCompound = {
-      for (final a in _allApps) _compoundKey(a.packageName, a.isWorkApp),
-    };
+    final installedCompound = {for (final a in _allApps) a.key};
     var changed = false;
     final workPackages = {
       for (final key in _hiddenApps)
-        if (key.endsWith('|true')) key.split('|').first,
+        if (AppInfo.isWorkKey(key)) AppInfo.packageOfKey(key),
     };
     final droppedLabels = _customLabels.keys
         .where(
           (k) =>
               !installedCompound.contains(k) &&
-              !k.endsWith('|true') &&
-              !workPackages.contains(k.split('|').first),
+              !AppInfo.isWorkKey(k) &&
+              !workPackages.contains(AppInfo.packageOfKey(k)),
         )
         .toList();
     if (droppedLabels.isNotEmpty) {
@@ -154,7 +143,7 @@ class AppListState extends ChangeNotifier {
     }
     final droppedHidden = _hiddenApps
         .where((p) => !installedCompound.contains(p))
-        .where((p) => !p.endsWith('|true'))
+        .where((p) => !AppInfo.isWorkKey(p))
         .toList();
     if (droppedHidden.isNotEmpty) {
       _hiddenApps.removeAll(droppedHidden);
@@ -183,12 +172,8 @@ class AppListState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setCustomLabel(
-    String packageName,
-    String label, {
-    bool isWorkApp = false,
-  }) {
-    final key = _compoundKey(packageName, isWorkApp);
+  /// An empty [label] goes back to the app's own name.
+  void setCustomLabel(String key, String label) {
     if (label.isEmpty) {
       _customLabels.remove(key);
     } else {
@@ -200,34 +185,25 @@ class AppListState extends ChangeNotifier {
     _saveCustomLabels();
   }
 
-  void hideApp(String packageName, {bool isWorkApp = false}) {
-    _hiddenApps.add(_compoundKey(packageName, isWorkApp));
+  void hideApp(String key) {
+    _hiddenApps.add(key);
     _computeHints();
     notifyListeners();
     _saveHiddenApps();
   }
 
-  void unhideApp(String packageName, {bool isWorkApp = false}) {
-    _hiddenApps.remove(_compoundKey(packageName, isWorkApp));
+  void unhideApp(String key) {
+    _hiddenApps.remove(key);
     _computeHints();
     notifyListeners();
     _saveHiddenApps();
   }
 
-  String displayLabelFor(
-    String packageName,
-    String fallback, {
-    bool isWorkApp = false,
-  }) {
-    return _customLabels[_compoundKey(packageName, isWorkApp)] ?? fallback;
-  }
+  String displayLabelFor(String key, String fallback) =>
+      _customLabels[key] ?? fallback;
 
   String displayLabel(AppInfo app) {
-    return displayLabelFor(
-      app.packageName,
-      app.label,
-      isWorkApp: app.isWorkApp,
-    );
+    return displayLabelFor(app.key, app.label);
   }
 
   String displayLabelForSearch(AppInfo app, String query) {
@@ -273,10 +249,7 @@ class AppListState extends ChangeNotifier {
   void _computeHints() {
     Iterable<AppInfo> visible = _searchPrefs.includeHidden
         ? _allApps
-        : _allApps.where(
-            (a) =>
-                !_hiddenApps.contains(_compoundKey(a.packageName, a.isWorkApp)),
-          );
+        : _allApps.where((a) => !_hiddenApps.contains(a.key));
     if (_searchPrefs.hidePersonalWhenWorkActive && hasWorkApps) {
       visible = visible.where((a) => a.isWorkApp);
     }
@@ -302,9 +275,7 @@ class AppListState extends ChangeNotifier {
         searchTerm,
       );
       _hints = {
-        for (var i = 0; i < matching.length; i++)
-          _compoundKey(matching[i].packageName, matching[i].isWorkApp):
-              hintList[i],
+        for (var i = 0; i < matching.length; i++) matching[i].key: hintList[i],
       };
     } else {
       final visibleList = visible.toList();
@@ -315,8 +286,7 @@ class AppListState extends ChangeNotifier {
       final hintList = computeHints(displayLabels, originals);
       _hints = {
         for (var i = 0; i < visibleList.length; i++)
-          _compoundKey(visibleList[i].packageName, visibleList[i].isWorkApp):
-              hintList[i],
+          visibleList[i].key: hintList[i],
       };
     }
   }

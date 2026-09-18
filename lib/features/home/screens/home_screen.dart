@@ -65,28 +65,20 @@ class HomeScreenState extends State<HomeScreen> {
           final newLabel = await showRenameDialog(
             context: context,
             currentLabel: widget.appListState.displayLabelFor(
-              app.packageName,
+              app.key,
               app.label,
-              isWorkApp: app.isWorkApp,
             ),
             originalLabel: app.label,
           );
           if (newLabel != null) {
-            widget.appListState.setCustomLabel(
-              app.packageName,
-              newLabel,
-              isWorkApp: app.isWorkApp,
-            );
+            widget.appListState.setCustomLabel(app.key, newLabel);
           }
         },
       ),
       ActionItem(
         icon: Icons.remove_circle_outline,
         label: l10n.actionUnpin,
-        onTap: () => widget.homeState.removeApp(
-          app.packageName,
-          isWorkApp: app.isWorkApp,
-        ),
+        onTap: () => widget.homeState.removeApp(app.key),
       ),
     ];
   }
@@ -205,15 +197,14 @@ class HomeScreenState extends State<HomeScreen> {
                     final handle = showHandles
                         ? dragHandle(context, index)
                         : null;
-                    final appKey = '${app.packageName}|${app.isWorkApp}';
+                    final appKey = app.key;
                     if (_activeAppPackage == appKey) {
                       return _withWorkDot(
                         ActionRow(
                           key: ValueKey(appKey),
                           label: widget.appListState.displayLabelFor(
-                            app.packageName,
+                            app.key,
                             app.label,
-                            isWorkApp: app.isWorkApp,
                           ),
                           actions: _appActions(context, app),
                           onClose: () =>
@@ -227,9 +218,8 @@ class HomeScreenState extends State<HomeScreen> {
                       AppLabel(
                         key: ValueKey(appKey),
                         label: widget.appListState.displayLabelFor(
-                          app.packageName,
+                          app.key,
                           app.label,
-                          isWorkApp: app.isWorkApp,
                         ),
                         onTap: () => widget.onLaunch(
                           app.packageName,

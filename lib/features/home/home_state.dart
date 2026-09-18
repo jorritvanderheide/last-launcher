@@ -37,11 +37,8 @@ class HomeState extends ChangeNotifier {
     await _prefs.setString(_key, PinnedApp.encodeList(_pinnedApps));
   }
 
-  bool isPinned(String packageName, {bool isWorkApp = false}) {
-    return _pinnedApps.any(
-      (a) => a.packageName == packageName && a.isWorkApp == isWorkApp,
-    );
-  }
+  /// [key] is an entry's [AppInfo.key] or [PinnedApp.key].
+  bool isPinned(String key) => _pinnedApps.any((a) => a.key == key);
 
   int _maxPinnedApps = 10;
   double? _lastAvailableHeight;
@@ -62,16 +59,14 @@ class HomeState extends ChangeNotifier {
   }
 
   Future<void> addApp(PinnedApp app) async {
-    if (isPinned(app.packageName, isWorkApp: app.isWorkApp) || isFull) return;
+    if (isPinned(app.key) || isFull) return;
     _pinnedApps.add(app);
     notifyListeners();
     await _save();
   }
 
-  Future<void> removeApp(String packageName, {bool isWorkApp = false}) async {
-    _pinnedApps.removeWhere(
-      (a) => a.packageName == packageName && a.isWorkApp == isWorkApp,
-    );
+  Future<void> removeApp(String key) async {
+    _pinnedApps.removeWhere((a) => a.key == key);
     notifyListeners();
     await _save();
   }

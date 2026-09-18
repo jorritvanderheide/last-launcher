@@ -31,7 +31,6 @@ class HiddenAppsScreen extends StatefulWidget {
 
 class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
   String? _activeAppKey;
-  String _appKey(AppInfo app) => '${app.packageName}|${app.isWorkApp}';
 
   Widget _withWorkDot(Widget child, AppInfo app) {
     if (!app.isWorkApp || !widget.settingsState.workAppDotActive) return child;
@@ -66,13 +65,10 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
     if (!widget.settingsState.hidePinnedFromDrawer.value) {
       result = hidden;
     } else {
-      final hiddenKeys = hidden.map(_appKey).toSet();
+      final hiddenKeys = hidden.map((app) => app.key).toSet();
       result = widget.appListState.allApps.where((app) {
-        if (hiddenKeys.contains(_appKey(app))) return true;
-        if (widget.homeState.isPinned(
-          app.packageName,
-          isWorkApp: app.isWorkApp,
-        )) {
+        if (hiddenKeys.contains(app.key)) return true;
+        if (widget.homeState.isPinned(app.key)) {
           return true;
         }
         return false;
@@ -87,10 +83,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
 
   List<ActionItem> _appActions(BuildContext context, AppInfo app) {
     final l10n = AppLocalizations.of(context)!;
-    final isHidden = widget.appListState.isHidden(
-      app.packageName,
-      isWorkApp: app.isWorkApp,
-    );
+    final isHidden = widget.appListState.isHidden(app.key);
     return [
       ActionItem(
         icon: Icons.edit,
@@ -102,11 +95,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
             originalLabel: app.label,
           );
           if (newLabel != null) {
-            widget.appListState.setCustomLabel(
-              app.packageName,
-              newLabel,
-              isWorkApp: app.isWorkApp,
-            );
+            widget.appListState.setCustomLabel(app.key, newLabel);
           }
         },
       ),
@@ -114,10 +103,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
         ActionItem(
           icon: Icons.visibility,
           label: l10n.actionUnhide,
-          onTap: () => widget.appListState.unhideApp(
-            app.packageName,
-            isWorkApp: app.isWorkApp,
-          ),
+          onTap: () => widget.appListState.unhideApp(app.key),
         ),
       ActionItem(
         icon: Icons.info_outline,
@@ -159,7 +145,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
               itemCount: apps.length,
               itemBuilder: (context, index) {
                 final app = apps[index];
-                final key = _appKey(app);
+                final key = app.key;
                 if (_activeAppKey == key) {
                   return _withWorkDot(
                     ActionRow(
