@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
@@ -197,6 +198,15 @@ class MainActivity : FlutterActivity() {
                         result.success(openLink(uri, call.argument<String>("package")))
                     }
                 }
+                "appsForLink" -> {
+                    val uri = call.argument<String>("uri")
+                    if (uri == null) {
+                        result.error("INVALID_ARGUMENT", "uri is required", null)
+                    } else {
+                        result.success(appsFor(Intent(Intent.ACTION_VIEW, Uri.parse(uri))))
+                    }
+                }
+                "appsWithSearch" -> result.success(appsFor(Intent(Intent.ACTION_SEARCH)))
                 "searchInApp" -> {
                     val pkg = call.argument<String>("package")
                     val query = call.argument<String>("query")
@@ -527,6 +537,25 @@ class MainActivity : FlutterActivity() {
             .putExtra(SearchManager.QUERY, query)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         return startIfPossible(intent)
+    }
+
+    /**
+     * The apps that can handle [intent], by name, for the pickers in the
+     * prefix editor. Personal profile only: other profiles' apps can't be
+     * started this way.
+     */
+    private fun appsFor(intent: Intent): List<Map<String, String>> {
+        @Suppress("DEPRECATION")
+        val resolved = packageManager.queryIntentActivities(
+            intent,
+            PackageManager.MATCH_DEFAULT_ONLY,
+        )
+        return resolved
+            .map { it.activityInfo.applicationInfo }
+            .filter { it.packageName != packageName }
+            .distinctBy { it.packageName }
+            .map { mapOf("packageName" to it.packageName, "label" to it.loadLabel(packageManager).toString()) }
+            .sortedBy { it.getValue("label").lowercase() }
     }
 
     private fun startIfPossible(intent: Intent): Boolean = try {

@@ -244,6 +244,83 @@ class AppLocalizationsEn extends AppLocalizations {
   String get prefixTypePersonal => 'Personal apps';
 
   @override
+  String get searchPrefixes => 'Search prefixes';
+
+  @override
+  String get searchPrefixesSubtitle =>
+      'Search the web, a map or an app from the search field';
+
+  @override
+  String get prefixAdd => 'Add prefix';
+
+  @override
+  String get prefixRestoreDefaults => 'Restore work and personal prefixes';
+
+  @override
+  String get prefixNeedsWorkProfile => 'Only with a work profile';
+
+  @override
+  String get prefixTrigger => 'Prefix';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return 'Shown as $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'Apps starting with these letters can\'t be found while this is on. End it with a space, or start it with a symbol.';
+
+  @override
+  String get prefixName => 'Name';
+
+  @override
+  String get prefixType => 'Action';
+
+  @override
+  String get prefixTypeLink => 'Open a link';
+
+  @override
+  String get prefixTypeSearchInApp => 'Search in an app';
+
+  @override
+  String get prefixTemplates => 'Start from';
+
+  @override
+  String get prefixLink => 'Link';
+
+  @override
+  String get prefixLinkHelp => '%s is where the search goes';
+
+  @override
+  String get prefixOpenWith => 'Open with';
+
+  @override
+  String get prefixAnyApp => 'Any app';
+
+  @override
+  String get prefixApp => 'App';
+
+  @override
+  String get prefixNoSearchApps => 'No apps offer their own search';
+
+  @override
+  String get prefixPersonalAppsOnly =>
+      'Apps in the work profile can\'t be used here';
+
+  @override
+  String get prefixErrorEmpty => 'Enter a prefix';
+
+  @override
+  String get prefixErrorTaken => 'Another prefix already uses this';
+
+  @override
+  String get prefixErrorNoPlaceholder => 'Put %s where the search goes';
+
+  @override
+  String get prefixTemplateMaps => 'Maps';
+
+  @override
   String get autoShowKeyboard => 'Show keyboard';
 
   @override

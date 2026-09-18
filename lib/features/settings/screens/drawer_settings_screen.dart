@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
+import 'package:last_launcher/features/settings/screens/prefixes_settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/settings/widgets/settings_tiles.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
@@ -92,6 +93,19 @@ class DrawerSettingsScreen extends StatelessWidget {
           subtitle: l10n.hidePinnedAppsSubtitle,
         ),
         SettingsSectionHeader(title: l10n.sectionSearch),
+        ListTile(
+          leading: const Icon(Icons.manage_search),
+          title: Text(l10n.searchPrefixes),
+          subtitle: Text(l10n.searchPrefixesSubtitle),
+          onTap: () => pushSettingsPage(
+            context,
+            PrefixesSettingsScreen(
+              settingsState: s,
+              appListState: appListState,
+              appChannel: appChannel,
+            ),
+          ),
+        ),
         SettingSwitch(
           setting: s.includeHiddenInSearch,
           title: l10n.includeHiddenInSearch,

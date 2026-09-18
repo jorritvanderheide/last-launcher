@@ -249,6 +249,86 @@ class AppLocalizationsFr extends AppLocalizations {
   String get prefixTypePersonal => 'Applications personnelles';
 
   @override
+  String get searchPrefixes => 'Préfixes de recherche';
+
+  @override
+  String get searchPrefixesSubtitle =>
+      'Rechercher sur le web, sur une carte ou dans une application depuis le champ de recherche';
+
+  @override
+  String get prefixAdd => 'Ajouter un préfixe';
+
+  @override
+  String get prefixRestoreDefaults =>
+      'Rétablir les préfixes professionnel et personnel';
+
+  @override
+  String get prefixNeedsWorkProfile =>
+      'Uniquement avec un profil professionnel';
+
+  @override
+  String get prefixTrigger => 'Préfixe';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return 'Affiché comme $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'Les applications commençant par ces lettres sont introuvables tant que ceci est actif. Terminez-le par une espace ou commencez-le par un symbole.';
+
+  @override
+  String get prefixName => 'Nom';
+
+  @override
+  String get prefixType => 'Action';
+
+  @override
+  String get prefixTypeLink => 'Ouvrir un lien';
+
+  @override
+  String get prefixTypeSearchInApp => 'Rechercher dans une application';
+
+  @override
+  String get prefixTemplates => 'Partir de';
+
+  @override
+  String get prefixLink => 'Lien';
+
+  @override
+  String get prefixLinkHelp => '%s indique l\'emplacement de la recherche';
+
+  @override
+  String get prefixOpenWith => 'Ouvrir avec';
+
+  @override
+  String get prefixAnyApp => 'N\'importe quelle application';
+
+  @override
+  String get prefixApp => 'Application';
+
+  @override
+  String get prefixNoSearchApps =>
+      'Aucune application ne propose sa propre recherche';
+
+  @override
+  String get prefixPersonalAppsOnly =>
+      'Les applications du profil professionnel ne peuvent pas être utilisées ici';
+
+  @override
+  String get prefixErrorEmpty => 'Saisissez un préfixe';
+
+  @override
+  String get prefixErrorTaken => 'Un autre préfixe l\'utilise déjà';
+
+  @override
+  String get prefixErrorNoPlaceholder => 'Placez %s là où va la recherche';
+
+  @override
+  String get prefixTemplateMaps => 'Cartes';
+
+  @override
   String get autoShowKeyboard => 'Afficher le clavier';
 
   @override

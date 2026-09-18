@@ -245,6 +245,85 @@ class AppLocalizationsCs extends AppLocalizations {
   String get prefixTypePersonal => 'Osobní aplikace';
 
   @override
+  String get searchPrefixes => 'Vyhledávací předpony';
+
+  @override
+  String get searchPrefixesSubtitle =>
+      'Hledat na webu, v mapě nebo v aplikaci přímo z vyhledávání';
+
+  @override
+  String get prefixAdd => 'Přidat předponu';
+
+  @override
+  String get prefixRestoreDefaults => 'Obnovit pracovní a osobní předponu';
+
+  @override
+  String get prefixNeedsWorkProfile => 'Jen s pracovním profilem';
+
+  @override
+  String get prefixTrigger => 'Předpona';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return 'Zobrazeno jako $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'Aplikace začínající těmito písmeny nelze najít, dokud je tato předpona zapnutá. Zakončete ji mezerou nebo ji začněte symbolem.';
+
+  @override
+  String get prefixName => 'Název';
+
+  @override
+  String get prefixType => 'Akce';
+
+  @override
+  String get prefixTypeLink => 'Otevřít odkaz';
+
+  @override
+  String get prefixTypeSearchInApp => 'Hledat v aplikaci';
+
+  @override
+  String get prefixTemplates => 'Vycházet z';
+
+  @override
+  String get prefixLink => 'Odkaz';
+
+  @override
+  String get prefixLinkHelp => '%s označuje místo pro hledaný text';
+
+  @override
+  String get prefixOpenWith => 'Otevřít v';
+
+  @override
+  String get prefixAnyApp => 'Libovolná aplikace';
+
+  @override
+  String get prefixApp => 'Aplikace';
+
+  @override
+  String get prefixNoSearchApps =>
+      'Žádná aplikace nenabízí vlastní vyhledávání';
+
+  @override
+  String get prefixPersonalAppsOnly =>
+      'Aplikace v pracovním profilu zde nelze použít';
+
+  @override
+  String get prefixErrorEmpty => 'Zadejte předponu';
+
+  @override
+  String get prefixErrorTaken => 'Tuto předponu už používá jiná';
+
+  @override
+  String get prefixErrorNoPlaceholder =>
+      'Vložte %s tam, kam patří hledaný text';
+
+  @override
+  String get prefixTemplateMaps => 'Mapy';
+
+  @override
   String get autoShowKeyboard => 'Zobrazit klávesnici';
 
   @override

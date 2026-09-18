@@ -243,6 +243,84 @@ class AppLocalizationsHi extends AppLocalizations {
   String get prefixTypePersonal => 'निजी ऐप';
 
   @override
+  String get searchPrefixes => 'खोज प्रीफ़िक्स';
+
+  @override
+  String get searchPrefixesSubtitle =>
+      'खोज फ़ील्ड से वेब, मैप या किसी ऐप में खोजें';
+
+  @override
+  String get prefixAdd => 'प्रीफ़िक्स जोड़ें';
+
+  @override
+  String get prefixRestoreDefaults => 'कार्य और निजी प्रीफ़िक्स वापस लाएँ';
+
+  @override
+  String get prefixNeedsWorkProfile => 'केवल कार्य प्रोफ़ाइल के साथ';
+
+  @override
+  String get prefixTrigger => 'प्रीफ़िक्स';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return '$trigger के रूप में दिखेगा';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'इसके चालू रहते इन अक्षरों से शुरू होने वाले ऐप नहीं मिलेंगे। इसे स्पेस से खत्म करें या किसी चिह्न से शुरू करें।';
+
+  @override
+  String get prefixName => 'नाम';
+
+  @override
+  String get prefixType => 'कार्रवाई';
+
+  @override
+  String get prefixTypeLink => 'लिंक खोलें';
+
+  @override
+  String get prefixTypeSearchInApp => 'किसी ऐप में खोजें';
+
+  @override
+  String get prefixTemplates => 'इससे शुरू करें';
+
+  @override
+  String get prefixLink => 'लिंक';
+
+  @override
+  String get prefixLinkHelp => '%s खोज की जगह है';
+
+  @override
+  String get prefixOpenWith => 'इसमें खोलें';
+
+  @override
+  String get prefixAnyApp => 'कोई भी ऐप';
+
+  @override
+  String get prefixApp => 'ऐप';
+
+  @override
+  String get prefixNoSearchApps => 'कोई ऐप अपनी खोज नहीं देता';
+
+  @override
+  String get prefixPersonalAppsOnly =>
+      'कार्य प्रोफ़ाइल के ऐप यहाँ इस्तेमाल नहीं हो सकते';
+
+  @override
+  String get prefixErrorEmpty => 'प्रीफ़िक्स डालें';
+
+  @override
+  String get prefixErrorTaken =>
+      'कोई दूसरा प्रीफ़िक्स इसे पहले से इस्तेमाल करता है';
+
+  @override
+  String get prefixErrorNoPlaceholder => 'खोज की जगह %s रखें';
+
+  @override
+  String get prefixTemplateMaps => 'मैप्स';
+
+  @override
   String get autoShowKeyboard => 'कीबोर्ड दिखाएँ';
 
   @override

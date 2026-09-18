@@ -246,6 +246,84 @@ class AppLocalizationsFi extends AppLocalizations {
   String get prefixTypePersonal => 'Henkilökohtaiset sovellukset';
 
   @override
+  String get searchPrefixes => 'Hakuetuliitteet';
+
+  @override
+  String get searchPrefixesSubtitle =>
+      'Hae verkosta, kartalta tai sovelluksesta hakukentän kautta';
+
+  @override
+  String get prefixAdd => 'Lisää etuliite';
+
+  @override
+  String get prefixRestoreDefaults =>
+      'Palauta työ- ja henkilökohtainen etuliite';
+
+  @override
+  String get prefixNeedsWorkProfile => 'Vain työprofiilin kanssa';
+
+  @override
+  String get prefixTrigger => 'Etuliite';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return 'Näkyy muodossa $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'Näillä kirjaimilla alkavia sovelluksia ei löydy, kun tämä on käytössä. Lopeta se välilyöntiin tai aloita se symbolilla.';
+
+  @override
+  String get prefixName => 'Nimi';
+
+  @override
+  String get prefixType => 'Toiminto';
+
+  @override
+  String get prefixTypeLink => 'Avaa linkki';
+
+  @override
+  String get prefixTypeSearchInApp => 'Hae sovelluksesta';
+
+  @override
+  String get prefixTemplates => 'Pohja';
+
+  @override
+  String get prefixLink => 'Linkki';
+
+  @override
+  String get prefixLinkHelp => '%s on hakusanan paikka';
+
+  @override
+  String get prefixOpenWith => 'Avaa sovelluksella';
+
+  @override
+  String get prefixAnyApp => 'Mikä tahansa sovellus';
+
+  @override
+  String get prefixApp => 'Sovellus';
+
+  @override
+  String get prefixNoSearchApps => 'Mikään sovellus ei tarjoa omaa hakua';
+
+  @override
+  String get prefixPersonalAppsOnly =>
+      'Työprofiilin sovelluksia ei voi käyttää tässä';
+
+  @override
+  String get prefixErrorEmpty => 'Anna etuliite';
+
+  @override
+  String get prefixErrorTaken => 'Toinen etuliite käyttää jo tätä';
+
+  @override
+  String get prefixErrorNoPlaceholder => 'Lisää %s hakusanan kohdalle';
+
+  @override
+  String get prefixTemplateMaps => 'Kartat';
+
+  @override
   String get autoShowKeyboard => 'Näytä näppäimistö';
 
   @override

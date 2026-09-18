@@ -238,6 +238,81 @@ class AppLocalizationsJa extends AppLocalizations {
   String get prefixTypePersonal => '個人用アプリ';
 
   @override
+  String get searchPrefixes => '検索プレフィックス';
+
+  @override
+  String get searchPrefixesSubtitle => '検索欄からウェブ、地図、アプリ内を検索';
+
+  @override
+  String get prefixAdd => 'プレフィックスを追加';
+
+  @override
+  String get prefixRestoreDefaults => '仕事用と個人用のプレフィックスを復元';
+
+  @override
+  String get prefixNeedsWorkProfile => '仕事用プロファイルがある場合のみ';
+
+  @override
+  String get prefixTrigger => 'プレフィックス';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return '表示: $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'オンの間、この文字で始まるアプリは見つかりません。末尾にスペースを付けるか、記号で始めてください。';
+
+  @override
+  String get prefixName => '名前';
+
+  @override
+  String get prefixType => '動作';
+
+  @override
+  String get prefixTypeLink => 'リンクを開く';
+
+  @override
+  String get prefixTypeSearchInApp => 'アプリ内で検索';
+
+  @override
+  String get prefixTemplates => 'テンプレート';
+
+  @override
+  String get prefixLink => 'リンク';
+
+  @override
+  String get prefixLinkHelp => '%s が検索語に置き換わります';
+
+  @override
+  String get prefixOpenWith => '開くアプリ';
+
+  @override
+  String get prefixAnyApp => '任意のアプリ';
+
+  @override
+  String get prefixApp => 'アプリ';
+
+  @override
+  String get prefixNoSearchApps => '独自の検索を提供するアプリはありません';
+
+  @override
+  String get prefixPersonalAppsOnly => '仕事用プロファイルのアプリはここでは使えません';
+
+  @override
+  String get prefixErrorEmpty => 'プレフィックスを入力';
+
+  @override
+  String get prefixErrorTaken => '別のプレフィックスで使用中です';
+
+  @override
+  String get prefixErrorNoPlaceholder => '検索語の位置に %s を入れてください';
+
+  @override
+  String get prefixTemplateMaps => 'マップ';
+
+  @override
   String get autoShowKeyboard => 'キーボードを表示';
 
   @override

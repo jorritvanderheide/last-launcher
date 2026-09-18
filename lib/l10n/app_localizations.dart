@@ -572,6 +572,150 @@ abstract class AppLocalizations {
   /// **'Personal apps'**
   String get prefixTypePersonal;
 
+  /// No description provided for @searchPrefixes.
+  ///
+  /// In en, this message translates to:
+  /// **'Search prefixes'**
+  String get searchPrefixes;
+
+  /// No description provided for @searchPrefixesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Search the web, a map or an app from the search field'**
+  String get searchPrefixesSubtitle;
+
+  /// No description provided for @prefixAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add prefix'**
+  String get prefixAdd;
+
+  /// No description provided for @prefixRestoreDefaults.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore work and personal prefixes'**
+  String get prefixRestoreDefaults;
+
+  /// No description provided for @prefixNeedsWorkProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Only with a work profile'**
+  String get prefixNeedsWorkProfile;
+
+  /// No description provided for @prefixTrigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Prefix'**
+  String get prefixTrigger;
+
+  /// No description provided for @prefixTriggerShownAs.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown as {trigger}'**
+  String prefixTriggerShownAs(String trigger);
+
+  /// No description provided for @prefixShadowWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps starting with these letters can\'t be found while this is on. End it with a space, or start it with a symbol.'**
+  String get prefixShadowWarning;
+
+  /// No description provided for @prefixName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get prefixName;
+
+  /// No description provided for @prefixType.
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get prefixType;
+
+  /// No description provided for @prefixTypeLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Open a link'**
+  String get prefixTypeLink;
+
+  /// No description provided for @prefixTypeSearchInApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Search in an app'**
+  String get prefixTypeSearchInApp;
+
+  /// No description provided for @prefixTemplates.
+  ///
+  /// In en, this message translates to:
+  /// **'Start from'**
+  String get prefixTemplates;
+
+  /// No description provided for @prefixLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Link'**
+  String get prefixLink;
+
+  /// No description provided for @prefixLinkHelp.
+  ///
+  /// In en, this message translates to:
+  /// **'%s is where the search goes'**
+  String get prefixLinkHelp;
+
+  /// No description provided for @prefixOpenWith.
+  ///
+  /// In en, this message translates to:
+  /// **'Open with'**
+  String get prefixOpenWith;
+
+  /// No description provided for @prefixAnyApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Any app'**
+  String get prefixAnyApp;
+
+  /// No description provided for @prefixApp.
+  ///
+  /// In en, this message translates to:
+  /// **'App'**
+  String get prefixApp;
+
+  /// No description provided for @prefixNoSearchApps.
+  ///
+  /// In en, this message translates to:
+  /// **'No apps offer their own search'**
+  String get prefixNoSearchApps;
+
+  /// No description provided for @prefixPersonalAppsOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Apps in the work profile can\'t be used here'**
+  String get prefixPersonalAppsOnly;
+
+  /// No description provided for @prefixErrorEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a prefix'**
+  String get prefixErrorEmpty;
+
+  /// No description provided for @prefixErrorTaken.
+  ///
+  /// In en, this message translates to:
+  /// **'Another prefix already uses this'**
+  String get prefixErrorTaken;
+
+  /// No description provided for @prefixErrorNoPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Put %s where the search goes'**
+  String get prefixErrorNoPlaceholder;
+
+  /// No description provided for @prefixTemplateMaps.
+  ///
+  /// In en, this message translates to:
+  /// **'Maps'**
+  String get prefixTemplateMaps;
+
   /// No description provided for @autoShowKeyboard.
   ///
   /// In en, this message translates to:

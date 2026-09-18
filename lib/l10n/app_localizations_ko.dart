@@ -238,6 +238,81 @@ class AppLocalizationsKo extends AppLocalizations {
   String get prefixTypePersonal => '개인 앱';
 
   @override
+  String get searchPrefixes => '검색 접두어';
+
+  @override
+  String get searchPrefixesSubtitle => '검색창에서 웹, 지도 또는 앱 검색';
+
+  @override
+  String get prefixAdd => '접두어 추가';
+
+  @override
+  String get prefixRestoreDefaults => '업무용 및 개인 접두어 복원';
+
+  @override
+  String get prefixNeedsWorkProfile => '업무 프로필이 있을 때만';
+
+  @override
+  String get prefixTrigger => '접두어';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return '$trigger(으)로 표시';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      '켜져 있는 동안 이 글자로 시작하는 앱을 찾을 수 없습니다. 끝에 공백을 넣거나 기호로 시작하세요.';
+
+  @override
+  String get prefixName => '이름';
+
+  @override
+  String get prefixType => '동작';
+
+  @override
+  String get prefixTypeLink => '링크 열기';
+
+  @override
+  String get prefixTypeSearchInApp => '앱에서 검색';
+
+  @override
+  String get prefixTemplates => '템플릿';
+
+  @override
+  String get prefixLink => '링크';
+
+  @override
+  String get prefixLinkHelp => '%s 자리에 검색어가 들어갑니다';
+
+  @override
+  String get prefixOpenWith => '열 앱';
+
+  @override
+  String get prefixAnyApp => '모든 앱';
+
+  @override
+  String get prefixApp => '앱';
+
+  @override
+  String get prefixNoSearchApps => '자체 검색을 제공하는 앱이 없습니다';
+
+  @override
+  String get prefixPersonalAppsOnly => '업무 프로필의 앱은 여기서 사용할 수 없습니다';
+
+  @override
+  String get prefixErrorEmpty => '접두어를 입력하세요';
+
+  @override
+  String get prefixErrorTaken => '다른 접두어가 이미 사용 중입니다';
+
+  @override
+  String get prefixErrorNoPlaceholder => '검색어 자리에 %s를 넣으세요';
+
+  @override
+  String get prefixTemplateMaps => '지도';
+
+  @override
   String get autoShowKeyboard => '키보드 표시';
 
   @override

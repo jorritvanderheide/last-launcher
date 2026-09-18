@@ -248,6 +248,85 @@ class AppLocalizationsPl extends AppLocalizations {
   String get prefixTypePersonal => 'Aplikacje osobiste';
 
   @override
+  String get searchPrefixes => 'Prefiksy wyszukiwania';
+
+  @override
+  String get searchPrefixesSubtitle =>
+      'Szukaj w sieci, na mapie lub w aplikacji z pola wyszukiwania';
+
+  @override
+  String get prefixAdd => 'Dodaj prefiks';
+
+  @override
+  String get prefixRestoreDefaults => 'Przywróć prefiksy służbowy i osobisty';
+
+  @override
+  String get prefixNeedsWorkProfile => 'Tylko z profilem służbowym';
+
+  @override
+  String get prefixTrigger => 'Prefiks';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return 'Wyświetlany jako $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'Aplikacji zaczynających się od tych liter nie da się znaleźć, gdy to jest włączone. Zakończ spacją lub zacznij symbolem.';
+
+  @override
+  String get prefixName => 'Nazwa';
+
+  @override
+  String get prefixType => 'Akcja';
+
+  @override
+  String get prefixTypeLink => 'Otwórz link';
+
+  @override
+  String get prefixTypeSearchInApp => 'Szukaj w aplikacji';
+
+  @override
+  String get prefixTemplates => 'Zacznij od';
+
+  @override
+  String get prefixLink => 'Link';
+
+  @override
+  String get prefixLinkHelp => '%s oznacza miejsce wyszukiwanej frazy';
+
+  @override
+  String get prefixOpenWith => 'Otwórz w';
+
+  @override
+  String get prefixAnyApp => 'Dowolna aplikacja';
+
+  @override
+  String get prefixApp => 'Aplikacja';
+
+  @override
+  String get prefixNoSearchApps =>
+      'Żadna aplikacja nie oferuje własnego wyszukiwania';
+
+  @override
+  String get prefixPersonalAppsOnly =>
+      'Aplikacji z profilu służbowego nie można tu użyć';
+
+  @override
+  String get prefixErrorEmpty => 'Wpisz prefiks';
+
+  @override
+  String get prefixErrorTaken => 'Inny prefiks już tego używa';
+
+  @override
+  String get prefixErrorNoPlaceholder =>
+      'Wstaw %s w miejsce wyszukiwanej frazy';
+
+  @override
+  String get prefixTemplateMaps => 'Mapy';
+
+  @override
   String get autoShowKeyboard => 'Pokaż klawiaturę';
 
   @override

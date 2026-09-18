@@ -248,6 +248,84 @@ class AppLocalizationsEs extends AppLocalizations {
   String get prefixTypePersonal => 'Apps personales';
 
   @override
+  String get searchPrefixes => 'Prefijos de búsqueda';
+
+  @override
+  String get searchPrefixesSubtitle =>
+      'Busca en la web, un mapa o una app desde el campo de búsqueda';
+
+  @override
+  String get prefixAdd => 'Añadir prefijo';
+
+  @override
+  String get prefixRestoreDefaults =>
+      'Restaurar prefijos de trabajo y personal';
+
+  @override
+  String get prefixNeedsWorkProfile => 'Solo con perfil de trabajo';
+
+  @override
+  String get prefixTrigger => 'Prefijo';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return 'Se muestra como $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'Las apps que empiezan por estas letras no se pueden encontrar mientras esté activo. Termínalo con un espacio o empiézalo con un símbolo.';
+
+  @override
+  String get prefixName => 'Nombre';
+
+  @override
+  String get prefixType => 'Acción';
+
+  @override
+  String get prefixTypeLink => 'Abrir un enlace';
+
+  @override
+  String get prefixTypeSearchInApp => 'Buscar en una app';
+
+  @override
+  String get prefixTemplates => 'Partir de';
+
+  @override
+  String get prefixLink => 'Enlace';
+
+  @override
+  String get prefixLinkHelp => '%s marca dónde va la búsqueda';
+
+  @override
+  String get prefixOpenWith => 'Abrir con';
+
+  @override
+  String get prefixAnyApp => 'Cualquier app';
+
+  @override
+  String get prefixApp => 'App';
+
+  @override
+  String get prefixNoSearchApps => 'Ninguna app ofrece su propia búsqueda';
+
+  @override
+  String get prefixPersonalAppsOnly =>
+      'Las apps del perfil de trabajo no se pueden usar aquí';
+
+  @override
+  String get prefixErrorEmpty => 'Escribe un prefijo';
+
+  @override
+  String get prefixErrorTaken => 'Otro prefijo ya usa esto';
+
+  @override
+  String get prefixErrorNoPlaceholder => 'Pon %s donde va la búsqueda';
+
+  @override
+  String get prefixTemplateMaps => 'Mapas';
+
+  @override
   String get autoShowKeyboard => 'Mostrar teclado';
 
   @override

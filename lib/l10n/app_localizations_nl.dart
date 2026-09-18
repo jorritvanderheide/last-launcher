@@ -246,6 +246,84 @@ class AppLocalizationsNl extends AppLocalizations {
   String get prefixTypePersonal => 'Persoonlijke apps';
 
   @override
+  String get searchPrefixes => 'Zoekvoorvoegsels';
+
+  @override
+  String get searchPrefixesSubtitle =>
+      'Zoek op het web, op een kaart of in een app vanuit het zoekveld';
+
+  @override
+  String get prefixAdd => 'Voorvoegsel toevoegen';
+
+  @override
+  String get prefixRestoreDefaults =>
+      'Werk- en persoonlijk voorvoegsel terugzetten';
+
+  @override
+  String get prefixNeedsWorkProfile => 'Alleen met een werkprofiel';
+
+  @override
+  String get prefixTrigger => 'Voorvoegsel';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return 'Weergegeven als $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'Apps die met deze letters beginnen zijn niet te vinden zolang dit aan staat. Eindig met een spatie of begin met een symbool.';
+
+  @override
+  String get prefixName => 'Naam';
+
+  @override
+  String get prefixType => 'Actie';
+
+  @override
+  String get prefixTypeLink => 'Link openen';
+
+  @override
+  String get prefixTypeSearchInApp => 'Zoeken in een app';
+
+  @override
+  String get prefixTemplates => 'Beginnen met';
+
+  @override
+  String get prefixLink => 'Link';
+
+  @override
+  String get prefixLinkHelp => '%s is waar de zoekterm komt';
+
+  @override
+  String get prefixOpenWith => 'Openen met';
+
+  @override
+  String get prefixAnyApp => 'Elke app';
+
+  @override
+  String get prefixApp => 'App';
+
+  @override
+  String get prefixNoSearchApps => 'Geen app biedt een eigen zoekfunctie';
+
+  @override
+  String get prefixPersonalAppsOnly =>
+      'Apps in het werkprofiel kunnen hier niet worden gebruikt';
+
+  @override
+  String get prefixErrorEmpty => 'Voer een voorvoegsel in';
+
+  @override
+  String get prefixErrorTaken => 'Een ander voorvoegsel gebruikt dit al';
+
+  @override
+  String get prefixErrorNoPlaceholder => 'Zet %s waar de zoekterm komt';
+
+  @override
+  String get prefixTemplateMaps => 'Kaarten';
+
+  @override
   String get autoShowKeyboard => 'Toetsenbord tonen';
 
   @override

@@ -244,6 +244,83 @@ class AppLocalizationsSv extends AppLocalizations {
   String get prefixTypePersonal => 'Personliga appar';
 
   @override
+  String get searchPrefixes => 'Sökprefix';
+
+  @override
+  String get searchPrefixesSubtitle =>
+      'Sök på webben, på en karta eller i en app från sökfältet';
+
+  @override
+  String get prefixAdd => 'Lägg till prefix';
+
+  @override
+  String get prefixRestoreDefaults => 'Återställ jobb- och personligt prefix';
+
+  @override
+  String get prefixNeedsWorkProfile => 'Bara med arbetsprofil';
+
+  @override
+  String get prefixTrigger => 'Prefix';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return 'Visas som $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'Appar som börjar med de här bokstäverna går inte att hitta när detta är på. Avsluta med ett mellanslag eller börja med en symbol.';
+
+  @override
+  String get prefixName => 'Namn';
+
+  @override
+  String get prefixType => 'Åtgärd';
+
+  @override
+  String get prefixTypeLink => 'Öppna en länk';
+
+  @override
+  String get prefixTypeSearchInApp => 'Sök i en app';
+
+  @override
+  String get prefixTemplates => 'Utgå från';
+
+  @override
+  String get prefixLink => 'Länk';
+
+  @override
+  String get prefixLinkHelp => '%s är där sökningen hamnar';
+
+  @override
+  String get prefixOpenWith => 'Öppna med';
+
+  @override
+  String get prefixAnyApp => 'Valfri app';
+
+  @override
+  String get prefixApp => 'App';
+
+  @override
+  String get prefixNoSearchApps => 'Ingen app har egen sökning';
+
+  @override
+  String get prefixPersonalAppsOnly =>
+      'Appar i arbetsprofilen kan inte användas här';
+
+  @override
+  String get prefixErrorEmpty => 'Ange ett prefix';
+
+  @override
+  String get prefixErrorTaken => 'Ett annat prefix använder redan detta';
+
+  @override
+  String get prefixErrorNoPlaceholder => 'Sätt %s där sökningen ska stå';
+
+  @override
+  String get prefixTemplateMaps => 'Kartor';
+
+  @override
   String get autoShowKeyboard => 'Visa tangentbord';
 
   @override

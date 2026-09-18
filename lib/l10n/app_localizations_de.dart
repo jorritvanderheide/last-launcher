@@ -246,6 +246,85 @@ class AppLocalizationsDe extends AppLocalizations {
   String get prefixTypePersonal => 'Private Apps';
 
   @override
+  String get searchPrefixes => 'Suchpräfixe';
+
+  @override
+  String get searchPrefixesSubtitle =>
+      'Im Web, in einer Karte oder in einer App direkt aus der Suche suchen';
+
+  @override
+  String get prefixAdd => 'Präfix hinzufügen';
+
+  @override
+  String get prefixRestoreDefaults =>
+      'Arbeits- und Privat-Präfix wiederherstellen';
+
+  @override
+  String get prefixNeedsWorkProfile => 'Nur mit Arbeitsprofil';
+
+  @override
+  String get prefixTrigger => 'Präfix';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return 'Angezeigt als $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning =>
+      'Apps, die mit diesen Buchstaben beginnen, sind nicht auffindbar, solange dies aktiv ist. Mit einem Leerzeichen beenden oder mit einem Symbol beginnen.';
+
+  @override
+  String get prefixName => 'Name';
+
+  @override
+  String get prefixType => 'Aktion';
+
+  @override
+  String get prefixTypeLink => 'Link öffnen';
+
+  @override
+  String get prefixTypeSearchInApp => 'In einer App suchen';
+
+  @override
+  String get prefixTemplates => 'Vorlage';
+
+  @override
+  String get prefixLink => 'Link';
+
+  @override
+  String get prefixLinkHelp => '%s steht für den Suchbegriff';
+
+  @override
+  String get prefixOpenWith => 'Öffnen mit';
+
+  @override
+  String get prefixAnyApp => 'Beliebige App';
+
+  @override
+  String get prefixApp => 'App';
+
+  @override
+  String get prefixNoSearchApps => 'Keine App bietet eine eigene Suche';
+
+  @override
+  String get prefixPersonalAppsOnly =>
+      'Apps im Arbeitsprofil sind hier nicht verfügbar';
+
+  @override
+  String get prefixErrorEmpty => 'Präfix eingeben';
+
+  @override
+  String get prefixErrorTaken => 'Ein anderes Präfix verwendet dies bereits';
+
+  @override
+  String get prefixErrorNoPlaceholder =>
+      '%s an die Stelle des Suchbegriffs setzen';
+
+  @override
+  String get prefixTemplateMaps => 'Karten';
+
+  @override
   String get autoShowKeyboard => 'Tastatur anzeigen';
 
   @override

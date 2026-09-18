@@ -238,6 +238,80 @@ class AppLocalizationsZh extends AppLocalizations {
   String get prefixTypePersonal => '個人應用程式';
 
   @override
+  String get searchPrefixes => '搜尋前綴';
+
+  @override
+  String get searchPrefixesSubtitle => '從搜尋欄搜尋網頁、地圖或應用程式';
+
+  @override
+  String get prefixAdd => '新增前綴';
+
+  @override
+  String get prefixRestoreDefaults => '還原工作與個人前綴';
+
+  @override
+  String get prefixNeedsWorkProfile => '僅限有工作設定檔時';
+
+  @override
+  String get prefixTrigger => '前綴';
+
+  @override
+  String prefixTriggerShownAs(String trigger) {
+    return '顯示為 $trigger';
+  }
+
+  @override
+  String get prefixShadowWarning => '啟用時將找不到以這些字母開頭的應用程式。請在結尾加上空格，或以符號開頭。';
+
+  @override
+  String get prefixName => '名稱';
+
+  @override
+  String get prefixType => '動作';
+
+  @override
+  String get prefixTypeLink => '開啟連結';
+
+  @override
+  String get prefixTypeSearchInApp => '在應用程式中搜尋';
+
+  @override
+  String get prefixTemplates => '範本';
+
+  @override
+  String get prefixLink => '連結';
+
+  @override
+  String get prefixLinkHelp => '%s 是搜尋文字的位置';
+
+  @override
+  String get prefixOpenWith => '開啟方式';
+
+  @override
+  String get prefixAnyApp => '任何應用程式';
+
+  @override
+  String get prefixApp => '應用程式';
+
+  @override
+  String get prefixNoSearchApps => '沒有應用程式提供自己的搜尋';
+
+  @override
+  String get prefixPersonalAppsOnly => '無法在此使用工作設定檔中的應用程式';
+
+  @override
+  String get prefixErrorEmpty => '輸入前綴';
+
+  @override
+  String get prefixErrorTaken => '其他前綴已使用此內容';
+
+  @override
+  String get prefixErrorNoPlaceholder => '將 %s 放在搜尋文字的位置';
+
+  @override
+  String get prefixTemplateMaps => '地圖';
+
+  @override
   String get autoShowKeyboard => '顯示鍵盤';
 
   @override

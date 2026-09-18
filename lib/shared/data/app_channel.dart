@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:last_launcher/shared/data/models.dart';
 
+/// An app offered in a picker: its package and its name.
+typedef AppChoice = ({String packageName, String label});
+
 /// The system accent (Material You) in the tones the launcher draws with. A
 /// record, so two reads of the same accent compare equal.
 typedef AccentColors = ({Color onDark, Color onLight, Color tint});
@@ -109,6 +112,33 @@ class AppChannel {
     } on PlatformException catch (e) {
       debugPrint('Failed to open $uri: $e');
       return false;
+    }
+  }
+
+  /// The apps that can open links like [uri], for choosing one to open a
+  /// prefix's links in.
+  Future<List<AppChoice>> appsForLink(String uri) =>
+      _appChoices('appsForLink', {'uri': uri});
+
+  /// The apps that offer their own search.
+  Future<List<AppChoice>> appsWithSearch() => _appChoices('appsWithSearch');
+
+  Future<List<AppChoice>> _appChoices(
+    String method, [
+    Map<String, Object?>? arguments,
+  ]) async {
+    try {
+      final apps = await _channel.invokeListMethod<Map>(method, arguments);
+      return [
+        for (final app in apps ?? const <Map>[])
+          (
+            packageName: app['packageName'] as String,
+            label: app['label'] as String,
+          ),
+      ];
+    } on PlatformException catch (e) {
+      debugPrint('Failed to list apps for $method: $e');
+      return const [];
     }
   }
 
