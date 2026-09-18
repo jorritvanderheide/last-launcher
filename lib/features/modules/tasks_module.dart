@@ -3,7 +3,6 @@ import 'package:last_launcher/features/modules/launcher_module.dart';
 import 'package:last_launcher/features/modules/tasks/screens/task_screen.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/features/settings/screens/task_settings_screen.dart';
-import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 
 /// Task list panel. Owns its own [GlobalKey] so the shell can reach into
@@ -22,7 +21,7 @@ class TasksModule extends LauncherModule {
       AppLocalizations.of(context)!.sectionTasks;
 
   @override
-  String hintName(BuildContext context) =>
+  String hintName(BuildContext context, ModuleSide side, ModuleDeps deps) =>
       AppLocalizations.of(context)!.panelTasks;
 
   @override
@@ -43,8 +42,8 @@ class TasksModule extends LauncherModule {
   List<String> get storageKeys => TaskState.storageKeys;
 
   @override
-  Widget settingsPage(SettingsState settings) =>
-      TaskSettingsScreen(settingsState: settings);
+  Widget settingsPage(ModuleDeps deps) =>
+      TaskSettingsScreen(settingsState: deps.settingsState);
 
   @override
   bool dismissActions() => _key.currentState?.dismissActions() ?? false;

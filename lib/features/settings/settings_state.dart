@@ -235,14 +235,16 @@ class SettingsState extends ChangeNotifier {
   void setRightPanel(LauncherModule panel) =>
       _setPanel(_rightPanel, _leftPanel, panel);
 
-  /// A module can only sit on one side, so taking it for one side clears the
-  /// other.
+  /// Most modules can only sit on one side, so taking one for one side
+  /// clears the other.
   void _setPanel(
     Setting<LauncherModule> side,
     Setting<LauncherModule> other,
     LauncherModule panel,
   ) {
-    if (panel is! NoneModule && other.value.id == panel.id) {
+    if (panel is! NoneModule &&
+        !panel.allowsBothSides &&
+        other.value.id == panel.id) {
       other.value = const NoneModule();
     }
     side.value = panel;

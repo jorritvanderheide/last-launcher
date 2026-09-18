@@ -14,7 +14,7 @@ class NoneModule extends LauncherModule {
       AppLocalizations.of(context)!.panelNone;
 
   @override
-  String hintName(BuildContext context) =>
+  String hintName(BuildContext context, ModuleSide side, ModuleDeps deps) =>
       AppLocalizations.of(context)!.panelNone;
 
   @override

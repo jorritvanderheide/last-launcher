@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
+import 'package:last_launcher/features/modules/launcher_module.dart';
 import 'package:last_launcher/features/modules/none_module.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
@@ -176,11 +177,23 @@ class HomeScreenState extends State<HomeScreen> {
                   }
 
                   addHint(l10n.hintSwipeUp);
+                  final deps = ModuleDeps(
+                    settingsState: widget.settingsState,
+                    appListState: widget.appListState,
+                  );
                   if (left is! NoneModule) {
-                    addHint(l10n.hintSwipeRightFor(left.hintName(context)));
+                    addHint(
+                      l10n.hintSwipeRightFor(
+                        left.hintName(context, ModuleSide.left, deps),
+                      ),
+                    );
                   }
                   if (right is! NoneModule) {
-                    addHint(l10n.hintSwipeLeftFor(right.hintName(context)));
+                    addHint(
+                      l10n.hintSwipeLeftFor(
+                        right.hintName(context, ModuleSide.right, deps),
+                      ),
+                    );
                   }
                   addHint(l10n.hintLongPress);
 

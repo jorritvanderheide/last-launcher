@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
+import 'package:last_launcher/features/modules/launcher_module.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/settings/screens/about_screen.dart';
 import 'package:last_launcher/features/settings/screens/appearance_settings_screen.dart';
@@ -118,8 +119,14 @@ class _SettingsScreenState extends State<SettingsScreen>
             ),
           ),
         ),
-        for (final module in [s.leftPanel.value, s.rightPanel.value])
-          if (module.settingsPage(s) case final page?)
+        // One row per module, even when it sits on both sides.
+        for (final module in {
+          for (final m in [s.leftPanel.value, s.rightPanel.value]) m.id: m,
+        }.values)
+          if (module.settingsPage(
+                ModuleDeps(settingsState: s, appListState: widget.appListState),
+              )
+              case final page?)
             ListTile(
               leading: const Icon(Icons.view_sidebar_outlined),
               title: Text(module.displayName(context)),

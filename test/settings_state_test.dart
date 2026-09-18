@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:last_launcher/features/modules/launcher_module.dart';
 import 'package:last_launcher/features/modules/none_module.dart';
 import 'package:last_launcher/features/modules/tasks_module.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
@@ -110,6 +111,14 @@ void main() {
   });
 
   group('SettingsState panels', () {
+    test('a module that allows both sides keeps both', () {
+      const everywhere = _EverywhereModule();
+      state.setLeftPanel(everywhere);
+      state.setRightPanel(everywhere);
+      expect(state.leftPanel.value.id, everywhere.id);
+      expect(state.rightPanel.value.id, everywhere.id);
+    });
+
     test('setLeftPanel', () {
       state.setLeftPanel(TasksModule());
       expect(state.leftPanel.value, isA<TasksModule>());
@@ -243,4 +252,25 @@ void main() {
       expect(count, 8);
     });
   });
+}
+
+class _EverywhereModule extends LauncherModule {
+  const _EverywhereModule();
+
+  @override
+  String get id => 'everywhere';
+
+  @override
+  bool get allowsBothSides => true;
+
+  @override
+  String displayName(BuildContext context) => 'Everywhere';
+
+  @override
+  String hintName(BuildContext context, ModuleSide side, ModuleDeps deps) =>
+      'everywhere';
+
+  @override
+  Widget build(BuildContext context, LauncherModuleProps props) =>
+      const SizedBox.shrink();
 }

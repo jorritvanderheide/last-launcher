@@ -35,6 +35,26 @@ const _doubleTapSlop = 40.0;
 /// otherwise both be set.
 enum _DragMode { none, sheet, page }
 
+/// Where a page drag settles when released: one slot on from [start] when
+/// it went far or fast enough that way, bounded by the configured sides,
+/// else back where it started.
+@visibleForTesting
+double pageSnapTarget({
+  required double start,
+  required double delta,
+  required double velocity,
+  required double lower,
+  required double upper,
+}) {
+  if (delta > _snapDeltaFraction || velocity > _swipeVelocityThreshold) {
+    return (start + 1).clamp(lower, upper);
+  }
+  if (delta < -_snapDeltaFraction || velocity < -_swipeVelocityThreshold) {
+    return (start - 1).clamp(lower, upper);
+  }
+  return start;
+}
+
 class LauncherShell extends StatefulWidget {
   const LauncherShell({
     required this.appChannel,
@@ -400,16 +420,30 @@ class _LauncherShellState extends State<LauncherShell>
       final delta = _pageFraction - _dragStartFraction;
       final hasLeft = widget.settingsState.leftPanel.value is! NoneModule;
       final hasRight = widget.settingsState.rightPanel.value is! NoneModule;
-      final lower = hasLeft ? -1.0 : 0.0;
-      final upper = hasRight ? 1.0 : 0.0;
-      var target = _dragStartFraction;
-      if (delta > _snapDeltaFraction || vx > _swipeVelocityThreshold) {
-        // Forward (toward right panel): snap to next slot, bounded by what
-        // is configured.
-        target = (_dragStartFraction + 1).clamp(lower, upper);
-      } else if (delta < -_snapDeltaFraction || vx < -_swipeVelocityThreshold) {
-        // Backward (toward left panel): snap to previous slot, bounded.
-        target = (_dragStartFraction - 1).clamp(lower, upper);
+      var target = pageSnapTarget(
+        start: _dragStartFraction,
+        delta: delta,
+        velocity: vx,
+        lower: hasLeft ? -1.0 : 0.0,
+        upper: hasRight ? 1.0 : 0.0,
+      );
+      // Arriving on a side: a module that acts instead of showing a panel
+      // sends us straight back home.
+      if (target != 0 && target != _dragStartFraction) {
+        final side = target < 0 ? ModuleSide.left : ModuleSide.right;
+        final module = side == ModuleSide.left
+            ? widget.settingsState.leftPanel.value
+            : widget.settingsState.rightPanel.value;
+        final stay = module.arrive(
+          side,
+          _moduleDeps,
+          (app) => _launchApp(
+            app.packageName,
+            isWorkApp: app.isWorkApp,
+            shortcutId: app.shortcutId,
+          ),
+        );
+        if (!stay) target = 0;
       }
       _animatePageTo(target);
       return;
@@ -494,19 +528,24 @@ class _LauncherShellState extends State<LauncherShell>
     }
   }
 
+  ModuleDeps get _moduleDeps => ModuleDeps(
+    settingsState: widget.settingsState,
+    appListState: widget.appListState,
+  );
+
   Widget _buildPanel(
     LauncherModule panel, {
     required bool isVisible,
-    required bool isLeftSide,
+    required ModuleSide side,
   }) {
     return panel.build(
       context,
       LauncherModuleProps(
+        deps: _moduleDeps,
         taskState: widget.taskState,
-        settingsState: widget.settingsState,
+        side: side,
         isVisible: isVisible,
         scrollLocked: _dragMode == _DragMode.page,
-        swipeRight: isLeftSide,
         onReorderStart: () => _isReorderingTasks = true,
         onReorderEnd: () => _isReorderingTasks = false,
       ),
@@ -563,7 +602,7 @@ class _LauncherShellState extends State<LauncherShell>
                       child: _buildPanel(
                         widget.settingsState.leftPanel.value,
                         isVisible: _pageFraction < -0.5,
-                        isLeftSide: true,
+                        side: ModuleSide.left,
                       ),
                     ),
                     SizedBox(
@@ -590,7 +629,7 @@ class _LauncherShellState extends State<LauncherShell>
                       child: _buildPanel(
                         widget.settingsState.rightPanel.value,
                         isVisible: _pageFraction > 0.5,
-                        isLeftSide: false,
+                        side: ModuleSide.right,
                       ),
                     ),
                   ],
