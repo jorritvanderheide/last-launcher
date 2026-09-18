@@ -156,6 +156,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get setAsDefaultSubtitle => 'Abrir o seletor do sistema';
 
   @override
+  String get drawerMode => 'Modo da gaveta';
+
+  @override
+  String get drawerModeList => 'Lista';
+
+  @override
   String get searchOnlyMode => 'Apenas pesquisa';
 
   @override

@@ -155,6 +155,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get setAsDefaultSubtitle => 'सिस्टम पिकर खोलें';
 
   @override
+  String get drawerMode => 'ड्रॉअर मोड';
+
+  @override
+  String get drawerModeList => 'सूची';
+
+  @override
   String get searchOnlyMode => 'केवल खोज';
 
   @override

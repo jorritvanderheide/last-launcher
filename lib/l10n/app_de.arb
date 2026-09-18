@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "Anheften und langes Drücken auf dem Startbildschirm deaktivieren",
   "setAsDefault": "Als Standard-Home-App festlegen",
   "setAsDefaultSubtitle": "System-Auswahl öffnen",
+  "drawerMode": "Schubladen-Modus",
+  "drawerModeList": "Liste",
   "searchOnlyMode": "Nur Suche",
   "searchOnlyModeSubtitle": "App-Namen ausblenden, zum Starten suchen",
   "autoShowKeyboard": "Tastatur anzeigen",

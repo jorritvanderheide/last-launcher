@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "Desativar fixar e o toque longo no ecrã inicial",
   "setAsDefault": "Definir como app inicial predefinida",
   "setAsDefaultSubtitle": "Abrir o seletor do sistema",
+  "drawerMode": "Modo da gaveta",
+  "drawerModeList": "Lista",
   "searchOnlyMode": "Apenas pesquisa",
   "searchOnlyModeSubtitle": "Ocultar nomes das aplicações, pesquisar para abrir",
   "autoShowKeyboard": "Mostrar teclado",

@@ -155,6 +155,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setAsDefaultSubtitle => 'Open the system picker';
 
   @override
+  String get drawerMode => 'Drawer mode';
+
+  @override
+  String get drawerModeList => 'List';
+
+  @override
   String get searchOnlyMode => 'Search only';
 
   @override

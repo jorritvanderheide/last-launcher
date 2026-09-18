@@ -158,6 +158,12 @@ class AppLocalizationsPl extends AppLocalizations {
   String get setAsDefaultSubtitle => 'Otwórz systemowy selektor';
 
   @override
+  String get drawerMode => 'Tryb szuflady';
+
+  @override
+  String get drawerModeList => 'Lista';
+
+  @override
   String get searchOnlyMode => 'Tylko wyszukiwanie';
 
   @override

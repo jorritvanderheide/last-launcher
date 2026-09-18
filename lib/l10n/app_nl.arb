@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "Vastmaken en lang indrukken op startscherm uitschakelen",
   "setAsDefault": "Instellen als standaard startscherm-app",
   "setAsDefaultSubtitle": "Open de systeemkiezer",
+  "drawerMode": "Lademodus",
+  "drawerModeList": "Lijst",
   "searchOnlyMode": "Alleen zoeken",
   "searchOnlyModeSubtitle": "Appnamen verbergen, zoeken om te starten",
   "autoShowKeyboard": "Toetsenbord tonen",

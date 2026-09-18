@@ -57,6 +57,8 @@
   "doubleTapToSleepPrivacy": "We do not collect, store, or share any personal or sensitive user data through the AccessibilityService API.",
   "setAsDefault": "Set as default home app",
   "setAsDefaultSubtitle": "Open the system picker",
+  "drawerMode": "Drawer mode",
+  "drawerModeList": "List",
   "searchOnlyMode": "Search only",
   "searchOnlyModeSubtitle": "Hide app names, search to launch",
   "autoShowKeyboard": "Show keyboard",

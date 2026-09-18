@@ -102,29 +102,51 @@ void main() {
     expect(find.byType(TaskSettingsScreen), findsOneWidget);
   });
 
-  testWidgets('drawer page follows the rules between settings', (tester) async {
+  testWidgets('drawer mode decides which search rows apply', (tester) async {
+    final settings = await _pumpSettings(tester);
+    settings.extraChar.value = true;
+    await tester.tap(find.text(l10n.sectionAppDrawer));
+    await tester.pumpAndSettle();
+    expect(find.text(l10n.drawerModeList), findsOneWidget);
+    expect(_switch(tester, l10n.extraChar).value, isTrue);
+
+    await tester.tap(find.text(l10n.drawerMode));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(l10n.searchOnlyMode).last);
+    await tester.pumpAndSettle();
+
+    // Search-only takes over those rows, so they're gone, not greyed out.
+    expect(settings.searchOnly.value, isTrue);
+    expect(find.text(l10n.autoShowKeyboard), findsNothing);
+    expect(find.text(l10n.autoLaunchOnMatch), findsNothing);
+    expect(find.text(l10n.extraChar), findsNothing);
+    expect(find.text(l10n.quickLaunchHints), findsNothing);
+    // The rows that still apply stay.
+    expect(find.text(l10n.includeHiddenInSearch), findsOneWidget);
+
+    await tester.tap(find.text(l10n.drawerMode));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(l10n.drawerModeList).last);
+    await tester.pumpAndSettle();
+
+    // Back in list mode, the kept choice comes back.
+    expect(settings.searchOnly.value, isFalse);
+    expect(_switch(tester, l10n.extraChar).value, isTrue);
+  });
+
+  testWidgets('quick-launch options wait for auto-launch', (tester) async {
     final settings = await _pumpSettings(tester);
     settings.extraChar.value = true;
     await tester.tap(find.text(l10n.sectionAppDrawer));
     await tester.pumpAndSettle();
 
-    var extraChar = _switch(tester, l10n.extraChar);
-    expect(extraChar.onChanged, isNotNull);
-    expect(extraChar.value, isTrue);
-
-    await tester.tap(find.text(l10n.searchOnlyMode));
+    await tester.tap(find.text(l10n.autoLaunchOnMatch));
     await tester.pumpAndSettle();
-    expect(settings.searchOnly.value, isTrue);
 
-    // Search-only takes over: the row is locked off, the choice is kept.
-    extraChar = _switch(tester, l10n.extraChar);
+    final extraChar = _switch(tester, l10n.extraChar);
     expect(extraChar.onChanged, isNull);
     expect(extraChar.value, isFalse);
     expect(settings.extraChar.value, isTrue);
-
-    final autoKeyboard = _switch(tester, l10n.autoShowKeyboard);
-    expect(autoKeyboard.onChanged, isNull);
-    expect(autoKeyboard.value, isTrue);
   });
 
   testWidgets('appearance locks the mode while the extra style is on', (

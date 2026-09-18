@@ -156,6 +156,12 @@ class AppLocalizationsFi extends AppLocalizations {
   String get setAsDefaultSubtitle => 'Avaa järjestelmän valitsin';
 
   @override
+  String get drawerMode => 'Valikon tila';
+
+  @override
+  String get drawerModeList => 'Luettelo';
+
+  @override
   String get searchOnlyMode => 'Vain haku';
 
   @override

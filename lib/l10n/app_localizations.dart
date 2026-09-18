@@ -398,6 +398,18 @@ abstract class AppLocalizations {
   /// **'Open the system picker'**
   String get setAsDefaultSubtitle;
 
+  /// No description provided for @drawerMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Drawer mode'**
+  String get drawerMode;
+
+  /// No description provided for @drawerModeList.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get drawerModeList;
+
   /// No description provided for @searchOnlyMode.
   ///
   /// In en, this message translates to:

@@ -151,6 +151,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get setAsDefaultSubtitle => '開啟系統選擇器';
 
   @override
+  String get drawerMode => '抽屜模式';
+
+  @override
+  String get drawerModeList => '清單';
+
+  @override
   String get searchOnlyMode => '僅搜尋';
 
   @override

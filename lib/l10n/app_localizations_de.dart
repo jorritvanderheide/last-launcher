@@ -156,6 +156,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setAsDefaultSubtitle => 'System-Auswahl öffnen';
 
   @override
+  String get drawerMode => 'Schubladen-Modus';
+
+  @override
+  String get drawerModeList => 'Liste';
+
+  @override
   String get searchOnlyMode => 'Nur Suche';
 
   @override

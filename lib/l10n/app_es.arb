@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "Desactivar fijar apps y la pulsación larga en la pantalla de inicio",
   "setAsDefault": "Establecer como app de inicio",
   "setAsDefaultSubtitle": "Abrir el selector del sistema",
+  "drawerMode": "Modo del cajón",
+  "drawerModeList": "Lista",
   "searchOnlyMode": "Solo búsqueda",
   "searchOnlyModeSubtitle": "Ocultar nombres de apps, buscar para abrir",
   "autoShowKeyboard": "Mostrar teclado",

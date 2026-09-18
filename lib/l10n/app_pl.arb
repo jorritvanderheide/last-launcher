@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "Wyłącz przypinanie i długie naciśnięcie na ekranie głównym",
   "setAsDefault": "Ustaw jako domyślną aplikację domową",
   "setAsDefaultSubtitle": "Otwórz systemowy selektor",
+  "drawerMode": "Tryb szuflady",
+  "drawerModeList": "Lista",
   "searchOnlyMode": "Tylko wyszukiwanie",
   "searchOnlyModeSubtitle": "Ukryj nazwy aplikacji, uruchamiaj przez wyszukiwanie",
   "autoShowKeyboard": "Pokaż klawiaturę",

@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "고정 및 홈 화면의 길게 누르기 비활성화",
   "setAsDefault": "기본 홈 앱으로 설정",
   "setAsDefaultSubtitle": "시스템 선택기 열기",
+  "drawerMode": "서랍 모드",
+  "drawerModeList": "목록",
   "searchOnlyMode": "검색 전용",
   "searchOnlyModeSubtitle": "앱 이름을 숨기고 검색으로 실행",
   "autoShowKeyboard": "키보드 표시",

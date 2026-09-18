@@ -151,6 +151,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get setAsDefaultSubtitle => '시스템 선택기 열기';
 
   @override
+  String get drawerMode => '서랍 모드';
+
+  @override
+  String get drawerModeList => '목록';
+
+  @override
   String get searchOnlyMode => '검색 전용';
 
   @override

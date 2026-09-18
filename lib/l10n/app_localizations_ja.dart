@@ -151,6 +151,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get setAsDefaultSubtitle => 'システム選択画面を開く';
 
   @override
+  String get drawerMode => 'ドロワーモード';
+
+  @override
+  String get drawerModeList => 'リスト';
+
+  @override
   String get searchOnlyMode => '検索のみ';
 
   @override

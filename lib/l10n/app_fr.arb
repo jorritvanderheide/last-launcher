@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "Désactiver l'épinglage et l'appui long sur l'écran d'accueil",
   "setAsDefault": "Définir comme app d'accueil par défaut",
   "setAsDefaultSubtitle": "Ouvrir le sélecteur système",
+  "drawerMode": "Mode du tiroir",
+  "drawerModeList": "Liste",
   "searchOnlyMode": "Recherche uniquement",
   "searchOnlyModeSubtitle": "Masquer les noms d'apps, rechercher pour lancer",
   "autoShowKeyboard": "Afficher le clavier",

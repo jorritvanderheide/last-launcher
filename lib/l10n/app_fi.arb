@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "Poista kiinnittäminen ja pitkä painallus käytöstä aloitusnäytöllä",
   "setAsDefault": "Aseta oletusaloitussovellukseksi",
   "setAsDefaultSubtitle": "Avaa järjestelmän valitsin",
+  "drawerMode": "Valikon tila",
+  "drawerModeList": "Luettelo",
   "searchOnlyMode": "Vain haku",
   "searchOnlyModeSubtitle": "Piilota sovellusten nimet, käynnistä hakemalla",
   "autoShowKeyboard": "Näytä näppäimistö",

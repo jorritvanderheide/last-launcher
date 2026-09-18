@@ -156,6 +156,12 @@ class AppLocalizationsNl extends AppLocalizations {
   String get setAsDefaultSubtitle => 'Open de systeemkiezer';
 
   @override
+  String get drawerMode => 'Lademodus';
+
+  @override
+  String get drawerModeList => 'Lijst';
+
+  @override
   String get searchOnlyMode => 'Alleen zoeken';
 
   @override

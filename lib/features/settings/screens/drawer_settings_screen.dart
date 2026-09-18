@@ -55,6 +55,17 @@ class DrawerSettingsScreen extends StatelessWidget {
       title: l10n.sectionAppDrawer,
       listenable: Listenable.merge([s, appListState, homeState]),
       children: (context) => [
+        // A mode rather than a switch: it decides what the drawer is, and
+        // with it which of the rows below apply at all.
+        ChoiceTile<bool>(
+          leading: const Icon(Icons.view_list_outlined),
+          title: l10n.drawerMode,
+          value: s.searchOnly.value,
+          options: const [false, true],
+          label: (context, searchOnly) =>
+              searchOnly ? l10n.searchOnlyMode : l10n.drawerModeList,
+          onChanged: (searchOnly) => s.searchOnly.value = searchOnly,
+        ),
         ListTile(
           leading: const Icon(Icons.visibility_off_outlined),
           title: Text(l10n.hiddenApps),
@@ -91,41 +102,37 @@ class DrawerSettingsScreen extends StatelessWidget {
           title: l10n.matchOriginalName,
           subtitle: l10n.matchOriginalNameSubtitle,
         ),
-        SettingSwitch(
-          setting: s.searchOnly,
-          title: l10n.searchOnlyMode,
-          subtitle: l10n.searchOnlyModeSubtitle,
-        ),
-        SettingSwitch(
-          setting: s.autoKeyboard,
-          title: l10n.autoShowKeyboard,
-          subtitle: l10n.autoShowKeyboardAppsSubtitle,
-          enabled: !s.searchOnly.value,
-          effective: s.autoKeyboardActive,
-        ),
-        SettingSwitch(
-          setting: s.autoLaunch,
-          title: l10n.autoLaunchOnMatch,
-          subtitle: l10n.autoLaunchOnMatchSubtitle,
-          enabled: !s.searchOnly.value,
-          effective: s.autoLaunchActive,
-        ),
-        SettingSwitch(
-          setting: s.extraChar,
-          title: l10n.extraChar,
-          subtitle: l10n.extraCharSubtitle,
-          enabled: s.quickLaunchOptionsAvailable,
-          effective: s.extraCharActive,
-          indent: true,
-        ),
-        SettingSwitch(
-          setting: s.quickLaunchHints,
-          title: l10n.quickLaunchHints,
-          subtitle: l10n.quickLaunchHintsSubtitle,
-          enabled: s.quickLaunchOptionsAvailable,
-          effective: s.quickLaunchHintsActive,
-          indent: true,
-        ),
+        // Search-only mode always shows the keyboard and launches the single
+        // match, and has no list for the quick-launch refinements, so these
+        // only apply to the list.
+        if (!s.searchOnly.value) ...[
+          SettingSwitch(
+            setting: s.autoKeyboard,
+            title: l10n.autoShowKeyboard,
+            subtitle: l10n.autoShowKeyboardAppsSubtitle,
+          ),
+          SettingSwitch(
+            setting: s.autoLaunch,
+            title: l10n.autoLaunchOnMatch,
+            subtitle: l10n.autoLaunchOnMatchSubtitle,
+          ),
+          SettingSwitch(
+            setting: s.extraChar,
+            title: l10n.extraChar,
+            subtitle: l10n.extraCharSubtitle,
+            enabled: s.quickLaunchOptionsAvailable,
+            effective: s.extraCharActive,
+            indent: true,
+          ),
+          SettingSwitch(
+            setting: s.quickLaunchHints,
+            title: l10n.quickLaunchHints,
+            subtitle: l10n.quickLaunchHintsSubtitle,
+            enabled: s.quickLaunchOptionsAvailable,
+            effective: s.quickLaunchHintsActive,
+            indent: true,
+          ),
+        ],
       ],
     );
   }

@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "停用釘選和主畫面的長按",
   "setAsDefault": "設為預設主畫面應用程式",
   "setAsDefaultSubtitle": "開啟系統選擇器",
+  "drawerMode": "抽屜模式",
+  "drawerModeList": "清單",
   "searchOnlyMode": "僅搜尋",
   "searchOnlyModeSubtitle": "隱藏應用程式名稱，以搜尋開啟",
   "autoShowKeyboard": "顯示鍵盤",

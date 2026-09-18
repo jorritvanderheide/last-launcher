@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "Inaktivera fästning och långtryckning på hemskärmen",
   "setAsDefault": "Ange som standard hem-app",
   "setAsDefaultSubtitle": "Öppna systemets väljare",
+  "drawerMode": "Lådläge",
+  "drawerModeList": "Lista",
   "searchOnlyMode": "Enbart sökning",
   "searchOnlyModeSubtitle": "Dölj appnamn, sök för att starta",
   "autoShowKeyboard": "Visa tangentbord",

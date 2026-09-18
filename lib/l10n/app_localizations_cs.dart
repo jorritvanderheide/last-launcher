@@ -155,6 +155,12 @@ class AppLocalizationsCs extends AppLocalizations {
   String get setAsDefaultSubtitle => 'Otevřít systémový výběr';
 
   @override
+  String get drawerMode => 'Režim šuplíku';
+
+  @override
+  String get drawerModeList => 'Seznam';
+
+  @override
   String get searchOnlyMode => 'Pouze hledání';
 
   @override

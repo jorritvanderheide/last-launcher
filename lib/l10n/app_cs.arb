@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "Zakázat připínání a dlouhé stisknutí na domovské obrazovce",
   "setAsDefault": "Nastavit jako výchozí domovskou aplikaci",
   "setAsDefaultSubtitle": "Otevřít systémový výběr",
+  "drawerMode": "Režim šuplíku",
+  "drawerModeList": "Seznam",
   "searchOnlyMode": "Pouze hledání",
   "searchOnlyModeSubtitle": "Skrýt názvy aplikací, spustit vyhledáváním",
   "autoShowKeyboard": "Zobrazit klávesnici",

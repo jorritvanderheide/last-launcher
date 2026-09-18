@@ -158,6 +158,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get setAsDefaultSubtitle => 'Ouvrir le sélecteur système';
 
   @override
+  String get drawerMode => 'Mode du tiroir';
+
+  @override
+  String get drawerModeList => 'Liste';
+
+  @override
   String get searchOnlyMode => 'Recherche uniquement';
 
   @override

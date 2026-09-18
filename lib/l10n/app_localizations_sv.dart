@@ -155,6 +155,12 @@ class AppLocalizationsSv extends AppLocalizations {
   String get setAsDefaultSubtitle => 'Öppna systemets väljare';
 
   @override
+  String get drawerMode => 'Lådläge';
+
+  @override
+  String get drawerModeList => 'Lista';
+
+  @override
   String get searchOnlyMode => 'Enbart sökning';
 
   @override

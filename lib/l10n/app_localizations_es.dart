@@ -157,6 +157,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setAsDefaultSubtitle => 'Abrir el selector del sistema';
 
   @override
+  String get drawerMode => 'Modo del cajón';
+
+  @override
+  String get drawerModeList => 'Lista';
+
+  @override
   String get searchOnlyMode => 'Solo búsqueda';
 
   @override

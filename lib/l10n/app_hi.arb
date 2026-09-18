@@ -48,6 +48,8 @@
   "lockLayoutSubtitle": "होम स्क्रीन पर पिन करना और लंबा दबाना अक्षम करें",
   "setAsDefault": "डिफ़ॉल्ट होम ऐप के रूप में सेट करें",
   "setAsDefaultSubtitle": "सिस्टम पिकर खोलें",
+  "drawerMode": "ड्रॉअर मोड",
+  "drawerModeList": "सूची",
   "searchOnlyMode": "केवल खोज",
   "searchOnlyModeSubtitle": "ऐप के नाम छुपाएँ, खोजकर खोलें",
   "autoShowKeyboard": "कीबोर्ड दिखाएँ",
