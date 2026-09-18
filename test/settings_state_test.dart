@@ -54,6 +54,19 @@ void main() {
       expect(state.terminalPrompt.value, true);
     });
 
+    test('animations only apply with something to animate', () {
+      expect(state.animations.value, true);
+      expect(state.animationsAvailable, false);
+      expect(state.animationsActive, false);
+
+      state.scanlines.value = ScanlineLevel.light;
+      expect(state.animationsActive, true);
+
+      state.scanlines.value = ScanlineLevel.off;
+      state.terminalPrompt.value = true;
+      expect(state.animationsActive, true);
+    });
+
     test('changing one option makes the look custom', () {
       state.applyPreset(ThemePreset.extra);
       state.scanlines.value = ScanlineLevel.strong;

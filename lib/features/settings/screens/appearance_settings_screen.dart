@@ -145,6 +145,8 @@ class AppearanceSettingsScreen extends StatelessWidget {
           setting: s.animations,
           title: l10n.animations,
           subtitle: l10n.animationsSubtitle,
+          enabled: s.animationsAvailable,
+          effective: s.animationsActive,
         ),
       ],
     );

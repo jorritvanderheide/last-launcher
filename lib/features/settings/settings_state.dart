@@ -203,6 +203,13 @@ class SettingsState extends ChangeNotifier {
     }
   }
 
+  /// Only scanlines (their sweep and glitches) and the terminal prompt (its
+  /// blinking cursor) move; with neither, there's nothing to animate.
+  bool get animationsAvailable =>
+      scanlines.value != ScanlineLevel.off || terminalPrompt.value;
+
+  bool get animationsActive => animationsAvailable && animations.value;
+
   /// Search-only mode has no list to scroll, so the keyboard is always up.
   bool get autoKeyboardActive => searchOnly.value || autoKeyboard.value;
 

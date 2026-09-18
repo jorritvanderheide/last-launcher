@@ -340,6 +340,17 @@ void main() {
     expect(left(l10n.sectionSearch), withIcon);
   });
 
+  testWidgets('animations are off and dimmed with nothing to animate', (
+    tester,
+  ) async {
+    await _pumpSettings(tester);
+    await tester.tap(find.text(l10n.sectionAppearance));
+    await tester.pumpAndSettle();
+    final animations = _switch(tester, l10n.animations);
+    expect(animations.value, isFalse);
+    expect(animations.onChanged, isNull);
+  });
+
   testWidgets('settings that hold a value have no icon', (tester) async {
     await _pumpSettings(tester);
     await tester.tap(find.text(l10n.sectionAppearance));
