@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:last_launcher/app.dart';
+import 'package:last_launcher/app_theme.dart';
 import 'package:last_launcher/features/settings/widgets/settings_tiles.dart';
 import 'package:last_launcher/shared/widgets/settings_theme.dart';
 
