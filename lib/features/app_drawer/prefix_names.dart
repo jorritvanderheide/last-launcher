@@ -31,3 +31,6 @@ String _linkName(String template) {
 
 /// A trigger as shown in lists, with spaces made visible: "g " reads "g␣".
 String visibleTrigger(String trigger) => trigger.replaceAll(' ', '␣');
+
+/// Triggers are shown in monospace, so spaces and symbols are easy to count.
+const triggerStyle = TextStyle(fontFamily: 'JetBrainsMono');
