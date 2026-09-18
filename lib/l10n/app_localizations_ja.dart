@@ -250,9 +250,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get prefixRestoreDefaults => '仕事用と個人用のプレフィックスを復元';
 
   @override
-  String get prefixNeedsWorkProfile => '仕事用プロファイルがある場合のみ';
-
-  @override
   String get prefixTrigger => 'プレフィックス';
 
   @override

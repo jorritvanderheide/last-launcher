@@ -257,9 +257,6 @@ class AppLocalizationsSv extends AppLocalizations {
   String get prefixRestoreDefaults => 'Återställ jobb- och personligt prefix';
 
   @override
-  String get prefixNeedsWorkProfile => 'Bara med arbetsprofil';
-
-  @override
   String get prefixTrigger => 'Prefix';
 
   @override

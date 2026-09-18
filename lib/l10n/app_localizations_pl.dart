@@ -261,9 +261,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get prefixRestoreDefaults => 'Przywróć prefiksy służbowy i osobisty';
 
   @override
-  String get prefixNeedsWorkProfile => 'Tylko z profilem służbowym';
-
-  @override
   String get prefixTrigger => 'Prefiks';
 
   @override

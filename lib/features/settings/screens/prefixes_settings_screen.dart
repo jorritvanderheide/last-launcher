@@ -33,27 +33,30 @@ class PrefixesSettingsScreen extends StatelessWidget {
       listenable: Listenable.merge([setting, appListState]),
       children: (context) {
         final prefixes = setting.value;
-        final missingDefaults = defaultPrefixes.where(
-          (d) => !prefixes.any((p) => _sameAction(p.action, d.action)),
-        );
+        // Profile filters are a work-profile feature: without one they're
+        // left out entirely (and kept, for if one is added). With one but
+        // personal apps hidden, they can't apply, so they show as off.
+        final hasWorkProfile = appListState.hasWorkProfile;
+        final filtersApply = appListState.profilePrefixEnabled;
+        final missingDefaults = hasWorkProfile
+            ? defaultPrefixes.where(
+                (d) => !prefixes.any((p) => _sameAction(p.action, d.action)),
+              )
+            : const <SearchPrefix>[];
         return [
           for (final (index, prefix) in prefixes.indexed)
-            ListTile(
-              leading: SizedBox(
-                width: 40,
-                child: Text(visibleTrigger(prefix.trigger), style: _mono),
-              ),
-              title: Text(prefixName(context, prefix, appListState)),
-              subtitle: Text(_summary(context, prefix)),
-              trailing: Switch(
-                value: prefix.enabled,
-                onChanged: (enabled) => setting.value = [
+            if (prefix.action is! FilterApps || hasWorkProfile)
+              _PrefixRow(
+                prefix: prefix,
+                name: prefixName(context, prefix, appListState),
+                summary: _summary(context, prefix),
+                forcedOff: prefix.action is FilterApps && !filtersApply,
+                onEnabled: (enabled) => setting.value = [
                   for (final (i, p) in prefixes.indexed)
                     i == index ? p.copyWith(enabled: enabled) : p,
                 ],
+                onTap: () => _edit(context, index),
               ),
-              onTap: () => _edit(context, index),
-            ),
           ListTile(
             leading: const Icon(Icons.add),
             title: Text(l10n.prefixAdd),
@@ -73,8 +76,6 @@ class PrefixesSettingsScreen extends StatelessWidget {
   String _summary(BuildContext context, SearchPrefix prefix) {
     final l10n = AppLocalizations.of(context)!;
     return switch (prefix.action) {
-      FilterApps() when !appListState.hasWorkProfile =>
-        l10n.prefixNeedsWorkProfile,
       FilterApps(:final work) =>
         work ? l10n.prefixTypeWork : l10n.prefixTypePersonal,
       OpenLink(:final template) => template,
@@ -91,6 +92,45 @@ class PrefixesSettingsScreen extends StatelessWidget {
       index: index,
     ),
   );
+}
+
+/// One prefix: its trigger, name and what it does, with a switch. A
+/// [forcedOff] prefix can't apply right now: it shows as off and dimmed, and
+/// its own setting is kept.
+class _PrefixRow extends StatelessWidget {
+  const _PrefixRow({
+    required this.prefix,
+    required this.name,
+    required this.summary,
+    required this.forcedOff,
+    required this.onEnabled,
+    required this.onTap,
+  });
+
+  final SearchPrefix prefix;
+  final String name;
+  final String summary;
+  final bool forcedOff;
+  final ValueChanged<bool> onEnabled;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      enabled: !forcedOff,
+      leading: SizedBox(
+        width: 40,
+        child: Text(visibleTrigger(prefix.trigger), style: _mono),
+      ),
+      title: Text(name),
+      subtitle: Text(summary),
+      trailing: Switch(
+        value: prefix.enabled && !forcedOff,
+        onChanged: forcedOff ? null : onEnabled,
+      ),
+      onTap: onTap,
+    );
+  }
 }
 
 bool _sameAction(PrefixAction a, PrefixAction b) => switch ((a, b)) {
@@ -312,7 +352,14 @@ class _PrefixEditorScreenState extends State<PrefixEditorScreen> {
           ChoiceTile<_Kind>(
             title: l10n.prefixType,
             value: _kind,
-            options: _Kind.values,
+            options: [
+              _Kind.link,
+              _Kind.appSearch,
+              if (widget.appListState.hasWorkProfile) ...[
+                _Kind.work,
+                _Kind.personal,
+              ],
+            ],
             label: (context, kind) => switch (kind) {
               _Kind.link => l10n.prefixTypeLink,
               _Kind.appSearch => l10n.prefixTypeSearchInApp,
@@ -367,7 +414,8 @@ class _PrefixEditorScreenState extends State<PrefixEditorScreen> {
               ),
               onTap: _pickSearchApp,
             ),
-          if (_kind == _Kind.link || _kind == _Kind.appSearch)
+          if ((_kind == _Kind.link || _kind == _Kind.appSearch) &&
+              widget.appListState.hasWorkProfile)
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 8, 24, 0),
               child: Text(

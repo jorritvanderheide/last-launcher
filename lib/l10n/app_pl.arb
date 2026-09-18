@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "Szukaj w sieci, na mapie lub w aplikacji z pola wyszukiwania",
   "prefixAdd": "Dodaj prefiks",
   "prefixRestoreDefaults": "Przywróć prefiksy służbowy i osobisty",
-  "prefixNeedsWorkProfile": "Tylko z profilem służbowym",
   "prefixTrigger": "Prefiks",
   "prefixTriggerShownAs": "Wyświetlany jako {trigger}",
   "prefixShadowWarning": "Aplikacji zaczynających się od tych liter nie da się znaleźć, gdy to jest włączone. Zakończ spacją lub zacznij symbolem.",

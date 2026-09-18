@@ -250,9 +250,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get prefixRestoreDefaults => '還原工作與個人前綴';
 
   @override
-  String get prefixNeedsWorkProfile => '僅限有工作設定檔時';
-
-  @override
   String get prefixTrigger => '前綴';
 
   @override

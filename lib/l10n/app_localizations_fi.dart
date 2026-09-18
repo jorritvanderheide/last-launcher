@@ -260,9 +260,6 @@ class AppLocalizationsFi extends AppLocalizations {
       'Palauta työ- ja henkilökohtainen etuliite';
 
   @override
-  String get prefixNeedsWorkProfile => 'Vain työprofiilin kanssa';
-
-  @override
   String get prefixTrigger => 'Etuliite';
 
   @override

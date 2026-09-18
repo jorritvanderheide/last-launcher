@@ -260,9 +260,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Arbeits- und Privat-Präfix wiederherstellen';
 
   @override
-  String get prefixNeedsWorkProfile => 'Nur mit Arbeitsprofil';
-
-  @override
   String get prefixTrigger => 'Präfix';
 
   @override

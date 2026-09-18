@@ -260,9 +260,6 @@ class AppLocalizationsNl extends AppLocalizations {
       'Werk- en persoonlijk voorvoegsel terugzetten';
 
   @override
-  String get prefixNeedsWorkProfile => 'Alleen met een werkprofiel';
-
-  @override
   String get prefixTrigger => 'Voorvoegsel';
 
   @override

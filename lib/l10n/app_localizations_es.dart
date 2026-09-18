@@ -262,9 +262,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Restaurar prefijos de trabajo y personal';
 
   @override
-  String get prefixNeedsWorkProfile => 'Solo con perfil de trabajo';
-
-  @override
   String get prefixTrigger => 'Prefijo';
 
   @override

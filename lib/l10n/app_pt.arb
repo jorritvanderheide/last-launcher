@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "Pesquisa na web, num mapa ou numa aplicação a partir do campo de pesquisa",
   "prefixAdd": "Adicionar prefixo",
   "prefixRestoreDefaults": "Repor os prefixos de trabalho e pessoal",
-  "prefixNeedsWorkProfile": "Só com perfil de trabalho",
   "prefixTrigger": "Prefixo",
   "prefixTriggerShownAs": "Mostrado como {trigger}",
   "prefixShadowWarning": "As aplicações que começam por estas letras não podem ser encontradas enquanto isto estiver ativo. Termina com um espaço ou começa com um símbolo.",

@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "Im Web, in einer Karte oder in einer App direkt aus der Suche suchen",
   "prefixAdd": "Präfix hinzufügen",
   "prefixRestoreDefaults": "Arbeits- und Privat-Präfix wiederherstellen",
-  "prefixNeedsWorkProfile": "Nur mit Arbeitsprofil",
   "prefixTrigger": "Präfix",
   "prefixTriggerShownAs": "Angezeigt als {trigger}",
   "prefixShadowWarning": "Apps, die mit diesen Buchstaben beginnen, sind nicht auffindbar, solange dies aktiv ist. Mit einem Leerzeichen beenden oder mit einem Symbol beginnen.",

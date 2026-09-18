@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "Hledat na webu, v mapě nebo v aplikaci přímo z vyhledávání",
   "prefixAdd": "Přidat předponu",
   "prefixRestoreDefaults": "Obnovit pracovní a osobní předponu",
-  "prefixNeedsWorkProfile": "Jen s pracovním profilem",
   "prefixTrigger": "Předpona",
   "prefixTriggerShownAs": "Zobrazeno jako {trigger}",
   "prefixShadowWarning": "Aplikace začínající těmito písmeny nelze najít, dokud je tato předpona zapnutá. Zakončete ji mezerou nebo ji začněte symbolem.",

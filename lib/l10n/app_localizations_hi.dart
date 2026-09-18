@@ -256,9 +256,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get prefixRestoreDefaults => 'कार्य और निजी प्रीफ़िक्स वापस लाएँ';
 
   @override
-  String get prefixNeedsWorkProfile => 'केवल कार्य प्रोफ़ाइल के साथ';
-
-  @override
   String get prefixTrigger => 'प्रीफ़िक्स';
 
   @override

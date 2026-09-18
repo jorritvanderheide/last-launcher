@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "Hae verkosta, kartalta tai sovelluksesta hakukentän kautta",
   "prefixAdd": "Lisää etuliite",
   "prefixRestoreDefaults": "Palauta työ- ja henkilökohtainen etuliite",
-  "prefixNeedsWorkProfile": "Vain työprofiilin kanssa",
   "prefixTrigger": "Etuliite",
   "prefixTriggerShownAs": "Näkyy muodossa {trigger}",
   "prefixShadowWarning": "Näillä kirjaimilla alkavia sovelluksia ei löydy, kun tämä on käytössä. Lopeta se välilyöntiin tai aloita se symbolilla.",

@@ -263,10 +263,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Rétablir les préfixes professionnel et personnel';
 
   @override
-  String get prefixNeedsWorkProfile =>
-      'Uniquement avec un profil professionnel';
-
-  @override
   String get prefixTrigger => 'Préfixe';
 
   @override

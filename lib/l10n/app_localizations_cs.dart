@@ -258,9 +258,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get prefixRestoreDefaults => 'Obnovit pracovní a osobní předponu';
 
   @override
-  String get prefixNeedsWorkProfile => 'Jen s pracovním profilem';
-
-  @override
   String get prefixTrigger => 'Předpona';
 
   @override

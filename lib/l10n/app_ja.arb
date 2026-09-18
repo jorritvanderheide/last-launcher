@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "検索欄からウェブ、地図、アプリ内を検索",
   "prefixAdd": "プレフィックスを追加",
   "prefixRestoreDefaults": "仕事用と個人用のプレフィックスを復元",
-  "prefixNeedsWorkProfile": "仕事用プロファイルがある場合のみ",
   "prefixTrigger": "プレフィックス",
   "prefixTriggerShownAs": "表示: {trigger}",
   "prefixShadowWarning": "オンの間、この文字で始まるアプリは見つかりません。末尾にスペースを付けるか、記号で始めてください。",

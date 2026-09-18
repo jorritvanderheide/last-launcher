@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "검색창에서 웹, 지도 또는 앱 검색",
   "prefixAdd": "접두어 추가",
   "prefixRestoreDefaults": "업무용 및 개인 접두어 복원",
-  "prefixNeedsWorkProfile": "업무 프로필이 있을 때만",
   "prefixTrigger": "접두어",
   "prefixTriggerShownAs": "{trigger}(으)로 표시",
   "prefixShadowWarning": "켜져 있는 동안 이 글자로 시작하는 앱을 찾을 수 없습니다. 끝에 공백을 넣거나 기호로 시작하세요.",

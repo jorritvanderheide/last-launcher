@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "Rechercher sur le web, sur une carte ou dans une application depuis le champ de recherche",
   "prefixAdd": "Ajouter un préfixe",
   "prefixRestoreDefaults": "Rétablir les préfixes professionnel et personnel",
-  "prefixNeedsWorkProfile": "Uniquement avec un profil professionnel",
   "prefixTrigger": "Préfixe",
   "prefixTriggerShownAs": "Affiché comme {trigger}",
   "prefixShadowWarning": "Les applications commençant par ces lettres sont introuvables tant que ceci est actif. Terminez-le par une espace ou commencez-le par un symbole.",

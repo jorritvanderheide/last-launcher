@@ -260,9 +260,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get prefixRestoreDefaults => 'Repor os prefixos de trabalho e pessoal';
 
   @override
-  String get prefixNeedsWorkProfile => 'Só com perfil de trabalho';
-
-  @override
   String get prefixTrigger => 'Prefixo';
 
   @override

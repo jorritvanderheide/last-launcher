@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "Sök på webben, på en karta eller i en app från sökfältet",
   "prefixAdd": "Lägg till prefix",
   "prefixRestoreDefaults": "Återställ jobb- och personligt prefix",
-  "prefixNeedsWorkProfile": "Bara med arbetsprofil",
   "prefixTrigger": "Prefix",
   "prefixTriggerShownAs": "Visas som {trigger}",
   "prefixShadowWarning": "Appar som börjar med de här bokstäverna går inte att hitta när detta är på. Avsluta med ett mellanslag eller börja med en symbol.",

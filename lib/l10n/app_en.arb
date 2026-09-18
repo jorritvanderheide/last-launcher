@@ -90,7 +90,6 @@
   "searchPrefixesSubtitle": "Search the web, a map or an app from the search field",
   "prefixAdd": "Add prefix",
   "prefixRestoreDefaults": "Restore work and personal prefixes",
-  "prefixNeedsWorkProfile": "Only with a work profile",
   "prefixTrigger": "Prefix",
   "prefixTriggerShownAs": "Shown as {trigger}",
   "@prefixTriggerShownAs": {

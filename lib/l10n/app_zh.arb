@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "從搜尋欄搜尋網頁、地圖或應用程式",
   "prefixAdd": "新增前綴",
   "prefixRestoreDefaults": "還原工作與個人前綴",
-  "prefixNeedsWorkProfile": "僅限有工作設定檔時",
   "prefixTrigger": "前綴",
   "prefixTriggerShownAs": "顯示為 {trigger}",
   "prefixShadowWarning": "啟用時將找不到以這些字母開頭的應用程式。請在結尾加上空格，或以符號開頭。",

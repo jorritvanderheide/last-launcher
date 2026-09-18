@@ -81,7 +81,6 @@
   "searchPrefixesSubtitle": "Busca en la web, un mapa o una app desde el campo de búsqueda",
   "prefixAdd": "Añadir prefijo",
   "prefixRestoreDefaults": "Restaurar prefijos de trabajo y personal",
-  "prefixNeedsWorkProfile": "Solo con perfil de trabajo",
   "prefixTrigger": "Prefijo",
   "prefixTriggerShownAs": "Se muestra como {trigger}",
   "prefixShadowWarning": "Las apps que empiezan por estas letras no se pueden encontrar mientras esté activo. Termínalo con un espacio o empiézalo con un símbolo.",

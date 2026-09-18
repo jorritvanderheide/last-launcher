@@ -250,9 +250,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get prefixRestoreDefaults => '업무용 및 개인 접두어 복원';
 
   @override
-  String get prefixNeedsWorkProfile => '업무 프로필이 있을 때만';
-
-  @override
   String get prefixTrigger => '접두어';
 
   @override

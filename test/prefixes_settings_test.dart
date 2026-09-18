@@ -11,13 +11,17 @@ import 'package:last_launcher/shared/data/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class _FakeAppChannel extends AppChannel {
+  _FakeAppChannel({required this.workProfile});
+
+  final bool workProfile;
+
   @override
   Future<List<AppInfo>> getInstalledApps() async => const [
     AppInfo(packageName: 'com.music', label: 'Music'),
   ];
 
   @override
-  Future<bool> hasWorkProfile() async => true;
+  Future<bool> hasWorkProfile() async => workProfile;
 
   @override
   Future<List<AppChoice>> appsWithSearch() async => const [
@@ -32,14 +36,19 @@ class _FakeAppChannel extends AppChannel {
 
 final l10n = AppLocalizationsEn();
 
-Future<SettingsState> _pump(WidgetTester tester) async {
+Future<SettingsState> _pump(
+  WidgetTester tester, {
+  bool workProfile = true,
+  bool hidePersonal = false,
+}) async {
   await tester.binding.setSurfaceSize(const Size(800, 2000));
   addTearDown(() => tester.binding.setSurfaceSize(null));
   SharedPreferences.setMockInitialValues({});
   final prefs = await SharedPreferences.getInstance();
-  final settings = SettingsState(prefs);
-  final channel = _FakeAppChannel();
-  final apps = AppListState(channel, prefs);
+  final settings = SettingsState(prefs)
+    ..hidePersonalWhenWorkActive.value = hidePersonal;
+  final channel = _FakeAppChannel(workProfile: workProfile);
+  final apps = AppListState(channel, prefs)..applyPrefs(settings.searchPrefs);
   await apps.loadApps();
   await tester.pumpWidget(
     MaterialApp(
@@ -157,6 +166,42 @@ void main() {
       settings.searchPrefixes.value.map((p) => p.trigger),
       containsAll(['.', ' ']),
     );
+  });
+
+  group('without a work profile', () {
+    testWidgets('the profile prefixes are left out, and kept', (tester) async {
+      final settings = await _pump(tester, workProfile: false);
+      expect(find.text('.'), findsNothing);
+      expect(find.text('␣'), findsNothing);
+      expect(find.text(l10n.prefixRestoreDefaults), findsNothing);
+      expect(settings.searchPrefixes.value, hasLength(2));
+    });
+
+    testWidgets('the editor offers no profile filters', (tester) async {
+      await _pump(tester, workProfile: false);
+      await tester.tap(find.text(l10n.prefixAdd));
+      await tester.pumpAndSettle();
+      expect(find.text(l10n.prefixPersonalAppsOnly), findsNothing);
+      await tester.tap(find.text(l10n.prefixType));
+      await tester.pumpAndSettle();
+      expect(find.text(l10n.prefixTypeWork), findsNothing);
+    });
+  });
+
+  testWidgets('with personal apps hidden, profile prefixes show as off', (
+    tester,
+  ) async {
+    final settings = await _pump(tester, hidePersonal: true);
+    final work = tester.widget<Switch>(
+      find.descendant(
+        of: find.widgetWithText(ListTile, '.'),
+        matching: find.byType(Switch),
+      ),
+    );
+    expect(work.value, isFalse);
+    expect(work.onChanged, isNull);
+    // The choice itself is kept for when they apply again.
+    expect(settings.searchPrefixes.value.first.enabled, isTrue);
   });
 
   testWidgets('a prefix can be switched off', (tester) async {

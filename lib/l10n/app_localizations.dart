@@ -596,12 +596,6 @@ abstract class AppLocalizations {
   /// **'Restore work and personal prefixes'**
   String get prefixRestoreDefaults;
 
-  /// No description provided for @prefixNeedsWorkProfile.
-  ///
-  /// In en, this message translates to:
-  /// **'Only with a work profile'**
-  String get prefixNeedsWorkProfile;
-
   /// No description provided for @prefixTrigger.
   ///
   /// In en, this message translates to:
