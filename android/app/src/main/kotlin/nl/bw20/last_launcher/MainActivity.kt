@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Process
+import android.os.UserHandle
 import android.os.UserManager
 import android.provider.Settings
 import android.view.View
@@ -123,8 +124,13 @@ class MainActivity : FlutterActivity() {
                 "launchApp" -> {
                     val packageName = call.argument<String>("packageName")
                     val useWorkProfile = call.argument<Boolean>("isWorkApp") ?: false
+                    val shortcutId = call.argument<String>("shortcutId")
                     if (packageName != null) {
-                        launchApp(packageName, useWorkProfile)
+                        if (shortcutId != null) {
+                            launchShortcut(packageName, shortcutId, useWorkProfile)
+                        } else {
+                            launchApp(packageName, useWorkProfile)
+                        }
                         result.success(null)
                     } else {
                         result.error("INVALID_ARGUMENT", "packageName is required", null)
@@ -181,6 +187,17 @@ class MainActivity : FlutterActivity() {
                     result.success(profiles.any { it != Process.myUserHandle() })
                 }
                 "getAccentColors" -> result.success(accentColors())
+                "removeShortcut" -> {
+                    val packageName = call.argument<String>("packageName")
+                    val shortcutId = call.argument<String>("shortcutId")
+                    val isWork = call.argument<Boolean>("isWorkApp") ?: false
+                    if (packageName != null && shortcutId != null) {
+                        removeShortcut(packageName, shortcutId, isWork)
+                        result.success(null)
+                    } else {
+                        result.error("INVALID_ARGUMENT", "packageName and shortcutId are required", null)
+                    }
+                }
                 "saveBackup" -> {
                     val fileName = call.argument<String>("fileName")
                     val content = call.argument<String>("content")
@@ -263,8 +280,83 @@ class MainActivity : FlutterActivity() {
                     ),
                 )
             }
+            result.addAll(pinnedShortcuts(launcherApps, profile, isWork))
         }
         return result
+    }
+
+    // ------------------------------------------------------------------
+    // Pinned shortcuts (installed web apps, website shortcuts, ...)
+    // ------------------------------------------------------------------
+
+    /**
+     * Shortcuts pinned to this launcher, listed like apps. Only the default
+     * launcher may read them, so this is empty until it is one.
+     */
+    private fun pinnedShortcuts(
+        launcherApps: LauncherApps,
+        profile: UserHandle,
+        isWork: Boolean,
+    ): List<Map<String, Any?>> {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) return emptyList()
+        if (!launcherApps.hasShortcutHostPermission()) return emptyList()
+        val query = LauncherApps.ShortcutQuery()
+            .setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED)
+        val shortcuts = try {
+            launcherApps.getShortcuts(query, profile)
+        } catch (_: Exception) {
+            // A locked profile or a lost default-launcher role.
+            null
+        } ?: return emptyList()
+        return shortcuts.mapNotNull { shortcut ->
+            if (!shortcut.isEnabled) return@mapNotNull null
+            val label = (shortcut.shortLabel ?: shortcut.longLabel)?.toString()
+            if (label.isNullOrBlank()) return@mapNotNull null
+            mapOf(
+                "packageName" to shortcut.`package`,
+                "label" to label,
+                "isWorkApp" to isWork,
+                "shortcutId" to shortcut.id,
+            )
+        }
+    }
+
+    private fun launchShortcut(packageName: String, shortcutId: String, isWork: Boolean) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) return
+        val launcherApps = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps? ?: return
+        val user = profileFor(isWork) ?: return
+        try {
+            launcherApps.startShortcut(packageName, shortcutId, null, null, user)
+        } catch (_: Exception) {
+            // The shortcut was disabled or removed by its app since listing.
+        }
+    }
+
+    /** Unpins one shortcut: pinning is per package, so re-pin the others. */
+    private fun removeShortcut(packageName: String, shortcutId: String, isWork: Boolean) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1) return
+        val launcherApps = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps? ?: return
+        if (!launcherApps.hasShortcutHostPermission()) return
+        val user = profileFor(isWork) ?: return
+        val query = LauncherApps.ShortcutQuery()
+            .setPackage(packageName)
+            .setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED)
+        try {
+            val remaining = launcherApps.getShortcuts(query, user)
+                ?.map { it.id }
+                ?.filter { it != shortcutId }
+                ?: return
+            launcherApps.pinShortcuts(packageName, remaining, user)
+        } catch (_: Exception) {
+            // Nothing to unpin if the profile is locked or the role was lost.
+        }
+    }
+
+    private fun profileFor(isWork: Boolean): UserHandle? {
+        val currentUser = Process.myUserHandle()
+        if (!isWork) return currentUser
+        val userManager = getSystemService(Context.USER_SERVICE) as UserManager? ?: return null
+        return userManager.userProfiles.firstOrNull { it != currentUser }
     }
 
     private fun launchApp(targetPackageName: String, useWorkProfile: Boolean) {

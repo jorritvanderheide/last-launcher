@@ -22,7 +22,8 @@ class HiddenAppsScreen extends StatefulWidget {
   final AppListState appListState;
   final HomeState homeState;
   final SettingsState settingsState;
-  final void Function(String packageName, {bool isWorkApp}) onLaunch;
+  final void Function(String packageName, {bool isWorkApp, String? shortcutId})
+  onLaunch;
   final void Function(String packageName) onOpenAppInfo;
 
   @override
@@ -163,6 +164,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
                     onTap: () => widget.onLaunch(
                       app.packageName,
                       isWorkApp: app.isWorkApp,
+                      shortcutId: app.shortcutId,
                     ),
                     onLongPress: () => setState(
                       () => _activeAppKey = _activeAppKey == key ? null : key,

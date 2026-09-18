@@ -33,6 +33,7 @@ class AppDrawerSheet extends StatefulWidget {
     required this.isOpen,
     required this.onLaunch,
     required this.onOpenAppInfo,
+    required this.onRemoveShortcut,
     required this.onCloseDrawer,
     required this.isAtTop,
     super.key,
@@ -42,8 +43,10 @@ class AppDrawerSheet extends StatefulWidget {
   final HomeState homeState;
   final SettingsState settingsState;
   final bool isOpen;
-  final void Function(String packageName, {bool isWorkApp}) onLaunch;
+  final void Function(String packageName, {bool isWorkApp, String? shortcutId})
+  onLaunch;
   final void Function(String packageName) onOpenAppInfo;
+  final void Function(AppInfo shortcut) onRemoveShortcut;
   final VoidCallback onCloseDrawer;
   final ValueNotifier<bool> isAtTop;
 
@@ -189,7 +192,11 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     // With extraChar on, the single match has to survive one more keystroke
     // before it launches, so a match that appears mid-word can't run away.
     if (!widget.settingsState.extraCharActive || _prevMatchKey == only.key) {
-      widget.onLaunch(only.packageName, isWorkApp: only.isWorkApp);
+      widget.onLaunch(
+        only.packageName,
+        isWorkApp: only.isWorkApp,
+        shortcutId: only.shortcutId,
+      );
       return;
     }
     _prevMatchKey = only.key;
@@ -204,7 +211,11 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
       widget.onCloseDrawer();
       return;
     }
-    widget.onLaunch(best.packageName, isWorkApp: best.isWorkApp);
+    widget.onLaunch(
+      best.packageName,
+      isWorkApp: best.isWorkApp,
+      shortcutId: best.shortcutId,
+    );
   }
 
   // ------------------------------------------------------------------
@@ -305,6 +316,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
                       packageName: app.packageName,
                       label: app.label,
                       isWorkApp: app.isWorkApp,
+                      shortcutId: app.shortcutId,
                     ),
                   );
                   widget.onCloseDrawer();
@@ -315,6 +327,12 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
           icon: Icons.visibility_off,
           label: l10n.actionHide,
           onTap: () => widget.appListState.hideApp(app.key),
+        ),
+      if (app.isShortcut)
+        ActionItem(
+          icon: Icons.delete_outline,
+          label: l10n.actionRemove,
+          onTap: () => widget.onRemoveShortcut(app),
         ),
       ActionItem(
         icon: Icons.info_outline,
@@ -356,7 +374,11 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
         label: searchLabel,
         hint: _displayHint(app: app, searchLabel: searchLabel, hint: hint),
         hintAlphaOnly: !RegExp(r'[^a-zA-Z]').hasMatch(results.query),
-        onTap: () => widget.onLaunch(app.packageName, isWorkApp: app.isWorkApp),
+        onTap: () => widget.onLaunch(
+          app.packageName,
+          isWorkApp: app.isWorkApp,
+          shortcutId: app.shortcutId,
+        ),
         onLongPress: () => setState(
           () => _activeAppKey = _activeAppKey == app.key ? null : app.key,
         ),

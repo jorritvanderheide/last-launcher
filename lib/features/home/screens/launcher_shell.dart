@@ -10,6 +10,7 @@ import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
+import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 
 const _maxSheetFraction = 0.9;
@@ -242,9 +243,24 @@ class _LauncherShellState extends State<LauncherShell>
     _pageAnim.forward(from: 0);
   }
 
-  void _launchApp(String packageName, {bool isWorkApp = false}) {
-    widget.appChannel.launchApp(packageName, isWorkApp: isWorkApp);
+  void _launchApp(
+    String packageName, {
+    bool isWorkApp = false,
+    String? shortcutId,
+  }) {
+    widget.appChannel.launchApp(
+      packageName,
+      isWorkApp: isWorkApp,
+      shortcutId: shortcutId,
+    );
     _closeDrawer();
+  }
+
+  /// Unpins a shortcut from the launcher, and from home if it was there.
+  Future<void> _removeShortcut(AppInfo shortcut) async {
+    await widget.appChannel.removeShortcut(shortcut);
+    await widget.homeState.removeApp(shortcut.key);
+    await widget.appListState.loadApps();
   }
 
   void _openAppInfo(String packageName) {
@@ -597,6 +613,7 @@ class _LauncherShellState extends State<LauncherShell>
                     isAtTop: _listIsAtTop,
                     onLaunch: _launchApp,
                     onOpenAppInfo: _openAppInfo,
+                    onRemoveShortcut: _removeShortcut,
                     onCloseDrawer: _closeDrawer,
                   ),
                 ),

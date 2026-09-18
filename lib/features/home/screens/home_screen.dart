@@ -24,7 +24,8 @@ class HomeScreen extends StatefulWidget {
   final HomeState homeState;
   final AppListState appListState;
   final SettingsState settingsState;
-  final void Function(String packageName, {bool isWorkApp}) onLaunch;
+  final void Function(String packageName, {bool isWorkApp, String? shortcutId})
+  onLaunch;
   final VoidCallback onReorderStart;
   final VoidCallback onReorderEnd;
   final bool isActive;
@@ -224,6 +225,7 @@ class HomeScreenState extends State<HomeScreen> {
                         onTap: () => widget.onLaunch(
                           app.packageName,
                           isWorkApp: app.isWorkApp,
+                          shortcutId: app.shortcutId,
                         ),
                         onLongPress: widget.settingsState.locked.value
                             ? () {}

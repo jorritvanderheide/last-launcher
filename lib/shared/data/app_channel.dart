@@ -63,6 +63,7 @@ class AppChannel {
           packageName: map['packageName'] as String,
           label: map['label'] as String,
           isWorkApp: map['isWorkApp'] as bool? ?? false,
+          shortcutId: map['shortcutId'] as String?,
         );
       }).toList();
     } on PlatformException catch (e) {
@@ -79,14 +80,33 @@ class AppChannel {
     }
   }
 
-  Future<void> launchApp(String packageName, {bool isWorkApp = false}) async {
+  /// Opens an app, or a pinned shortcut when [shortcutId] is given.
+  Future<void> launchApp(
+    String packageName, {
+    bool isWorkApp = false,
+    String? shortcutId,
+  }) async {
     try {
       await _channel.invokeMethod<void>('launchApp', {
         'packageName': packageName,
         'isWorkApp': isWorkApp,
+        'shortcutId': ?shortcutId,
       });
     } on PlatformException catch (e) {
       debugPrint('Failed to launch $packageName: $e');
+    }
+  }
+
+  /// Unpins a shortcut from the launcher; the app that made it keeps it.
+  Future<void> removeShortcut(AppInfo shortcut) async {
+    try {
+      await _channel.invokeMethod<void>('removeShortcut', {
+        'packageName': shortcut.packageName,
+        'shortcutId': shortcut.shortcutId,
+        'isWorkApp': shortcut.isWorkApp,
+      });
+    } on PlatformException catch (e) {
+      debugPrint('Failed to remove shortcut ${shortcut.key}: $e');
     }
   }
 
