@@ -21,7 +21,10 @@ void main() async {
     () => appListState.applyPrefs(settingsState.searchPrefs),
   );
   await appListState.loadApps();
-  await homeState.pruneMissing(appListState.installedPackages);
+  await homeState.pruneMissing(
+    appListState.allApps,
+    hasWorkProfile: appListState.hasWorkProfile,
+  );
 
   runApp(
     LastLauncherApp(

@@ -82,10 +82,31 @@ class HomeState extends ChangeNotifier {
     await _save();
   }
 
-  Future<void> pruneMissing(Set<String> installed) async {
+  /// Unpins what is no longer installed, given everything that is. An empty
+  /// list (a failed read) prunes nothing.
+  ///
+  /// A paused work profile still exists but lists no apps, so its pins are
+  /// kept for when it's back; they're pruned once their app is really gone,
+  /// or the profile is.
+  Future<void> pruneMissing(
+    List<AppInfo> installed, {
+    required bool hasWorkProfile,
+  }) async {
     if (installed.isEmpty) return;
+    final keys = {for (final app in installed) app.key};
+    final packages = {for (final app in installed) app.packageName};
+    final workPaused = hasWorkProfile && !installed.any((a) => a.isWorkApp);
+    bool keep(PinnedApp pin) {
+      if (pin.isWorkApp) return workPaused || keys.contains(pin.key);
+      // Shortcuts share their app's package, so only their own key counts.
+      if (pin.shortcutId != null) return keys.contains(pin.key);
+      // Pins from before work profiles were supported carry no work flag,
+      // so the package installed in any profile counts.
+      return packages.contains(pin.packageName);
+    }
+
     final before = _pinnedApps.length;
-    _pinnedApps.removeWhere((a) => !installed.contains(a.packageName));
+    _pinnedApps.retainWhere(keep);
     if (_pinnedApps.length == before) return;
     notifyListeners();
     await _save();

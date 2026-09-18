@@ -170,11 +170,6 @@ class AppListState extends ChangeNotifier {
     }
   }
 
-  /// Set of package names currently installed.
-  Set<String> get installedPackages => {
-    for (final a in _allApps) a.packageName,
-  };
-
   void filter(String query) {
     _query = query;
     _computeHints();

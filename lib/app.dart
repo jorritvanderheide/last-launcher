@@ -75,7 +75,10 @@ class _LastLauncherAppState extends State<LastLauncherApp>
 
   Future<void> _refreshApps() async {
     await widget.appListState.loadApps();
-    await widget.homeState.pruneMissing(widget.appListState.installedPackages);
+    await widget.homeState.pruneMissing(
+      widget.appListState.allApps,
+      hasWorkProfile: widget.appListState.hasWorkProfile,
+    );
   }
 
   Future<void> _refreshAccent() async {

@@ -108,24 +108,78 @@ void main() {
       expect(restored.pinnedApps.first.packageName, 'com.test');
     });
 
+    Future<void> pin(PinnedApp app) => state.addApp(app);
+
+    AppInfo app(String package, {bool work = false, String? shortcut}) =>
+        AppInfo(
+          packageName: package,
+          label: package,
+          isWorkApp: work,
+          shortcutId: shortcut,
+        );
+
     test('pruneMissing drops uninstalled pinned apps', () async {
-      await state.addApp(
-        const PinnedApp(packageName: 'com.kept', label: 'Kept'),
-      );
-      await state.addApp(
-        const PinnedApp(packageName: 'com.gone', label: 'Gone'),
-      );
-      await state.pruneMissing({'com.kept'});
-      expect(state.pinnedApps.length, 1);
-      expect(state.pinnedApps.first.packageName, 'com.kept');
+      await pin(const PinnedApp(packageName: 'com.kept', label: 'Kept'));
+      await pin(const PinnedApp(packageName: 'com.gone', label: 'Gone'));
+      await state.pruneMissing([app('com.kept')], hasWorkProfile: false);
+      expect(state.pinnedApps.single.packageName, 'com.kept');
     });
 
-    test('pruneMissing with empty set is a no-op', () async {
-      await state.addApp(
-        const PinnedApp(packageName: 'com.test', label: 'Test'),
-      );
-      await state.pruneMissing({});
-      expect(state.pinnedApps.length, 1);
+    test('pruneMissing with an empty list is a no-op', () async {
+      await pin(const PinnedApp(packageName: 'com.test', label: 'Test'));
+      await state.pruneMissing([], hasWorkProfile: false);
+      expect(state.pinnedApps, hasLength(1));
     });
+
+    test('keeps work pins while the work profile is paused', () async {
+      await pin(
+        const PinnedApp(packageName: 'com.work', label: 'W', isWorkApp: true),
+      );
+      // Paused: the profile exists, but none of its apps are listed.
+      await state.pruneMissing([app('com.personal')], hasWorkProfile: true);
+      expect(state.pinnedApps, hasLength(1));
+    });
+
+    test('drops work pins once the app or the profile is gone', () async {
+      await pin(
+        const PinnedApp(packageName: 'com.work', label: 'W', isWorkApp: true),
+      );
+      // Profile running, app uninstalled from it.
+      await state.pruneMissing([
+        app('com.personal'),
+        app('com.other', work: true),
+      ], hasWorkProfile: true);
+      expect(state.pinnedApps, isEmpty);
+
+      await pin(
+        const PinnedApp(packageName: 'com.work', label: 'W', isWorkApp: true),
+      );
+      // Profile removed altogether.
+      await state.pruneMissing([app('com.personal')], hasWorkProfile: false);
+      expect(state.pinnedApps, isEmpty);
+    });
+
+    test('keeps old pins of work apps, which lack the work flag', () async {
+      await pin(const PinnedApp(packageName: 'com.work', label: 'W'));
+      await state.pruneMissing([
+        app('com.work', work: true),
+      ], hasWorkProfile: true);
+      expect(state.pinnedApps, hasLength(1));
+    });
+
+    test(
+      'drops a pinned shortcut that is gone, with its app still here',
+      () async {
+        await pin(
+          const PinnedApp(
+            packageName: 'org.browser',
+            label: 'News',
+            shortcutId: 'web-news',
+          ),
+        );
+        await state.pruneMissing([app('org.browser')], hasWorkProfile: false);
+        expect(state.pinnedApps, isEmpty);
+      },
+    );
   });
 }
