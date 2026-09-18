@@ -73,142 +73,156 @@ class _SettingsScreenState extends State<SettingsScreen>
     final l10n = AppLocalizations.of(context)!;
     final s = widget.settingsState;
 
-    return SettingsPage(
-      title: l10n.settings,
-      listenable: Listenable.merge([s, widget.appListState, widget.homeState]),
-      children: (context) => [
-        if (!_isDefaultLauncher)
-          ListTile(
-            tileColor: Theme.of(context).colorScheme.surfaceContainer,
-            leading: const Icon(Icons.app_settings_alt_outlined),
-            title: Text(l10n.setAsDefault),
-            subtitle: Text(l10n.setAsDefaultSubtitle),
-            onTap: widget.appChannel.requestDefaultLauncher,
-          ),
-        ListTile(
-          leading: const Icon(Icons.palette_outlined),
-          title: Text(l10n.sectionAppearance),
-          subtitle: Text(appearanceSummary(context, s)),
-          onTap: () => pushSettingsPage(
-            context,
-            AppearanceSettingsScreen(settingsState: s),
-          ),
-        ),
-        ListTile(
-          leading: const Icon(Icons.home_outlined),
-          title: Text(l10n.sectionHome),
-          onTap: () =>
-              pushSettingsPage(context, HomeSettingsScreen(settingsState: s)),
-        ),
-        // The modules chosen on Home, right under it; one row per module,
-        // even when it sits on both sides.
-        for (final module in {
-          for (final m in [s.leftPanel.value, s.rightPanel.value]) m.id: m,
-        }.values)
-          if (module.settingsPage(
-                ModuleDeps(settingsState: s, appListState: widget.appListState),
-              )
-              case final page?)
-            // Indented under Home, where the module is picked, and saying
-            // which side it's on.
+    // The accent tints the icons here, on the top-level list only; inside
+    // the pages they stay plain, as in Android's own settings.
+    return ListTileTheme.merge(
+      iconColor: Theme.of(context).colorScheme.primary,
+      child: SettingsPage(
+        title: l10n.settings,
+        listenable: Listenable.merge([
+          s,
+          widget.appListState,
+          widget.homeState,
+        ]),
+        children: (context) => [
+          if (!_isDefaultLauncher)
             ListTile(
-              contentPadding: const EdgeInsetsDirectional.only(
-                start: 40,
-                end: 24,
-              ),
-              leading: Icon(module.icon),
-              title: Text(module.displayName(context)),
-              subtitle: Text(
-                [
-                  if (s.leftPanel.value.id == module.id) l10n.leftOfHome,
-                  if (s.rightPanel.value.id == module.id) l10n.rightOfHome,
-                ].join(' · '),
-              ),
-              onTap: () => pushSettingsPage(context, page),
+              tileColor: Theme.of(context).colorScheme.surfaceContainer,
+              leading: const Icon(Icons.app_settings_alt_outlined),
+              title: Text(l10n.setAsDefault),
+              subtitle: Text(l10n.setAsDefaultSubtitle),
+              onTap: widget.appChannel.requestDefaultLauncher,
             ),
-        ListTile(
-          leading: const Icon(Icons.search),
-          title: Text(l10n.sectionAppDrawer),
-          subtitle: Text(
-            hiddenAppSummary(
+          ListTile(
+            leading: const Icon(Icons.palette_outlined),
+            title: Text(l10n.sectionAppearance),
+            subtitle: Text(appearanceSummary(context, s)),
+            onTap: () => pushSettingsPage(
               context,
-              hiddenAppCount(widget.appListState, widget.homeState, s),
+              AppearanceSettingsScreen(settingsState: s),
             ),
           ),
-          onTap: () => pushSettingsPage(
-            context,
-            DrawerSettingsScreen(
-              settingsState: s,
-              appListState: widget.appListState,
-              homeState: widget.homeState,
-              appChannel: widget.appChannel,
-            ),
-          ),
-        ),
-        if (widget.appListState.hasWorkProfile)
           ListTile(
-            leading: const Icon(Icons.work_outline),
-            title: Text(l10n.sectionWork),
+            leading: const Icon(Icons.home_outlined),
+            title: Text(l10n.sectionHome),
             onTap: () =>
-                pushSettingsPage(context, WorkSettingsScreen(settingsState: s)),
+                pushSettingsPage(context, HomeSettingsScreen(settingsState: s)),
           ),
-        ListTile(
-          leading: const Icon(Icons.settings_backup_restore),
-          title: Text(l10n.backupTitle),
-          onTap: () => pushSettingsPage(
-            context,
-            BackupSettingsScreen(
-              appChannel: widget.appChannel,
-              onRestored: widget.onRestored,
-            ),
-          ),
-        ),
-        SettingsSectionHeader(title: l10n.sectionSupport),
-        if (_store == 'playstore')
-          ListTile(
-            leading: const Icon(Icons.star_outline),
-            title: Text(l10n.rateApp),
-            subtitle: Text(l10n.rateAppSubtitle),
-            onTap: () => launchUrl(
-              Uri.parse(
-                'https://play.google.com/store/apps/details?id=nl.bw20.last_launcher',
+          // The modules chosen on Home, right under it; one row per module,
+          // even when it sits on both sides.
+          for (final module in {
+            for (final m in [s.leftPanel.value, s.rightPanel.value]) m.id: m,
+          }.values)
+            if (module.settingsPage(
+                  ModuleDeps(
+                    settingsState: s,
+                    appListState: widget.appListState,
+                  ),
+                )
+                case final page?)
+              // Indented under Home, where the module is picked, and saying
+              // which side it's on.
+              ListTile(
+                contentPadding: const EdgeInsetsDirectional.only(
+                  start: 40,
+                  end: 24,
+                ),
+                leading: Icon(module.icon),
+                title: Text(module.displayName(context)),
+                subtitle: Text(
+                  [
+                    if (s.leftPanel.value.id == module.id) l10n.leftOfHome,
+                    if (s.rightPanel.value.id == module.id) l10n.rightOfHome,
+                  ].join(' · '),
+                ),
+                onTap: () => pushSettingsPage(context, page),
               ),
-              mode: LaunchMode.externalApplication,
-            ),
-          ),
-        if (_store == 'fdroid')
           ListTile(
-            leading: const Icon(Icons.favorite_outline),
-            title: Text(l10n.donate),
-            subtitle: Text(l10n.donateSubtitle),
+            leading: const Icon(Icons.search),
+            title: Text(l10n.sectionAppDrawer),
+            subtitle: Text(
+              hiddenAppSummary(
+                context,
+                hiddenAppCount(widget.appListState, widget.homeState, s),
+              ),
+            ),
+            onTap: () => pushSettingsPage(
+              context,
+              DrawerSettingsScreen(
+                settingsState: s,
+                appListState: widget.appListState,
+                homeState: widget.homeState,
+                appChannel: widget.appChannel,
+              ),
+            ),
+          ),
+          if (widget.appListState.hasWorkProfile)
+            ListTile(
+              leading: const Icon(Icons.work_outline),
+              title: Text(l10n.sectionWork),
+              onTap: () => pushSettingsPage(
+                context,
+                WorkSettingsScreen(settingsState: s),
+              ),
+            ),
+          ListTile(
+            leading: const Icon(Icons.settings_backup_restore),
+            title: Text(l10n.backupTitle),
+            onTap: () => pushSettingsPage(
+              context,
+              BackupSettingsScreen(
+                appChannel: widget.appChannel,
+                onRestored: widget.onRestored,
+              ),
+            ),
+          ),
+          SettingsSectionHeader(title: l10n.sectionSupport),
+          if (_store == 'playstore')
+            ListTile(
+              leading: const Icon(Icons.star_outline),
+              title: Text(l10n.rateApp),
+              subtitle: Text(l10n.rateAppSubtitle),
+              onTap: () => launchUrl(
+                Uri.parse(
+                  'https://play.google.com/store/apps/details?id=nl.bw20.last_launcher',
+                ),
+                mode: LaunchMode.externalApplication,
+              ),
+            ),
+          if (_store == 'fdroid')
+            ListTile(
+              leading: const Icon(Icons.favorite_outline),
+              title: Text(l10n.donate),
+              subtitle: Text(l10n.donateSubtitle),
+              onTap: () => launchUrl(
+                Uri.parse('https://liberapay.com/BW20'),
+                mode: LaunchMode.externalApplication,
+              ),
+            ),
+          ListTile(
+            leading: const Icon(Icons.mail_outline),
+            title: Text(l10n.sendFeedback),
+            subtitle: Text(l10n.sendFeedbackSubtitle),
+            onTap: _launchFeedback,
+          ),
+          ListTile(
+            leading: const Icon(Icons.help_outline),
+            title: Text(l10n.help),
+            subtitle: Text(l10n.helpSubtitle),
             onTap: () => launchUrl(
-              Uri.parse('https://liberapay.com/BW20'),
+              Uri.parse('https://codeberg.org/BW20/last-launcher'),
               mode: LaunchMode.externalApplication,
             ),
           ),
-        ListTile(
-          leading: const Icon(Icons.mail_outline),
-          title: Text(l10n.sendFeedback),
-          subtitle: Text(l10n.sendFeedbackSubtitle),
-          onTap: _launchFeedback,
-        ),
-        ListTile(
-          leading: const Icon(Icons.help_outline),
-          title: Text(l10n.help),
-          subtitle: Text(l10n.helpSubtitle),
-          onTap: () => launchUrl(
-            Uri.parse('https://codeberg.org/BW20/last-launcher'),
-            mode: LaunchMode.externalApplication,
+          SettingsSectionHeader(title: l10n.sectionAbout),
+          ListTile(
+            leading: const Icon(Icons.info_outline),
+            title: Text(l10n.sectionAbout),
+            subtitle: Text(l10n.aboutSubtitle),
+            onTap: () => pushSettingsPage(context, const AboutScreen()),
           ),
-        ),
-        SettingsSectionHeader(title: l10n.sectionAbout),
-        ListTile(
-          leading: const Icon(Icons.info_outline),
-          title: Text(l10n.sectionAbout),
-          subtitle: Text(l10n.aboutSubtitle),
-          onTap: () => pushSettingsPage(context, const AboutScreen()),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

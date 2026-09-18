@@ -112,6 +112,21 @@ void main() {
     expect(find.text(l10n.sectionTasks), findsNothing);
   });
 
+  testWidgets('icons take the accent on the root page only', (tester) async {
+    await _pumpSettings(tester);
+    final primary = Theme.of(
+      tester.element(find.byType(Scaffold)),
+    ).colorScheme.primary;
+    Color? iconColor(IconData icon) =>
+        IconTheme.of(tester.element(find.byIcon(icon).first)).color;
+
+    expect(iconColor(Icons.palette_outlined), primary);
+
+    await tester.tap(find.text(l10n.sectionAppearance));
+    await tester.pumpAndSettle();
+    expect(iconColor(Icons.palette_outlined), isNot(primary));
+  });
+
   testWidgets('root offers to become the default launcher', (tester) async {
     await _pumpSettings(tester, isDefault: false);
     expect(find.text(l10n.setAsDefault), findsOneWidget);
