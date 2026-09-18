@@ -34,7 +34,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
   String _appKey(AppInfo app) => '${app.packageName}|${app.isWorkApp}';
 
   Widget _withWorkDot(Widget child, AppInfo app) {
-    if (!app.isWorkApp || !widget.settingsState.showWorkAppDot) return child;
+    if (!app.isWorkApp || !widget.settingsState.workAppDotActive) return child;
     final dotColor = Theme.of(
       context,
     ).textTheme.titleLarge?.color?.withAlpha((0.6 * 255).round());
@@ -63,7 +63,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
   List<AppInfo> _hiddenListItems() {
     final hidden = widget.appListState.hiddenApps;
     List<AppInfo> result;
-    if (!widget.settingsState.hidePinnedFromDrawer) {
+    if (!widget.settingsState.hidePinnedFromDrawer.value) {
       result = hidden;
     } else {
       final hiddenKeys = hidden.map(_appKey).toSet();
@@ -78,7 +78,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
         return false;
       }).toList();
     }
-    if (widget.settingsState.hidePersonalWhenWorkActive &&
+    if (widget.settingsState.hidePersonalWhenWorkActive.value &&
         widget.appListState.allApps.any((a) => a.isWorkApp)) {
       result = result.where((app) => app.isWorkApp).toList();
     }
@@ -136,7 +136,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
         builder: (context, _) {
           final apps = _hiddenListItems();
           if (apps.isEmpty) {
-            if (!widget.settingsState.showHints) {
+            if (!widget.settingsState.showHints.value) {
               return const SizedBox.shrink();
             }
             return Padding(

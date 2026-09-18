@@ -71,9 +71,9 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     widget.homeState,
   ]);
 
-  bool get _searchOnly => widget.settingsState.searchOnly;
-  bool get _autoKeyboard => _searchOnly || widget.settingsState.autoKeyboard;
-  bool get _autoLaunch => _searchOnly || widget.settingsState.autoLaunch;
+  bool get _searchOnly => widget.settingsState.searchOnly.value;
+  bool get _autoKeyboard => widget.settingsState.autoKeyboardActive;
+  bool get _autoLaunch => widget.settingsState.autoLaunchActive;
 
   @override
   void initState() {
@@ -138,13 +138,14 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     final appList = widget.appListState;
     final settings = widget.settingsState;
     final query = appList.query;
-    final expandSearch = query.isNotEmpty && settings.includeHiddenInSearch;
+    final expandSearch =
+        query.isNotEmpty && settings.includeHiddenInSearch.value;
     var matches = appList.search(
       query,
       includeHidden: expandSearch,
-      matchOriginal: settings.matchOriginalName,
+      matchOriginal: settings.matchOriginalName.value,
     );
-    if (!expandSearch && settings.hidePinnedFromDrawer) {
+    if (!expandSearch && settings.hidePinnedFromDrawer.value) {
       matches = matches
           .where(
             (a) => !widget.homeState.isPinned(
@@ -163,7 +164,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
         apps: matches,
         searchTerm: searchTerm,
         hints: appList.hints,
-        sortByHint: searchTerm.isNotEmpty && settings.quickLaunchHints,
+        sortByHint: searchTerm.isNotEmpty && settings.quickLaunchHintsActive,
         searchLabel: (app) => appList.displayLabelForSearch(app, query),
       ),
       query: query,
@@ -192,7 +193,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     }
     // With extraChar on, the single match has to survive one more keystroke
     // before it launches, so a match that appears mid-word can't run away.
-    if (!widget.settingsState.extraChar || _prevMatchKey == only.key) {
+    if (!widget.settingsState.extraCharActive || _prevMatchKey == only.key) {
       widget.onLaunch(only.packageName, isWorkApp: only.isWorkApp);
       return;
     }
@@ -239,7 +240,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     required String searchLabel,
     required SubstringHint? hint,
   }) {
-    if (!widget.settingsState.extraChar) return hint;
+    if (!widget.settingsState.extraCharActive) return hint;
     if (_stableHint != null && _prevMatchKey == app.key) {
       return _stableHint!.extendedBy(1, searchLabel.length);
     }
@@ -251,7 +252,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
   // ------------------------------------------------------------------
 
   Widget _withWorkDot(Widget child, AppInfo app, double opacity) {
-    if (!app.isWorkApp || !widget.settingsState.showWorkAppDot) return child;
+    if (!app.isWorkApp || !widget.settingsState.workAppDotActive) return child;
     final dotColor = Theme.of(
       context,
     ).textTheme.titleLarge?.color?.withAlpha((_workDotOpacity * 255).round());
@@ -303,7 +304,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
           }
         },
       ),
-      if (!isPinned && !widget.settingsState.locked)
+      if (!isPinned && !widget.settingsState.locked.value)
         ActionItem(
           icon: Icons.add_circle_outline,
           label: widget.homeState.isFull ? l10n.actionPinFull : l10n.actionPin,
@@ -347,12 +348,12 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
           app.packageName,
           isWorkApp: app.isWorkApp,
         ) ||
-        (widget.settingsState.hidePinnedFromDrawer &&
+        (widget.settingsState.hidePinnedFromDrawer.value &&
             widget.homeState.isPinned(
               app.packageName,
               isWorkApp: app.isWorkApp,
             ));
-    final showHint = widget.settingsState.quickLaunchHints;
+    final showHint = widget.settingsState.quickLaunchHintsActive;
     final searchLabel = widget.appListState.displayLabelForSearch(
       app,
       results.query,
@@ -391,7 +392,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
   }
 
   Widget _buildEmptyState(BuildContext context) {
-    if (!widget.settingsState.showHints) return const SizedBox.shrink();
+    if (!widget.settingsState.showHints.value) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.only(
         left: 20,

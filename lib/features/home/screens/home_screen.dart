@@ -92,7 +92,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _withWorkDot(Widget child, PinnedApp app) {
-    if (!app.isWorkApp || !widget.settingsState.showWorkAppDotOnHome) {
+    if (!app.isWorkApp || !widget.settingsState.workAppDotOnHomeActive) {
       return child;
     }
     final dotColor = Theme.of(
@@ -137,14 +137,14 @@ class HomeScreenState extends State<HomeScreen> {
                           workPackages.contains(app.packageName),
                     )
                     .toList();
-                if (widget.settingsState.hidePersonalWhenWorkActive &&
+                if (widget.settingsState.hidePersonalWhenWorkActive.value &&
                     workPackages.isNotEmpty) {
                   apps.removeWhere((app) => !app.isWorkApp);
                 }
-                if (apps.isEmpty && widget.settingsState.showHints) {
+                if (apps.isEmpty && widget.settingsState.showHints.value) {
                   final l10n = AppLocalizations.of(context)!;
-                  final left = widget.settingsState.leftPanel;
-                  final right = widget.settingsState.rightPanel;
+                  final left = widget.settingsState.leftPanel.value;
+                  final right = widget.settingsState.rightPanel.value;
                   final style = Theme.of(context).textTheme.titleLarge
                       ?.copyWith(
                         fontSize: AppLabel.fontSize,
@@ -232,7 +232,7 @@ class HomeScreenState extends State<HomeScreen> {
                           app.packageName,
                           isWorkApp: app.isWorkApp,
                         ),
-                        onLongPress: widget.settingsState.locked
+                        onLongPress: widget.settingsState.locked.value
                             ? () {}
                             : () => setState(
                                 () => _activeAppPackage =

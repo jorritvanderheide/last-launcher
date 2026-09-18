@@ -16,6 +16,10 @@ void main() async {
   final appListState = AppListState(appChannel, prefs);
   final settingsState = SettingsState(prefs);
   final taskState = TaskState(prefs);
+  appListState.applyPrefs(settingsState.searchPrefs);
+  settingsState.searchPrefsChanged.addListener(
+    () => appListState.applyPrefs(settingsState.searchPrefs),
+  );
   await appListState.loadApps();
   await homeState.pruneMissing(appListState.installedPackages);
 

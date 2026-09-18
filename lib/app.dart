@@ -182,11 +182,11 @@ class _LastLauncherAppState extends State<LastLauncherApp>
   }
 
   void _syncFullscreen() {
-    widget.appChannel.setFullscreen(widget.settingsState.hideStatusBar);
+    widget.appChannel.setFullscreen(widget.settingsState.hideStatusBar.value);
   }
 
   void _maybeClearCompleted() {
-    if (widget.settingsState.clearCompletedDaily) {
+    if (widget.settingsState.clearCompletedDaily.value) {
       widget.taskState.clearCompletedIfNewDay();
     }
   }
@@ -194,7 +194,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
   @override
   Widget build(BuildContext context) {
     return ListenableBuilder(
-      listenable: widget.settingsState.themeNotifier,
+      listenable: widget.settingsState.appearanceChanged,
       builder: (context, _) {
         final brightness = switch (widget.settingsState.themeMode) {
           ThemeMode.light => Brightness.light,

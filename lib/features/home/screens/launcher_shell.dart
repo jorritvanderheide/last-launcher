@@ -164,8 +164,8 @@ class _LauncherShellState extends State<LauncherShell>
   /// Closes any open row action bar on the home grid and both side panels.
   void _dismissPanelActions() {
     _homeKey.currentState?.dismissActions();
-    widget.settingsState.leftPanel.dismissActions();
-    widget.settingsState.rightPanel.dismissActions();
+    widget.settingsState.leftPanel.value.dismissActions();
+    widget.settingsState.rightPanel.value.dismissActions();
   }
 
   void _resetToHome() {
@@ -253,7 +253,7 @@ class _LauncherShellState extends State<LauncherShell>
     _listWasAtTopOnDown = _listIsAtTop.value;
 
     // Double-tap detection (outside gesture arena, no tap delay).
-    if (widget.settingsState.doubleTapToSleep &&
+    if (widget.settingsState.doubleTapToSleep.value &&
         _onHomePage &&
         !_drawerOpen &&
         !_isReorderingHome &&
@@ -289,8 +289,8 @@ class _LauncherShellState extends State<LauncherShell>
     if (_dragMode == _DragMode.none) {
       if (absDx < _dragStartThreshold && absDy < _dragStartThreshold) return;
 
-      final hasLeft = widget.settingsState.leftPanel is! NoneModule;
-      final hasRight = widget.settingsState.rightPanel is! NoneModule;
+      final hasLeft = widget.settingsState.leftPanel.value is! NoneModule;
+      final hasRight = widget.settingsState.rightPanel.value is! NoneModule;
       if (absDx > absDy &&
           !_drawerOpen &&
           (hasLeft || hasRight) &&
@@ -337,8 +337,8 @@ class _LauncherShellState extends State<LauncherShell>
       final screenWidth = MediaQuery.sizeOf(context).width;
       final threshold = dx >= 0 ? _dragStartThreshold : -_dragStartThreshold;
       final delta = (dx - threshold) / screenWidth;
-      final hasLeft = widget.settingsState.leftPanel is! NoneModule;
-      final hasRight = widget.settingsState.rightPanel is! NoneModule;
+      final hasLeft = widget.settingsState.leftPanel.value is! NoneModule;
+      final hasRight = widget.settingsState.rightPanel.value is! NoneModule;
       final fraction = (_dragStartFraction + delta).clamp(
         hasLeft ? -1.0 : 0.0,
         hasRight ? 1.0 : 0.0,
@@ -369,8 +369,8 @@ class _LauncherShellState extends State<LauncherShell>
     if (mode == _DragMode.page) {
       final vx = velocity.dx;
       final delta = _pageFraction - _dragStartFraction;
-      final hasLeft = widget.settingsState.leftPanel is! NoneModule;
-      final hasRight = widget.settingsState.rightPanel is! NoneModule;
+      final hasLeft = widget.settingsState.leftPanel.value is! NoneModule;
+      final hasRight = widget.settingsState.rightPanel.value is! NoneModule;
       final lower = hasLeft ? -1.0 : 0.0;
       final upper = hasRight ? 1.0 : 0.0;
       var target = _dragStartFraction;
@@ -499,12 +499,12 @@ class _LauncherShellState extends State<LauncherShell>
         // system bars and the OS doesn't always restore them cleanly when
         // PopScope rejects the pop. Re-applying after each back gesture
         // forces the bars hidden again.
-        if (widget.settingsState.hideStatusBar) {
+        if (widget.settingsState.hideStatusBar.value) {
           widget.appChannel.setFullscreen(true);
         }
         if (_homeKey.currentState?.dismissActions() ?? false) return;
-        if (widget.settingsState.leftPanel.dismissActions()) return;
-        if (widget.settingsState.rightPanel.dismissActions()) return;
+        if (widget.settingsState.leftPanel.value.dismissActions()) return;
+        if (widget.settingsState.rightPanel.value.dismissActions()) return;
         if (_drawerOpen) {
           _closeDrawer();
         } else if (!_onHomePage) {
@@ -532,7 +532,7 @@ class _LauncherShellState extends State<LauncherShell>
                       width: screenWidth,
                       height: screenHeight,
                       child: _buildPanel(
-                        widget.settingsState.leftPanel,
+                        widget.settingsState.leftPanel.value,
                         isVisible: _pageFraction < -0.5,
                         isLeftSide: true,
                       ),
@@ -559,7 +559,7 @@ class _LauncherShellState extends State<LauncherShell>
                       width: screenWidth,
                       height: screenHeight,
                       child: _buildPanel(
-                        widget.settingsState.rightPanel,
+                        widget.settingsState.rightPanel.value,
                         isVisible: _pageFraction > 0.5,
                         isLeftSide: false,
                       ),

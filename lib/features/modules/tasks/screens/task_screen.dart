@@ -71,7 +71,7 @@ class TaskScreenState extends State<TaskScreen> {
 
   String? _activeTaskId;
   bool _isReordering = false;
-  bool get _autoKeyboard => widget.settingsState.autoKeyboardTasks;
+  bool get _autoKeyboard => widget.settingsState.autoKeyboardTasks.value;
 
   @override
   void initState() {
@@ -133,7 +133,7 @@ class TaskScreenState extends State<TaskScreen> {
   }
 
   void _completeTask(Task task) {
-    if (!task.done && widget.settingsState.removeOnComplete) {
+    if (!task.done && widget.settingsState.removeOnComplete.value) {
       widget.taskState.removeTask(task.id);
     } else {
       widget.taskState.toggleTask(task.id);
@@ -257,7 +257,7 @@ class TaskScreenState extends State<TaskScreen> {
                 final complete = filtered.where((t) => t.done).toList();
 
                 if (incomplete.isEmpty && complete.isEmpty) {
-                  if (!widget.settingsState.showHints) {
+                  if (!widget.settingsState.showHints.value) {
                     return const SizedBox.shrink();
                   }
                   final l10n = AppLocalizations.of(context)!;

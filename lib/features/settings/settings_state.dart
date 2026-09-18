@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:last_launcher/features/modules/launcher_module.dart';
 import 'package:last_launcher/features/modules/none_module.dart';
@@ -16,333 +19,200 @@ class SearchPrefs {
   final bool hidePersonalWhenWorkActive;
 }
 
+/// One persisted setting. Assigning [value] stores it and notifies.
+class Setting<T> extends ValueNotifier<T> {
+  Setting(this.key, T initial, this._write) : super(initial);
+
+  /// SharedPreferences key the value lives under. Never rename one: it is
+  /// where existing users' choices are stored.
+  final String key;
+  final Future<bool> Function(T) _write;
+
+  @override
+  set value(T newValue) {
+    if (newValue == value) return;
+    super.value = newValue;
+    unawaited(_write(newValue));
+  }
+}
+
+/// All user settings.
+///
+/// Each setting is declared once below, with its key, type and default on one
+/// line. Rules that tie settings together are derived getters
+/// ([autoLaunchActive], [workAppDotActive], ...) and never writes, so what the
+/// user picked is kept as-is and comes back when the rule stops applying.
+///
+/// Listening to the whole object fires on any change; listen to a single
+/// [Setting] to react to just that one.
 class SettingsState extends ChangeNotifier {
   SettingsState(this._prefs) {
-    _load();
+    _migrate();
   }
 
-  /// Incremented when settings that require rebuilding the [MaterialApp]
-  /// subtree change (theme mode, status bar visibility). Exists separately
-  /// from [notifyListeners] so routine setting changes (e.g. keyboard toggle)
-  /// don't rebuild the entire app.
-  final themeNotifier = ValueNotifier<int>(0);
-
-  static const _themeKey = 'theme_mode';
-  static const _autoKeyboardKey = 'auto_keyboard';
-  static const _autoKeyboardTasksKey = 'auto_keyboard_tasks';
-  static const _searchOnlyKey = 'search_only';
-  static const _autoLaunchKey = 'auto_launch';
-  static const _tasksEnabledKey = 'tasks_enabled';
-  static const _leftPanelKey = 'left_panel';
-  static const _rightPanelKey = 'right_panel';
-  static const _showHintsKey = 'show_hints';
-  static const _showWorkAppDotKey = 'show_work_app_dot';
-  static const _showWorkAppDotOnHomeKey = 'show_work_app_dot_on_home';
-  static const _hidePersonalWhenWorkActiveKey =
-      'hide_personal_when_work_active';
-  static const _removeOnCompleteKey = 'remove_on_complete';
-  static const _hideStatusBarKey = 'hide_status_bar';
-  static const _hidePinnedFromDrawerKey = 'hide_pinned_from_drawer';
-  static const _includeHiddenInSearchKey = 'include_hidden_in_search';
-  static const _matchOriginalNameKey = 'match_original_name';
-  static const _lockedKey = 'locked';
-  static const _doubleTapToSleepKey = 'double_tap_to_sleep';
-  static const _quickLaunchHintsKey = 'quick_launch_hints';
-  static const _extraCharKey = 'extra_char';
-  static const _clearCompletedDailyKey = 'clear_completed_daily';
   final SharedPreferences _prefs;
-  ThemeMode _themeMode = ThemeMode.system;
-  bool _extraTheme = false;
-  bool _autoKeyboard = true;
-  bool _autoKeyboardTasks = true;
-  bool _searchOnly = false;
-  bool _autoLaunch = true;
-  LauncherModule _leftPanel = const NoneModule();
-  LauncherModule _rightPanel = const NoneModule();
-  bool _showHints = true;
-  bool _showWorkAppDot = true;
-  bool _showWorkAppDotOnHome = false;
-  bool _savedShowWorkAppDotOnHome = false;
-  bool _savedShowWorkAppDot = true;
-  bool _hidePersonalWhenWorkActive = false;
-  bool _removeOnComplete = false;
-  bool _hideStatusBar = false;
-  bool _hidePinnedFromDrawer = true;
-  bool _includeHiddenInSearch = false;
-  bool _matchOriginalName = true;
-  bool _locked = false;
-  bool _doubleTapToSleep = true;
-  bool _quickLaunchHints = false;
-  bool _extraChar = false;
-  bool _savedExtraCharFromAutoLaunch = false;
-  bool _savedQuickLaunchHints = false;
-  bool _savedQuickLaunchHintsFromAutoLaunch = false;
-  bool _clearCompletedDaily = false;
-  ThemeMode get themeMode => _extraTheme ? ThemeMode.dark : _themeMode;
-  bool get isExtra => _extraTheme;
-  bool get autoKeyboard => _autoKeyboard;
-  bool get autoKeyboardTasks => _autoKeyboardTasks;
-  bool get searchOnly => _searchOnly;
-  bool get autoLaunch => _autoLaunch;
-  LauncherModule get leftPanel => _leftPanel;
-  LauncherModule get rightPanel => _rightPanel;
-  bool get tasksEnabled =>
-      _leftPanel is TasksModule || _rightPanel is TasksModule;
-  bool get showHints => _showHints;
-  bool get showWorkAppDot => _showWorkAppDot;
-  bool get showWorkAppDotOnHome => _showWorkAppDotOnHome;
-  bool get hidePersonalWhenWorkActive => _hidePersonalWhenWorkActive;
-  bool get removeOnComplete => _removeOnComplete;
-  bool get hideStatusBar => _hideStatusBar;
-  bool get hidePinnedFromDrawer => _hidePinnedFromDrawer;
-  bool get includeHiddenInSearch => _includeHiddenInSearch;
-  bool get matchOriginalName => _matchOriginalName;
-  bool get locked => _locked;
-  bool get doubleTapToSleep => _doubleTapToSleep;
-  bool get quickLaunchHints => _quickLaunchHints;
-  bool get extraChar => _extraChar;
-  bool get clearCompletedDaily => _clearCompletedDaily;
+
+  // --- Appearance --------------------------------------------------------
+
+  /// One of system, light, dark or extra.
+  late final theme = _string('theme_mode', 'system');
+  late final hideStatusBar = _bool('hide_status_bar', false);
+  late final showHints = _bool('show_hints', true);
+
+  // --- Home --------------------------------------------------------------
+
+  late final locked = _bool('locked', false);
+  late final doubleTapToSleep = _bool('double_tap_to_sleep', true);
+  late final _leftPanel = _module('left_panel');
+  late final _rightPanel = _module('right_panel');
+
+  // --- App drawer and search ---------------------------------------------
+
+  late final hidePinnedFromDrawer = _bool('hide_pinned_from_drawer', true);
+  late final includeHiddenInSearch = _bool('include_hidden_in_search', false);
+  late final matchOriginalName = _bool('match_original_name', true);
+  late final searchOnly = _bool('search_only', false);
+  late final autoKeyboard = _bool('auto_keyboard', true);
+  late final autoLaunch = _bool('auto_launch', true);
+  late final extraChar = _bool('extra_char', false);
+  late final quickLaunchHints = _bool('quick_launch_hints', false);
+
+  // --- Work profile ------------------------------------------------------
+
+  late final hidePersonalWhenWorkActive = _bool(
+    'hide_personal_when_work_active',
+    false,
+  );
+  late final showWorkAppDot = _bool('show_work_app_dot', true);
+  late final showWorkAppDotOnHome = _bool('show_work_app_dot_on_home', false);
+
+  // --- Tasks -------------------------------------------------------------
+
+  late final autoKeyboardTasks = _bool('auto_keyboard_tasks', true);
+  late final removeOnComplete = _bool('remove_on_complete', false);
+  late final clearCompletedDaily = _bool('clear_completed_daily', false);
+
+  // --- Derived: what is actually in effect -------------------------------
+
+  ThemeMode get themeMode => switch (theme.value) {
+    'light' => ThemeMode.light,
+    'dark' || 'extra' => ThemeMode.dark,
+    _ => ThemeMode.system,
+  };
+
+  bool get isExtra => theme.value == 'extra';
+
+  /// Search-only mode has no list to scroll, so the keyboard is always up.
+  bool get autoKeyboardActive => searchOnly.value || autoKeyboard.value;
+
+  /// Search-only mode always launches the single remaining match.
+  bool get autoLaunchActive => searchOnly.value || autoLaunch.value;
+
+  /// The quick-launch refinements build on auto-launch in the drawer's list,
+  /// which search-only mode doesn't show.
+  bool get quickLaunchOptionsAvailable => !searchOnly.value && autoLaunch.value;
+
+  bool get extraCharActive => quickLaunchOptionsAvailable && extraChar.value;
+
+  bool get quickLaunchHintsActive =>
+      quickLaunchOptionsAvailable && quickLaunchHints.value;
+
+  /// With personal apps hidden there is nothing to tell work apps apart from.
+  bool get workAppDotAvailable => !hidePersonalWhenWorkActive.value;
+
+  bool get workAppDotActive => workAppDotAvailable && showWorkAppDot.value;
+
+  bool get workAppDotOnHomeActive =>
+      workAppDotActive && showWorkAppDotOnHome.value;
+
   SearchPrefs get searchPrefs => SearchPrefs(
-    matchOriginal: _matchOriginalName,
-    includeHidden: _includeHiddenInSearch,
-    hidePersonalWhenWorkActive: _hidePersonalWhenWorkActive,
+    matchOriginal: matchOriginalName.value,
+    includeHidden: includeHiddenInSearch.value,
+    hidePersonalWhenWorkActive: hidePersonalWhenWorkActive.value,
   );
 
-  void _load() {
-    final value = _prefs.getString(_themeKey);
-    _extraTheme = value == 'extra';
-    _themeMode = switch (value) {
-      'light' => ThemeMode.light,
-      'dark' => ThemeMode.dark,
-      _ => ThemeMode.system,
-    };
-    _autoKeyboard = _prefs.getBool(_autoKeyboardKey) ?? true;
-    _autoKeyboardTasks = _prefs.getBool(_autoKeyboardTasksKey) ?? true;
-    _searchOnly = _prefs.getBool(_searchOnlyKey) ?? false;
-    _autoLaunch = _prefs.getBool(_autoLaunchKey) ?? true;
-    final leftId = _prefs.getString(_leftPanelKey);
-    final rightId = _prefs.getString(_rightPanelKey);
-    if (leftId == null && rightId == null) {
-      // Migrate legacy tasks_enabled flag.
-      final legacyTasks = _prefs.getBool(_tasksEnabledKey) ?? false;
-      _leftPanel = legacyTasks ? TasksModule() : const NoneModule();
-      _rightPanel = const NoneModule();
-    } else {
-      _leftPanel = moduleById(leftId);
-      _rightPanel = moduleById(rightId);
+  /// Fires when anything in [searchPrefs] changes.
+  late final Listenable searchPrefsChanged = Listenable.merge([
+    matchOriginalName,
+    includeHiddenInSearch,
+    hidePersonalWhenWorkActive,
+  ]);
+
+  /// Fires when anything that needs the whole [MaterialApp] rebuilt changes,
+  /// so routine settings don't rebuild the entire app.
+  late final Listenable appearanceChanged = Listenable.merge([
+    theme,
+    hideStatusBar,
+  ]);
+
+  // --- Panels ------------------------------------------------------------
+
+  ValueListenable<LauncherModule> get leftPanel => _leftPanel;
+  ValueListenable<LauncherModule> get rightPanel => _rightPanel;
+
+  void setLeftPanel(LauncherModule panel) =>
+      _setPanel(_leftPanel, _rightPanel, panel);
+
+  void setRightPanel(LauncherModule panel) =>
+      _setPanel(_rightPanel, _leftPanel, panel);
+
+  /// A module can only sit on one side, so taking it for one side clears the
+  /// other.
+  void _setPanel(
+    Setting<LauncherModule> side,
+    Setting<LauncherModule> other,
+    LauncherModule panel,
+  ) {
+    if (panel is! NoneModule && other.value.id == panel.id) {
+      other.value = const NoneModule();
     }
-    _showHints = _prefs.getBool(_showHintsKey) ?? true;
-    _showWorkAppDot = _prefs.getBool(_showWorkAppDotKey) ?? true;
-    _showWorkAppDotOnHome = _prefs.getBool(_showWorkAppDotOnHomeKey) ?? false;
-    _hidePersonalWhenWorkActive =
-        _prefs.getBool(_hidePersonalWhenWorkActiveKey) ?? false;
-    _removeOnComplete = _prefs.getBool(_removeOnCompleteKey) ?? false;
-    _hideStatusBar = _prefs.getBool(_hideStatusBarKey) ?? false;
-    _hidePinnedFromDrawer = _prefs.getBool(_hidePinnedFromDrawerKey) ?? true;
-    _includeHiddenInSearch = _prefs.getBool(_includeHiddenInSearchKey) ?? false;
-    _matchOriginalName = _prefs.getBool(_matchOriginalNameKey) ?? true;
-    _locked = _prefs.getBool(_lockedKey) ?? false;
-    _doubleTapToSleep = _prefs.getBool(_doubleTapToSleepKey) ?? true;
-    _quickLaunchHints = _prefs.getBool(_quickLaunchHintsKey) ?? false;
-    _extraChar = _prefs.getBool(_extraCharKey) ?? false;
-    _clearCompletedDaily = _prefs.getBool(_clearCompletedDailyKey) ?? false;
+    side.value = panel;
   }
 
-  Future<void> setTheme(String value) async {
-    _extraTheme = value == 'extra';
-    _themeMode = switch (value) {
-      'light' => ThemeMode.light,
-      'dark' => ThemeMode.dark,
-      'extra' => ThemeMode.dark,
-      _ => ThemeMode.system,
-    };
-    notifyListeners();
-    themeNotifier.value++;
-    await _prefs.setString(_themeKey, value);
-  }
+  // --- Migrations --------------------------------------------------------
 
-  String get themeValue {
-    if (_extraTheme) return 'extra';
-    return switch (_themeMode) {
-      ThemeMode.light => 'light',
-      ThemeMode.dark => 'dark',
-      ThemeMode.system => 'system',
-    };
-  }
-
-  Future<void> setAutoKeyboard(bool enabled) async {
-    _autoKeyboard = enabled;
-    notifyListeners();
-    await _prefs.setBool(_autoKeyboardKey, enabled);
-  }
-
-  Future<void> setAutoKeyboardTasks(bool enabled) async {
-    _autoKeyboardTasks = enabled;
-    notifyListeners();
-    await _prefs.setBool(_autoKeyboardTasksKey, enabled);
-  }
-
-  Future<void> setSearchOnly(bool enabled) async {
-    _searchOnly = enabled;
-    if (enabled) {
-      if (_quickLaunchHints) {
-        _savedQuickLaunchHints = true;
-        _quickLaunchHints = false;
-        await _prefs.setBool(_quickLaunchHintsKey, false);
-      }
-    } else if (_savedQuickLaunchHints) {
-      _quickLaunchHints = true;
-      _savedQuickLaunchHints = false;
-      await _prefs.setBool(_quickLaunchHintsKey, true);
+  /// Rewrites values stored by older versions, before any setting reads them.
+  /// Settings are created lazily, so doing this up front keeps each one's
+  /// initial value independent of which was created first.
+  void _migrate() {
+    // Before either side was configurable there was only a tasks_enabled
+    // flag, which meant tasks on the left.
+    final panelsNeverChosen =
+        _prefs.getString('left_panel') == null &&
+        _prefs.getString('right_panel') == null;
+    if (panelsNeverChosen && (_prefs.getBool('tasks_enabled') ?? false)) {
+      unawaited(_prefs.setString('left_panel', TasksModule().id));
     }
-    notifyListeners();
-    await _prefs.setBool(_searchOnlyKey, enabled);
   }
 
-  Future<void> setAutoLaunch(bool enabled) async {
-    _autoLaunch = enabled;
-    if (!enabled && _quickLaunchHints) {
-      _savedQuickLaunchHintsFromAutoLaunch = true;
-      _quickLaunchHints = false;
-      await _prefs.setBool(_quickLaunchHintsKey, false);
-    } else if (enabled && _savedQuickLaunchHintsFromAutoLaunch) {
-      _quickLaunchHints = true;
-      _savedQuickLaunchHintsFromAutoLaunch = false;
-      await _prefs.setBool(_quickLaunchHintsKey, true);
-    }
-    if (!enabled && _extraChar) {
-      _savedExtraCharFromAutoLaunch = true;
-      _extraChar = false;
-      await _prefs.setBool(_extraCharKey, false);
-    } else if (enabled && _savedExtraCharFromAutoLaunch) {
-      _extraChar = true;
-      _savedExtraCharFromAutoLaunch = false;
-      await _prefs.setBool(_extraCharKey, true);
-    }
-    notifyListeners();
-    await _prefs.setBool(_autoLaunchKey, enabled);
-  }
+  // --- Declaration helpers -----------------------------------------------
 
-  Future<void> setLeftPanel(LauncherModule panel) async {
-    _leftPanel = panel;
-    if (panel is! NoneModule && _rightPanel.id == panel.id) {
-      _rightPanel = const NoneModule();
-      await _prefs.setString(_rightPanelKey, _rightPanel.id);
-    }
-    notifyListeners();
-    await _prefs.setString(_leftPanelKey, panel.id);
-  }
+  Setting<bool> _bool(String key, bool fallback) => _track(
+    Setting(
+      key,
+      _prefs.getBool(key) ?? fallback,
+      (v) => _prefs.setBool(key, v),
+    ),
+  );
 
-  Future<void> setRightPanel(LauncherModule panel) async {
-    _rightPanel = panel;
-    if (panel is! NoneModule && _leftPanel.id == panel.id) {
-      _leftPanel = const NoneModule();
-      await _prefs.setString(_leftPanelKey, _leftPanel.id);
-    }
-    notifyListeners();
-    await _prefs.setString(_rightPanelKey, panel.id);
-  }
+  Setting<String> _string(String key, String fallback) => _track(
+    Setting(
+      key,
+      _prefs.getString(key) ?? fallback,
+      (v) => _prefs.setString(key, v),
+    ),
+  );
 
-  Future<void> setShowHints(bool enabled) async {
-    _showHints = enabled;
-    notifyListeners();
-    await _prefs.setBool(_showHintsKey, enabled);
-  }
+  Setting<LauncherModule> _module(String key) => _track(
+    Setting(
+      key,
+      moduleById(_prefs.getString(key)),
+      (m) => _prefs.setString(key, m.id),
+    ),
+  );
 
-  Future<void> setShowWorkAppDot(bool enabled) async {
-    _showWorkAppDot = enabled;
-    if (enabled) {
-      _showWorkAppDotOnHome = _savedShowWorkAppDotOnHome;
-    } else {
-      _savedShowWorkAppDotOnHome = _showWorkAppDotOnHome;
-      _showWorkAppDotOnHome = false;
-    }
-    notifyListeners();
-    await _prefs.setBool(_showWorkAppDotKey, enabled);
-    await _prefs.setBool(_showWorkAppDotOnHomeKey, _showWorkAppDotOnHome);
-  }
-
-  Future<void> setShowWorkAppDotOnHome(bool enabled) async {
-    _showWorkAppDotOnHome = enabled;
-    notifyListeners();
-    await _prefs.setBool(_showWorkAppDotOnHomeKey, enabled);
-  }
-
-  Future<void> setHidePersonalWhenWorkActive(bool enabled) async {
-    _hidePersonalWhenWorkActive = enabled;
-    if (enabled) {
-      _savedShowWorkAppDot = _showWorkAppDot;
-      _savedShowWorkAppDotOnHome = _showWorkAppDotOnHome;
-      _showWorkAppDot = false;
-      _showWorkAppDotOnHome = false;
-    } else {
-      _showWorkAppDot = _savedShowWorkAppDot;
-      _showWorkAppDotOnHome = _savedShowWorkAppDotOnHome;
-    }
-    notifyListeners();
-    await _prefs.setBool(_hidePersonalWhenWorkActiveKey, enabled);
-    await _prefs.setBool(_showWorkAppDotKey, _showWorkAppDot);
-    await _prefs.setBool(_showWorkAppDotOnHomeKey, _showWorkAppDotOnHome);
-  }
-
-  Future<void> setRemoveOnComplete(bool enabled) async {
-    _removeOnComplete = enabled;
-    notifyListeners();
-    await _prefs.setBool(_removeOnCompleteKey, enabled);
-  }
-
-  Future<void> setHideStatusBar(bool enabled) async {
-    _hideStatusBar = enabled;
-    notifyListeners();
-    themeNotifier.value++;
-    await _prefs.setBool(_hideStatusBarKey, enabled);
-  }
-
-  Future<void> setHidePinnedFromDrawer(bool enabled) async {
-    _hidePinnedFromDrawer = enabled;
-    notifyListeners();
-    await _prefs.setBool(_hidePinnedFromDrawerKey, enabled);
-  }
-
-  Future<void> setIncludeHiddenInSearch(bool enabled) async {
-    _includeHiddenInSearch = enabled;
-    notifyListeners();
-    await _prefs.setBool(_includeHiddenInSearchKey, enabled);
-  }
-
-  Future<void> setMatchOriginalName(bool enabled) async {
-    _matchOriginalName = enabled;
-    notifyListeners();
-    await _prefs.setBool(_matchOriginalNameKey, enabled);
-  }
-
-  Future<void> setLocked(bool enabled) async {
-    _locked = enabled;
-    notifyListeners();
-    await _prefs.setBool(_lockedKey, enabled);
-  }
-
-  Future<void> setDoubleTapToSleep(bool enabled) async {
-    _doubleTapToSleep = enabled;
-    notifyListeners();
-    await _prefs.setBool(_doubleTapToSleepKey, enabled);
-  }
-
-  Future<void> setQuickLaunchHints(bool enabled) async {
-    _quickLaunchHints = enabled;
-    notifyListeners();
-    await _prefs.setBool(_quickLaunchHintsKey, enabled);
-  }
-
-  Future<void> setExtraChar(bool enabled) async {
-    _extraChar = enabled;
-    notifyListeners();
-    await _prefs.setBool(_extraCharKey, enabled);
-  }
-
-  Future<void> setClearCompletedDaily(bool enabled) async {
-    _clearCompletedDaily = enabled;
-    notifyListeners();
-    await _prefs.setBool(_clearCompletedDailyKey, enabled);
+  Setting<T> _track<T>(Setting<T> setting) {
+    setting.addListener(notifyListeners);
+    return setting;
   }
 }

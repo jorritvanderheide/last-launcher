@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/modules/launcher_module.dart';
+import 'package:last_launcher/features/modules/tasks_module.dart';
 import 'package:last_launcher/features/settings/screens/about_screen.dart';
 import 'package:last_launcher/features/settings/screens/hidden_apps_screen.dart';
 import 'package:last_launcher/features/settings/screens/task_settings_screen.dart';
@@ -72,7 +73,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       body: ListenableBuilder(
         listenable: settingsState,
         builder: (context, _) {
-          final searchOnly = settingsState.searchOnly;
+          final searchOnly = settingsState.searchOnly.value;
 
           return FadeOverflow(
             child: ListView(
@@ -80,20 +81,20 @@ class _SettingsScreenState extends State<SettingsScreen>
               children: [
                 _SectionHeader(title: l10n.sectionAppearance),
                 _ThemeListTile(
-                  themeValue: settingsState.themeValue,
-                  onChanged: settingsState.setTheme,
+                  themeValue: settingsState.theme.value,
+                  onChanged: (v) => settingsState.theme.value = v,
                 ),
                 SwitchListTile(
                   title: Text(l10n.hideStatusBar),
                   subtitle: Text(l10n.hideStatusBarSubtitle),
-                  value: settingsState.hideStatusBar,
-                  onChanged: settingsState.setHideStatusBar,
+                  value: settingsState.hideStatusBar.value,
+                  onChanged: (v) => settingsState.hideStatusBar.value = v,
                 ),
                 SwitchListTile(
                   title: Text(l10n.showHints),
                   subtitle: Text(l10n.showHintsSubtitle),
-                  value: settingsState.showHints,
-                  onChanged: settingsState.setShowHints,
+                  value: settingsState.showHints.value,
+                  onChanged: (v) => settingsState.showHints.value = v,
                 ),
                 _SectionHeader(title: l10n.sectionHome),
                 if (!_isDefaultLauncher)
@@ -105,26 +106,27 @@ class _SettingsScreenState extends State<SettingsScreen>
                 SwitchListTile(
                   title: Text(l10n.lockLayout),
                   subtitle: Text(l10n.lockLayoutSubtitle),
-                  value: settingsState.locked,
-                  onChanged: settingsState.setLocked,
+                  value: settingsState.locked.value,
+                  onChanged: (v) => settingsState.locked.value = v,
                 ),
                 SwitchListTile(
                   title: Text(l10n.doubleTapToSleep),
                   subtitle: Text(l10n.doubleTapToSleepSubtitle),
-                  value: settingsState.doubleTapToSleep,
-                  onChanged: settingsState.setDoubleTapToSleep,
+                  value: settingsState.doubleTapToSleep.value,
+                  onChanged: (v) => settingsState.doubleTapToSleep.value = v,
                 ),
                 _PanelListTile(
                   title: l10n.leftOfHome,
-                  current: settingsState.leftPanel,
+                  current: settingsState.leftPanel.value,
                   onChanged: settingsState.setLeftPanel,
                 ),
                 _PanelListTile(
                   title: l10n.rightOfHome,
-                  current: settingsState.rightPanel,
+                  current: settingsState.rightPanel.value,
                   onChanged: settingsState.setRightPanel,
                 ),
-                if (settingsState.tasksEnabled) ...[
+                if (settingsState.leftPanel.value is TasksModule ||
+                    settingsState.rightPanel.value is TasksModule) ...[
                   _SectionHeader(title: l10n.sectionModules),
                   ListTile(
                     title: Text(l10n.sectionTasks),
@@ -150,14 +152,15 @@ class _SettingsScreenState extends State<SettingsScreen>
                       ...appListState.hiddenApps.map(
                         (a) => compoundKey(a.packageName, a.isWorkApp),
                       ),
-                      if (settingsState.hidePinnedFromDrawer)
+                      if (settingsState.hidePinnedFromDrawer.value)
                         ...homeState.pinnedApps.map(
                           (a) => compoundKey(a.packageName, a.isWorkApp),
                         ),
                     };
                     final hasWorkApps = appListState.workPackages.isNotEmpty;
                     final hidePersonal =
-                        settingsState.hidePersonalWhenWorkActive && hasWorkApps;
+                        settingsState.hidePersonalWhenWorkActive.value &&
+                        hasWorkApps;
                     final count = hidePersonal
                         ? hiddenPackages
                               .where((k) => k.endsWith('|true'))
@@ -197,8 +200,9 @@ class _SettingsScreenState extends State<SettingsScreen>
                         SwitchListTile(
                           title: Text(l10n.hidePinnedApps),
                           subtitle: Text(l10n.hidePinnedAppsSubtitle),
-                          value: settingsState.hidePinnedFromDrawer,
-                          onChanged: settingsState.setHidePinnedFromDrawer,
+                          value: settingsState.hidePinnedFromDrawer.value,
+                          onChanged: (v) =>
+                              settingsState.hidePinnedFromDrawer.value = v,
                         ),
                       ],
                     );
@@ -208,89 +212,78 @@ class _SettingsScreenState extends State<SettingsScreen>
                 SwitchListTile(
                   title: Text(l10n.includeHiddenInSearch),
                   subtitle: Text(l10n.includeHiddenInSearchSubtitle),
-                  value: settingsState.includeHiddenInSearch,
-                  onChanged: (value) {
-                    settingsState.setIncludeHiddenInSearch(value);
-                    appListState.applyPrefs(settingsState.searchPrefs);
-                  },
+                  value: settingsState.includeHiddenInSearch.value,
+                  onChanged: (v) =>
+                      settingsState.includeHiddenInSearch.value = v,
                 ),
                 SwitchListTile(
                   title: Text(l10n.matchOriginalName),
                   subtitle: Text(l10n.matchOriginalNameSubtitle),
-                  value: settingsState.matchOriginalName,
-                  onChanged: (value) {
-                    settingsState.setMatchOriginalName(value);
-                    appListState.applyPrefs(settingsState.searchPrefs);
-                  },
+                  value: settingsState.matchOriginalName.value,
+                  onChanged: (v) => settingsState.matchOriginalName.value = v,
                 ),
                 SwitchListTile(
                   title: Text(l10n.searchOnlyMode),
                   subtitle: Text(l10n.searchOnlyModeSubtitle),
                   value: searchOnly,
-                  onChanged: settingsState.setSearchOnly,
+                  onChanged: (v) => settingsState.searchOnly.value = v,
                 ),
                 SwitchListTile(
                   title: Text(l10n.autoShowKeyboard),
                   subtitle: Text(l10n.autoShowKeyboardAppsSubtitle),
-                  value: searchOnly || settingsState.autoKeyboard,
-                  onChanged: searchOnly ? null : settingsState.setAutoKeyboard,
+                  value: settingsState.autoKeyboardActive,
+                  onChanged: searchOnly
+                      ? null
+                      : (v) => settingsState.autoKeyboard.value = v,
                 ),
                 SwitchListTile(
                   title: Text(l10n.autoLaunchOnMatch),
                   subtitle: Text(l10n.autoLaunchOnMatchSubtitle),
-                  value: searchOnly || settingsState.autoLaunch,
-                  onChanged: searchOnly ? null : settingsState.setAutoLaunch,
+                  value: settingsState.autoLaunchActive,
+                  onChanged: searchOnly
+                      ? null
+                      : (v) => settingsState.autoLaunch.value = v,
                 ),
                 SwitchListTile(
                   title: Text(l10n.extraChar),
                   subtitle: Text(l10n.extraCharSubtitle),
-                  value:
-                      !searchOnly &&
-                      settingsState.autoLaunch &&
-                      settingsState.extraChar,
-                  onChanged: searchOnly || !settingsState.autoLaunch
-                      ? null
-                      : settingsState.setExtraChar,
+                  value: settingsState.extraCharActive,
+                  onChanged: settingsState.quickLaunchOptionsAvailable
+                      ? (v) => settingsState.extraChar.value = v
+                      : null,
                 ),
                 SwitchListTile(
                   title: Text(l10n.quickLaunchHints),
                   subtitle: Text(l10n.quickLaunchHintsSubtitle),
-                  value:
-                      !searchOnly &&
-                      settingsState.autoLaunch &&
-                      settingsState.quickLaunchHints,
-                  onChanged: searchOnly || !settingsState.autoLaunch
-                      ? null
-                      : settingsState.setQuickLaunchHints,
+                  value: settingsState.quickLaunchHintsActive,
+                  onChanged: settingsState.quickLaunchOptionsAvailable
+                      ? (v) => settingsState.quickLaunchHints.value = v
+                      : null,
                 ),
                 if (appListState.hasWorkProfile) ...[
                   _SectionHeader(title: l10n.sectionWork),
                   SwitchListTile(
                     title: Text(l10n.hidePersonalWhenWorkActive),
                     subtitle: Text(l10n.hidePersonalWhenWorkActiveSubtitle),
-                    value: settingsState.hidePersonalWhenWorkActive,
-                    onChanged: (value) {
-                      settingsState.setHidePersonalWhenWorkActive(value);
-                      appListState.applyPrefs(settingsState.searchPrefs);
-                    },
+                    value: settingsState.hidePersonalWhenWorkActive.value,
+                    onChanged: (v) =>
+                        settingsState.hidePersonalWhenWorkActive.value = v,
                   ),
                   SwitchListTile(
                     title: Text(l10n.showWorkAppDot),
                     subtitle: Text(l10n.showWorkAppDotSubtitle),
-                    value: settingsState.showWorkAppDot,
-                    onChanged: settingsState.hidePersonalWhenWorkActive
-                        ? null
-                        : settingsState.setShowWorkAppDot,
+                    value: settingsState.workAppDotActive,
+                    onChanged: settingsState.workAppDotAvailable
+                        ? (v) => settingsState.showWorkAppDot.value = v
+                        : null,
                   ),
                   SwitchListTile(
                     title: Text(l10n.showWorkAppDotOnHome),
                     subtitle: Text(l10n.showWorkAppDotOnHomeSubtitle),
-                    value: settingsState.showWorkAppDotOnHome,
-                    onChanged:
-                        settingsState.hidePersonalWhenWorkActive ||
-                            !settingsState.showWorkAppDot
-                        ? null
-                        : settingsState.setShowWorkAppDotOnHome,
+                    value: settingsState.workAppDotOnHomeActive,
+                    onChanged: settingsState.workAppDotActive
+                        ? (v) => settingsState.showWorkAppDotOnHome.value = v
+                        : null,
                   ),
                 ],
                 _SectionHeader(title: l10n.sectionSupport),

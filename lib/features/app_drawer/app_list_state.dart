@@ -13,27 +13,24 @@ class AppListState extends ChangeNotifier {
   AppListState(this._channel, this._prefs) {
     _loadCustomLabels();
     _loadHiddenApps();
-    _searchPrefs = SearchPrefs(
-      matchOriginal: _prefs.getBool(_matchOriginalKey) ?? true,
-      includeHidden: _prefs.getBool(_includeHiddenInSearchKey) ?? false,
-      hidePersonalWhenWorkActive:
-          _prefs.getBool(_hidePersonalWhenWorkActiveKey) ?? false,
-    );
   }
 
   static const _labelsKey = 'custom_labels';
   static const _hiddenKey = 'hidden_apps';
-  static const _matchOriginalKey = 'match_original_name';
-  static const _includeHiddenInSearchKey = 'include_hidden_in_search';
-  static const _hidePersonalWhenWorkActiveKey =
-      'hide_personal_when_work_active';
 
   final AppChannel _channel;
   final SharedPreferences _prefs;
   List<AppInfo> _allApps = [];
   String _query = '';
   bool _loading = false;
-  late SearchPrefs _searchPrefs;
+
+  /// Owned by [SettingsState]; pushed in through [applyPrefs] at startup and
+  /// whenever one of them changes.
+  SearchPrefs _searchPrefs = const SearchPrefs(
+    matchOriginal: true,
+    includeHidden: false,
+    hidePersonalWhenWorkActive: false,
+  );
   bool _hasWorkProfile = false;
   final Map<String, String> _customLabels = {};
   final Set<String> _hiddenApps = {};
