@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:last_launcher/features/modules/launcher_module.dart';
 import 'package:last_launcher/features/modules/tasks/screens/task_screen.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
@@ -15,6 +15,9 @@ class TasksModule extends LauncherModule {
 
   @override
   String get id => 'tasks';
+
+  @override
+  IconData get icon => Icons.checklist;
 
   @override
   String displayName(BuildContext context) =>

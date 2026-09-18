@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
 import 'package:last_launcher/features/modules/launch_app_module.dart';
 import 'package:last_launcher/features/modules/none_module.dart';
@@ -33,6 +33,9 @@ abstract class LauncherModule {
 
   /// Title-case name shown in pickers and section headers.
   String displayName(BuildContext context);
+
+  /// Shown next to the module's row in settings.
+  IconData get icon => Icons.extension_outlined;
 
   /// In-sentence form used inside hint strings, as seen from [side];
   /// depending on the language this may be lowercase ("tasks") or the same

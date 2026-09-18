@@ -80,7 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen>
         if (!_isDefaultLauncher)
           ListTile(
             tileColor: Theme.of(context).colorScheme.surfaceContainer,
-            leading: const Icon(Icons.home_outlined),
+            leading: const Icon(Icons.app_settings_alt_outlined),
             title: Text(l10n.setAsDefault),
             subtitle: Text(l10n.setAsDefaultSubtitle),
             onTap: widget.appChannel.requestDefaultLauncher,
@@ -95,7 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen>
           ),
         ),
         ListTile(
-          leading: const Icon(Icons.grid_view_outlined),
+          leading: const Icon(Icons.home_outlined),
           title: Text(l10n.sectionHome),
           onTap: () =>
               pushSettingsPage(context, HomeSettingsScreen(settingsState: s)),
@@ -110,7 +110,7 @@ class _SettingsScreenState extends State<SettingsScreen>
               )
               case final page?)
             ListTile(
-              leading: const Icon(Icons.view_sidebar_outlined),
+              leading: Icon(module.icon),
               title: Text(module.displayName(context)),
               onTap: () => pushSettingsPage(context, page),
             ),

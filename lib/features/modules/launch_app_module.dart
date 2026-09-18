@@ -21,6 +21,9 @@ class LaunchAppModule extends LauncherModule {
   bool get allowsBothSides => true;
 
   @override
+  IconData get icon => Icons.launch;
+
+  @override
   String displayName(BuildContext context) =>
       AppLocalizations.of(context)!.panelLaunchApp;
 
