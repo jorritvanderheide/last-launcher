@@ -42,6 +42,9 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   String? _activeAppPackage;
+
+  /// The row being dragged, from the moment a hold lifts it.
+  int? _dragFrom;
   late final Listenable _mergedState = Listenable.merge([
     widget.homeState,
     widget.appListState,
@@ -211,16 +214,23 @@ class HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.zero,
                   buildDefaultDragHandles: false,
                   proxyDecorator: dragProxyDecorator,
-                  onReorderStart: (_) => widget.onReorderStart(),
-                  onReorderEnd: (_) => widget.onReorderEnd(),
+                  onReorderStart: (index) {
+                    _dragFrom = index;
+                    widget.onReorderStart();
+                  },
+                  onReorderEnd: (index) {
+                    widget.onReorderEnd();
+                    final from = _dragFrom;
+                    _dragFrom = null;
+                    // Held and let go in place: the row's actions.
+                    if (from != null && droppedInPlace(from, index)) {
+                      setState(() => _activeAppPackage = apps[from].key);
+                    }
+                  },
                   onReorder: widget.homeState.reorderApps,
                   itemCount: apps.length,
                   itemBuilder: (context, index) {
                     final app = apps[index];
-                    final showHandles = _activeAppPackage != null;
-                    final handle = showHandles
-                        ? dragHandle(context, index)
-                        : null;
                     final appKey = app.key;
                     if (_activeAppPackage == appKey) {
                       return _withWorkDot(
@@ -233,14 +243,13 @@ class HomeScreenState extends State<HomeScreen> {
                           actions: _appActions(context, app),
                           onClose: () =>
                               setState(() => _activeAppPackage = null),
-                          leading: handle,
                         ),
                         app,
                       );
                     }
-                    return _withWorkDot(
+                    final locked = widget.settingsState.locked.value;
+                    final row = _withWorkDot(
                       AppLabel(
-                        key: ValueKey(appKey),
                         label: widget.appListState.displayLabelFor(
                           app.key,
                           app.label,
@@ -250,16 +259,21 @@ class HomeScreenState extends State<HomeScreen> {
                           isWorkApp: app.isWorkApp,
                           shortcutId: app.shortcutId,
                         ),
-                        onLongPress: widget.settingsState.locked.value
-                            ? () {}
-                            : () => setState(
-                                () => _activeAppPackage =
-                                    _activeAppPackage == appKey ? null : appKey,
-                              ),
-                        leading: handle,
+                        // A locked layout neither moves nor edits rows; the
+                        // empty handler keeps a hold from reaching the
+                        // long press on home, which opens settings.
+                        onLongPress: locked ? () {} : null,
                       ),
                       app,
                     );
+                    // Press and hold to drag; see droppedInPlace.
+                    return locked
+                        ? KeyedSubtree(key: ValueKey(appKey), child: row)
+                        : ReorderableDelayedDragStartListener(
+                            key: ValueKey(appKey),
+                            index: index,
+                            child: row,
+                          );
                   },
                 );
               },

@@ -254,18 +254,11 @@ Widget dragProxyDecorator(
   );
 }
 
-Widget dragHandle(BuildContext context, int index) {
-  return ReorderableDragStartListener(
-    index: index,
-    child: SizedBox.square(
-      dimension: 48,
-      child: Center(
-        child: Icon(
-          Icons.drag_indicator,
-          size: 22,
-          color: Theme.of(context).colorScheme.onSurface.withAlpha(130),
-        ),
-      ),
-    ),
-  );
-}
+/// Whether a row dragged from [from] was dropped back where it started, as
+/// reported by a reorderable list's onReorderEnd ([to]). Coming back from
+/// below reports the next index, since it's counted with the dragged row
+/// still in place.
+///
+/// Rows are reordered by pressing and holding them; a hold let go without
+/// moving opens the row's actions instead.
+bool droppedInPlace(int from, int to) => to == from || to == from + 1;

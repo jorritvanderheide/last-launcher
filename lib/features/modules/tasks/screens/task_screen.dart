@@ -163,34 +163,42 @@ class TaskScreenState extends State<TaskScreen> {
     ];
   }
 
-  void _onReorderStart(int _) {
+  /// The row being dragged, from the moment a hold lifts it.
+  int? _dragFrom;
+
+  void _onReorderStart(int index) {
     _isReordering = true;
+    _dragFrom = index;
     widget.onReorderStart();
   }
 
-  void _onReorderEnd(int _) {
+  /// Ends a drag within [group]. A hold let go in place opens the row's
+  /// actions; see droppedInPlace.
+  void _onReorderEnd(List<Task> group, int index) {
     _isReordering = false;
     widget.onReorderEnd();
+    final from = _dragFrom;
+    _dragFrom = null;
+    if (from != null && droppedInPlace(from, index)) {
+      setState(() => _activeTaskId = group[from].id);
+    }
   }
 
   Widget _buildTaskItem(BuildContext context, Task task, int index) {
-    final showHandle = _activeTaskId != null;
-    final Widget leading = showHandle
-        ? dragHandle(context, index)
-        : GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => _completeTask(task),
-            child: SizedBox.square(
-              dimension: 48,
-              child: Center(
-                child: Icon(
-                  task.done ? Icons.check_box : Icons.check_box_outline_blank,
-                  size: 22,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-              ),
-            ),
-          );
+    final Widget leading = GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => _completeTask(task),
+      child: SizedBox.square(
+        dimension: 48,
+        child: Center(
+          child: Icon(
+            task.done ? Icons.check_box : Icons.check_box_outline_blank,
+            size: 22,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+        ),
+      ),
+    );
 
     if (_activeTaskId == task.id) {
       return KeyedSubtree(
@@ -206,17 +214,18 @@ class TaskScreenState extends State<TaskScreen> {
         ),
       );
     }
-    return KeyedSubtree(
+    // Press and hold to drag.
+    return ReorderableDelayedDragStartListener(
       key: ValueKey(task.id),
+      index: index,
       child: _SwipeToDismiss(
         swipeRight: widget.swipeRight,
+        // A row being dragged to a new place isn't being swiped away.
+        blocked: () => _isReordering,
         onDismissed: () => widget.taskState.removeTask(task.id),
         child: AppLabel(
           label: task.title,
           onTap: task.done ? null : () => _renameTask(context, task),
-          onLongPress: () => setState(
-            () => _activeTaskId = _activeTaskId == task.id ? null : task.id,
-          ),
           opacity: task.done ? _doneOpacity : 1.0,
           textDecoration: task.done ? TextDecoration.lineThrough : null,
           decorationThickness: task.done ? 1.5 : null,
@@ -310,7 +319,8 @@ class TaskScreenState extends State<TaskScreen> {
                             itemCount: incomplete.length,
                             proxyDecorator: dragProxyDecorator,
                             onReorderStart: _onReorderStart,
-                            onReorderEnd: _onReorderEnd,
+                            onReorderEnd: (index) =>
+                                _onReorderEnd(incomplete, index),
                             onReorder: (o, n) => widget.taskState
                                 .reorderInGroup(o, n, done: false),
                             itemBuilder: (context, index) => _buildTaskItem(
@@ -326,7 +336,8 @@ class TaskScreenState extends State<TaskScreen> {
                           itemCount: complete.length,
                           proxyDecorator: dragProxyDecorator,
                           onReorderStart: _onReorderStart,
-                          onReorderEnd: _onReorderEnd,
+                          onReorderEnd: (index) =>
+                              _onReorderEnd(complete, index),
                           onReorder: (o, n) =>
                               widget.taskState.reorderInGroup(o, n, done: true),
                           itemBuilder: (context, index) =>
@@ -349,11 +360,15 @@ class TaskScreenState extends State<TaskScreen> {
 class _SwipeToDismiss extends StatefulWidget {
   const _SwipeToDismiss({
     required this.onDismissed,
+    required this.blocked,
     required this.child,
     this.swipeRight = true,
   });
 
   final VoidCallback onDismissed;
+
+  /// Asked on every move; while true the row doesn't swipe.
+  final bool Function() blocked;
   final Widget child;
   final bool swipeRight;
 
@@ -408,6 +423,12 @@ class _SwipeToDismissState extends State<_SwipeToDismiss>
       onPointerMove: (e) {
         final start = _start;
         if (start == null) return;
+        if (widget.blocked()) {
+          if (_tracking) _animateSnapBack();
+          _start = null;
+          _tracking = false;
+          return;
+        }
         final dx = (e.position.dx - start.dx) * _sign;
         final dy = (e.position.dy - start.dy).abs();
         if (!_tracking) {
