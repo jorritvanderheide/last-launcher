@@ -8,8 +8,6 @@ class HomeState extends ChangeNotifier {
   }
 
   static const _key = 'pinned_apps';
-  // 28px font * 1.2 line height + 2 * 9px padding
-  static const _itemHeight = 28.0 * 1.2 + 2 * 9.0;
 
   final SharedPreferences _prefs;
   List<PinnedApp> _pinnedApps = [];
@@ -39,14 +37,20 @@ class HomeState extends ChangeNotifier {
 
   int _maxPinnedApps = 10;
   double? _lastAvailableHeight;
+  double? _lastItemHeight;
 
   int get maxPinnedApps => _maxPinnedApps;
   bool get isFull => _pinnedApps.length >= _maxPinnedApps;
 
-  void updateMaxApps(double availableHeight) {
-    if (_lastAvailableHeight == availableHeight) return;
+  /// How many apps fit on home: [itemHeight] depends on the text size.
+  void updateMaxApps(double availableHeight, {required double itemHeight}) {
+    if (_lastAvailableHeight == availableHeight &&
+        _lastItemHeight == itemHeight) {
+      return;
+    }
     _lastAvailableHeight = availableHeight;
-    _maxPinnedApps = (availableHeight / _itemHeight).floor().clamp(1, 10);
+    _lastItemHeight = itemHeight;
+    _maxPinnedApps = (availableHeight / itemHeight).floor().clamp(1, 10);
   }
 
   Future<void> addApp(PinnedApp app) async {

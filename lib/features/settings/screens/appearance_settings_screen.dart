@@ -29,6 +29,15 @@ String _fontLabel(BuildContext context, FontChoice font) {
   };
 }
 
+String _textSizeLabel(BuildContext context, TextSize size) {
+  final l10n = AppLocalizations.of(context)!;
+  return switch (size) {
+    TextSize.small => l10n.textSizeSmall,
+    TextSize.medium => l10n.textSizeMedium,
+    TextSize.large => l10n.textSizeLarge,
+  };
+}
+
 String _scanlineLabel(BuildContext context, ScanlineLevel level) {
   final l10n = AppLocalizations.of(context)!;
   return switch (level) {
@@ -82,6 +91,14 @@ class AppearanceSettingsScreen extends StatelessWidget {
           options: FontChoice.values,
           label: _fontLabel,
           onChanged: (font) => s.font.value = font,
+        ),
+        ChoiceTile<TextSize>(
+          leading: const Icon(Icons.format_size),
+          title: l10n.textSizeTitle,
+          value: s.textSize.value,
+          options: TextSize.values,
+          label: _textSizeLabel,
+          onChanged: (size) => s.textSize.value = size,
         ),
         SettingSwitch(
           setting: s.terminalPrompt,

@@ -3,6 +3,9 @@ import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// One label row at the default text size.
+const _itemHeight = 28 * 1.2 + 2 * 9.0;
+
 void main() {
   late HomeState state;
 
@@ -50,7 +53,7 @@ void main() {
     });
 
     test('isFull respects max', () async {
-      state.updateMaxApps(100);
+      state.updateMaxApps(100, itemHeight: _itemHeight);
       final max = state.maxPinnedApps;
       for (var i = 0; i < max; i++) {
         await state.addApp(
@@ -80,10 +83,17 @@ void main() {
       expect(state.pinnedApps.map((a) => a.label).toList(), ['A', 'B']);
     });
 
+    test('fewer apps fit with larger text', () {
+      state.updateMaxApps(400, itemHeight: _itemHeight);
+      final medium = state.maxPinnedApps;
+      state.updateMaxApps(400, itemHeight: 34 * 1.2 + 2 * 9.0);
+      expect(state.maxPinnedApps, lessThan(medium));
+    });
+
     test('updateMaxApps clamps to range', () {
-      state.updateMaxApps(10);
+      state.updateMaxApps(10, itemHeight: _itemHeight);
       expect(state.maxPinnedApps, 1);
-      state.updateMaxApps(10000);
+      state.updateMaxApps(10000, itemHeight: _itemHeight);
       expect(state.maxPinnedApps, 10);
     });
 

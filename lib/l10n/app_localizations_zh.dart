@@ -78,6 +78,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get fontMono => '等寬';
 
   @override
+  String get textSizeTitle => '文字大小';
+
+  @override
+  String get textSizeSmall => '小';
+
+  @override
+  String get textSizeMedium => '中';
+
+  @override
+  String get textSizeLarge => '大';
+
+  @override
   String get terminalPrompt => '終端機提示字元';
 
   @override

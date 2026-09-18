@@ -123,7 +123,10 @@ class HomeScreenState extends State<HomeScreen> {
         builder: (context, constraints) {
           // updateMaxApps is a pure setter (no notifyListeners), so calling
           // it inside build is safe and avoids the postFrameCallback queue.
-          widget.homeState.updateMaxApps(constraints.maxHeight);
+          widget.homeState.updateMaxApps(
+            constraints.maxHeight,
+            itemHeight: AppLabel.itemHeightFor(AppLabel.fontSizeOf(context)),
+          );
           return Align(
             alignment: Alignment.centerLeft,
             child: ListenableBuilder(
@@ -147,7 +150,7 @@ class HomeScreenState extends State<HomeScreen> {
                   final right = widget.settingsState.rightPanel.value;
                   final style = Theme.of(context).textTheme.titleLarge
                       ?.copyWith(
-                        fontSize: AppLabel.fontSize,
+                        fontSize: AppLabel.fontSizeOf(context),
                         color: Theme.of(
                           context,
                         ).colorScheme.onSurface.withAlpha(130),

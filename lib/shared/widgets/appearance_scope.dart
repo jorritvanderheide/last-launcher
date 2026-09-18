@@ -8,11 +8,15 @@ import 'package:flutter/widgets.dart';
 /// off on its own.
 class AppearanceScope extends InheritedWidget {
   const AppearanceScope({
+    required this.labelFontSize,
     required this.terminalPrompt,
     required this.animate,
     required super.child,
     super.key,
   });
+
+  /// Font size of app labels and everything that lines up with them.
+  final double labelFontSize;
 
   /// Show search fields as a command line: a `$` prompt and block cursor.
   final bool terminalPrompt;
@@ -24,6 +28,7 @@ class AppearanceScope extends InheritedWidget {
 
   /// The look outside any scope, e.g. in widget tests.
   static const _fallback = AppearanceScope(
+    labelFontSize: 28,
     terminalPrompt: false,
     animate: true,
     child: SizedBox.shrink(),
@@ -35,6 +40,7 @@ class AppearanceScope extends InheritedWidget {
 
   @override
   bool updateShouldNotify(AppearanceScope oldWidget) =>
+      labelFontSize != oldWidget.labelFontSize ||
       terminalPrompt != oldWidget.terminalPrompt ||
       animate != oldWidget.animate;
 }

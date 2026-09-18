@@ -78,6 +78,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get fontMono => 'Monoespaçado';
 
   @override
+  String get textSizeTitle => 'Tamanho do texto';
+
+  @override
+  String get textSizeSmall => 'Pequeno';
+
+  @override
+  String get textSizeMedium => 'Médio';
+
+  @override
+  String get textSizeLarge => 'Grande';
+
+  @override
   String get terminalPrompt => 'Linha de comandos';
 
   @override

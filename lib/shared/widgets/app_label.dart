@@ -29,13 +29,20 @@ class AppLabel extends StatelessWidget {
   final double hintOpacity;
   final bool hintAlphaOnly;
 
-  static const fontSize = 28.0;
   static const verticalPadding = 9.0;
+
+  /// Label font size under the current text-size setting.
+  static double fontSizeOf(BuildContext context) =>
+      AppearanceScope.of(context).labelFontSize;
+
+  /// Height of one label row: the text's line height plus its padding.
+  static double itemHeightFor(double fontSize) =>
+      fontSize * 1.2 + 2 * verticalPadding;
 
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).textTheme.titleLarge?.copyWith(
-      fontSize: fontSize,
+      fontSize: fontSizeOf(context),
       decoration: textDecoration,
       decorationThickness: decorationThickness,
     );

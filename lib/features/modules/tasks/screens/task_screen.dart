@@ -276,7 +276,7 @@ class TaskScreenState extends State<TaskScreen> {
                           hint,
                           style: Theme.of(context).textTheme.titleLarge
                               ?.copyWith(
-                                fontSize: AppLabel.fontSize,
+                                fontSize: AppLabel.fontSizeOf(context),
                                 color: Theme.of(context).colorScheme.onSurface
                                     .withAlpha(_emptyTextAlpha),
                               ),

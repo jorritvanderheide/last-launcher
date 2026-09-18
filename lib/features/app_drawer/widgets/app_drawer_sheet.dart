@@ -401,7 +401,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
       child: Text(
         AppLocalizations.of(context)!.noResults,
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
-          fontSize: AppLabel.fontSize,
+          fontSize: AppLabel.fontSizeOf(context),
           color: Theme.of(
             context,
           ).colorScheme.onSurface.withAlpha(_emptyTextAlpha),

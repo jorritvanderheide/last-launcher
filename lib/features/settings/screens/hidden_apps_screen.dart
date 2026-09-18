@@ -147,7 +147,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
               child: Text(
                 AppLocalizations.of(context)!.noHiddenApps,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: AppLabel.fontSize,
+                  fontSize: AppLabel.fontSizeOf(context),
                   color: Theme.of(context).colorScheme.onSurface.withAlpha(130),
                 ),
               ),

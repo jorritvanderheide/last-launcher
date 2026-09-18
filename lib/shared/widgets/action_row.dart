@@ -57,7 +57,7 @@ class ActionRow extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: AppLabel.fontSize,
+                  fontSize: AppLabel.fontSizeOf(context),
                   decoration: textDecoration,
                   decorationThickness: decorationThickness,
                   color: opacity < 1.0

@@ -78,6 +78,18 @@ class AppLocalizationsSv extends AppLocalizations {
   String get fontMono => 'Monospace';
 
   @override
+  String get textSizeTitle => 'Textstorlek';
+
+  @override
+  String get textSizeSmall => 'Liten';
+
+  @override
+  String get textSizeMedium => 'Mellan';
+
+  @override
+  String get textSizeLarge => 'Stor';
+
+  @override
   String get terminalPrompt => 'Terminalprompt';
 
   @override

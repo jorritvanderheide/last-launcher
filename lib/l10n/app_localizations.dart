@@ -260,6 +260,30 @@ abstract class AppLocalizations {
   /// **'Monospace'**
   String get fontMono;
 
+  /// No description provided for @textSizeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Text size'**
+  String get textSizeTitle;
+
+  /// No description provided for @textSizeSmall.
+  ///
+  /// In en, this message translates to:
+  /// **'Small'**
+  String get textSizeSmall;
+
+  /// No description provided for @textSizeMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get textSizeMedium;
+
+  /// No description provided for @textSizeLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get textSizeLarge;
+
   /// No description provided for @terminalPrompt.
   ///
   /// In en, this message translates to:

@@ -78,6 +78,18 @@ class AppLocalizationsHi extends AppLocalizations {
   String get fontMono => 'मोनोस्पेस';
 
   @override
+  String get textSizeTitle => 'टेक्स्ट का आकार';
+
+  @override
+  String get textSizeSmall => 'छोटा';
+
+  @override
+  String get textSizeMedium => 'मध्यम';
+
+  @override
+  String get textSizeLarge => 'बड़ा';
+
+  @override
   String get terminalPrompt => 'टर्मिनल प्रॉम्प्ट';
 
   @override

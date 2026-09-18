@@ -78,6 +78,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get fontMono => 'Monospace';
 
   @override
+  String get textSizeTitle => 'Taille du texte';
+
+  @override
+  String get textSizeSmall => 'Petite';
+
+  @override
+  String get textSizeMedium => 'Moyenne';
+
+  @override
+  String get textSizeLarge => 'Grande';
+
+  @override
   String get terminalPrompt => 'Invite de commande';
 
   @override

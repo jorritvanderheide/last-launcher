@@ -78,6 +78,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get fontMono => '等幅';
 
   @override
+  String get textSizeTitle => '文字サイズ';
+
+  @override
+  String get textSizeSmall => '小';
+
+  @override
+  String get textSizeMedium => '中';
+
+  @override
+  String get textSizeLarge => '大';
+
+  @override
   String get terminalPrompt => 'ターミナルプロンプト';
 
   @override

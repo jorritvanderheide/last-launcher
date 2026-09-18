@@ -21,6 +21,12 @@ ThemeData _themeFor(Brightness brightness, _ThemeSpec spec) => _themes
 
 /// How much each scanline level darkens or lightens the screen, relative to
 /// the original look.
+double _labelFontSize(TextSize size) => switch (size) {
+  TextSize.small => 22,
+  TextSize.medium => 28,
+  TextSize.large => 34,
+};
+
 double _scanlineStrength(ScanlineLevel level) => switch (level) {
   ScanlineLevel.off => 0,
   ScanlineLevel.light => 0.5,
@@ -242,6 +248,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
           theme: _themeFor(Brightness.light, spec),
           darkTheme: _themeFor(Brightness.dark, spec),
           builder: (context, child) => AppearanceScope(
+            labelFontSize: _labelFontSize(settings.textSize.value),
             terminalPrompt: settings.terminalPrompt.value,
             animate:
                 settings.animations.value &&

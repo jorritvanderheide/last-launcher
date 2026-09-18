@@ -9,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum FontChoice { standard, mono }
 
+enum TextSize { small, medium, large }
+
 enum ScanlineLevel { off, light, medium, strong }
 
 /// A named bundle of look options. Derived from the options themselves:
@@ -68,6 +70,7 @@ class SettingsState extends ChangeNotifier {
     ThemeMode.system,
   );
   late final font = _enum('font', FontChoice.values, FontChoice.standard);
+  late final textSize = _enum('text_size', TextSize.values, TextSize.medium);
   late final terminalPrompt = _bool('terminal_prompt', false);
   // Effects: only drawn in dark mode, where they were designed.
   late final glow = _bool('glow', false);
@@ -195,6 +198,7 @@ class SettingsState extends ChangeNotifier {
   late final Listenable appearanceChanged = Listenable.merge([
     themeMode,
     font,
+    textSize,
     terminalPrompt,
     glow,
     scanlines,

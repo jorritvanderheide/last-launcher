@@ -78,6 +78,18 @@ class AppLocalizationsCs extends AppLocalizations {
   String get fontMono => 'Neproporcionální';
 
   @override
+  String get textSizeTitle => 'Velikost textu';
+
+  @override
+  String get textSizeSmall => 'Malý';
+
+  @override
+  String get textSizeMedium => 'Střední';
+
+  @override
+  String get textSizeLarge => 'Velký';
+
+  @override
   String get terminalPrompt => 'Příkazový řádek';
 
   @override

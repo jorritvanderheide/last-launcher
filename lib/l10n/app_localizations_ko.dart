@@ -78,6 +78,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get fontMono => '고정폭';
 
   @override
+  String get textSizeTitle => '글자 크기';
+
+  @override
+  String get textSizeSmall => '작게';
+
+  @override
+  String get textSizeMedium => '보통';
+
+  @override
+  String get textSizeLarge => '크게';
+
+  @override
   String get terminalPrompt => '터미널 프롬프트';
 
   @override

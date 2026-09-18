@@ -78,6 +78,18 @@ class AppLocalizationsNl extends AppLocalizations {
   String get fontMono => 'Monospace';
 
   @override
+  String get textSizeTitle => 'Tekstgrootte';
+
+  @override
+  String get textSizeSmall => 'Klein';
+
+  @override
+  String get textSizeMedium => 'Middel';
+
+  @override
+  String get textSizeLarge => 'Groot';
+
+  @override
   String get terminalPrompt => 'Terminalprompt';
 
   @override
