@@ -7,6 +7,7 @@ import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/modules/launcher_module.dart';
 import 'package:last_launcher/features/modules/none_module.dart';
 import 'package:last_launcher/features/home/screens/home_screen.dart';
+import 'package:last_launcher/features/home/shell_gestures.dart';
 import 'package:last_launcher/features/settings/screens/settings_screen.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/settings/widgets/settings_tiles.dart';
@@ -16,46 +17,15 @@ import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 
 const _maxSheetFraction = 0.9;
-const _dragStartThreshold = 20.0;
-const _swipeVelocityThreshold = 300.0;
 const _pageAnimDuration = Duration(milliseconds: 100);
-
-/// Fraction a drag must cover to snap forward instead of back.
-const _snapDeltaFraction = 0.05;
 
 /// Sheet fractions within this of 0 or [_maxSheetFraction] count as settled.
 const _sheetSettledEpsilon = 0.01;
-
-/// How long after a tap a second tap still counts as a double tap.
-const _doubleTapWindow = Duration(milliseconds: 300);
-
-/// How far the second tap may land from the first.
-const _doubleTapSlop = 40.0;
 
 /// Which of the two drags a pointer has committed to, if any. A pointer can
 /// only ever drive one of them, so this replaces a pair of booleans that could
 /// otherwise both be set.
 enum _DragMode { none, sheet, page }
-
-/// Where a page drag settles when released: one slot on from [start] when
-/// it went far or fast enough that way, bounded by the configured sides,
-/// else back where it started.
-@visibleForTesting
-double pageSnapTarget({
-  required double start,
-  required double delta,
-  required double velocity,
-  required double lower,
-  required double upper,
-}) {
-  if (delta > _snapDeltaFraction || velocity > _swipeVelocityThreshold) {
-    return (start + 1).clamp(lower, upper);
-  }
-  if (delta < -_snapDeltaFraction || velocity < -_swipeVelocityThreshold) {
-    return (start - 1).clamp(lower, upper);
-  }
-  return start;
-}
 
 class LauncherShell extends StatefulWidget {
   const LauncherShell({
@@ -333,12 +303,12 @@ class _LauncherShellState extends State<LauncherShell>
         !_isReorderingHome &&
         !_isReorderingTasks) {
       final now = DateTime.now();
-      final samePosition =
-          _lastTapPosition != null &&
-          (event.position - _lastTapPosition!).distance < _doubleTapSlop;
-      if (_lastTapTime != null &&
-          samePosition &&
-          now.difference(_lastTapTime!) < _doubleTapWindow) {
+      if (isDoubleTap(
+        lastTime: _lastTapTime,
+        lastPosition: _lastTapPosition,
+        now: now,
+        position: event.position,
+      )) {
         _lastTapTime = null;
         _lastTapPosition = null;
         _handleDoubleTap();
@@ -357,74 +327,55 @@ class _LauncherShellState extends State<LauncherShell>
 
     final dy = start.dy - event.position.dy; // positive = upward
     final dx = start.dx - event.position.dx; // positive = left
-    final absDx = dx.abs();
-    final absDy = dy.abs();
+    final hasLeft = widget.settingsState.leftPanel.value is! NoneModule;
+    final hasRight = widget.settingsState.rightPanel.value is! NoneModule;
 
     if (_dragMode == _DragMode.none) {
-      if (absDx < _dragStartThreshold && absDy < _dragStartThreshold) return;
-
-      final hasLeft = widget.settingsState.leftPanel.value is! NoneModule;
-      final hasRight = widget.settingsState.rightPanel.value is! NoneModule;
-      if (absDx > absDy &&
-          !_drawerOpen &&
-          (hasLeft || hasRight) &&
-          !_isReorderingTasks &&
-          !_isReorderingHome) {
-        // Horizontal drag — page navigation.
-        // dx > 0: finger moved leftward → fraction increases (toward right).
-        // dx < 0: finger moved rightward → fraction decreases (toward left).
-        final lowerBound = hasLeft ? -1.0 : 0.0;
-        final upperBound = hasRight ? 1.0 : 0.0;
-        if (dx > 0 && _pageFraction >= upperBound) return;
-        if (dx < 0 && _pageFraction <= lowerBound) return;
-        _dragMode = _DragMode.page;
-        _cancelDoubleTap();
-        _dragStartFraction = _pageFraction;
-      } else if (absDy > absDx) {
-        // Vertical drag — sheet.
-        // Only drag the sheet when on home page and it can actually move.
-        if (!_onHomePage || _isReorderingHome) return;
-        if (dy > 0 && !_drawerOpen) {
-          // Upward drag with drawer closed — open sheet.
+      switch (classifyDrag(
+        dx: dx,
+        dy: dy,
+        hasLeft: hasLeft,
+        hasRight: hasRight,
+        pageFraction: _pageFraction,
+        onHomePage: _onHomePage,
+        drawerOpen: _drawerOpen,
+        listWasAtTop: _listWasAtTopOnDown,
+        reorderingHome: _isReorderingHome,
+        reorderingTasks: _isReorderingTasks,
+      )) {
+        case DragStart.none:
+          return;
+        case DragStart.page:
+          _dragMode = _DragMode.page;
+          _dragStartFraction = _pageFraction;
+        case DragStart.sheet:
           _dragMode = _DragMode.sheet;
-          _cancelDoubleTap();
           _dragStartFraction = _sheetFraction;
-        } else if (_drawerOpen) {
-          if (dy > 0) return;
-          if (dy < 0 && !_listWasAtTopOnDown) return;
-          _dragMode = _DragMode.sheet;
-          _cancelDoubleTap();
-          _dragStartFraction = _sheetFraction;
-        } else {
-          // Downward drag with drawer closed — expand quick settings.
+        case DragStart.quickSettings:
           widget.appChannel.expandQuickSettings();
           _cancelDoubleTap();
           _resetPointer();
           return;
-        }
-      } else {
-        return;
       }
+      _cancelDoubleTap();
     }
 
     if (_dragMode == _DragMode.page) {
-      final screenWidth = MediaQuery.sizeOf(context).width;
-      final threshold = dx >= 0 ? _dragStartThreshold : -_dragStartThreshold;
-      final delta = (dx - threshold) / screenWidth;
-      final hasLeft = widget.settingsState.leftPanel.value is! NoneModule;
-      final hasRight = widget.settingsState.rightPanel.value is! NoneModule;
-      final fraction = (_dragStartFraction + delta).clamp(
-        hasLeft ? -1.0 : 0.0,
-        hasRight ? 1.0 : 0.0,
+      final fraction = followDrag(
+        start: _dragStartFraction,
+        travel: dx,
+        extent: MediaQuery.sizeOf(context).width,
+        lower: hasLeft ? -1.0 : 0.0,
+        upper: hasRight ? 1.0 : 0.0,
       );
       setState(() => _pageFraction = fraction);
     } else if (_dragMode == _DragMode.sheet) {
-      final screenHeight = MediaQuery.sizeOf(context).height;
-      final threshold = dy >= 0 ? _dragStartThreshold : -_dragStartThreshold;
-      final delta = (dy - threshold) / screenHeight;
-      final fraction = (_dragStartFraction + delta).clamp(
-        0.0,
-        _maxSheetFraction,
+      final fraction = followDrag(
+        start: _dragStartFraction,
+        travel: dy,
+        extent: MediaQuery.sizeOf(context).height,
+        lower: 0,
+        upper: _maxSheetFraction,
       );
       setState(() => _sheetFraction = fraction);
     }
@@ -475,15 +426,17 @@ class _LauncherShellState extends State<LauncherShell>
     }
 
     if (mode == _DragMode.sheet) {
-      final vy = velocity.dy;
-      if (_sheetFraction > _dragStartFraction + _snapDeltaFraction ||
-          vy > _swipeVelocityThreshold) {
-        _animateSheetTo(_maxSheetFraction);
-      } else if (_sheetFraction < _dragStartFraction - _snapDeltaFraction ||
-          vy < -_swipeVelocityThreshold) {
-        _closeDrawer();
-      } else {
-        _animateSheetTo(_dragStartFraction);
+      switch (sheetSnap(
+        start: _dragStartFraction,
+        fraction: _sheetFraction,
+        velocity: velocity.dy,
+      )) {
+        case SheetSettle.open:
+          _animateSheetTo(_maxSheetFraction);
+        case SheetSettle.close:
+          _closeDrawer();
+        case SheetSettle.back:
+          _animateSheetTo(_dragStartFraction);
       }
       return;
     }
