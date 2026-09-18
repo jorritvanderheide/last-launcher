@@ -90,6 +90,18 @@ class AppLocalizationsNl extends AppLocalizations {
   String get textSizeLarge => 'Groot';
 
   @override
+  String get textAlignTitle => 'Tekstuitlijning';
+
+  @override
+  String get alignLeft => 'Links';
+
+  @override
+  String get alignCenter => 'Midden';
+
+  @override
+  String get alignRight => 'Rechts';
+
+  @override
   String get accentColor => 'Accentkleur';
 
   @override

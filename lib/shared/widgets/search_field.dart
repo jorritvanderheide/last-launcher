@@ -41,10 +41,11 @@ class AppSearchField extends StatelessWidget {
         vertical: AppLabel.verticalPadding,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: appearance.labelCrossAxis,
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
+            textAlign: appearance.labelAlign,
             controller: controller,
             focusNode: focusNode,
             onChanged: onChanged,
@@ -134,6 +135,7 @@ class _ExtraField extends StatelessWidget {
                 final text = controller.text;
                 final focused = MediaQuery.viewInsetsOf(context).bottom > 0;
                 return Row(
+                  mainAxisAlignment: AppearanceScope.of(context).labelMainAxis,
                   children: [
                     Text('\$ ', style: style),
                     Flexible(

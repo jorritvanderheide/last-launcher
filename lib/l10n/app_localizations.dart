@@ -284,6 +284,30 @@ abstract class AppLocalizations {
   /// **'Large'**
   String get textSizeLarge;
 
+  /// No description provided for @textAlignTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Text alignment'**
+  String get textAlignTitle;
+
+  /// No description provided for @alignLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get alignLeft;
+
+  /// No description provided for @alignCenter.
+  ///
+  /// In en, this message translates to:
+  /// **'Center'**
+  String get alignCenter;
+
+  /// No description provided for @alignRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right'**
+  String get alignRight;
+
   /// No description provided for @accentColor.
   ///
   /// In en, this message translates to:

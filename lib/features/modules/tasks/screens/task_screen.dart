@@ -6,6 +6,7 @@ import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/modules/tasks/task.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 import 'package:last_launcher/shared/widgets/rename_dialog.dart';
@@ -264,6 +265,7 @@ class TaskScreenState extends State<TaskScreen> {
                   return Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
+                      right: 20,
                       top: 32 + AppLabel.verticalPadding,
                     ),
                     child: ValueListenableBuilder<TextEditingValue>(
@@ -274,6 +276,7 @@ class TaskScreenState extends State<TaskScreen> {
                             : l10n.returnToAddTask;
                         return Text(
                           hint,
+                          textAlign: AppearanceScope.of(context).labelAlign,
                           style: Theme.of(context).textTheme.titleLarge
                               ?.copyWith(
                                 fontSize: AppLabel.fontSizeOf(context),

@@ -90,6 +90,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get textSizeLarge => '大';
 
   @override
+  String get textAlignTitle => '文字の配置';
+
+  @override
+  String get alignLeft => '左';
+
+  @override
+  String get alignCenter => '中央';
+
+  @override
+  String get alignRight => '右';
+
+  @override
   String get accentColor => 'アクセントカラー';
 
   @override

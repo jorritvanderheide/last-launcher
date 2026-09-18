@@ -90,6 +90,18 @@ class AppLocalizationsFi extends AppLocalizations {
   String get textSizeLarge => 'Suuri';
 
   @override
+  String get textAlignTitle => 'Tekstin tasaus';
+
+  @override
+  String get alignLeft => 'Vasen';
+
+  @override
+  String get alignCenter => 'Keskitetty';
+
+  @override
+  String get alignRight => 'Oikea';
+
+  @override
   String get accentColor => 'Korostusväri';
 
   @override

@@ -90,6 +90,18 @@ class AppLocalizationsSv extends AppLocalizations {
   String get textSizeLarge => 'Stor';
 
   @override
+  String get textAlignTitle => 'Textjustering';
+
+  @override
+  String get alignLeft => 'Vänster';
+
+  @override
+  String get alignCenter => 'Centrerad';
+
+  @override
+  String get alignRight => 'Höger';
+
+  @override
   String get accentColor => 'Accentfärg';
 
   @override

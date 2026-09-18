@@ -54,13 +54,17 @@ class AppLabel extends StatelessWidget {
         top: verticalPadding,
         bottom: verticalPadding,
       ),
-      child: _GlitchText(
-        label: label,
-        style: style,
-        hint: hint,
-        hintOpacity: hintOpacity,
-        hintAlphaOnly: hintAlphaOnly,
-        textOpacity: opacity,
+      // Aligns itself rather than relying on the parent to force full width.
+      child: Align(
+        alignment: Alignment(AppearanceScope.of(context).labelAlignX, 0),
+        child: _GlitchText(
+          label: label,
+          style: style,
+          hint: hint,
+          hintOpacity: hintOpacity,
+          hintAlphaOnly: hintAlphaOnly,
+          textOpacity: opacity,
+        ),
       ),
     );
 
@@ -190,6 +194,7 @@ class _GlitchTextState extends State<_GlitchText> {
         ),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
+        textAlign: AppearanceScope.of(context).labelAlign,
       );
     }
 
@@ -203,6 +208,7 @@ class _GlitchTextState extends State<_GlitchText> {
         ),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
+        textAlign: AppearanceScope.of(context).labelAlign,
       );
     }
 
@@ -211,6 +217,7 @@ class _GlitchTextState extends State<_GlitchText> {
       intensity > 0 ? glitchText(widget.label, intensity) : widget.label,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
+      textAlign: AppearanceScope.of(context).labelAlign,
       style: widget.style,
     );
   }

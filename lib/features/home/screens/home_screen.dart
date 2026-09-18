@@ -7,6 +7,7 @@ import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:last_launcher/shared/widgets/rename_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -85,6 +86,7 @@ class HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _withWorkDot(Widget child, PinnedApp app) {
+    final onRight = AppearanceScope.of(context).markersOnRight;
     if (!app.isWorkApp || !widget.settingsState.workAppDotOnHomeActive) {
       return child;
     }
@@ -97,7 +99,8 @@ class HomeScreenState extends State<HomeScreen> {
       children: [
         child,
         Positioned(
-          left: -5,
+          left: onRight ? null : -5,
+          right: onRight ? -5 : null,
           top: 0,
           bottom: 0,
           child: IgnorePointer(
@@ -121,7 +124,7 @@ class HomeScreenState extends State<HomeScreen> {
             itemHeight: AppLabel.itemHeightFor(AppLabel.fontSizeOf(context)),
           );
           return Align(
-            alignment: Alignment.centerLeft,
+            alignment: Alignment(AppearanceScope.of(context).labelAlignX, 0),
             child: ListenableBuilder(
               listenable: _mergedState,
               builder: (context, _) {
@@ -155,7 +158,11 @@ class HomeScreenState extends State<HomeScreen> {
                         horizontal: 20,
                         vertical: AppLabel.verticalPadding,
                       ),
-                      child: Text(text, style: style),
+                      child: Text(
+                        text,
+                        style: style,
+                        textAlign: AppearanceScope.of(context).labelAlign,
+                      ),
                     );
                     children.add(
                       onTap != null
@@ -179,7 +186,9 @@ class HomeScreenState extends State<HomeScreen> {
 
                   return Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: AppearanceScope.of(
+                      context,
+                    ).labelCrossAxis,
                     children: children,
                   );
                 }

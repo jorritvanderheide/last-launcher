@@ -25,6 +25,7 @@ void main() {
       expect(state.scanlines.value, ScanlineLevel.off);
       expect(state.terminalPrompt.value, false);
       expect(state.animations.value, true);
+      expect(state.labelAlignment.value, LabelAlignment.left);
     });
 
     test('boolean defaults', () {

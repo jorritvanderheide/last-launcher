@@ -90,6 +90,18 @@ class AppLocalizationsHi extends AppLocalizations {
   String get textSizeLarge => 'बड़ा';
 
   @override
+  String get textAlignTitle => 'टेक्स्ट संरेखण';
+
+  @override
+  String get alignLeft => 'बाएँ';
+
+  @override
+  String get alignCenter => 'बीच में';
+
+  @override
+  String get alignRight => 'दाएँ';
+
+  @override
   String get accentColor => 'एक्सेंट रंग';
 
   @override

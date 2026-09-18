@@ -90,6 +90,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get textSizeLarge => '크게';
 
   @override
+  String get textAlignTitle => '텍스트 정렬';
+
+  @override
+  String get alignLeft => '왼쪽';
+
+  @override
+  String get alignCenter => '가운데';
+
+  @override
+  String get alignRight => '오른쪽';
+
+  @override
   String get accentColor => '강조 색상';
 
   @override

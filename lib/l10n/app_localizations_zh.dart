@@ -90,6 +90,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get textSizeLarge => '大';
 
   @override
+  String get textAlignTitle => '文字對齊';
+
+  @override
+  String get alignLeft => '靠左';
+
+  @override
+  String get alignCenter => '置中';
+
+  @override
+  String get alignRight => '靠右';
+
+  @override
   String get accentColor => '強調色';
 
   @override

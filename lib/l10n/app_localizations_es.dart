@@ -90,6 +90,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get textSizeLarge => 'Grande';
 
   @override
+  String get textAlignTitle => 'Alineación del texto';
+
+  @override
+  String get alignLeft => 'Izquierda';
+
+  @override
+  String get alignCenter => 'Centro';
+
+  @override
+  String get alignRight => 'Derecha';
+
+  @override
   String get accentColor => 'Color de acento';
 
   @override

@@ -90,6 +90,18 @@ class AppLocalizationsCs extends AppLocalizations {
   String get textSizeLarge => 'Velký';
 
   @override
+  String get textAlignTitle => 'Zarovnání textu';
+
+  @override
+  String get alignLeft => 'Vlevo';
+
+  @override
+  String get alignCenter => 'Na střed';
+
+  @override
+  String get alignRight => 'Vpravo';
+
+  @override
   String get accentColor => 'Barva zvýraznění';
 
   @override

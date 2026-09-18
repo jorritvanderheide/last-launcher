@@ -11,6 +11,8 @@ enum FontChoice { standard, mono }
 
 enum TextSize { small, medium, large }
 
+enum LabelAlignment { left, center, right }
+
 enum ScanlineLevel { off, light, medium, strong }
 
 /// A named bundle of look options. Derived from the options themselves:
@@ -75,6 +77,11 @@ class SettingsState extends ChangeNotifier {
   );
   late final font = _enum('font', FontChoice.values, FontChoice.standard);
   late final textSize = _enum('text_size', TextSize.values, TextSize.medium);
+  late final labelAlignment = _enum(
+    'label_alignment',
+    LabelAlignment.values,
+    LabelAlignment.left,
+  );
   late final accentColor = _bool('accent_color', false);
   late final terminalPrompt = _bool('terminal_prompt', false);
   // Effects: only drawn in dark mode, where they were designed.
@@ -208,6 +215,7 @@ class SettingsState extends ChangeNotifier {
     themeMode,
     font,
     textSize,
+    labelAlignment,
     accentColor,
     terminalPrompt,
     glow,

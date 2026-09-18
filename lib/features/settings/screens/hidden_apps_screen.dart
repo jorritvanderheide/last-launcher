@@ -6,6 +6,7 @@ import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 import 'package:last_launcher/shared/widgets/rename_dialog.dart';
 
@@ -34,6 +35,7 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
   String? _activeAppKey;
 
   Widget _withWorkDot(Widget child, AppInfo app) {
+    final onRight = AppearanceScope.of(context).markersOnRight;
     if (!app.isWorkApp || !widget.settingsState.workAppDotActive) return child;
     final dotColor = Theme.of(
       context,
@@ -43,7 +45,8 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
       children: [
         child,
         Positioned(
-          left: -5,
+          left: onRight ? null : -5,
+          right: onRight ? -5 : null,
           top: 0,
           bottom: 0,
           child: IgnorePointer(
@@ -129,10 +132,12 @@ class _HiddenAppsScreenState extends State<HiddenAppsScreen> {
             return Padding(
               padding: const EdgeInsets.only(
                 left: 20,
+                right: 20,
                 top: 8 + AppLabel.verticalPadding,
               ),
               child: Text(
                 AppLocalizations.of(context)!.noHiddenApps,
+                textAlign: AppearanceScope.of(context).labelAlign,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontSize: AppLabel.fontSizeOf(context),
                   color: Theme.of(context).colorScheme.onSurface.withAlpha(130),

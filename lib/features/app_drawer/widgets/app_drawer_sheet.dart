@@ -5,6 +5,7 @@ import 'package:last_launcher/features/app_drawer/ranking.dart';
 import 'package:last_launcher/features/app_drawer/search.dart';
 import 'package:last_launcher/shared/search_focus_controller.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:last_launcher/shared/widgets/fade_overflow.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
 import 'package:last_launcher/shared/widgets/rename_dialog.dart';
@@ -258,6 +259,7 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
   // ------------------------------------------------------------------
 
   Widget _withWorkDot(Widget child, AppInfo app, double opacity) {
+    final onRight = AppearanceScope.of(context).markersOnRight;
     if (!app.isWorkApp || !widget.settingsState.workAppDotActive) return child;
     final dotColor = Theme.of(
       context,
@@ -267,7 +269,8 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
       children: [
         child,
         Positioned(
-          left: -5,
+          left: onRight ? null : -5,
+          right: onRight ? -5 : null,
           top: 0,
           bottom: 0,
           child: IgnorePointer(
@@ -394,10 +397,12 @@ class _AppDrawerSheetState extends State<AppDrawerSheet>
     return Padding(
       padding: const EdgeInsets.only(
         left: 20,
+        right: 20,
         top: 8 + AppLabel.verticalPadding,
       ),
       child: Text(
         AppLocalizations.of(context)!.noResults,
+        textAlign: AppearanceScope.of(context).labelAlign,
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
           fontSize: AppLabel.fontSizeOf(context),
           color: Theme.of(
