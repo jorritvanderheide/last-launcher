@@ -27,6 +27,8 @@
   "textSizeSmall": "Liten",
   "textSizeMedium": "Mellan",
   "textSizeLarge": "Stor",
+  "accentColor": "Accentfärg",
+  "accentColorSubtitle": "Färga text och bakgrund med systemets accentfärg",
   "terminalPrompt": "Terminalprompt",
   "terminalPromptSubtitle": "Visa sökningen som en kommandorad",
   "sectionEffects": "Effekter",

@@ -91,6 +91,13 @@ class AppLocalizationsPl extends AppLocalizations {
   String get textSizeLarge => 'Duży';
 
   @override
+  String get accentColor => 'Kolor akcentu';
+
+  @override
+  String get accentColorSubtitle =>
+      'Zabarw tekst i tło systemowym kolorem akcentu';
+
+  @override
   String get terminalPrompt => 'Wiersz poleceń';
 
   @override

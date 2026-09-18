@@ -27,6 +27,8 @@
   "textSizeSmall": "작게",
   "textSizeMedium": "보통",
   "textSizeLarge": "크게",
+  "accentColor": "강조 색상",
+  "accentColorSubtitle": "텍스트와 배경에 시스템 강조 색상 적용",
   "terminalPrompt": "터미널 프롬프트",
   "terminalPromptSubtitle": "검색을 명령줄처럼 표시",
   "sectionEffects": "효과",

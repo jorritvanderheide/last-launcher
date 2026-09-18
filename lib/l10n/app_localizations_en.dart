@@ -90,6 +90,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get textSizeLarge => 'Large';
 
   @override
+  String get accentColor => 'Accent color';
+
+  @override
+  String get accentColorSubtitle =>
+      'Tint text and background with your system accent';
+
+  @override
   String get terminalPrompt => 'Terminal prompt';
 
   @override

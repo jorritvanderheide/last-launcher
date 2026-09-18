@@ -90,6 +90,13 @@ class AppLocalizationsSv extends AppLocalizations {
   String get textSizeLarge => 'Stor';
 
   @override
+  String get accentColor => 'Accentfärg';
+
+  @override
+  String get accentColorSubtitle =>
+      'Färga text och bakgrund med systemets accentfärg';
+
+  @override
   String get terminalPrompt => 'Terminalprompt';
 
   @override

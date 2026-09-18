@@ -284,6 +284,18 @@ abstract class AppLocalizations {
   /// **'Large'**
   String get textSizeLarge;
 
+  /// No description provided for @accentColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Accent color'**
+  String get accentColor;
+
+  /// No description provided for @accentColorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tint text and background with your system accent'**
+  String get accentColorSubtitle;
+
   /// No description provided for @terminalPrompt.
   ///
   /// In en, this message translates to:

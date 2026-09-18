@@ -90,6 +90,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get textSizeLarge => '大';
 
   @override
+  String get accentColor => '強調色';
+
+  @override
+  String get accentColorSubtitle => '以系統強調色為文字與背景上色';
+
+  @override
   String get terminalPrompt => '終端機提示字元';
 
   @override

@@ -27,6 +27,8 @@
   "textSizeSmall": "Klein",
   "textSizeMedium": "Middel",
   "textSizeLarge": "Groot",
+  "accentColor": "Accentkleur",
+  "accentColorSubtitle": "Tekst en achtergrond kleuren met de accentkleur van het systeem",
   "terminalPrompt": "Terminalprompt",
   "terminalPromptSubtitle": "Zoeken tonen als opdrachtregel",
   "sectionEffects": "Effecten",

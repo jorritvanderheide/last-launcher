@@ -90,6 +90,13 @@ class AppLocalizationsCs extends AppLocalizations {
   String get textSizeLarge => 'Velký';
 
   @override
+  String get accentColor => 'Barva zvýraznění';
+
+  @override
+  String get accentColorSubtitle =>
+      'Obarvit text a pozadí systémovou barvou zvýraznění';
+
+  @override
   String get terminalPrompt => 'Příkazový řádek';
 
   @override

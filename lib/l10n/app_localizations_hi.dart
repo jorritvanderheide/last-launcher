@@ -90,6 +90,13 @@ class AppLocalizationsHi extends AppLocalizations {
   String get textSizeLarge => 'बड़ा';
 
   @override
+  String get accentColor => 'एक्सेंट रंग';
+
+  @override
+  String get accentColorSubtitle =>
+      'टेक्स्ट और बैकग्राउंड को सिस्टम के एक्सेंट रंग से रंगें';
+
+  @override
   String get terminalPrompt => 'टर्मिनल प्रॉम्प्ट';
 
   @override

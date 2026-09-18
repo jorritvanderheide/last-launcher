@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 class AppearanceScope extends InheritedWidget {
   const AppearanceScope({
     required this.labelFontSize,
+    required this.accentAvailable,
     required this.terminalPrompt,
     required this.animate,
     required super.child,
@@ -17,6 +18,9 @@ class AppearanceScope extends InheritedWidget {
 
   /// Font size of app labels and everything that lines up with them.
   final double labelFontSize;
+
+  /// Whether the system has an accent colour to theme with (Android 12+).
+  final bool accentAvailable;
 
   /// Show search fields as a command line: a `$` prompt and block cursor.
   final bool terminalPrompt;
@@ -29,6 +33,7 @@ class AppearanceScope extends InheritedWidget {
   /// The look outside any scope, e.g. in widget tests.
   static const _fallback = AppearanceScope(
     labelFontSize: 28,
+    accentAvailable: false,
     terminalPrompt: false,
     animate: true,
     child: SizedBox.shrink(),
@@ -41,6 +46,7 @@ class AppearanceScope extends InheritedWidget {
   @override
   bool updateShouldNotify(AppearanceScope oldWidget) =>
       labelFontSize != oldWidget.labelFontSize ||
+      accentAvailable != oldWidget.accentAvailable ||
       terminalPrompt != oldWidget.terminalPrompt ||
       animate != oldWidget.animate;
 }

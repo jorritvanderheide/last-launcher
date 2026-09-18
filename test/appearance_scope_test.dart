@@ -17,6 +17,7 @@ Future<void> _pumpField(WidgetTester tester, {AppearanceScope? scope}) async {
             ? field
             : AppearanceScope(
                 labelFontSize: scope.labelFontSize,
+                accentAvailable: scope.accentAvailable,
                 terminalPrompt: scope.terminalPrompt,
                 animate: scope.animate,
                 child: field,
@@ -37,6 +38,7 @@ void main() {
       tester,
       scope: const AppearanceScope(
         labelFontSize: 28,
+        accentAvailable: false,
         terminalPrompt: true,
         animate: false,
         child: SizedBox.shrink(),

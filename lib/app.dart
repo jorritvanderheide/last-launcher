@@ -12,21 +12,20 @@ import 'package:last_launcher/shared/widgets/scanline_overlay.dart';
 
 /// The parts of the look that end up in [ThemeData]. A record, so equal
 /// looks compare equal and each theme is only ever built once.
-typedef _ThemeSpec = ({bool mono, bool glow});
+typedef _ThemeSpec = ({bool mono, bool glow, AccentColors? accent});
 
 final _themes = <(Brightness, _ThemeSpec), ThemeData>{};
 
 ThemeData _themeFor(Brightness brightness, _ThemeSpec spec) => _themes
     .putIfAbsent((brightness, spec), () => _buildTheme(brightness, spec));
 
-/// How much each scanline level darkens or lightens the screen, relative to
-/// the original look.
 double _labelFontSize(TextSize size) => switch (size) {
   TextSize.small => 22,
   TextSize.medium => 28,
   TextSize.large => 34,
 };
 
+/// How strongly each scanline level draws, relative to the original look.
 double _scanlineStrength(ScanlineLevel level) => switch (level) {
   ScanlineLevel.off => 0,
   ScanlineLevel.light => 0.5,
@@ -36,8 +35,16 @@ double _scanlineStrength(ScanlineLevel level) => switch (level) {
 
 ThemeData _buildTheme(Brightness brightness, _ThemeSpec spec) {
   final isDark = brightness == Brightness.dark;
-  final textColor = isDark ? Colors.white : Colors.black;
-  final glowColor = isDark ? Colors.white : Colors.black;
+  final accent = spec.accent;
+  final textColor = accent == null
+      ? (isDark ? Colors.white : Colors.black)
+      : (isDark ? accent.onDark : accent.onLight);
+  final glowColor = textColor;
+
+  // With the accent on, backgrounds take on a faint tint of it.
+  Color tinted(Color background) => accent == null
+      ? background
+      : Color.alphaBlend(accent.tint.withAlpha(isDark ? 20 : 26), background);
 
   final colorScheme = ColorScheme(
     brightness: brightness,
@@ -45,21 +52,21 @@ ThemeData _buildTheme(Brightness brightness, _ThemeSpec spec) {
     onPrimary: isDark ? Colors.black : Colors.white,
     secondary: textColor,
     onSecondary: isDark ? Colors.black : Colors.white,
-    surface: isDark ? Colors.black : Colors.white,
+    surface: tinted(isDark ? Colors.black : Colors.white),
     onSurface: textColor,
     error: Colors.red,
     onError: Colors.white,
     inverseSurface: textColor,
     onInverseSurface: isDark ? Colors.black : Colors.white,
-    surfaceContainerLow: isDark
-        ? const Color(0xFF0A0A0A)
-        : const Color(0xFFF5F5F5),
-    surfaceContainer: isDark
-        ? const Color(0xFF121212)
-        : const Color(0xFFEEEEEE),
-    surfaceContainerHigh: isDark
-        ? const Color(0xFF1A1A1A)
-        : const Color(0xFFE0E0E0),
+    surfaceContainerLow: tinted(
+      isDark ? const Color(0xFF0A0A0A) : const Color(0xFFF5F5F5),
+    ),
+    surfaceContainer: tinted(
+      isDark ? const Color(0xFF121212) : const Color(0xFFEEEEEE),
+    ),
+    surfaceContainerHigh: tinted(
+      isDark ? const Color(0xFF1A1A1A) : const Color(0xFFE0E0E0),
+    ),
     outline: isDark ? textColor.withAlpha(60) : Colors.black26,
   );
 
@@ -173,10 +180,15 @@ class LastLauncherApp extends StatefulWidget {
 
 class _LastLauncherAppState extends State<LastLauncherApp>
     with WidgetsBindingObserver {
+  /// The system accent, re-read on every resume since the user can change it
+  /// (with the wallpaper, say) while the launcher is in the background.
+  AccentColors? _accent;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _refreshAccent();
     widget.settingsState.addListener(_syncFullscreen);
     _syncFullscreen();
     _maybeClearCompleted();
@@ -193,6 +205,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       _refreshApps();
+      _refreshAccent();
       _maybeClearCompleted();
       _syncFullscreen();
     }
@@ -201,6 +214,11 @@ class _LastLauncherAppState extends State<LastLauncherApp>
   Future<void> _refreshApps() async {
     await widget.appListState.loadApps();
     await widget.homeState.pruneMissing(widget.appListState.installedPackages);
+  }
+
+  Future<void> _refreshAccent() async {
+    final accent = await widget.appChannel.getAccentColors();
+    if (mounted && accent != _accent) setState(() => _accent = accent);
   }
 
   void _syncFullscreen() {
@@ -222,6 +240,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
         final spec = (
           mono: settings.font.value == FontChoice.mono,
           glow: settings.glow.value,
+          accent: settings.accentColor.value ? _accent : null,
         );
         final brightness = switch (settings.themeMode.value) {
           ThemeMode.light => Brightness.light,
@@ -249,6 +268,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
           darkTheme: _themeFor(Brightness.dark, spec),
           builder: (context, child) => AppearanceScope(
             labelFontSize: _labelFontSize(settings.textSize.value),
+            accentAvailable: _accent != null,
             terminalPrompt: settings.terminalPrompt.value,
             animate:
                 settings.animations.value &&

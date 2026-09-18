@@ -27,6 +27,8 @@
   "textSizeSmall": "Mały",
   "textSizeMedium": "Średni",
   "textSizeLarge": "Duży",
+  "accentColor": "Kolor akcentu",
+  "accentColorSubtitle": "Zabarw tekst i tło systemowym kolorem akcentu",
   "terminalPrompt": "Wiersz poleceń",
   "terminalPromptSubtitle": "Pokaż wyszukiwanie jako wiersz poleceń",
   "sectionEffects": "Efekty",

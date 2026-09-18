@@ -29,6 +29,8 @@
   "textSizeSmall": "Small",
   "textSizeMedium": "Medium",
   "textSizeLarge": "Large",
+  "accentColor": "Accent color",
+  "accentColorSubtitle": "Tint text and background with your system accent",
   "terminalPrompt": "Terminal prompt",
   "terminalPromptSubtitle": "Show search as a command line",
   "sectionEffects": "Effects",

@@ -2,6 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:last_launcher/shared/data/models.dart';
 
+/// The system accent (Material You) in the tones the launcher draws with. A
+/// record, so two reads of the same accent compare equal.
+typedef AccentColors = ({Color onDark, Color onLight, Color tint});
+
 class AppChannel {
   AppChannel();
 
@@ -125,6 +129,24 @@ class AppChannel {
     } catch (e) {
       debugPrint('Failed to check work profile: $e');
       return false;
+    }
+  }
+
+  /// Null where the system has no accent (before Android 12).
+  Future<AccentColors?> getAccentColors() async {
+    try {
+      final tones = await _channel.invokeMapMethod<String, int>(
+        'getAccentColors',
+      );
+      if (tones == null) return null;
+      return (
+        onDark: Color(tones['onDark']!),
+        onLight: Color(tones['onLight']!),
+        tint: Color(tones['tint']!),
+      );
+    } on PlatformException catch (e) {
+      debugPrint('Failed to read accent colors: $e');
+      return null;
     }
   }
 

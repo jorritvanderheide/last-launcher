@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/settings/widgets/settings_tiles.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 
 String themeModeLabel(BuildContext context, ThemeMode mode) {
   final l10n = AppLocalizations.of(context)!;
@@ -100,6 +101,12 @@ class AppearanceSettingsScreen extends StatelessWidget {
           label: _textSizeLabel,
           onChanged: (size) => s.textSize.value = size,
         ),
+        if (AppearanceScope.of(context).accentAvailable)
+          SettingSwitch(
+            setting: s.accentColor,
+            title: l10n.accentColor,
+            subtitle: l10n.accentColorSubtitle,
+          ),
         SettingSwitch(
           setting: s.terminalPrompt,
           title: l10n.terminalPrompt,

@@ -27,6 +27,8 @@
   "textSizeSmall": "小",
   "textSizeMedium": "中",
   "textSizeLarge": "大",
+  "accentColor": "強調色",
+  "accentColorSubtitle": "以系統強調色為文字與背景上色",
   "terminalPrompt": "終端機提示字元",
   "terminalPromptSubtitle": "將搜尋顯示為命令列",
   "sectionEffects": "效果",

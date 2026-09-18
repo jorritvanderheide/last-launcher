@@ -27,6 +27,8 @@
   "textSizeSmall": "Pequeño",
   "textSizeMedium": "Mediano",
   "textSizeLarge": "Grande",
+  "accentColor": "Color de acento",
+  "accentColorSubtitle": "Teñir el texto y el fondo con el color de acento del sistema",
   "terminalPrompt": "Línea de comandos",
   "terminalPromptSubtitle": "Mostrar la búsqueda como línea de comandos",
   "sectionEffects": "Efectos",

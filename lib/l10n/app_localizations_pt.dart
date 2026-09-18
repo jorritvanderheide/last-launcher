@@ -90,6 +90,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get textSizeLarge => 'Grande';
 
   @override
+  String get accentColor => 'Cor de destaque';
+
+  @override
+  String get accentColorSubtitle =>
+      'Colorir o texto e o fundo com a cor de destaque do sistema';
+
+  @override
   String get terminalPrompt => 'Linha de comandos';
 
   @override

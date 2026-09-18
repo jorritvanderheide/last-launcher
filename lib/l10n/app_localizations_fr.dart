@@ -90,6 +90,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get textSizeLarge => 'Grande';
 
   @override
+  String get accentColor => 'Couleur d\'accentuation';
+
+  @override
+  String get accentColorSubtitle =>
+      'Teinter le texte et le fond avec la couleur d\'accentuation du système';
+
+  @override
   String get terminalPrompt => 'Invite de commande';
 
   @override

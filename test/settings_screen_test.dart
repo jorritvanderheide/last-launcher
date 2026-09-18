@@ -10,6 +10,7 @@ import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/l10n/app_localizations_en.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/data/models.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class _FakeAppChannel extends AppChannel {
@@ -34,6 +35,7 @@ Future<SettingsState> _pumpSettings(
   WidgetTester tester, {
   bool isDefault = true,
   bool workProfile = false,
+  bool accentAvailable = false,
 }) async {
   // Tall enough that every row of the longest page is built.
   await tester.binding.setSurfaceSize(const Size(800, 2000));
@@ -53,6 +55,13 @@ Future<SettingsState> _pumpSettings(
     MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      builder: (context, child) => AppearanceScope(
+        labelFontSize: 28,
+        accentAvailable: accentAvailable,
+        terminalPrompt: false,
+        animate: true,
+        child: child!,
+      ),
       home: SettingsScreen(
         settingsState: settings,
         appListState: appList,
@@ -165,6 +174,22 @@ void main() {
     await tester.pumpAndSettle();
     expect(settings.glow.value, isFalse);
     expect(find.text(l10n.themeStyleCustom), findsOneWidget);
+  });
+
+  testWidgets('accent row only where the system has an accent', (tester) async {
+    await _pumpSettings(tester);
+    await tester.tap(find.text(l10n.sectionAppearance));
+    await tester.pumpAndSettle();
+    expect(find.text(l10n.accentColor), findsNothing);
+  });
+
+  testWidgets('accent row toggles the setting', (tester) async {
+    final settings = await _pumpSettings(tester, accentAvailable: true);
+    await tester.tap(find.text(l10n.sectionAppearance));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(l10n.accentColor));
+    await tester.pumpAndSettle();
+    expect(settings.accentColor.value, isTrue);
   });
 
   testWidgets('home page picks a module by id', (tester) async {

@@ -90,6 +90,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get textSizeLarge => '大';
 
   @override
+  String get accentColor => 'アクセントカラー';
+
+  @override
+  String get accentColorSubtitle => '文字と背景をシステムのアクセントカラーで色付け';
+
+  @override
   String get terminalPrompt => 'ターミナルプロンプト';
 
   @override

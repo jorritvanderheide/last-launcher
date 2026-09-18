@@ -27,6 +27,8 @@
   "textSizeSmall": "小",
   "textSizeMedium": "中",
   "textSizeLarge": "大",
+  "accentColor": "アクセントカラー",
+  "accentColorSubtitle": "文字と背景をシステムのアクセントカラーで色付け",
   "terminalPrompt": "ターミナルプロンプト",
   "terminalPromptSubtitle": "検索をコマンドラインとして表示",
   "sectionEffects": "エフェクト",

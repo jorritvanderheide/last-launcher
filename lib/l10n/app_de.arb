@@ -27,6 +27,8 @@
   "textSizeSmall": "Klein",
   "textSizeMedium": "Mittel",
   "textSizeLarge": "Groß",
+  "accentColor": "Akzentfarbe",
+  "accentColorSubtitle": "Text und Hintergrund in der Akzentfarbe des Systems einfärben",
   "terminalPrompt": "Terminal-Eingabe",
   "terminalPromptSubtitle": "Suche als Befehlszeile anzeigen",
   "sectionEffects": "Effekte",

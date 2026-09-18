@@ -27,6 +27,8 @@
   "textSizeSmall": "Malý",
   "textSizeMedium": "Střední",
   "textSizeLarge": "Velký",
+  "accentColor": "Barva zvýraznění",
+  "accentColorSubtitle": "Obarvit text a pozadí systémovou barvou zvýraznění",
   "terminalPrompt": "Příkazový řádek",
   "terminalPromptSubtitle": "Zobrazit hledání jako příkazový řádek",
   "sectionEffects": "Efekty",

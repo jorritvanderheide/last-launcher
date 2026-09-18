@@ -27,6 +27,8 @@
   "textSizeSmall": "छोटा",
   "textSizeMedium": "मध्यम",
   "textSizeLarge": "बड़ा",
+  "accentColor": "एक्सेंट रंग",
+  "accentColorSubtitle": "टेक्स्ट और बैकग्राउंड को सिस्टम के एक्सेंट रंग से रंगें",
   "terminalPrompt": "टर्मिनल प्रॉम्प्ट",
   "terminalPromptSubtitle": "खोज को कमांड लाइन की तरह दिखाएँ",
   "sectionEffects": "इफ़ेक्ट",

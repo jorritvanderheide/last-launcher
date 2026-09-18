@@ -71,6 +71,7 @@ class SettingsState extends ChangeNotifier {
   );
   late final font = _enum('font', FontChoice.values, FontChoice.standard);
   late final textSize = _enum('text_size', TextSize.values, TextSize.medium);
+  late final accentColor = _bool('accent_color', false);
   late final terminalPrompt = _bool('terminal_prompt', false);
   // Effects: only drawn in dark mode, where they were designed.
   late final glow = _bool('glow', false);
@@ -199,6 +200,7 @@ class SettingsState extends ChangeNotifier {
     themeMode,
     font,
     textSize,
+    accentColor,
     terminalPrompt,
     glow,
     scanlines,

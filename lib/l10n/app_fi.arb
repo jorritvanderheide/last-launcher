@@ -27,6 +27,8 @@
   "textSizeSmall": "Pieni",
   "textSizeMedium": "Keskikokoinen",
   "textSizeLarge": "Suuri",
+  "accentColor": "Korostusväri",
+  "accentColorSubtitle": "Sävytä teksti ja tausta järjestelmän korostusvärillä",
   "terminalPrompt": "Komentorivi",
   "terminalPromptSubtitle": "Näytä haku komentorivinä",
   "sectionEffects": "Tehosteet",

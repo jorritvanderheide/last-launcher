@@ -27,6 +27,8 @@
   "textSizeSmall": "Pequeno",
   "textSizeMedium": "Médio",
   "textSizeLarge": "Grande",
+  "accentColor": "Cor de destaque",
+  "accentColorSubtitle": "Colorir o texto e o fundo com a cor de destaque do sistema",
   "terminalPrompt": "Linha de comandos",
   "terminalPromptSubtitle": "Mostrar a pesquisa como linha de comandos",
   "sectionEffects": "Efeitos",

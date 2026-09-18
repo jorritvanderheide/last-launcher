@@ -90,6 +90,13 @@ class AppLocalizationsNl extends AppLocalizations {
   String get textSizeLarge => 'Groot';
 
   @override
+  String get accentColor => 'Accentkleur';
+
+  @override
+  String get accentColorSubtitle =>
+      'Tekst en achtergrond kleuren met de accentkleur van het systeem';
+
+  @override
   String get terminalPrompt => 'Terminalprompt';
 
   @override

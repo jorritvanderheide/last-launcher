@@ -90,6 +90,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get textSizeLarge => '크게';
 
   @override
+  String get accentColor => '강조 색상';
+
+  @override
+  String get accentColorSubtitle => '텍스트와 배경에 시스템 강조 색상 적용';
+
+  @override
   String get terminalPrompt => '터미널 프롬프트';
 
   @override

@@ -175,6 +175,7 @@ class MainActivity : FlutterActivity() {
                     val profiles = userManager?.userProfiles ?: listOf(Process.myUserHandle())
                     result.success(profiles.any { it != Process.myUserHandle() })
                 }
+                "getAccentColors" -> result.success(accentColors())
                 "isDefaultLauncher" -> result.success(isDefaultLauncher())
                 "requestDefaultLauncher" -> {
                     requestDefaultLauncher()
@@ -307,6 +308,26 @@ class MainActivity : FlutterActivity() {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         startActivity(intent)
+    }
+
+    // ------------------------------------------------------------------
+    // Accent colours
+    // ------------------------------------------------------------------
+
+    /**
+     * The system's Material You accent in the tones the launcher draws with:
+     * text on dark and on light backgrounds, and a mid tone to tint the
+     * backgrounds themselves. Null before Android 12, which has no accent.
+     */
+    private fun accentColors(): Map<String, Long>? {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return null
+        // Masked so ARGB arrives in Dart as a positive int, as Color expects.
+        fun tone(id: Int) = getColor(id).toLong() and 0xFFFFFFFFL
+        return mapOf(
+            "onDark" to tone(android.R.color.system_accent1_200),
+            "onLight" to tone(android.R.color.system_accent1_700),
+            "tint" to tone(android.R.color.system_accent1_500),
+        )
     }
 
     // ------------------------------------------------------------------

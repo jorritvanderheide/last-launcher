@@ -90,6 +90,13 @@ class AppLocalizationsFi extends AppLocalizations {
   String get textSizeLarge => 'Suuri';
 
   @override
+  String get accentColor => 'Korostusväri';
+
+  @override
+  String get accentColorSubtitle =>
+      'Sävytä teksti ja tausta järjestelmän korostusvärillä';
+
+  @override
   String get terminalPrompt => 'Komentorivi';
 
   @override
