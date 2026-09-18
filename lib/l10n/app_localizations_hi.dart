@@ -81,15 +81,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get textSizeTitle => 'टेक्स्ट का आकार';
 
   @override
-  String get textSizeSmall => 'छोटा';
-
-  @override
-  String get textSizeMedium => 'मध्यम';
-
-  @override
-  String get textSizeLarge => 'बड़ा';
-
-  @override
   String get textAlignTitle => 'टेक्स्ट संरेखण';
 
   @override

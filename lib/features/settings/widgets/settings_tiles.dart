@@ -114,6 +114,61 @@ class SettingSwitch extends StatelessWidget {
   }
 }
 
+/// A slider bound to a numeric [Setting], moving in steps of [step], with
+/// the current value shown next to it.
+///
+/// The setting is written once, when the user lets go, rather than on every
+/// step while dragging.
+class SettingSlider extends StatefulWidget {
+  const SettingSlider({
+    required this.setting,
+    required this.title,
+    required this.min,
+    required this.max,
+    required this.step,
+    this.leading,
+    super.key,
+  });
+
+  final Setting<double> setting;
+  final String title;
+  final double min;
+  final double max;
+  final double step;
+  final Widget? leading;
+
+  @override
+  State<SettingSlider> createState() => _SettingSliderState();
+}
+
+class _SettingSliderState extends State<SettingSlider> {
+  /// The value under the user's finger, until they let go.
+  double? _dragging;
+
+  @override
+  Widget build(BuildContext context) {
+    final value = _dragging ?? widget.setting.value;
+    final shown = value.round().toString();
+    return ListTile(
+      leading: widget.leading,
+      title: Text(widget.title),
+      trailing: Text(shown, style: Theme.of(context).textTheme.bodyLarge),
+      subtitle: Slider(
+        value: value,
+        min: widget.min,
+        max: widget.max,
+        divisions: ((widget.max - widget.min) / widget.step).round(),
+        label: shown,
+        onChanged: (value) => setState(() => _dragging = value),
+        onChangeEnd: (value) {
+          widget.setting.value = value;
+          setState(() => _dragging = null);
+        },
+      ),
+    );
+  }
+}
+
 /// A row showing the current choice, which opens a picker when tapped.
 ///
 /// [subtitle] replaces the current-choice summary, for instance to say why

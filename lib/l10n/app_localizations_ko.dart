@@ -81,15 +81,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get textSizeTitle => '글자 크기';
 
   @override
-  String get textSizeSmall => '작게';
-
-  @override
-  String get textSizeMedium => '보통';
-
-  @override
-  String get textSizeLarge => '크게';
-
-  @override
   String get textAlignTitle => '텍스트 정렬';
 
   @override

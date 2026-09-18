@@ -30,15 +30,6 @@ String _fontLabel(BuildContext context, FontChoice font) {
   };
 }
 
-String _textSizeLabel(BuildContext context, TextSize size) {
-  final l10n = AppLocalizations.of(context)!;
-  return switch (size) {
-    TextSize.small => l10n.textSizeSmall,
-    TextSize.medium => l10n.textSizeMedium,
-    TextSize.large => l10n.textSizeLarge,
-  };
-}
-
 String _alignmentLabel(BuildContext context, LabelAlignment alignment) {
   final l10n = AppLocalizations.of(context)!;
   return switch (alignment) {
@@ -102,13 +93,13 @@ class AppearanceSettingsScreen extends StatelessWidget {
           label: _fontLabel,
           onChanged: (font) => s.font.value = font,
         ),
-        ChoiceTile<TextSize>(
+        SettingSlider(
           leading: const Icon(Icons.format_size),
+          setting: s.textSize,
           title: l10n.textSizeTitle,
-          value: s.textSize.value,
-          options: TextSize.values,
-          label: _textSizeLabel,
-          onChanged: (size) => s.textSize.value = size,
+          min: SettingsState.textSizeMin,
+          max: SettingsState.textSizeMax,
+          step: SettingsState.textSizeStep,
         ),
         ChoiceTile<LabelAlignment>(
           leading: const Icon(Icons.format_align_left),

@@ -200,6 +200,17 @@ void main() {
     expect(find.text(l10n.themeStyleCustom), findsOneWidget);
   });
 
+  testWidgets('text size slider stores the size when let go', (tester) async {
+    final settings = await _pumpSettings(tester);
+    await tester.tap(find.text(l10n.sectionAppearance));
+    await tester.pumpAndSettle();
+
+    await tester.drag(find.byType(Slider), const Offset(-600, 0));
+    await tester.pumpAndSettle();
+    expect(settings.textSize.value, SettingsState.textSizeMin);
+    expect(find.text('18'), findsOneWidget);
+  });
+
   testWidgets('accent row only where the system has an accent', (tester) async {
     await _pumpSettings(tester);
     await tester.tap(find.text(l10n.sectionAppearance));

@@ -110,6 +110,37 @@ void main() {
     });
   });
 
+  group('SettingsState text size', () {
+    test('defaults to the original size, in the middle of the range', () {
+      expect(state.textSize.value, SettingsState.defaultTextSize);
+      expect(
+        (SettingsState.textSizeMin + SettingsState.textSizeMax) / 2,
+        SettingsState.defaultTextSize,
+      );
+    });
+
+    test('persists a chosen size', () async {
+      state.textSize.value = 24;
+      expect((await _reload()).textSize.value, 24);
+    });
+
+    test('keeps a stored size within range', () async {
+      SharedPreferences.setMockInitialValues({'text_size': 90.0});
+      expect((await _reload()).textSize.value, SettingsState.textSizeMax);
+    });
+
+    test('migrates the development-only size names', () async {
+      for (final (name, size) in [
+        ('small', 22.0),
+        ('medium', 28.0),
+        ('large', 34.0),
+      ]) {
+        SharedPreferences.setMockInitialValues({'text_size': name});
+        expect((await _reload()).textSize.value, size);
+      }
+    });
+  });
+
   group('SettingsState panels', () {
     test('a module that allows both sides keeps both', () {
       const everywhere = _EverywhereModule();

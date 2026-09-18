@@ -81,15 +81,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get textSizeTitle => 'Textgröße';
 
   @override
-  String get textSizeSmall => 'Klein';
-
-  @override
-  String get textSizeMedium => 'Mittel';
-
-  @override
-  String get textSizeLarge => 'Groß';
-
-  @override
   String get textAlignTitle => 'Textausrichtung';
 
   @override

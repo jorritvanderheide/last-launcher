@@ -81,15 +81,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get textSizeTitle => '文字サイズ';
 
   @override
-  String get textSizeSmall => '小';
-
-  @override
-  String get textSizeMedium => '中';
-
-  @override
-  String get textSizeLarge => '大';
-
-  @override
   String get textAlignTitle => '文字の配置';
 
   @override

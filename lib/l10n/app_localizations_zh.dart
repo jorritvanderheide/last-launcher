@@ -81,15 +81,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get textSizeTitle => '文字大小';
 
   @override
-  String get textSizeSmall => '小';
-
-  @override
-  String get textSizeMedium => '中';
-
-  @override
-  String get textSizeLarge => '大';
-
-  @override
   String get textAlignTitle => '文字對齊';
 
   @override

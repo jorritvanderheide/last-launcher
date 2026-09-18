@@ -82,15 +82,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get textSizeTitle => 'Rozmiar tekstu';
 
   @override
-  String get textSizeSmall => 'Mały';
-
-  @override
-  String get textSizeMedium => 'Średni';
-
-  @override
-  String get textSizeLarge => 'Duży';
-
-  @override
   String get textAlignTitle => 'Wyrównanie tekstu';
 
   @override

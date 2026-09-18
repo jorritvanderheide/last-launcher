@@ -19,12 +19,6 @@ final _themes = <(Brightness, _ThemeSpec), ThemeData>{};
 ThemeData _themeFor(Brightness brightness, _ThemeSpec spec) => _themes
     .putIfAbsent((brightness, spec), () => _buildTheme(brightness, spec));
 
-double _labelFontSize(TextSize size) => switch (size) {
-  TextSize.small => 22,
-  TextSize.medium => 28,
-  TextSize.large => 34,
-};
-
 /// How strongly each scanline level draws, relative to the original look.
 double _scanlineStrength(ScanlineLevel level) => switch (level) {
   ScanlineLevel.off => 0,
@@ -267,7 +261,7 @@ class _LastLauncherAppState extends State<LastLauncherApp>
           theme: _themeFor(Brightness.light, spec),
           darkTheme: _themeFor(Brightness.dark, spec),
           builder: (context, child) => AppearanceScope(
-            labelFontSize: _labelFontSize(settings.textSize.value),
+            labelFontSize: settings.textSize.value,
             labelAlign: switch (settings.labelAlignment.value) {
               LabelAlignment.left => TextAlign.left,
               LabelAlignment.center => TextAlign.center,

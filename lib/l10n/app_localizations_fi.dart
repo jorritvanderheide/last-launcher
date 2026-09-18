@@ -81,15 +81,6 @@ class AppLocalizationsFi extends AppLocalizations {
   String get textSizeTitle => 'Tekstin koko';
 
   @override
-  String get textSizeSmall => 'Pieni';
-
-  @override
-  String get textSizeMedium => 'Keskikokoinen';
-
-  @override
-  String get textSizeLarge => 'Suuri';
-
-  @override
   String get textAlignTitle => 'Tekstin tasaus';
 
   @override

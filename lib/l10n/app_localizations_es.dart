@@ -81,15 +81,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get textSizeTitle => 'Tamaño del texto';
 
   @override
-  String get textSizeSmall => 'Pequeño';
-
-  @override
-  String get textSizeMedium => 'Mediano';
-
-  @override
-  String get textSizeLarge => 'Grande';
-
-  @override
   String get textAlignTitle => 'Alineación del texto';
 
   @override

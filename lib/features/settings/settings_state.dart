@@ -9,8 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 enum FontChoice { standard, mono }
 
-enum TextSize { small, medium, large }
-
 enum LabelAlignment { left, center, right }
 
 enum ScanlineLevel { off, light, medium, strong }
@@ -76,7 +74,19 @@ class SettingsState extends ChangeNotifier {
     ThemeMode.system,
   );
   late final font = _enum('font', FontChoice.values, FontChoice.standard);
-  late final textSize = _enum('text_size', TextSize.values, TextSize.medium);
+
+  /// Font size of app labels, in logical pixels, between [textSizeMin] and
+  /// [textSizeMax] in steps of [textSizeStep].
+  late final textSize = _double(
+    'text_size',
+    defaultTextSize,
+    min: textSizeMin,
+    max: textSizeMax,
+  );
+  static const textSizeMin = 18.0;
+  static const textSizeMax = 38.0;
+  static const textSizeStep = 2.0;
+  static const defaultTextSize = 28.0;
   late final labelAlignment = _enum(
     'label_alignment',
     LabelAlignment.values,
@@ -284,6 +294,18 @@ class SettingsState extends ChangeNotifier {
     }
     unawaited(_prefs.remove('theme_style'));
 
+    // Development builds stored text size as small, medium or large.
+    final textSize = _prefs.get('text_size');
+    if (textSize is String) {
+      unawaited(
+        _prefs.setDouble('text_size', switch (textSize) {
+          'small' => 22.0,
+          'large' => 34.0,
+          _ => defaultTextSize,
+        }),
+      );
+    }
+
     // Before either side was configurable there was only a tasks_enabled
     // flag, which meant tasks on the left.
     final panelsNeverChosen =
@@ -314,6 +336,21 @@ class SettingsState extends ChangeNotifier {
           (v) => _prefs.setString(key, v.name),
         ),
       );
+
+  /// A number, clamped to [min]..[max] when read so a stored value from
+  /// elsewhere (a backup, say) can't fall outside what the setting allows.
+  Setting<double> _double(
+    String key,
+    double fallback, {
+    required double min,
+    required double max,
+  }) => _track(
+    Setting(
+      key,
+      () => (_prefs.getDouble(key) ?? fallback).clamp(min, max),
+      (v) => _prefs.setDouble(key, v),
+    ),
+  );
 
   /// A string that may be unset; setting null removes it.
   Setting<String?> _optionalString(String key) => _track(

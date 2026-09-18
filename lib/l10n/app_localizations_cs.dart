@@ -81,15 +81,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get textSizeTitle => 'Velikost textu';
 
   @override
-  String get textSizeSmall => 'Malý';
-
-  @override
-  String get textSizeMedium => 'Střední';
-
-  @override
-  String get textSizeLarge => 'Velký';
-
-  @override
   String get textAlignTitle => 'Zarovnání textu';
 
   @override
