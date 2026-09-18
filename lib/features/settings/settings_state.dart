@@ -282,8 +282,8 @@ class SettingsState extends ChangeNotifier {
     // It is now a preset of separate options, and was always shown dark.
     // theme_style only ever existed in development builds.
     final wasExtra =
-        _prefs.getString('theme_mode') == 'extra' ||
-        _prefs.getString('theme_style') == 'extra';
+        _stored<String>('theme_mode') == 'extra' ||
+        _stored<String>('theme_style') == 'extra';
     if (wasExtra) {
       unawaited(_prefs.setString('theme_mode', ThemeMode.dark.name));
       unawaited(_prefs.setString('font', FontChoice.mono.name));
@@ -309,19 +309,30 @@ class SettingsState extends ChangeNotifier {
     // Before either side was configurable there was only a tasks_enabled
     // flag, which meant tasks on the left.
     final panelsNeverChosen =
-        _prefs.getString('left_panel') == null &&
-        _prefs.getString('right_panel') == null;
-    if (panelsNeverChosen && (_prefs.getBool('tasks_enabled') ?? false)) {
+        _stored<String>('left_panel') == null &&
+        _stored<String>('right_panel') == null;
+    if (panelsNeverChosen && (_stored<bool>('tasks_enabled') ?? false)) {
       unawaited(_prefs.setString('left_panel', TasksModule().id));
     }
   }
 
   // --- Declaration helpers -----------------------------------------------
 
+  /// The value stored under [key] if it has type [T], else null.
+  ///
+  /// SharedPreferences' typed getters throw when a key holds another type,
+  /// which happens when a different version of the app stored it: an older
+  /// build run after a newer one, or an unusual backup. A launcher must not
+  /// crash on that, so such a value reads as unset and the default applies.
+  T? _stored<T>(String key) {
+    final value = _prefs.get(key);
+    return value is T ? value : null;
+  }
+
   Setting<bool> _bool(String key, bool fallback) => _track(
     Setting(
       key,
-      () => _prefs.getBool(key) ?? fallback,
+      () => _stored<bool>(key) ?? fallback,
       (v) => _prefs.setBool(key, v),
     ),
   );
@@ -332,7 +343,7 @@ class SettingsState extends ChangeNotifier {
       _track(
         Setting(
           key,
-          () => values.asNameMap()[_prefs.getString(key)] ?? fallback,
+          () => values.asNameMap()[_stored<String>(key)] ?? fallback,
           (v) => _prefs.setString(key, v.name),
         ),
       );
@@ -347,7 +358,8 @@ class SettingsState extends ChangeNotifier {
   }) => _track(
     Setting(
       key,
-      () => (_prefs.getDouble(key) ?? fallback).clamp(min, max),
+      // An int is a fine number too, as JSON-restored values can be.
+      () => (_stored<num>(key)?.toDouble() ?? fallback).clamp(min, max),
       (v) => _prefs.setDouble(key, v),
     ),
   );
@@ -356,7 +368,7 @@ class SettingsState extends ChangeNotifier {
   Setting<String?> _optionalString(String key) => _track(
     Setting(
       key,
-      () => _prefs.getString(key),
+      () => _stored<String>(key),
       (v) => v == null ? _prefs.remove(key) : _prefs.setString(key, v),
     ),
   );
@@ -364,7 +376,7 @@ class SettingsState extends ChangeNotifier {
   Setting<LauncherModule> _module(String key) => _track(
     Setting(
       key,
-      () => moduleById(_prefs.getString(key)),
+      () => moduleById(_stored<String>(key)),
       (m) => _prefs.setString(key, m.id),
     ),
   );

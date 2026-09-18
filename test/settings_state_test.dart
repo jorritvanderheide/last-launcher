@@ -141,6 +141,32 @@ void main() {
     });
   });
 
+  group('SettingsState stored by another version', () {
+    test('a value of the wrong type reads as the default', () async {
+      SharedPreferences.setMockInitialValues({
+        // The reported crash: a number where text was expected, and back.
+        'theme_mode': 28.0,
+        'font': 1.5,
+        'locked': 'yes',
+        'text_size': true,
+        'left_panel': 3,
+        'launch_app_left': false,
+      });
+      final state = await _reload();
+      expect(state.themeMode.value, ThemeMode.system);
+      expect(state.font.value, FontChoice.standard);
+      expect(state.locked.value, false);
+      expect(state.textSize.value, SettingsState.defaultTextSize);
+      expect(state.leftPanel.value, isA<NoneModule>());
+      expect(state.launchAppLeft.value, isNull);
+    });
+
+    test('a whole-number size reads as a size', () async {
+      SharedPreferences.setMockInitialValues({'text_size': 24});
+      expect((await _reload()).textSize.value, 24.0);
+    });
+  });
+
   group('SettingsState panels', () {
     test('a module that allows both sides keeps both', () {
       const everywhere = _EverywhereModule();
