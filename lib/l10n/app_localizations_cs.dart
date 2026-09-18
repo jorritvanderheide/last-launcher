@@ -280,6 +280,30 @@ class AppLocalizationsCs extends AppLocalizations {
   String get panelTasks => 'úkoly';
 
   @override
+  String get panelLaunchApp => 'Spustit aplikaci';
+
+  @override
+  String get panelLaunchAppHint => 'aplikaci';
+
+  @override
+  String get launchAppLeft => 'Levá aplikace';
+
+  @override
+  String get launchAppRight => 'Pravá aplikace';
+
+  @override
+  String get launchAppChoose => 'Vybrat aplikaci';
+
+  @override
+  String get launchAppOnlyLeft => 'Jen pokud je toto levý modul';
+
+  @override
+  String get launchAppOnlyRight => 'Jen pokud je toto pravý modul';
+
+  @override
+  String get launchAppSearch => 'Hledat aplikace';
+
+  @override
   String get removeOnComplete => 'Odstranit po dokončení';
 
   @override

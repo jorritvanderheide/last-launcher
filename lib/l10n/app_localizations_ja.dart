@@ -269,6 +269,30 @@ class AppLocalizationsJa extends AppLocalizations {
   String get panelTasks => 'タスク';
 
   @override
+  String get panelLaunchApp => 'アプリを起動';
+
+  @override
+  String get panelLaunchAppHint => 'アプリ';
+
+  @override
+  String get launchAppLeft => '左のアプリ';
+
+  @override
+  String get launchAppRight => '右のアプリ';
+
+  @override
+  String get launchAppChoose => 'アプリを選択';
+
+  @override
+  String get launchAppOnlyLeft => '左モジュールに設定しているときのみ';
+
+  @override
+  String get launchAppOnlyRight => '右モジュールに設定しているときのみ';
+
+  @override
+  String get launchAppSearch => 'アプリを検索';
+
+  @override
   String get removeOnComplete => '完了時に削除';
 
   @override

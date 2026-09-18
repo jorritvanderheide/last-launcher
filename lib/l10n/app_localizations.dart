@@ -632,6 +632,54 @@ abstract class AppLocalizations {
   /// **'tasks'**
   String get panelTasks;
 
+  /// No description provided for @panelLaunchApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Launch app'**
+  String get panelLaunchApp;
+
+  /// No description provided for @panelLaunchAppHint.
+  ///
+  /// In en, this message translates to:
+  /// **'an app'**
+  String get panelLaunchAppHint;
+
+  /// No description provided for @launchAppLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left app'**
+  String get launchAppLeft;
+
+  /// No description provided for @launchAppRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right app'**
+  String get launchAppRight;
+
+  /// No description provided for @launchAppChoose.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose an app'**
+  String get launchAppChoose;
+
+  /// No description provided for @launchAppOnlyLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Only while this is the left module'**
+  String get launchAppOnlyLeft;
+
+  /// No description provided for @launchAppOnlyRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Only while this is the right module'**
+  String get launchAppOnlyRight;
+
+  /// No description provided for @launchAppSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search apps'**
+  String get launchAppSearch;
+
   /// No description provided for @removeOnComplete.
   ///
   /// In en, this message translates to:

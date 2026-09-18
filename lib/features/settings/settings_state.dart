@@ -122,6 +122,15 @@ class SettingsState extends ChangeNotifier {
   late final showWorkAppDot = _bool('show_work_app_dot', true);
   late final showWorkAppDotOnHome = _bool('show_work_app_dot_on_home', false);
 
+  // --- Launch app module -------------------------------------------------
+
+  /// Key of the entry each side opens ([AppInfo.key]); null for none yet.
+  late final launchAppLeft = _optionalString('launch_app_left');
+  late final launchAppRight = _optionalString('launch_app_right');
+
+  Setting<String?> launchApp(ModuleSide side) =>
+      side == ModuleSide.left ? launchAppLeft : launchAppRight;
+
   // --- Tasks -------------------------------------------------------------
 
   late final autoKeyboardTasks = _bool('auto_keyboard_tasks', true);
@@ -229,6 +238,9 @@ class SettingsState extends ChangeNotifier {
   ValueListenable<LauncherModule> get leftPanel => _leftPanel;
   ValueListenable<LauncherModule> get rightPanel => _rightPanel;
 
+  ValueListenable<LauncherModule> panel(ModuleSide side) =>
+      side == ModuleSide.left ? leftPanel : rightPanel;
+
   void setLeftPanel(LauncherModule panel) =>
       _setPanel(_leftPanel, _rightPanel, panel);
 
@@ -302,6 +314,15 @@ class SettingsState extends ChangeNotifier {
           (v) => _prefs.setString(key, v.name),
         ),
       );
+
+  /// A string that may be unset; setting null removes it.
+  Setting<String?> _optionalString(String key) => _track(
+    Setting(
+      key,
+      () => _prefs.getString(key),
+      (v) => v == null ? _prefs.remove(key) : _prefs.setString(key, v),
+    ),
+  );
 
   Setting<LauncherModule> _module(String key) => _track(
     Setting(

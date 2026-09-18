@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:last_launcher/features/app_drawer/app_list_state.dart';
+import 'package:last_launcher/features/modules/launch_app_module.dart';
 import 'package:last_launcher/features/modules/none_module.dart';
 import 'package:last_launcher/features/modules/tasks_module.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
@@ -99,6 +100,7 @@ class LauncherModuleProps {
 final List<LauncherModule> launcherModules = <LauncherModule>[
   const NoneModule(),
   TasksModule(),
+  const LaunchAppModule(),
 ];
 
 /// Resolve a persisted id to a module, falling back to [NoneModule].

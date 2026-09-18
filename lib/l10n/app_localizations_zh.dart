@@ -269,6 +269,30 @@ class AppLocalizationsZh extends AppLocalizations {
   String get panelTasks => '任務';
 
   @override
+  String get panelLaunchApp => '開啟應用程式';
+
+  @override
+  String get panelLaunchAppHint => '應用程式';
+
+  @override
+  String get launchAppLeft => '左側應用程式';
+
+  @override
+  String get launchAppRight => '右側應用程式';
+
+  @override
+  String get launchAppChoose => '選擇應用程式';
+
+  @override
+  String get launchAppOnlyLeft => '僅在設為左側模組時';
+
+  @override
+  String get launchAppOnlyRight => '僅在設為右側模組時';
+
+  @override
+  String get launchAppSearch => '搜尋應用程式';
+
+  @override
   String get removeOnComplete => '完成後移除';
 
   @override

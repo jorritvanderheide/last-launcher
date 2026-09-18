@@ -278,6 +278,30 @@ class AppLocalizationsSv extends AppLocalizations {
   String get panelTasks => 'uppgifter';
 
   @override
+  String get panelLaunchApp => 'Öppna app';
+
+  @override
+  String get panelLaunchAppHint => 'en app';
+
+  @override
+  String get launchAppLeft => 'Vänster app';
+
+  @override
+  String get launchAppRight => 'Höger app';
+
+  @override
+  String get launchAppChoose => 'Välj en app';
+
+  @override
+  String get launchAppOnlyLeft => 'Bara när detta är vänster modul';
+
+  @override
+  String get launchAppOnlyRight => 'Bara när detta är höger modul';
+
+  @override
+  String get launchAppSearch => 'Sök appar';
+
+  @override
   String get removeOnComplete => 'Ta bort vid slutförande';
 
   @override

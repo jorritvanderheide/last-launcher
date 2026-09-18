@@ -284,6 +284,30 @@ class AppLocalizationsFr extends AppLocalizations {
   String get panelTasks => 'les tâches';
 
   @override
+  String get panelLaunchApp => 'Lancer une application';
+
+  @override
+  String get panelLaunchAppHint => 'une application';
+
+  @override
+  String get launchAppLeft => 'Application de gauche';
+
+  @override
+  String get launchAppRight => 'Application de droite';
+
+  @override
+  String get launchAppChoose => 'Choisir une application';
+
+  @override
+  String get launchAppOnlyLeft => 'Seulement si c\'est le module gauche';
+
+  @override
+  String get launchAppOnlyRight => 'Seulement si c\'est le module droit';
+
+  @override
+  String get launchAppSearch => 'Rechercher des applications';
+
+  @override
   String get removeOnComplete => 'Supprimer à l\'achèvement';
 
   @override

@@ -275,6 +275,30 @@ class AppLocalizationsHi extends AppLocalizations {
   String get panelTasks => 'कार्य';
 
   @override
+  String get panelLaunchApp => 'ऐप खोलें';
+
+  @override
+  String get panelLaunchAppHint => 'ऐप';
+
+  @override
+  String get launchAppLeft => 'बाईं ओर का ऐप';
+
+  @override
+  String get launchAppRight => 'दाईं ओर का ऐप';
+
+  @override
+  String get launchAppChoose => 'ऐप चुनें';
+
+  @override
+  String get launchAppOnlyLeft => 'केवल तब जब यह बायां मॉड्यूल हो';
+
+  @override
+  String get launchAppOnlyRight => 'केवल तब जब यह दायां मॉड्यूल हो';
+
+  @override
+  String get launchAppSearch => 'ऐप खोजें';
+
+  @override
   String get removeOnComplete => 'पूरा होने पर हटाएँ';
 
   @override

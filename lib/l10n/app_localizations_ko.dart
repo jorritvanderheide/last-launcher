@@ -269,6 +269,30 @@ class AppLocalizationsKo extends AppLocalizations {
   String get panelTasks => '할 일';
 
   @override
+  String get panelLaunchApp => '앱 실행';
+
+  @override
+  String get panelLaunchAppHint => '앱';
+
+  @override
+  String get launchAppLeft => '왼쪽 앱';
+
+  @override
+  String get launchAppRight => '오른쪽 앱';
+
+  @override
+  String get launchAppChoose => '앱 선택';
+
+  @override
+  String get launchAppOnlyLeft => '왼쪽 모듈로 설정된 경우에만';
+
+  @override
+  String get launchAppOnlyRight => '오른쪽 모듈로 설정된 경우에만';
+
+  @override
+  String get launchAppSearch => '앱 검색';
+
+  @override
   String get removeOnComplete => '완료 시 제거';
 
   @override

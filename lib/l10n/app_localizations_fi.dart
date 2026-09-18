@@ -280,6 +280,30 @@ class AppLocalizationsFi extends AppLocalizations {
   String get panelTasks => 'tehtävät';
 
   @override
+  String get panelLaunchApp => 'Käynnistä sovellus';
+
+  @override
+  String get panelLaunchAppHint => 'sovellus';
+
+  @override
+  String get launchAppLeft => 'Vasen sovellus';
+
+  @override
+  String get launchAppRight => 'Oikea sovellus';
+
+  @override
+  String get launchAppChoose => 'Valitse sovellus';
+
+  @override
+  String get launchAppOnlyLeft => 'Vain kun tämä on vasen moduuli';
+
+  @override
+  String get launchAppOnlyRight => 'Vain kun tämä on oikea moduuli';
+
+  @override
+  String get launchAppSearch => 'Hae sovelluksia';
+
+  @override
   String get removeOnComplete => 'Poista valmistuttua';
 
   @override

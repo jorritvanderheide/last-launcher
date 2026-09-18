@@ -280,6 +280,30 @@ class AppLocalizationsNl extends AppLocalizations {
   String get panelTasks => 'taken';
 
   @override
+  String get panelLaunchApp => 'App openen';
+
+  @override
+  String get panelLaunchAppHint => 'een app';
+
+  @override
+  String get launchAppLeft => 'Linker-app';
+
+  @override
+  String get launchAppRight => 'Rechter-app';
+
+  @override
+  String get launchAppChoose => 'Kies een app';
+
+  @override
+  String get launchAppOnlyLeft => 'Alleen als dit de linkermodule is';
+
+  @override
+  String get launchAppOnlyRight => 'Alleen als dit de rechtermodule is';
+
+  @override
+  String get launchAppSearch => 'Apps zoeken';
+
+  @override
   String get removeOnComplete => 'Verwijderen bij voltooiing';
 
   @override

@@ -276,6 +276,30 @@ class AppLocalizationsEn extends AppLocalizations {
   String get panelTasks => 'tasks';
 
   @override
+  String get panelLaunchApp => 'Launch app';
+
+  @override
+  String get panelLaunchAppHint => 'an app';
+
+  @override
+  String get launchAppLeft => 'Left app';
+
+  @override
+  String get launchAppRight => 'Right app';
+
+  @override
+  String get launchAppChoose => 'Choose an app';
+
+  @override
+  String get launchAppOnlyLeft => 'Only while this is the left module';
+
+  @override
+  String get launchAppOnlyRight => 'Only while this is the right module';
+
+  @override
+  String get launchAppSearch => 'Search apps';
+
+  @override
   String get removeOnComplete => 'Remove on complete';
 
   @override
