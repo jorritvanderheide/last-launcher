@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:last_launcher/app.dart';
 import 'package:last_launcher/features/settings/widgets/settings_tiles.dart';
@@ -30,13 +31,12 @@ void main() {
     test('settings keep text and backgrounds plain', () {
       expect(settings.colorScheme.onSurface, Colors.white);
       expect(settings.textTheme.bodyLarge?.color, Colors.white);
-      expect(settings.appBarTheme.foregroundColor, Colors.white);
       expect(settings.colorScheme.surface, Colors.black);
     });
 
-    test('settings pages theme their titles, not the icons beside them', () {
-      expect(settings.appBarTheme.titleTextStyle?.color, _accent.onDark);
-      expect(settings.appBarTheme.foregroundColor, Colors.white);
+    test('settings theme their titles and icons', () {
+      expect(settings.appBarTheme.foregroundColor, _accent.onDark);
+      expect(settings.listTileTheme.iconColor, _accent.onDark);
     });
 
     test('settings still theme their highlights', () {
@@ -59,6 +59,35 @@ void main() {
     });
   });
 
+  testWidgets('page titles keep their size in the settings theme', (
+    tester,
+  ) async {
+    Future<TextStyle?> titleStyle(ThemeData theme) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          theme: theme,
+          home: Scaffold(appBar: AppBar(title: const Text('Title'))),
+        ),
+      );
+      // MaterialApp animates between themes.
+      await tester.pumpAndSettle();
+      return tester
+          .renderObject<RenderParagraph>(find.text('Title'))
+          .text
+          .style;
+    }
+
+    final plain = await titleStyle(
+      buildLauncherTheme(Brightness.dark, _plain, settings: true),
+    );
+    final accented = await titleStyle(
+      buildLauncherTheme(Brightness.dark, _withAccent, settings: true),
+    );
+    expect(accented?.fontSize, plain?.fontSize);
+    expect(accented?.fontSize, greaterThan(20));
+    expect(accented?.color, _accent.onDark);
+  });
+
   test('without an accent, settings look like the rest', () {
     final launcher = buildLauncherTheme(Brightness.dark, _plain);
     final settings = buildLauncherTheme(
@@ -67,6 +96,8 @@ void main() {
       settings: true,
     );
     expect(settings.colorScheme, launcher.colorScheme);
+    // Icons keep Material's own colour.
+    expect(settings.listTileTheme.iconColor, isNull);
   });
 
   testWidgets('settings pages open in the settings theme', (tester) async {

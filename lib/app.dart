@@ -36,9 +36,8 @@ double _scanlineStrength(ScanlineLevel level) => switch (level) {
 };
 
 /// The app's theme. With [settings] set, the variant for settings pages:
-/// text, icons and backgrounds stay plain, and only the highlights (page
-/// titles and section headings, switches, sliders, focused fields) take the
-/// accent.
+/// text and backgrounds stay plain, and only the highlights (titles and
+/// headings, icons, switches, sliders, focused fields) take the accent.
 @visibleForTesting
 ThemeData buildLauncherTheme(
   Brightness brightness,
@@ -116,10 +115,17 @@ ThemeData buildLauncherTheme(
     appBarTheme: AppBarTheme(
       scrolledUnderElevation: 0,
       backgroundColor: colorScheme.surface,
-      foregroundColor: textColor,
-      // Page titles are headings: they take the accent, the icons don't.
-      titleTextStyle: textTheme.titleLarge?.copyWith(color: highlight),
+      // Titles and their icons take the accent. Set as a colour rather
+      // than a title style: the theme has no font sizes yet at this point
+      // (they're added per script when the app starts), so a copied style
+      // would lose its size.
+      foregroundColor: highlight,
     ),
+    // Row icons on settings pages take the accent too; without one they
+    // keep Material's own softer icon colour.
+    listTileTheme: settings && accent != null
+        ? ListTileThemeData(iconColor: highlight)
+        : null,
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: colorScheme.surface,
       foregroundColor: textColor,

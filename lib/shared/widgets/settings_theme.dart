@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 /// The theme settings pages use, provided near the root of the app.
 ///
-/// It's the app's theme with text, icons and backgrounds kept plain black or
-/// white: with an accent colour on, only the highlights (page titles and
-/// headings, switches, sliders, focused fields) take it there, while the
+/// It's the app's theme with text and backgrounds kept plain black or white:
+/// with an accent colour on, only the highlights (titles and headings,
+/// icons, switches, sliders, focused fields) take it there, while the
 /// launcher itself is themed throughout.
 class SettingsTheme extends InheritedWidget {
   const SettingsTheme({required this.data, required super.child, super.key});
