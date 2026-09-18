@@ -10,11 +10,25 @@ import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:last_launcher/shared/widgets/scanline_overlay.dart';
 
-final _lightTheme = _buildTheme(Brightness.light);
-final _darkTheme = _buildTheme(Brightness.dark);
-final _extraTheme = _buildTheme(Brightness.dark, extra: true);
+/// The parts of the look that end up in [ThemeData]. A record, so equal
+/// looks compare equal and each theme is only ever built once.
+typedef _ThemeSpec = ({bool mono, bool glow});
 
-ThemeData _buildTheme(Brightness brightness, {bool extra = false}) {
+final _themes = <(Brightness, _ThemeSpec), ThemeData>{};
+
+ThemeData _themeFor(Brightness brightness, _ThemeSpec spec) => _themes
+    .putIfAbsent((brightness, spec), () => _buildTheme(brightness, spec));
+
+/// How much each scanline level darkens or lightens the screen, relative to
+/// the original look.
+double _scanlineStrength(ScanlineLevel level) => switch (level) {
+  ScanlineLevel.off => 0,
+  ScanlineLevel.light => 0.5,
+  ScanlineLevel.medium => 1,
+  ScanlineLevel.strong => 2,
+};
+
+ThemeData _buildTheme(Brightness brightness, _ThemeSpec spec) {
   final isDark = brightness == Brightness.dark;
   final textColor = isDark ? Colors.white : Colors.black;
   final glowColor = isDark ? Colors.white : Colors.black;
@@ -43,7 +57,8 @@ ThemeData _buildTheme(Brightness brightness, {bool extra = false}) {
     outline: isDark ? textColor.withAlpha(60) : Colors.black26,
   );
 
-  final shadows = extra
+  // Glow is one of the effects that only exist in dark mode.
+  final shadows = spec.glow && isDark
       ? [
           Shadow(color: glowColor.withAlpha(120), blurRadius: 8),
           Shadow(color: glowColor.withAlpha(70), blurRadius: 24),
@@ -51,7 +66,7 @@ ThemeData _buildTheme(Brightness brightness, {bool extra = false}) {
       : <Shadow>[];
 
   final applied = ThemeData(brightness: brightness).textTheme.apply(
-    fontFamily: extra ? 'JetBrainsMono' : null,
+    fontFamily: spec.mono ? 'JetBrainsMono' : null,
     bodyColor: textColor,
     displayColor: textColor,
   );
@@ -197,7 +212,12 @@ class _LastLauncherAppState extends State<LastLauncherApp>
     return ListenableBuilder(
       listenable: widget.settingsState.appearanceChanged,
       builder: (context, _) {
-        final brightness = switch (widget.settingsState.effectiveThemeMode) {
+        final settings = widget.settingsState;
+        final spec = (
+          mono: settings.font.value == FontChoice.mono,
+          glow: settings.glow.value,
+        );
+        final brightness = switch (settings.themeMode.value) {
           ThemeMode.light => Brightness.light,
           ThemeMode.dark => Brightness.dark,
           ThemeMode.system => MediaQuery.platformBrightnessOf(context),
@@ -218,31 +238,26 @@ class _LastLauncherAppState extends State<LastLauncherApp>
           title: 'Last Launcher',
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          themeMode: widget.settingsState.effectiveThemeMode,
-          theme: _lightTheme,
-          darkTheme: widget.settingsState.isExtra ? _extraTheme : _darkTheme,
+          themeMode: settings.themeMode.value,
+          theme: _themeFor(Brightness.light, spec),
+          darkTheme: _themeFor(Brightness.dark, spec),
           builder: (context, child) => AppearanceScope(
-            terminalPrompt: widget.settingsState.isExtra,
-            animate: !MediaQuery.disableAnimationsOf(context),
+            terminalPrompt: settings.terminalPrompt.value,
+            animate:
+                settings.animations.value &&
+                !MediaQuery.disableAnimationsOf(context),
             child: child!,
           ),
-          home: widget.settingsState.isExtra
-              ? ScanlineOverlay(
-                  child: LauncherShell(
-                    appChannel: widget.appChannel,
-                    homeState: widget.homeState,
-                    appListState: widget.appListState,
-                    settingsState: widget.settingsState,
-                    taskState: widget.taskState,
-                  ),
-                )
-              : LauncherShell(
-                  appChannel: widget.appChannel,
-                  homeState: widget.homeState,
-                  appListState: widget.appListState,
-                  settingsState: widget.settingsState,
-                  taskState: widget.taskState,
-                ),
+          home: ScanlineOverlay(
+            strength: _scanlineStrength(settings.scanlines.value),
+            child: LauncherShell(
+              appChannel: widget.appChannel,
+              homeState: widget.homeState,
+              appListState: widget.appListState,
+              settingsState: widget.settingsState,
+              taskState: widget.taskState,
+            ),
+          ),
         );
       },
     );

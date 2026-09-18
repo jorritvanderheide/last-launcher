@@ -66,7 +66,53 @@ class AppLocalizationsCs extends AppLocalizations {
   String get themeStyleStandard => 'Standardní';
 
   @override
-  String get themeExtraAlwaysDark => 'Extra je vždy tmavý';
+  String get themeStyleCustom => 'Vlastní';
+
+  @override
+  String get fontTitle => 'Písmo';
+
+  @override
+  String get fontStandard => 'Standardní';
+
+  @override
+  String get fontMono => 'Neproporcionální';
+
+  @override
+  String get terminalPrompt => 'Příkazový řádek';
+
+  @override
+  String get terminalPromptSubtitle => 'Zobrazit hledání jako příkazový řádek';
+
+  @override
+  String get sectionEffects => 'Efekty';
+
+  @override
+  String get effectsDarkOnly => 'Pouze v tmavém režimu';
+
+  @override
+  String get glow => 'Záře';
+
+  @override
+  String get scanlines => 'Skenovací linky';
+
+  @override
+  String get scanlinesOff => 'Vypnuto';
+
+  @override
+  String get scanlinesLight => 'Slabé';
+
+  @override
+  String get scanlinesMedium => 'Střední';
+
+  @override
+  String get scanlinesStrong => 'Silné';
+
+  @override
+  String get animations => 'Animace';
+
+  @override
+  String get animationsSubtitle =>
+      'Pohyblivé linky, glitche a blikající kurzor';
 
   @override
   String get hideStatusBar => 'Celá obrazovka';

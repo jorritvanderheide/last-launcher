@@ -66,7 +66,53 @@ class AppLocalizationsSv extends AppLocalizations {
   String get themeStyleStandard => 'Standard';
 
   @override
-  String get themeExtraAlwaysDark => 'Extra är alltid mörkt';
+  String get themeStyleCustom => 'Anpassad';
+
+  @override
+  String get fontTitle => 'Typsnitt';
+
+  @override
+  String get fontStandard => 'Standard';
+
+  @override
+  String get fontMono => 'Monospace';
+
+  @override
+  String get terminalPrompt => 'Terminalprompt';
+
+  @override
+  String get terminalPromptSubtitle => 'Visa sökningen som en kommandorad';
+
+  @override
+  String get sectionEffects => 'Effekter';
+
+  @override
+  String get effectsDarkOnly => 'Endast i mörkt läge';
+
+  @override
+  String get glow => 'Glöd';
+
+  @override
+  String get scanlines => 'Sveplinjer';
+
+  @override
+  String get scanlinesOff => 'Av';
+
+  @override
+  String get scanlinesLight => 'Svaga';
+
+  @override
+  String get scanlinesMedium => 'Mellan';
+
+  @override
+  String get scanlinesStrong => 'Starka';
+
+  @override
+  String get animations => 'Animationer';
+
+  @override
+  String get animationsSubtitle =>
+      'Rörliga sveplinjer, glitchar och blinkande markör';
 
   @override
   String get hideStatusBar => 'Helskärm';

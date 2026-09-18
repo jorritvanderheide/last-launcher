@@ -66,7 +66,52 @@ class AppLocalizationsJa extends AppLocalizations {
   String get themeStyleStandard => '標準';
 
   @override
-  String get themeExtraAlwaysDark => 'Extra は常にダークです';
+  String get themeStyleCustom => 'カスタム';
+
+  @override
+  String get fontTitle => 'フォント';
+
+  @override
+  String get fontStandard => '標準';
+
+  @override
+  String get fontMono => '等幅';
+
+  @override
+  String get terminalPrompt => 'ターミナルプロンプト';
+
+  @override
+  String get terminalPromptSubtitle => '検索をコマンドラインとして表示';
+
+  @override
+  String get sectionEffects => 'エフェクト';
+
+  @override
+  String get effectsDarkOnly => 'ダークモードのみ';
+
+  @override
+  String get glow => 'グロー';
+
+  @override
+  String get scanlines => '走査線';
+
+  @override
+  String get scanlinesOff => 'オフ';
+
+  @override
+  String get scanlinesLight => '弱';
+
+  @override
+  String get scanlinesMedium => '中';
+
+  @override
+  String get scanlinesStrong => '強';
+
+  @override
+  String get animations => 'アニメーション';
+
+  @override
+  String get animationsSubtitle => '動く走査線、グリッチ、点滅カーソル';
 
   @override
   String get hideStatusBar => 'フルスクリーン';

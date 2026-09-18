@@ -7,8 +7,13 @@ import 'package:last_launcher/features/modules/none_module.dart';
 import 'package:last_launcher/features/modules/tasks_module.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// The look layered on top of the light/dark mode.
-enum ThemeStyle { standard, extra }
+enum FontChoice { standard, mono }
+
+enum ScanlineLevel { off, light, medium, strong }
+
+/// A named bundle of look options. Derived from the options themselves:
+/// changing any one of them after picking a preset makes it [custom].
+enum ThemePreset { standard, extra, custom }
 
 class SearchPrefs {
   const SearchPrefs({
@@ -62,11 +67,16 @@ class SettingsState extends ChangeNotifier {
     ThemeMode.values,
     ThemeMode.system,
   );
-  late final themeStyle = _enum(
-    'theme_style',
-    ThemeStyle.values,
-    ThemeStyle.standard,
+  late final font = _enum('font', FontChoice.values, FontChoice.standard);
+  late final terminalPrompt = _bool('terminal_prompt', false);
+  // Effects: only drawn in dark mode, where they were designed.
+  late final glow = _bool('glow', false);
+  late final scanlines = _enum(
+    'scanlines',
+    ScanlineLevel.values,
+    ScanlineLevel.off,
   );
+  late final animations = _bool('animations', true);
   late final hideStatusBar = _bool('hide_status_bar', false);
   late final showHints = _bool('show_hints', true);
 
@@ -105,13 +115,44 @@ class SettingsState extends ChangeNotifier {
 
   // --- Derived: what is actually in effect -------------------------------
 
-  bool get isExtra => themeStyle.value == ThemeStyle.extra;
+  ThemePreset get preset {
+    final mono = font.value == FontChoice.mono;
+    if (mono &&
+        glow.value &&
+        scanlines.value == ScanlineLevel.medium &&
+        terminalPrompt.value &&
+        animations.value) {
+      return ThemePreset.extra;
+    }
+    if (!mono &&
+        !glow.value &&
+        scanlines.value == ScanlineLevel.off &&
+        !terminalPrompt.value) {
+      return ThemePreset.standard;
+    }
+    return ThemePreset.custom;
+  }
 
-  /// Extra has only been designed in dark, so for now it decides the mode.
-  bool get themeModeAvailable => !isExtra;
-
-  ThemeMode get effectiveThemeMode =>
-      themeModeAvailable ? themeMode.value : ThemeMode.dark;
+  /// Sets every option a preset covers. Extra also switches to dark mode,
+  /// since its effects only show there.
+  void applyPreset(ThemePreset preset) {
+    switch (preset) {
+      case ThemePreset.extra:
+        themeMode.value = ThemeMode.dark;
+        font.value = FontChoice.mono;
+        glow.value = true;
+        scanlines.value = ScanlineLevel.medium;
+        terminalPrompt.value = true;
+        animations.value = true;
+      case ThemePreset.standard:
+        font.value = FontChoice.standard;
+        glow.value = false;
+        scanlines.value = ScanlineLevel.off;
+        terminalPrompt.value = false;
+      case ThemePreset.custom:
+        break;
+    }
+  }
 
   /// Search-only mode has no list to scroll, so the keyboard is always up.
   bool get autoKeyboardActive => searchOnly.value || autoKeyboard.value;
@@ -153,7 +194,11 @@ class SettingsState extends ChangeNotifier {
   /// so routine settings don't rebuild the entire app.
   late final Listenable appearanceChanged = Listenable.merge([
     themeMode,
-    themeStyle,
+    font,
+    terminalPrompt,
+    glow,
+    scanlines,
+    animations,
     hideStatusBar,
   ]);
 
@@ -188,11 +233,20 @@ class SettingsState extends ChangeNotifier {
   /// initial value independent of which was created first.
   void _migrate() {
     // Extra used to be a fourth theme mode next to system, light and dark.
-    // It is now a style, and was always shown dark.
-    if (_prefs.getString('theme_mode') == 'extra') {
+    // It is now a preset of separate options, and was always shown dark.
+    // theme_style only ever existed in development builds.
+    final wasExtra =
+        _prefs.getString('theme_mode') == 'extra' ||
+        _prefs.getString('theme_style') == 'extra';
+    if (wasExtra) {
       unawaited(_prefs.setString('theme_mode', ThemeMode.dark.name));
-      unawaited(_prefs.setString('theme_style', ThemeStyle.extra.name));
+      unawaited(_prefs.setString('font', FontChoice.mono.name));
+      unawaited(_prefs.setBool('glow', true));
+      unawaited(_prefs.setString('scanlines', ScanlineLevel.medium.name));
+      unawaited(_prefs.setBool('terminal_prompt', true));
+      unawaited(_prefs.setBool('animations', true));
     }
+    unawaited(_prefs.remove('theme_style'));
 
     // Before either side was configurable there was only a tasks_enabled
     // flag, which meant tasks on the left.

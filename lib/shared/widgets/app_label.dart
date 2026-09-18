@@ -138,7 +138,7 @@ class _GlitchTextState extends State<_GlitchText> {
 
     Key? textKey;
     double intensity = 0;
-    if (scope != null && animate) {
+    if (scope != null && scope.active && animate) {
       final key = _key ??= GlobalKey();
       textKey = key;
       intensity = _getIntensity(scope, key);

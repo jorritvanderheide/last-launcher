@@ -17,11 +17,14 @@ void main() {
   });
 
   group('SettingsState defaults', () {
-    test('theme defaults to system, standard style', () {
+    test('look defaults to system, standard', () {
       expect(state.themeMode.value, ThemeMode.system);
-      expect(state.themeStyle.value, ThemeStyle.standard);
-      expect(state.effectiveThemeMode, ThemeMode.system);
-      expect(state.isExtra, false);
+      expect(state.preset, ThemePreset.standard);
+      expect(state.font.value, FontChoice.standard);
+      expect(state.glow.value, false);
+      expect(state.scanlines.value, ScanlineLevel.off);
+      expect(state.terminalPrompt.value, false);
+      expect(state.animations.value, true);
     });
 
     test('boolean defaults', () {
@@ -37,47 +40,68 @@ void main() {
     });
   });
 
-  group('SettingsState theme', () {
-    test('mode applies in the standard style', () {
+  group('SettingsState look', () {
+    test('extra preset sets its options and dark mode', () {
       state.themeMode.value = ThemeMode.light;
-      expect(state.effectiveThemeMode, ThemeMode.light);
-      expect(state.themeModeAvailable, true);
+      state.applyPreset(ThemePreset.extra);
+      expect(state.preset, ThemePreset.extra);
+      expect(state.themeMode.value, ThemeMode.dark);
+      expect(state.font.value, FontChoice.mono);
+      expect(state.glow.value, true);
+      expect(state.scanlines.value, ScanlineLevel.medium);
+      expect(state.terminalPrompt.value, true);
     });
 
-    test('extra is always dark but keeps the chosen mode', () {
-      state.themeMode.value = ThemeMode.light;
-      state.themeStyle.value = ThemeStyle.extra;
-      expect(state.isExtra, true);
-      expect(state.themeModeAvailable, false);
-      expect(state.effectiveThemeMode, ThemeMode.dark);
+    test('changing one option makes the look custom', () {
+      state.applyPreset(ThemePreset.extra);
+      state.scanlines.value = ScanlineLevel.strong;
+      expect(state.preset, ThemePreset.custom);
 
-      state.themeStyle.value = ThemeStyle.standard;
-      expect(state.effectiveThemeMode, ThemeMode.light);
+      state.applyPreset(ThemePreset.standard);
+      state.font.value = FontChoice.mono;
+      expect(state.preset, ThemePreset.custom);
     });
 
-    test('migrates the old extra theme mode to dark plus extra', () async {
+    test('standard preset clears the effects but keeps the mode', () {
+      state.applyPreset(ThemePreset.extra);
+      state.applyPreset(ThemePreset.standard);
+      expect(state.preset, ThemePreset.standard);
+      expect(state.themeMode.value, ThemeMode.dark);
+    });
+
+    test('migrates the released extra theme to the extra preset', () async {
       SharedPreferences.setMockInitialValues({'theme_mode': 'extra'});
       final migrated = await _reload();
       expect(migrated.themeMode.value, ThemeMode.dark);
-      expect(migrated.themeStyle.value, ThemeStyle.extra);
+      expect(migrated.preset, ThemePreset.extra);
 
       // And stays migrated.
-      final again = await _reload();
-      expect(again.themeStyle.value, ThemeStyle.extra);
+      expect((await _reload()).preset, ThemePreset.extra);
+    });
+
+    test('migrates the development-only theme_style too', () async {
+      SharedPreferences.setMockInitialValues({
+        'theme_mode': 'light',
+        'theme_style': 'extra',
+      });
+      final migrated = await _reload();
+      expect(migrated.preset, ThemePreset.extra);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.containsKey('theme_style'), false);
     });
 
     test('keeps reading the old light and dark values', () async {
       SharedPreferences.setMockInitialValues({'theme_mode': 'light'});
       final restored = await _reload();
       expect(restored.themeMode.value, ThemeMode.light);
-      expect(restored.themeStyle.value, ThemeStyle.standard);
+      expect(restored.preset, ThemePreset.standard);
     });
 
-    test('theme and status bar changes signal an app rebuild', () {
+    test('look and status bar changes signal an app rebuild', () {
       var count = 0;
       state.appearanceChanged.addListener(() => count++);
       state.themeMode.value = ThemeMode.dark;
-      state.themeStyle.value = ThemeStyle.extra;
+      state.glow.value = true;
       state.hideStatusBar.value = true;
       state.autoKeyboard.value = false;
       expect(count, 3);
@@ -160,7 +184,7 @@ void main() {
 
   group('SettingsState persistence', () {
     test('persists and restores settings', () async {
-      state.themeStyle.value = ThemeStyle.extra;
+      state.applyPreset(ThemePreset.extra);
       state.autoKeyboard.value = false;
       state.searchOnly.value = true;
       state.setLeftPanel(TasksModule());
@@ -168,8 +192,8 @@ void main() {
       state.hideStatusBar.value = true;
 
       final restored = await _reload();
-      expect(restored.isExtra, true);
-      expect(restored.effectiveThemeMode, ThemeMode.dark);
+      expect(restored.preset, ThemePreset.extra);
+      expect(restored.themeMode.value, ThemeMode.dark);
       expect(restored.autoKeyboard.value, false);
       expect(restored.searchOnly.value, true);
       expect(restored.leftPanel.value, isA<TasksModule>());

@@ -236,11 +236,101 @@ abstract class AppLocalizations {
   /// **'Standard'**
   String get themeStyleStandard;
 
-  /// No description provided for @themeExtraAlwaysDark.
+  /// No description provided for @themeStyleCustom.
   ///
   /// In en, this message translates to:
-  /// **'Extra is always dark'**
-  String get themeExtraAlwaysDark;
+  /// **'Custom'**
+  String get themeStyleCustom;
+
+  /// No description provided for @fontTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Font'**
+  String get fontTitle;
+
+  /// No description provided for @fontStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get fontStandard;
+
+  /// No description provided for @fontMono.
+  ///
+  /// In en, this message translates to:
+  /// **'Monospace'**
+  String get fontMono;
+
+  /// No description provided for @terminalPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Terminal prompt'**
+  String get terminalPrompt;
+
+  /// No description provided for @terminalPromptSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Show search as a command line'**
+  String get terminalPromptSubtitle;
+
+  /// No description provided for @sectionEffects.
+  ///
+  /// In en, this message translates to:
+  /// **'Effects'**
+  String get sectionEffects;
+
+  /// No description provided for @effectsDarkOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark mode only'**
+  String get effectsDarkOnly;
+
+  /// No description provided for @glow.
+  ///
+  /// In en, this message translates to:
+  /// **'Glow'**
+  String get glow;
+
+  /// No description provided for @scanlines.
+  ///
+  /// In en, this message translates to:
+  /// **'Scanlines'**
+  String get scanlines;
+
+  /// No description provided for @scanlinesOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get scanlinesOff;
+
+  /// No description provided for @scanlinesLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get scanlinesLight;
+
+  /// No description provided for @scanlinesMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get scanlinesMedium;
+
+  /// No description provided for @scanlinesStrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Strong'**
+  String get scanlinesStrong;
+
+  /// No description provided for @animations.
+  ///
+  /// In en, this message translates to:
+  /// **'Animations'**
+  String get animations;
+
+  /// No description provided for @animationsSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Moving scanlines, glitches and a blinking cursor'**
+  String get animationsSubtitle;
 
   /// No description provided for @hideStatusBar.
   ///

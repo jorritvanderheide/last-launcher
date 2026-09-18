@@ -66,7 +66,53 @@ class AppLocalizationsFi extends AppLocalizations {
   String get themeStyleStandard => 'Vakio';
 
   @override
-  String get themeExtraAlwaysDark => 'Extra on aina tumma';
+  String get themeStyleCustom => 'Mukautettu';
+
+  @override
+  String get fontTitle => 'Fontti';
+
+  @override
+  String get fontStandard => 'Vakio';
+
+  @override
+  String get fontMono => 'Tasavälinen';
+
+  @override
+  String get terminalPrompt => 'Komentorivi';
+
+  @override
+  String get terminalPromptSubtitle => 'Näytä haku komentorivinä';
+
+  @override
+  String get sectionEffects => 'Tehosteet';
+
+  @override
+  String get effectsDarkOnly => 'Vain tummassa tilassa';
+
+  @override
+  String get glow => 'Hehku';
+
+  @override
+  String get scanlines => 'Juovat';
+
+  @override
+  String get scanlinesOff => 'Pois';
+
+  @override
+  String get scanlinesLight => 'Kevyt';
+
+  @override
+  String get scanlinesMedium => 'Keskitaso';
+
+  @override
+  String get scanlinesStrong => 'Voimakas';
+
+  @override
+  String get animations => 'Animaatiot';
+
+  @override
+  String get animationsSubtitle =>
+      'Liikkuvat juovat, häiriöt ja vilkkuva kohdistin';
 
   @override
   String get hideStatusBar => 'Koko näyttö';

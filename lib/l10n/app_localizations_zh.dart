@@ -66,7 +66,52 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themeStyleStandard => '標準';
 
   @override
-  String get themeExtraAlwaysDark => 'Extra 一律為深色';
+  String get themeStyleCustom => '自訂';
+
+  @override
+  String get fontTitle => '字型';
+
+  @override
+  String get fontStandard => '標準';
+
+  @override
+  String get fontMono => '等寬';
+
+  @override
+  String get terminalPrompt => '終端機提示字元';
+
+  @override
+  String get terminalPromptSubtitle => '將搜尋顯示為命令列';
+
+  @override
+  String get sectionEffects => '效果';
+
+  @override
+  String get effectsDarkOnly => '僅限深色模式';
+
+  @override
+  String get glow => '光暈';
+
+  @override
+  String get scanlines => '掃描線';
+
+  @override
+  String get scanlinesOff => '關閉';
+
+  @override
+  String get scanlinesLight => '輕微';
+
+  @override
+  String get scanlinesMedium => '中等';
+
+  @override
+  String get scanlinesStrong => '強烈';
+
+  @override
+  String get animations => '動畫';
+
+  @override
+  String get animationsSubtitle => '移動的掃描線、故障效果和閃爍游標';
 
   @override
   String get hideStatusBar => '全螢幕';

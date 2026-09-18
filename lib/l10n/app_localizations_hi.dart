@@ -66,7 +66,52 @@ class AppLocalizationsHi extends AppLocalizations {
   String get themeStyleStandard => 'मानक';
 
   @override
-  String get themeExtraAlwaysDark => 'Extra हमेशा डार्क होता है';
+  String get themeStyleCustom => 'कस्टम';
+
+  @override
+  String get fontTitle => 'फ़ॉन्ट';
+
+  @override
+  String get fontStandard => 'मानक';
+
+  @override
+  String get fontMono => 'मोनोस्पेस';
+
+  @override
+  String get terminalPrompt => 'टर्मिनल प्रॉम्प्ट';
+
+  @override
+  String get terminalPromptSubtitle => 'खोज को कमांड लाइन की तरह दिखाएँ';
+
+  @override
+  String get sectionEffects => 'इफ़ेक्ट';
+
+  @override
+  String get effectsDarkOnly => 'केवल डार्क मोड में';
+
+  @override
+  String get glow => 'चमक';
+
+  @override
+  String get scanlines => 'स्कैनलाइन';
+
+  @override
+  String get scanlinesOff => 'बंद';
+
+  @override
+  String get scanlinesLight => 'हल्की';
+
+  @override
+  String get scanlinesMedium => 'मध्यम';
+
+  @override
+  String get scanlinesStrong => 'तेज़';
+
+  @override
+  String get animations => 'एनिमेशन';
+
+  @override
+  String get animationsSubtitle => 'चलती स्कैनलाइन, ग्लिच और टिमटिमाता कर्सर';
 
   @override
   String get hideStatusBar => 'फ़ुलस्क्रीन';

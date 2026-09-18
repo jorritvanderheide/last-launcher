@@ -149,9 +149,7 @@ void main() {
     expect(settings.extraChar.value, isTrue);
   });
 
-  testWidgets('appearance locks the mode while the extra style is on', (
-    tester,
-  ) async {
+  testWidgets('appearance presets and custom looks', (tester) async {
     final settings = await _pumpSettings(tester);
     await tester.tap(find.text(l10n.sectionAppearance));
     await tester.pumpAndSettle();
@@ -160,13 +158,13 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text(l10n.themeExtra).last);
     await tester.pumpAndSettle();
+    expect(settings.preset, ThemePreset.extra);
+    expect(settings.themeMode.value, ThemeMode.dark);
 
-    expect(settings.isExtra, isTrue);
-    final mode = tester.widget<ListTile>(
-      find.widgetWithText(ListTile, l10n.themeTitle),
-    );
-    expect(mode.enabled, isFalse);
-    expect(find.text(l10n.themeExtraAlwaysDark), findsOneWidget);
+    await tester.tap(find.text(l10n.glow));
+    await tester.pumpAndSettle();
+    expect(settings.glow.value, isFalse);
+    expect(find.text(l10n.themeStyleCustom), findsOneWidget);
   });
 
   testWidgets('home page picks a module by id', (tester) async {

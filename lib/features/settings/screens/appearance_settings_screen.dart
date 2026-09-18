@@ -12,19 +12,37 @@ String themeModeLabel(BuildContext context, ThemeMode mode) {
   };
 }
 
-String themeStyleLabel(BuildContext context, ThemeStyle style) {
+String themePresetLabel(BuildContext context, ThemePreset preset) {
   final l10n = AppLocalizations.of(context)!;
-  return switch (style) {
-    ThemeStyle.standard => l10n.themeStyleStandard,
-    ThemeStyle.extra => l10n.themeExtra,
+  return switch (preset) {
+    ThemePreset.standard => l10n.themeStyleStandard,
+    ThemePreset.extra => l10n.themeExtra,
+    ThemePreset.custom => l10n.themeStyleCustom,
+  };
+}
+
+String _fontLabel(BuildContext context, FontChoice font) {
+  final l10n = AppLocalizations.of(context)!;
+  return switch (font) {
+    FontChoice.standard => l10n.fontStandard,
+    FontChoice.mono => l10n.fontMono,
+  };
+}
+
+String _scanlineLabel(BuildContext context, ScanlineLevel level) {
+  final l10n = AppLocalizations.of(context)!;
+  return switch (level) {
+    ScanlineLevel.off => l10n.scanlinesOff,
+    ScanlineLevel.light => l10n.scanlinesLight,
+    ScanlineLevel.medium => l10n.scanlinesMedium,
+    ScanlineLevel.strong => l10n.scanlinesStrong,
   };
 }
 
 /// One-line description of the current look, for the row leading here.
 String appearanceSummary(BuildContext context, SettingsState settings) =>
-    settings.isExtra
-    ? themeStyleLabel(context, ThemeStyle.extra)
-    : themeModeLabel(context, settings.effectiveThemeMode);
+    '${themePresetLabel(context, settings.preset)} · '
+    '${themeModeLabel(context, settings.themeMode.value)}';
 
 class AppearanceSettingsScreen extends StatelessWidget {
   const AppearanceSettingsScreen({required this.settingsState, super.key});
@@ -40,24 +58,35 @@ class AppearanceSettingsScreen extends StatelessWidget {
       title: l10n.sectionAppearance,
       listenable: s,
       children: (context) => [
-        ChoiceTile<ThemeStyle>(
+        // Custom is what the options add up to, never something to pick.
+        ChoiceTile<ThemePreset>(
           leading: const Icon(Icons.palette_outlined),
           title: l10n.themeStyleTitle,
-          value: s.themeStyle.value,
-          options: ThemeStyle.values,
-          label: themeStyleLabel,
-          onChanged: (style) => s.themeStyle.value = style,
+          value: s.preset,
+          options: const [ThemePreset.standard, ThemePreset.extra],
+          label: themePresetLabel,
+          onChanged: s.applyPreset,
         ),
         ChoiceTile<ThemeMode>(
           leading: const Icon(Icons.brightness_6_outlined),
           title: l10n.themeTitle,
-          value: s.effectiveThemeMode,
+          value: s.themeMode.value,
           options: ThemeMode.values,
           label: themeModeLabel,
-          subtitle: s.themeModeAvailable ? null : l10n.themeExtraAlwaysDark,
-          onChanged: s.themeModeAvailable
-              ? (mode) => s.themeMode.value = mode
-              : null,
+          onChanged: (mode) => s.themeMode.value = mode,
+        ),
+        ChoiceTile<FontChoice>(
+          leading: const Icon(Icons.text_fields),
+          title: l10n.fontTitle,
+          value: s.font.value,
+          options: FontChoice.values,
+          label: _fontLabel,
+          onChanged: (font) => s.font.value = font,
+        ),
+        SettingSwitch(
+          setting: s.terminalPrompt,
+          title: l10n.terminalPrompt,
+          subtitle: l10n.terminalPromptSubtitle,
         ),
         SettingSwitch(
           setting: s.hideStatusBar,
@@ -68,6 +97,27 @@ class AppearanceSettingsScreen extends StatelessWidget {
           setting: s.showHints,
           title: l10n.showHints,
           subtitle: l10n.showHintsSubtitle,
+        ),
+        SettingsSectionHeader(title: l10n.sectionEffects),
+        SettingSwitch(
+          setting: s.glow,
+          title: l10n.glow,
+          subtitle: l10n.effectsDarkOnly,
+        ),
+        ChoiceTile<ScanlineLevel>(
+          title: l10n.scanlines,
+          value: s.scanlines.value,
+          options: ScanlineLevel.values,
+          label: _scanlineLabel,
+          subtitle:
+              '${_scanlineLabel(context, s.scanlines.value)} · '
+              '${l10n.effectsDarkOnly}',
+          onChanged: (level) => s.scanlines.value = level,
+        ),
+        SettingSwitch(
+          setting: s.animations,
+          title: l10n.animations,
+          subtitle: l10n.animationsSubtitle,
         ),
       ],
     );

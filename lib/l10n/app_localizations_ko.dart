@@ -66,7 +66,52 @@ class AppLocalizationsKo extends AppLocalizations {
   String get themeStyleStandard => '기본';
 
   @override
-  String get themeExtraAlwaysDark => 'Extra는 항상 다크입니다';
+  String get themeStyleCustom => '사용자 지정';
+
+  @override
+  String get fontTitle => '글꼴';
+
+  @override
+  String get fontStandard => '기본';
+
+  @override
+  String get fontMono => '고정폭';
+
+  @override
+  String get terminalPrompt => '터미널 프롬프트';
+
+  @override
+  String get terminalPromptSubtitle => '검색을 명령줄처럼 표시';
+
+  @override
+  String get sectionEffects => '효과';
+
+  @override
+  String get effectsDarkOnly => '다크 모드에서만';
+
+  @override
+  String get glow => '글로우';
+
+  @override
+  String get scanlines => '주사선';
+
+  @override
+  String get scanlinesOff => '끔';
+
+  @override
+  String get scanlinesLight => '약하게';
+
+  @override
+  String get scanlinesMedium => '보통';
+
+  @override
+  String get scanlinesStrong => '강하게';
+
+  @override
+  String get animations => '애니메이션';
+
+  @override
+  String get animationsSubtitle => '움직이는 주사선, 글리치, 깜빡이는 커서';
 
   @override
   String get hideStatusBar => '전체 화면';

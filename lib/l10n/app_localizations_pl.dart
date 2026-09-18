@@ -67,7 +67,53 @@ class AppLocalizationsPl extends AppLocalizations {
   String get themeStyleStandard => 'Standardowy';
 
   @override
-  String get themeExtraAlwaysDark => 'Extra jest zawsze ciemny';
+  String get themeStyleCustom => 'Własny';
+
+  @override
+  String get fontTitle => 'Czcionka';
+
+  @override
+  String get fontStandard => 'Standardowa';
+
+  @override
+  String get fontMono => 'Stałej szerokości';
+
+  @override
+  String get terminalPrompt => 'Wiersz poleceń';
+
+  @override
+  String get terminalPromptSubtitle => 'Pokaż wyszukiwanie jako wiersz poleceń';
+
+  @override
+  String get sectionEffects => 'Efekty';
+
+  @override
+  String get effectsDarkOnly => 'Tylko w trybie ciemnym';
+
+  @override
+  String get glow => 'Poświata';
+
+  @override
+  String get scanlines => 'Linie skanowania';
+
+  @override
+  String get scanlinesOff => 'Wyłączone';
+
+  @override
+  String get scanlinesLight => 'Słabe';
+
+  @override
+  String get scanlinesMedium => 'Średnie';
+
+  @override
+  String get scanlinesStrong => 'Mocne';
+
+  @override
+  String get animations => 'Animacje';
+
+  @override
+  String get animationsSubtitle =>
+      'Ruchome linie, zakłócenia i migający kursor';
 
   @override
   String get hideStatusBar => 'Pełny ekran';

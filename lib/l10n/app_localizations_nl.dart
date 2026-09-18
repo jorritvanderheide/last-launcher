@@ -66,7 +66,53 @@ class AppLocalizationsNl extends AppLocalizations {
   String get themeStyleStandard => 'Standaard';
 
   @override
-  String get themeExtraAlwaysDark => 'Extra is altijd donker';
+  String get themeStyleCustom => 'Aangepast';
+
+  @override
+  String get fontTitle => 'Lettertype';
+
+  @override
+  String get fontStandard => 'Standaard';
+
+  @override
+  String get fontMono => 'Monospace';
+
+  @override
+  String get terminalPrompt => 'Terminalprompt';
+
+  @override
+  String get terminalPromptSubtitle => 'Zoeken tonen als opdrachtregel';
+
+  @override
+  String get sectionEffects => 'Effecten';
+
+  @override
+  String get effectsDarkOnly => 'Alleen in donkere modus';
+
+  @override
+  String get glow => 'Gloed';
+
+  @override
+  String get scanlines => 'Scanlijnen';
+
+  @override
+  String get scanlinesOff => 'Uit';
+
+  @override
+  String get scanlinesLight => 'Licht';
+
+  @override
+  String get scanlinesMedium => 'Middel';
+
+  @override
+  String get scanlinesStrong => 'Sterk';
+
+  @override
+  String get animations => 'Animaties';
+
+  @override
+  String get animationsSubtitle =>
+      'Bewegende scanlijnen, glitches en een knipperende cursor';
 
   @override
   String get hideStatusBar => 'Volledig scherm';
