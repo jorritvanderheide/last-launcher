@@ -165,6 +165,7 @@ class TaskScreenState extends State<TaskScreen> {
 
   /// The row being dragged, from the moment a hold lifts it.
   int? _dragFrom;
+  final _hold = HoldTracker();
 
   void _onReorderStart(int index) {
     _isReordering = true;
@@ -172,14 +173,14 @@ class TaskScreenState extends State<TaskScreen> {
     widget.onReorderStart();
   }
 
-  /// Ends a drag within [group]. A hold let go in place opens the row's
-  /// actions; see droppedInPlace.
+  /// Ends a drag within [group]. A hold let go without moving opens the
+  /// row's actions; see HoldTracker.
   void _onReorderEnd(List<Task> group, int index) {
     _isReordering = false;
     widget.onReorderEnd();
     final from = _dragFrom;
     _dragFrom = null;
-    if (from != null && droppedInPlace(from, index)) {
+    if (from != null && !_hold.moved) {
       setState(() => _activeTaskId = group[from].id);
     }
   }
@@ -307,44 +308,48 @@ class TaskScreenState extends State<TaskScreen> {
                     return false;
                   },
                   child: FadeOverflow(
-                    child: CustomScrollView(
-                      controller: _scrollController,
-                      physics: widget.scrollLocked
-                          ? const NeverScrollableScrollPhysics()
-                          : const AlwaysScrollableScrollPhysics(),
-                      slivers: [
-                        SliverPadding(
-                          padding: const EdgeInsets.only(top: 32),
-                          sliver: SliverReorderableList(
-                            itemCount: incomplete.length,
+                    child: _hold.listener(
+                      child: CustomScrollView(
+                        controller: _scrollController,
+                        physics: widget.scrollLocked
+                            ? const NeverScrollableScrollPhysics()
+                            : const AlwaysScrollableScrollPhysics(),
+                        slivers: [
+                          SliverPadding(
+                            padding: const EdgeInsets.only(top: 32),
+                            sliver: SliverReorderableList(
+                              itemCount: incomplete.length,
+                              proxyDecorator: dragProxyDecorator,
+                              onReorderStart: _onReorderStart,
+                              onReorderEnd: (index) =>
+                                  _onReorderEnd(incomplete, index),
+                              onReorder: (o, n) => widget.taskState
+                                  .reorderInGroup(o, n, done: false),
+                              itemBuilder: (context, index) => _buildTaskItem(
+                                context,
+                                incomplete[index],
+                                index,
+                              ),
+                            ),
+                          ),
+                          if (incomplete.isNotEmpty && complete.isNotEmpty)
+                            const SliverToBoxAdapter(
+                              child: SizedBox(height: 24),
+                            ),
+                          SliverReorderableList(
+                            itemCount: complete.length,
                             proxyDecorator: dragProxyDecorator,
                             onReorderStart: _onReorderStart,
                             onReorderEnd: (index) =>
-                                _onReorderEnd(incomplete, index),
+                                _onReorderEnd(complete, index),
                             onReorder: (o, n) => widget.taskState
-                                .reorderInGroup(o, n, done: false),
-                            itemBuilder: (context, index) => _buildTaskItem(
-                              context,
-                              incomplete[index],
-                              index,
-                            ),
+                                .reorderInGroup(o, n, done: true),
+                            itemBuilder: (context, index) =>
+                                _buildTaskItem(context, complete[index], index),
                           ),
-                        ),
-                        if (incomplete.isNotEmpty && complete.isNotEmpty)
-                          const SliverToBoxAdapter(child: SizedBox(height: 24)),
-                        SliverReorderableList(
-                          itemCount: complete.length,
-                          proxyDecorator: dragProxyDecorator,
-                          onReorderStart: _onReorderStart,
-                          onReorderEnd: (index) =>
-                              _onReorderEnd(complete, index),
-                          onReorder: (o, n) =>
-                              widget.taskState.reorderInGroup(o, n, done: true),
-                          itemBuilder: (context, index) =>
-                              _buildTaskItem(context, complete[index], index),
-                        ),
-                        const SliverToBoxAdapter(child: SizedBox(height: 80)),
-                      ],
+                          const SliverToBoxAdapter(child: SizedBox(height: 80)),
+                        ],
+                      ),
                     ),
                   ),
                 );

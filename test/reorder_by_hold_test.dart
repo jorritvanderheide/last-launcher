@@ -12,7 +12,6 @@ import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
-import 'package:last_launcher/shared/widgets/app_label.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _names = ['Alpha', 'Bravo', 'Charlie'];
@@ -116,6 +115,26 @@ void main() {
       expect(settingsOpened, isFalse);
     });
 
+    testWidgets('a drag that ends where it started opens no actions', (
+      tester,
+    ) async {
+      await pump(tester);
+      final gesture = await tester.startGesture(
+        tester.getCenter(find.text('Alpha')),
+      );
+      await tester.pump(kLongPressTimeout + const Duration(milliseconds: 100));
+      for (final step in [const Offset(0, 15), const Offset(0, -15)]) {
+        for (var i = 0; i < 10; i++) {
+          await gesture.moveBy(step);
+          await tester.pump(const Duration(milliseconds: 16));
+        }
+      }
+      await gesture.up();
+      await tester.pumpAndSettle();
+      expect(find.byType(ActionRow), findsNothing);
+      expect(home.pinnedApps.map((a) => a.label), _names);
+    });
+
     testWidgets('a locked layout neither moves nor opens rows', (tester) async {
       await pump(tester, locked: true);
       await _hold(tester, 'Alpha', move: const Offset(0, 150));
@@ -168,13 +187,5 @@ void main() {
       expect(tasks.tasks, hasLength(3));
       expect(find.byType(ActionRow), findsNothing);
     });
-  });
-
-  test('a row dropped back where it started counts as not moved', () {
-    expect(droppedInPlace(2, 2), isTrue);
-    // Coming back from below reports the next index.
-    expect(droppedInPlace(2, 3), isTrue);
-    expect(droppedInPlace(2, 0), isFalse);
-    expect(droppedInPlace(2, 5), isFalse);
   });
 }

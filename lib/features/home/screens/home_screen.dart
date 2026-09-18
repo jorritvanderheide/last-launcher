@@ -45,6 +45,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   /// The row being dragged, from the moment a hold lifts it.
   int? _dragFrom;
+  final _hold = HoldTracker();
   late final Listenable _mergedState = Listenable.merge([
     widget.homeState,
     widget.appListState,
@@ -209,72 +210,74 @@ class HomeScreenState extends State<HomeScreen> {
                     children: children,
                   );
                 }
-                return ReorderableListView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  buildDefaultDragHandles: false,
-                  proxyDecorator: dragProxyDecorator,
-                  onReorderStart: (index) {
-                    _dragFrom = index;
-                    widget.onReorderStart();
-                  },
-                  onReorderEnd: (index) {
-                    widget.onReorderEnd();
-                    final from = _dragFrom;
-                    _dragFrom = null;
-                    // Held and let go in place: the row's actions.
-                    if (from != null && droppedInPlace(from, index)) {
-                      setState(() => _activeAppPackage = apps[from].key);
-                    }
-                  },
-                  onReorder: widget.homeState.reorderApps,
-                  itemCount: apps.length,
-                  itemBuilder: (context, index) {
-                    final app = apps[index];
-                    final appKey = app.key;
-                    if (_activeAppPackage == appKey) {
-                      return _withWorkDot(
-                        ActionRow(
-                          key: ValueKey(appKey),
+                return _hold.listener(
+                  child: ReorderableListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    buildDefaultDragHandles: false,
+                    proxyDecorator: dragProxyDecorator,
+                    onReorderStart: (index) {
+                      _dragFrom = index;
+                      widget.onReorderStart();
+                    },
+                    onReorderEnd: (index) {
+                      widget.onReorderEnd();
+                      final from = _dragFrom;
+                      _dragFrom = null;
+                      // Held and let go without moving: the row's actions.
+                      if (from != null && !_hold.moved) {
+                        setState(() => _activeAppPackage = apps[from].key);
+                      }
+                    },
+                    onReorder: widget.homeState.reorderApps,
+                    itemCount: apps.length,
+                    itemBuilder: (context, index) {
+                      final app = apps[index];
+                      final appKey = app.key;
+                      if (_activeAppPackage == appKey) {
+                        return _withWorkDot(
+                          ActionRow(
+                            key: ValueKey(appKey),
+                            label: widget.appListState.displayLabelFor(
+                              app.key,
+                              app.label,
+                            ),
+                            actions: _appActions(context, app),
+                            onClose: () =>
+                                setState(() => _activeAppPackage = null),
+                          ),
+                          app,
+                        );
+                      }
+                      final locked = widget.settingsState.locked.value;
+                      final row = _withWorkDot(
+                        AppLabel(
                           label: widget.appListState.displayLabelFor(
                             app.key,
                             app.label,
                           ),
-                          actions: _appActions(context, app),
-                          onClose: () =>
-                              setState(() => _activeAppPackage = null),
+                          onTap: () => widget.onLaunch(
+                            app.packageName,
+                            isWorkApp: app.isWorkApp,
+                            shortcutId: app.shortcutId,
+                          ),
+                          // A locked layout neither moves nor edits rows; the
+                          // empty handler keeps a hold from reaching the
+                          // long press on home, which opens settings.
+                          onLongPress: locked ? () {} : null,
                         ),
                         app,
                       );
-                    }
-                    final locked = widget.settingsState.locked.value;
-                    final row = _withWorkDot(
-                      AppLabel(
-                        label: widget.appListState.displayLabelFor(
-                          app.key,
-                          app.label,
-                        ),
-                        onTap: () => widget.onLaunch(
-                          app.packageName,
-                          isWorkApp: app.isWorkApp,
-                          shortcutId: app.shortcutId,
-                        ),
-                        // A locked layout neither moves nor edits rows; the
-                        // empty handler keeps a hold from reaching the
-                        // long press on home, which opens settings.
-                        onLongPress: locked ? () {} : null,
-                      ),
-                      app,
-                    );
-                    // Press and hold to drag; see droppedInPlace.
-                    return locked
-                        ? KeyedSubtree(key: ValueKey(appKey), child: row)
-                        : ReorderableDelayedDragStartListener(
-                            key: ValueKey(appKey),
-                            index: index,
-                            child: row,
-                          );
-                  },
+                      // Press and hold to drag; see HoldTracker.
+                      return locked
+                          ? KeyedSubtree(key: ValueKey(appKey), child: row)
+                          : ReorderableDelayedDragStartListener(
+                              key: ValueKey(appKey),
+                              index: index,
+                              child: row,
+                            );
+                    },
+                  ),
                 );
               },
             ),

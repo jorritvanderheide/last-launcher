@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:last_launcher/shared/data/hints.dart';
 import 'package:last_launcher/shared/widgets/appearance_scope.dart';
@@ -254,11 +255,30 @@ Widget dragProxyDecorator(
   );
 }
 
-/// Whether a row dragged from [from] was dropped back where it started, as
-/// reported by a reorderable list's onReorderEnd ([to]). Coming back from
-/// below reports the next index, since it's counted with the dragged row
-/// still in place.
+/// Tells a press-and-hold on a row that moved (a drag) from one that didn't
+/// (asking for the row's actions), in lists reordered by holding a row.
 ///
-/// Rows are reordered by pressing and holding them; a hold let go without
-/// moving opens the row's actions instead.
-bool droppedInPlace(int from, int to) => to == from || to == from + 1;
+/// Where the row lands can't tell them apart, since a drag can end back
+/// where it started; the finger can. Wrap the list in [listener] and ask
+/// [moved] when the drag ends.
+class HoldTracker {
+  Offset? _down;
+  bool _moved = false;
+
+  /// Whether the finger travelled past the touch slop since it went down.
+  bool get moved => _moved;
+
+  Widget listener({required Widget child}) => Listener(
+    onPointerDown: (event) {
+      _down = event.position;
+      _moved = false;
+    },
+    onPointerMove: (event) {
+      final down = _down;
+      if (down != null && (event.position - down).distance > kTouchSlop) {
+        _moved = true;
+      }
+    },
+    child: child,
+  );
+}
