@@ -292,9 +292,6 @@ class AppLocalizationsCs extends AppLocalizations {
   String get launchAppOnlyRight => 'Jen pokud je toto pravý modul';
 
   @override
-  String get launchAppSearch => 'Hledat aplikace';
-
-  @override
   String get removeOnComplete => 'Odstranit po dokončení';
 
   @override

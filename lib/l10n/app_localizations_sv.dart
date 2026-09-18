@@ -290,9 +290,6 @@ class AppLocalizationsSv extends AppLocalizations {
   String get launchAppOnlyRight => 'Bara när detta är höger modul';
 
   @override
-  String get launchAppSearch => 'Sök appar';
-
-  @override
   String get removeOnComplete => 'Ta bort vid slutförande';
 
   @override

@@ -100,6 +100,20 @@ class _SettingsScreenState extends State<SettingsScreen>
           onTap: () =>
               pushSettingsPage(context, HomeSettingsScreen(settingsState: s)),
         ),
+        // The modules chosen on Home, right under it; one row per module,
+        // even when it sits on both sides.
+        for (final module in {
+          for (final m in [s.leftPanel.value, s.rightPanel.value]) m.id: m,
+        }.values)
+          if (module.settingsPage(
+                ModuleDeps(settingsState: s, appListState: widget.appListState),
+              )
+              case final page?)
+            ListTile(
+              leading: const Icon(Icons.view_sidebar_outlined),
+              title: Text(module.displayName(context)),
+              onTap: () => pushSettingsPage(context, page),
+            ),
         ListTile(
           leading: const Icon(Icons.search),
           title: Text(l10n.sectionAppDrawer),
@@ -119,19 +133,6 @@ class _SettingsScreenState extends State<SettingsScreen>
             ),
           ),
         ),
-        // One row per module, even when it sits on both sides.
-        for (final module in {
-          for (final m in [s.leftPanel.value, s.rightPanel.value]) m.id: m,
-        }.values)
-          if (module.settingsPage(
-                ModuleDeps(settingsState: s, appListState: widget.appListState),
-              )
-              case final page?)
-            ListTile(
-              leading: const Icon(Icons.view_sidebar_outlined),
-              title: Text(module.displayName(context)),
-              onTap: () => pushSettingsPage(context, page),
-            ),
         if (widget.appListState.hasWorkProfile)
           ListTile(
             leading: const Icon(Icons.work_outline),

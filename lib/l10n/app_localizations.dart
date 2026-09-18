@@ -656,12 +656,6 @@ abstract class AppLocalizations {
   /// **'Only while this is the right module'**
   String get launchAppOnlyRight;
 
-  /// No description provided for @launchAppSearch.
-  ///
-  /// In en, this message translates to:
-  /// **'Search apps'**
-  String get launchAppSearch;
-
   /// No description provided for @removeOnComplete.
   ///
   /// In en, this message translates to:

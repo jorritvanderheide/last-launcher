@@ -294,9 +294,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get launchAppOnlyRight => 'Tylko gdy to jest prawy moduł';
 
   @override
-  String get launchAppSearch => 'Szukaj aplikacji';
-
-  @override
   String get removeOnComplete => 'Usuń po ukończeniu';
 
   @override

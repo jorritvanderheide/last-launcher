@@ -281,9 +281,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get launchAppOnlyRight => '右モジュールに設定しているときのみ';
 
   @override
-  String get launchAppSearch => 'アプリを検索';
-
-  @override
   String get removeOnComplete => '完了時に削除';
 
   @override

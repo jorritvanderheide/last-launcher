@@ -123,6 +123,16 @@ void main() {
     expect(find.text(l10n.sectionWork), findsOneWidget);
   });
 
+  testWidgets('module rows sit right under Home', (tester) async {
+    final settings = await _pumpSettings(tester);
+    settings.setLeftPanel(TasksModule());
+    await tester.pumpAndSettle();
+
+    double top(String text) => tester.getTopLeft(find.text(text)).dy;
+    expect(top(l10n.sectionHome), lessThan(top(l10n.sectionTasks)));
+    expect(top(l10n.sectionTasks), lessThan(top(l10n.sectionAppDrawer)));
+  });
+
   testWidgets('a module on either side gets its settings row', (tester) async {
     final settings = await _pumpSettings(tester);
     settings.setRightPanel(TasksModule());

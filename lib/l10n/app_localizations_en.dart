@@ -288,9 +288,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get launchAppOnlyRight => 'Only while this is the right module';
 
   @override
-  String get launchAppSearch => 'Search apps';
-
-  @override
   String get removeOnComplete => 'Remove on complete';
 
   @override

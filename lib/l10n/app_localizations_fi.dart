@@ -292,9 +292,6 @@ class AppLocalizationsFi extends AppLocalizations {
   String get launchAppOnlyRight => 'Vain kun tämä on oikea moduuli';
 
   @override
-  String get launchAppSearch => 'Hae sovelluksia';
-
-  @override
   String get removeOnComplete => 'Poista valmistuttua';
 
   @override

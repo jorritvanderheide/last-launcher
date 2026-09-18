@@ -76,9 +76,9 @@ class _Picked {
   final String? key;
 }
 
-/// Every drawer entry, hidden ones and shortcuts included, with a search
-/// field, and None at the top.
-class _AppPicker extends StatefulWidget {
+/// Every drawer entry, hidden ones and shortcuts included, with None at the
+/// top.
+class _AppPicker extends StatelessWidget {
   const _AppPicker({
     required this.title,
     required this.apps,
@@ -90,16 +90,9 @@ class _AppPicker extends StatefulWidget {
   final String? currentKey;
 
   @override
-  State<_AppPicker> createState() => _AppPickerState();
-}
-
-class _AppPickerState extends State<_AppPicker> {
-  String _query = '';
-
-  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final entries = widget.apps.search(_query, includeHidden: true);
+    final entries = apps.search('', includeHidden: true);
     return Dialog(
       child: ConstrainedBox(
         constraints: BoxConstraints(
@@ -111,35 +104,21 @@ class _AppPickerState extends State<_AppPicker> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 24, 24, 8),
-              child: Text(
-                widget.title,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: l10n.launchAppSearch,
-                  isDense: true,
-                ),
-                onChanged: (query) => setState(() => _query = query),
-              ),
+              child: Text(title, style: Theme.of(context).textTheme.titleLarge),
             ),
             Flexible(
               child: ListView(
                 shrinkWrap: true,
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 children: [
-                  if (_query.isEmpty)
-                    ListTile(
-                      title: Text(l10n.panelNone),
-                      selected: widget.currentKey == null,
-                      onTap: () => Navigator.pop(context, const _Picked(null)),
-                    ),
+                  ListTile(
+                    title: Text(l10n.panelNone),
+                    selected: currentKey == null,
+                    onTap: () => Navigator.pop(context, const _Picked(null)),
+                  ),
                   for (final app in entries)
                     ListTile(
-                      title: Text(widget.apps.displayLabel(app)),
+                      title: Text(apps.displayLabel(app)),
                       trailing: app.isWorkApp || app.isShortcut
                           ? Row(
                               mainAxisSize: MainAxisSize.min,
@@ -151,7 +130,7 @@ class _AppPickerState extends State<_AppPicker> {
                               ],
                             )
                           : null,
-                      selected: app.key == widget.currentKey,
+                      selected: app.key == currentKey,
                       onTap: () => Navigator.pop(context, _Picked(app.key)),
                     ),
                 ],

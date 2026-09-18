@@ -281,9 +281,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get launchAppOnlyRight => '僅在設為右側模組時';
 
   @override
-  String get launchAppSearch => '搜尋應用程式';
-
-  @override
   String get removeOnComplete => '完成後移除';
 
   @override

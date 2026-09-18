@@ -91,7 +91,6 @@
   "launchAppChoose": "アプリを選択",
   "launchAppOnlyLeft": "左モジュールに設定しているときのみ",
   "launchAppOnlyRight": "右モジュールに設定しているときのみ",
-  "launchAppSearch": "アプリを検索",
   "removeOnComplete": "完了時に削除",
   "removeOnCompleteSubtitle": "完了したタスクを削除",
   "clearCompletedDaily": "完了タスクを毎日クリア",

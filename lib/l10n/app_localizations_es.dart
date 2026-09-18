@@ -294,9 +294,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get launchAppOnlyRight => 'Solo si este es el módulo derecho';
 
   @override
-  String get launchAppSearch => 'Buscar apps';
-
-  @override
   String get removeOnComplete => 'Eliminar al completar';
 
   @override

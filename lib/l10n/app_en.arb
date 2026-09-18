@@ -100,7 +100,6 @@
   "launchAppChoose": "Choose an app",
   "launchAppOnlyLeft": "Only while this is the left module",
   "launchAppOnlyRight": "Only while this is the right module",
-  "launchAppSearch": "Search apps",
   "removeOnComplete": "Remove on complete",
   "removeOnCompleteSubtitle": "Remove tasks when marked as done",
   "clearCompletedDaily": "Clear completed daily",

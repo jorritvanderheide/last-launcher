@@ -292,9 +292,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get launchAppOnlyRight => 'Alleen als dit de rechtermodule is';
 
   @override
-  String get launchAppSearch => 'Apps zoeken';
-
-  @override
   String get removeOnComplete => 'Verwijderen bij voltooiing';
 
   @override

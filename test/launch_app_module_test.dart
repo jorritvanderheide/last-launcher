@@ -128,14 +128,16 @@ void main() {
       expect(deps.settingsState.launchAppLeft.value, isNull);
     });
 
-    testWidgets('the picker searches', (tester) async {
-      await pumpPage(tester);
+    testWidgets('the picker lists every entry, hidden ones too', (
+      tester,
+    ) async {
+      final deps = await pumpPage(tester);
+      deps.appListState.hideApp(_music.key);
       await tester.tap(find.text(l10n.launchAppLeft));
       await tester.pumpAndSettle();
-      await tester.enterText(find.byType(TextField), 'new');
-      await tester.pumpAndSettle();
+      expect(find.byType(TextField), findsNothing);
+      expect(find.text('Music'), findsOneWidget);
       expect(find.text('News'), findsOneWidget);
-      expect(find.text('Music'), findsNothing);
     });
   });
 

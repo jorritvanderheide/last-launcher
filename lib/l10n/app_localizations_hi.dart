@@ -287,9 +287,6 @@ class AppLocalizationsHi extends AppLocalizations {
   String get launchAppOnlyRight => 'केवल तब जब यह दायां मॉड्यूल हो';
 
   @override
-  String get launchAppSearch => 'ऐप खोजें';
-
-  @override
   String get removeOnComplete => 'पूरा होने पर हटाएँ';
 
   @override

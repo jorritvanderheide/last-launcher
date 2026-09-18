@@ -281,9 +281,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get launchAppOnlyRight => '오른쪽 모듈로 설정된 경우에만';
 
   @override
-  String get launchAppSearch => '앱 검색';
-
-  @override
   String get removeOnComplete => '완료 시 제거';
 
   @override

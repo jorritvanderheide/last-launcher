@@ -91,7 +91,6 @@
   "launchAppChoose": "Choisir une application",
   "launchAppOnlyLeft": "Seulement si c'est le module gauche",
   "launchAppOnlyRight": "Seulement si c'est le module droit",
-  "launchAppSearch": "Rechercher des applications",
   "removeOnComplete": "Supprimer à l'achèvement",
   "removeOnCompleteSubtitle": "Supprimer les tâches quand elles sont terminées",
   "clearCompletedDaily": "Effacer les terminées chaque jour",
