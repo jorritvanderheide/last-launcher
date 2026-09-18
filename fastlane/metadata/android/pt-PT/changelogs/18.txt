@@ -1,0 +1,7 @@
+## Alterações
+
+- New: definições organizadas em páginas, com cópia de segurança e restauro
+- New: aspeto: tipo de letra, tamanho e alinhamento do texto, brilho, linhas de varrimento, cor de destaque
+- New: módulo Abrir aplicação, prefixos de pesquisa próprios, atalhos de aplicações web
+- New: mantém premida uma linha para a mover
+- Fix: tremulação do teclado; o botão de início volta agora ao ecrã inicial

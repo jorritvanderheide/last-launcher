@@ -1,0 +1,7 @@
+## Changements
+
+- New: paramètres répartis en pages, avec sauvegarde et restauration
+- New: apparence : police, taille et alignement du texte, lueur, lignes de balayage, couleur d'accentuation
+- New: module Lancer une application, préfixes de recherche personnalisés, raccourcis d'applications web
+- New: maintenez une ligne appuyée pour la déplacer
+- Fix: clignotement du clavier ; le bouton d'accueil ramène désormais à l'écran d'accueil

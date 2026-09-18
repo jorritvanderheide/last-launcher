@@ -1,0 +1,7 @@
+## Wijzigingen
+
+- New: instellingen verdeeld over pagina's, met back-up en herstel
+- New: uiterlijk: lettertype, tekstgrootte en -uitlijning, gloed, scanlijnen, accentkleur
+- New: module App openen, eigen zoekvoorvoegsels, snelkoppelingen naar web-apps
+- New: houd een rij ingedrukt om hem te verplaatsen
+- Fix: flikkerend toetsenbord; de thuisknop gaat nu terug naar het startscherm

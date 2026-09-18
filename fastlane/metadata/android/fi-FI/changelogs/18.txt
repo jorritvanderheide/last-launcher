@@ -1,0 +1,7 @@
+## Muutokset
+
+- New: asetukset jaettu sivuihin, varmuuskopiointi ja palautus
+- New: ulkoasu: fontti, tekstin koko ja tasaus, hehku, juovat, korostusväri
+- New: Käynnistä sovellus -moduuli, omat hakuetuliitteet, verkkosovellusten pikakuvakkeet
+- New: siirrä riviä pitämällä sitä painettuna
+- Fix: näppäimistön välkkyminen; kotipainike palaa nyt aloitusnäyttöön

@@ -1,0 +1,7 @@
+## Zmiany
+
+- New: ustawienia podzielone na strony, z kopią zapasową i przywracaniem
+- New: wygląd: czcionka, rozmiar i wyrównanie tekstu, poświata, linie skanowania, kolor akcentu
+- New: moduł Uruchom aplikację, własne prefiksy wyszukiwania, skróty aplikacji internetowych
+- New: przytrzymaj wiersz, aby go przesunąć
+- Fix: migotanie klawiatury; przycisk ekranu głównego wraca teraz na ekran główny

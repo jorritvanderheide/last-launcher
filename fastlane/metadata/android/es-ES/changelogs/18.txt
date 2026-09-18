@@ -1,0 +1,7 @@
+## Cambios
+
+- New: ajustes organizados en páginas, con copia de seguridad y restauración
+- New: apariencia: fuente, tamaño y alineación del texto, brillo, líneas de escaneo, color de acento
+- New: módulo Abrir app, prefijos de búsqueda propios, accesos directos de apps web
+- New: mantén pulsada una fila para moverla
+- Fix: parpadeo del teclado; el botón de inicio ahora vuelve a la pantalla de inicio

@@ -1,0 +1,7 @@
+## Änderungen
+
+- New: Einstellungen auf Seiten verteilt, mit Sichern und Wiederherstellen
+- New: Darstellung: Schrift, Textgröße und -ausrichtung, Leuchten, Scanlines, Akzentfarbe
+- New: Modul „App starten“, eigene Suchpräfixe, Web-App-Verknüpfungen
+- New: Zeile gedrückt halten, um sie zu verschieben
+- Fix: Flackern der Tastatur; die Home-Taste führt jetzt zum Startbildschirm

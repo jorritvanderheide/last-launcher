@@ -1,0 +1,7 @@
+## Změny
+
+- New: nastavení rozdělené do stránek, se zálohou a obnovením
+- New: vzhled: písmo, velikost a zarovnání textu, záře, skenovací linky, barva zvýraznění
+- New: modul Spustit aplikaci, vlastní vyhledávací předpony, zkratky webových aplikací
+- New: podržením řádku jej přesunete
+- Fix: blikání klávesnice; tlačítko Domů teď vrací na domovskou obrazovku

@@ -1,0 +1,7 @@
+## Ändringar
+
+- New: inställningarna uppdelade på sidor, med säkerhetskopiering och återställning
+- New: utseende: typsnitt, textstorlek och justering, glöd, sveplinjer, accentfärg
+- New: modulen Öppna app, egna sökprefix, genvägar till webbappar
+- New: håll in en rad för att flytta den
+- Fix: flimrande tangentbord; hemknappen går nu tillbaka till hemskärmen

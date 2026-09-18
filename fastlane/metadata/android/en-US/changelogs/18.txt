@@ -1,0 +1,7 @@
+## Changes
+
+- New: settings reorganised into pages, with backup and restore
+- New: look options: font, text size and alignment, glow, scanlines, accent colour
+- New: Launch app module, custom search prefixes, web app shortcuts
+- New: press and hold a row to reorder it
+- Fix: keyboard flicker; the home button now returns home
