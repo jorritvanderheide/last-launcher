@@ -7,6 +7,7 @@ import 'package:last_launcher/features/home/screens/launcher_shell.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:last_launcher/shared/widgets/scanline_overlay.dart';
 
 final _lightTheme = _buildTheme(Brightness.light);
@@ -220,6 +221,11 @@ class _LastLauncherAppState extends State<LastLauncherApp>
           themeMode: widget.settingsState.effectiveThemeMode,
           theme: _lightTheme,
           darkTheme: widget.settingsState.isExtra ? _extraTheme : _darkTheme,
+          builder: (context, child) => AppearanceScope(
+            terminalPrompt: widget.settingsState.isExtra,
+            animate: !MediaQuery.disableAnimationsOf(context),
+            child: child!,
+          ),
           home: widget.settingsState.isExtra
               ? ScanlineOverlay(
                   child: LauncherShell(

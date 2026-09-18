@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/shared/data/hints.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:last_launcher/shared/widgets/scanline_overlay.dart';
 
 class AppLabel extends StatelessWidget {
@@ -133,11 +134,11 @@ class _GlitchTextState extends State<_GlitchText> {
   @override
   Widget build(BuildContext context) {
     final scope = ScanlineScope.of(context);
-    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final animate = AppearanceScope.of(context).animate;
 
     Key? textKey;
     double intensity = 0;
-    if (scope != null && !reduceMotion) {
+    if (scope != null && animate) {
       final key = _key ??= GlobalKey();
       textKey = key;
       intensity = _getIntensity(scope, key);

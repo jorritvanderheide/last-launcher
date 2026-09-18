@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
-import 'package:last_launcher/shared/widgets/scanline_overlay.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 
 class AppSearchField extends StatelessWidget {
   const AppSearchField({
@@ -22,9 +22,9 @@ class AppSearchField extends StatelessWidget {
       context,
     ).textTheme.titleLarge?.copyWith(fontSize: AppLabel.fontSize);
     final colorScheme = Theme.of(context).colorScheme;
-    final isExtra = ScanlineScope.of(context) != null;
+    final appearance = AppearanceScope.of(context);
 
-    if (isExtra) {
+    if (appearance.terminalPrompt) {
       return _ExtraField(
         controller: controller,
         focusNode: focusNode,
@@ -144,7 +144,11 @@ class _ExtraField extends StatelessWidget {
                         style: style,
                       ),
                     ),
-                    if (focused) _BlinkingCursor(color: color),
+                    if (focused)
+                      _BlinkingCursor(
+                        color: color,
+                        blink: AppearanceScope.of(context).animate,
+                      ),
                   ],
                 );
               },
@@ -157,9 +161,12 @@ class _ExtraField extends StatelessWidget {
 }
 
 class _BlinkingCursor extends StatefulWidget {
-  const _BlinkingCursor({required this.color});
+  const _BlinkingCursor({required this.color, required this.blink});
 
   final Color color;
+
+  /// When false the cursor is drawn steady.
+  final bool blink;
 
   @override
   State<_BlinkingCursor> createState() => _BlinkingCursorState();
@@ -175,7 +182,24 @@ class _BlinkingCursorState extends State<_BlinkingCursor>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
-    )..repeat(reverse: true);
+    );
+    _applyBlink();
+  }
+
+  @override
+  void didUpdateWidget(_BlinkingCursor oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.blink != oldWidget.blink) _applyBlink();
+  }
+
+  void _applyBlink() {
+    if (widget.blink) {
+      _controller.repeat(reverse: true);
+    } else {
+      _controller
+        ..stop()
+        ..value = 1;
+    }
   }
 
   @override

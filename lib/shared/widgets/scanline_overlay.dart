@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 
 /// Provides the current scanline band Y position to descendants.
 class ScanlineScope extends InheritedWidget {
@@ -48,10 +49,10 @@ class _ScanlineOverlayState extends State<ScanlineOverlay>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final disable = MediaQuery.disableAnimationsOf(context);
-    if (disable && _controller.isAnimating) {
+    final animate = AppearanceScope.of(context).animate;
+    if (!animate && _controller.isAnimating) {
       _controller.stop();
-    } else if (!disable && !_controller.isAnimating) {
+    } else if (animate && !_controller.isAnimating) {
       _controller.repeat();
     }
   }
