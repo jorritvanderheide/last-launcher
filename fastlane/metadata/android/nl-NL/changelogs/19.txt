@@ -1,0 +1,4 @@
+## Wijzigingen
+
+- Fix: op F-Droid de eerste update sinds 1.2.1, met alles uit 1.3.0
+- New: Help in de instellingen opent de veelgestelde vragen

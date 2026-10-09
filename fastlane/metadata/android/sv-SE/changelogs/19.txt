@@ -1,0 +1,4 @@
+## Ändringar
+
+- Fix: på F-Droid den första uppdateringen sedan 1.2.1, med allt från 1.3.0
+- New: Hjälp i inställningarna öppnar vanliga frågor

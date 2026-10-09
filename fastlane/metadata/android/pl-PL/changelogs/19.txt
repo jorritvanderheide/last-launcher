@@ -1,0 +1,4 @@
+## Zmiany
+
+- Fix: w F-Droid pierwsza aktualizacja od 1.2.1, ze wszystkim z 1.3.0
+- New: Pomoc w ustawieniach otwiera najczęstsze pytania

@@ -1,0 +1,4 @@
+## Cambios
+
+- Fix: en F-Droid, la primera actualización desde la 1.2.1, con todo lo de la 1.3.0
+- New: Ayuda, en los ajustes, abre las preguntas frecuentes

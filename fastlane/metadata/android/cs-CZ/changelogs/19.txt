@@ -1,0 +1,4 @@
+## Změny
+
+- Fix: na F-Droidu první aktualizace od 1.2.1, se vším z 1.3.0
+- New: Nápověda v nastavení otevírá časté dotazy
