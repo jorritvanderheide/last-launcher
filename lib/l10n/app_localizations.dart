@@ -863,7 +863,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'View the project page'**
+  /// **'Answers to common questions'**
   String get helpSubtitle;
 
   /// No description provided for @version.

@@ -385,7 +385,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get help => '도움말';
 
   @override
-  String get helpSubtitle => '프로젝트 페이지 보기';
+  String get helpSubtitle => '자주 묻는 질문에 대한 답변';
 
   @override
   String get version => '버전';

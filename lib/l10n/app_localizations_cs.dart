@@ -401,7 +401,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get help => 'Nápověda';
 
   @override
-  String get helpSubtitle => 'Zobrazit stránku projektu';
+  String get helpSubtitle => 'Odpovědi na časté dotazy';
 
   @override
   String get version => 'Verze';

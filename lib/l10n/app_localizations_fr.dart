@@ -405,7 +405,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get help => 'Aide';
 
   @override
-  String get helpSubtitle => 'Voir la page du projet';
+  String get helpSubtitle => 'Réponses aux questions fréquentes';
 
   @override
   String get version => 'Version';

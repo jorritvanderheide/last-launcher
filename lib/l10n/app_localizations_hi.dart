@@ -394,7 +394,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get help => 'सहायता';
 
   @override
-  String get helpSubtitle => 'प्रोजेक्ट पेज देखें';
+  String get helpSubtitle => 'अक्सर पूछे जाने वाले प्रश्नों के उत्तर';
 
   @override
   String get version => 'संस्करण';

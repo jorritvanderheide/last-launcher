@@ -403,7 +403,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get help => 'Pomoc';
 
   @override
-  String get helpSubtitle => 'Zobacz stronę projektu';
+  String get helpSubtitle => 'Odpowiedzi na częste pytania';
 
   @override
   String get version => 'Wersja';

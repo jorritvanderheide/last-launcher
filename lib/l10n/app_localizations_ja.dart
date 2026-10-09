@@ -385,7 +385,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get help => 'ヘルプ';
 
   @override
-  String get helpSubtitle => 'プロジェクトページを表示';
+  String get helpSubtitle => 'よくある質問への回答';
 
   @override
   String get version => 'バージョン';

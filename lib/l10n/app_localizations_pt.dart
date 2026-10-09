@@ -401,7 +401,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get help => 'Ajuda';
 
   @override
-  String get helpSubtitle => 'Ver a página do projeto';
+  String get helpSubtitle => 'Respostas a perguntas frequentes';
 
   @override
   String get version => 'Versão';

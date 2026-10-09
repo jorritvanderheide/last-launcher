@@ -4,6 +4,11 @@ What changed in each release of Last Launcher, newest first. What counts as
 breaking is in [Compatibility](docs/compatibility.md). The stores show a
 shorter version of the same notes, from `fastlane/metadata/android/`.
 
+## Unreleased
+
+- Help, in settings, opens the answers to common questions instead of the
+  project page.
+
 ## 1.3.0
 
 - Settings are split into pages: Appearance, Home, App drawer, a page for

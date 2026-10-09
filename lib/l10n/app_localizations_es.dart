@@ -402,7 +402,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get help => 'Ayuda';
 
   @override
-  String get helpSubtitle => 'Ver la página del proyecto';
+  String get helpSubtitle => 'Respuestas a preguntas frecuentes';
 
   @override
   String get version => 'Versión';

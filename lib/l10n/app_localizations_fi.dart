@@ -400,7 +400,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get help => 'Ohje';
 
   @override
-  String get helpSubtitle => 'Avaa projektisivu';
+  String get helpSubtitle => 'Vastauksia usein kysyttyihin kysymyksiin';
 
   @override
   String get version => 'Versio';

@@ -400,7 +400,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get help => 'Help';
 
   @override
-  String get helpSubtitle => 'Bekijk de projectpagina';
+  String get helpSubtitle => 'Antwoorden op veelgestelde vragen';
 
   @override
   String get version => 'Versie';

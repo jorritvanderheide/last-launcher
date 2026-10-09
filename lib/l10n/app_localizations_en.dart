@@ -395,7 +395,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get help => 'Help';
 
   @override
-  String get helpSubtitle => 'View the project page';
+  String get helpSubtitle => 'Answers to common questions';
 
   @override
   String get version => 'Version';

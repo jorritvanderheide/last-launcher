@@ -198,7 +198,9 @@ class _SettingsScreenState extends State<SettingsScreen>
           title: Text(l10n.help),
           subtitle: Text(l10n.helpSubtitle),
           onTap: () => launchUrl(
-            Uri.parse('https://codeberg.org/BW20/last-launcher'),
+            Uri.parse(
+              'https://codeberg.org/BW20/last-launcher/src/branch/main/FAQ.md',
+            ),
             mode: LaunchMode.externalApplication,
           ),
         ),

@@ -398,7 +398,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get help => 'Hjälp';
 
   @override
-  String get helpSubtitle => 'Visa projektsidan';
+  String get helpSubtitle => 'Svar på vanliga frågor';
 
   @override
   String get version => 'Version';

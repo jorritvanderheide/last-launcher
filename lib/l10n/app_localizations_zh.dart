@@ -384,7 +384,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get help => '說明';
 
   @override
-  String get helpSubtitle => '檢視專案頁面';
+  String get helpSubtitle => '常見問題解答';
 
   @override
   String get version => '版本';
