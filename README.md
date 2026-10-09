@@ -14,10 +14,10 @@ attention. See [Getting started](#2-getting-started).
 ![Android 7 and newer](https://img.shields.io/badge/platform-android%207%2B-111111?style=flat-square)
 [![License: EUPL-1.2](https://img.shields.io/badge/license-EUPL--1.2-blue?style=flat-square)](LICENSE)
 
-<p align="center">
-  <img src="images/home.png" width="250" alt="The home screen in dark mode: six pinned apps as plain text, and the hint Swipe up for apps" />
-  <img src="images/search.png" width="250" alt="The app drawer with two letters typed: the matching apps, with the letters that open each one marked" />
-  <img src="images/tasks.png" width="250" alt="The task list next to home, with four tasks, one of them done" />
+<p>
+  <img src="images/home.png" width="250" alt="The home screen in dark mode: Phone, Messages, Camera, Chrome, Maps and Mail as plain white text on black" />
+  <img src="images/search.png" width="250" alt="The app drawer with c typed: Clock, Contacts and Calendar, with the letters that open each one in bright white, and two weaker matches dimmed" />
+  <img src="images/tasks.png" width="250" alt="The task list next to home: Buy coffee beans, Call the plumber and Return library books, and Plan weekend hike ticked off" />
 </p>
 
 Your phone's home screen is built to be looked at. Icons in colours picked to
@@ -152,10 +152,10 @@ The left and right of home can each hold a module:
 
 ### 5.4 Looks
 
-<p align="center">
-  <img src="images/light.png" width="250" alt="The home screen in light mode" />
-  <img src="images/extra.png" width="250" alt="The home screen in the Extra style: green monospace text with scanlines and a glow" />
-  <img src="images/settings.png" width="250" alt="The settings page, with Appearance, Home, App drawer and Backup and restore" />
+<p>
+  <img src="images/extra.png" width="250" alt="The home screen in the Extra style: glowing monospace text over faint scanlines" />
+  <img src="images/settings.png" width="250" alt="The settings page: Appearance, Home with the Tasks module, App drawer, Backup and restore, Support and About" />
+  <img src="images/light.png" width="250" alt="The home screen in light mode: the same apps in black on white" />
 </p>
 
 System, light or dark, with a pure black dark mode for OLED screens. Choose
