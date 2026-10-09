@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+    - name: Read the FAQ
+      url: https://codeberg.org/BW20/last-launcher/src/branch/main/FAQ.md
+      about: Answers to the most common questions, such as an app missing from the drawer or moving to a new phone.
     - name: Report a security problem
       url: https://github.com/jorritvanderheide/last-launcher/security/advisories/new
       about: Please report security problems privately, not in a public issue.

@@ -5,7 +5,7 @@ body:
     - type: markdown
       attributes:
           value: |
-              Thanks for taking the time to report this.
+              Thanks for taking the time to report this. Before you start, have a quick look at the [FAQ](https://codeberg.org/BW20/last-launcher/src/branch/main/FAQ.md): the most common surprises, like an app missing from the drawer or the accessibility service, are explained there.
 
               Found a security problem? Please don't report it here. Use [private reporting](https://github.com/jorritvanderheide/last-launcher/security/advisories/new) instead.
 
