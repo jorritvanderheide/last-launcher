@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/modules/launcher_module.dart';
+import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/features/settings/backup.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -145,6 +148,56 @@ void main() {
       await _restore(prefs, backup);
       settings.reload();
       expect(settings.locked.value, isTrue);
+    });
+  });
+
+  // Every backup restores in every later release (docs/compatibility.md).
+  // Add a backup here whenever the format or a stored value changes.
+  group('older backups', () {
+    test('a backup from 1.3.0 restores', () async {
+      const fromV130 = r'''
+{
+  "format": "last-launcher-backup",
+  "version": 1,
+  "modules": ["tasks"],
+  "prefs": {
+    "theme_mode": {"type": "string", "value": "dark"},
+    "font": {"type": "string", "value": "mono"},
+    "text_size": {"type": "double", "value": 30.0},
+    "scanlines": {"type": "string", "value": "light"},
+    "locked": {"type": "bool", "value": true},
+    "left_panel": {"type": "string", "value": "tasks"},
+    "search_prefixes": {"type": "string", "value": "[{\"trigger\":\"m \",\"name\":\"\",\"enabled\":true,\"action\":{\"type\":\"link\",\"template\":\"geo:0,0?q=%s\"}}]"},
+    "pinned_apps": {"type": "string", "value": "[{\"packageName\":\"com.example.notes\",\"label\":\"Notes\"},{\"packageName\":\"com.example.mail\",\"label\":\"Mail\",\"isWorkApp\":true}]"},
+    "custom_labels": {"type": "string", "value": "{\"com.example.notes|false\":\"Jot\"}"},
+    "hidden_apps": {"type": "string", "value": "[\"com.example.games|false\"]"},
+    "tasks": {"type": "string", "value": "[{\"id\":\"1\",\"title\":\"Buy coffee beans\",\"done\":false}]"}
+  }
+}
+''';
+      final prefs = await _prefs({});
+      await _restore(prefs, Backup.decode(fromV130));
+
+      final settings = SettingsState(prefs);
+      expect(settings.themeMode.value, ThemeMode.dark);
+      expect(settings.font.value, FontChoice.mono);
+      expect(settings.textSize.value, 30.0);
+      expect(settings.scanlines.value, ScanlineLevel.light);
+      expect(settings.locked.value, isTrue);
+      expect(settings.leftPanel.value.id, 'tasks');
+      expect(settings.searchPrefixes.value.single.trigger, 'm ');
+
+      final pinned = HomeState(prefs).pinnedApps;
+      expect(pinned.map((p) => p.key), [
+        'com.example.notes|false',
+        'com.example.mail|true',
+      ]);
+      expect(TaskState(prefs).tasks.single.title, 'Buy coffee beans');
+      expect(prefs.getString('custom_labels'), contains('Jot'));
+      expect(
+        prefs.getString('hidden_apps'),
+        contains('com.example.games|false'),
+      );
     });
   });
 }
