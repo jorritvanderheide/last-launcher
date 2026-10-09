@@ -1,10 +1,10 @@
-# Privacy Policy — Last Launcher
+# Privacy Policy: Last Launcher
 
-**Last updated:** 2026-06-03
+**Last updated:** 2026-10-09
 
 Welcome to Last Launcher for Android!
 
-This is an open-source app developed by BW20, published under the EUPL 1.2 licence. The source code is available on GitHub.
+This is an open-source app developed by BW20, published under the EUPL 1.2 licence. The source code is available on [Codeberg](https://codeberg.org/BW20/last-launcher).
 
 As an Android user myself, I take privacy very seriously. I know how frustrating it is when apps collect your data without your knowledge. Last Launcher was built with one principle: your data belongs on your device, nowhere else.
 
@@ -12,14 +12,18 @@ I hereby state, to the best of my knowledge and belief, that I have not programm
 
 ## Data stored on your device
 
-- **Pinned apps** — app package names, custom labels, and display order are stored locally via SharedPreferences.
-- **Tasks** — task titles, completion state, and display order are stored locally via SharedPreferences.
-- **Hidden apps** — package names of apps you have chosen to hide are stored locally via SharedPreferences.
-- **Preferences** — theme, keyboard behavior, and other settings are stored locally via SharedPreferences.
+- **Pinned apps**: app package names, custom labels, and display order are stored locally via SharedPreferences.
+- **Tasks**: task titles, completion state, and display order are stored locally via SharedPreferences.
+- **Hidden apps**: package names of apps you have chosen to hide are stored locally via SharedPreferences.
+- **Preferences**: theme, keyboard behavior, and other settings are stored locally via SharedPreferences.
+- **Backups**: only when you export one, to a file and a place you choose. Restoring reads a file you pick.
+- **Shortcuts**: shortcuts another app asks to add, such as a website you add to the home screen from your browser, are kept by Android and listed with your apps.
 
 ## Network requests
 
 The app makes **no network requests**. Last Launcher works entirely offline. No data ever leaves your device.
+
+A search prefix that opens a link, such as a web search, hands the link to another app, such as your browser, which then connects the way it always does. Last Launcher itself has no internet permission.
 
 ## Explanation of permissions requested in the app
 
@@ -49,7 +53,7 @@ The app does not knowingly collect any data from anyone, including children unde
 
 ## Data sharing
 
-Last Launcher does not share any data with third parties. There is no data to share — nothing is collected.
+Last Launcher does not share any data with third parties. There is no data to share: nothing is collected.
 
 ## Data retention
 
@@ -61,4 +65,4 @@ Updates to this policy will be reflected in the "Last updated" date above and co
 
 ---
 
-If you find any security vulnerability that has been inadvertently caused by me, or have any questions regarding how the app protects your privacy, please open an issue on GitHub and I will do my best to address it.
+If you have questions about how the app protects your privacy, please [open an issue on Codeberg](https://codeberg.org/BW20/last-launcher/issues/new/choose). If you find a security vulnerability, please report it privately instead, as described in the [security policy](SECURITY.md).
