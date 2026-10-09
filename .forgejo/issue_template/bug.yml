@@ -1,0 +1,77 @@
+name: Bug report
+about: Something in Last Launcher doesn't work the way you expect.
+labels: ['bug']
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to report this.
+
+              Found a security problem? Please don't report it here. Use [private reporting](https://github.com/jorritvanderheide/last-launcher/security/advisories/new) instead.
+
+              A screenshot helps, but your home screen and task list show which apps you use and what you're planning. Cover anything you'd rather keep to yourself before you attach one.
+
+    - type: textarea
+      id: what
+      attributes:
+          label: What happened?
+          description: And what did you expect to happen instead?
+      validations:
+          required: true
+
+    - type: textarea
+      id: steps
+      attributes:
+          label: Steps to reproduce
+          description: The smallest set of steps that shows the problem. A screenshot or screen recording helps too.
+          placeholder: |
+              1. Swipe up to open the app drawer
+              2. Type "ma"
+              3. ...
+      validations:
+          required: true
+
+    - type: input
+      id: version
+      attributes:
+          label: Last Launcher version
+          description: Settings → About, under Version.
+      validations:
+          required: true
+
+    - type: dropdown
+      id: from
+      attributes:
+          label: Where did you get it?
+          options:
+              - F-Droid
+              - Google Play
+              - An APK from the releases page
+              - I built it myself
+      validations:
+          required: true
+
+    - type: input
+      id: device
+      attributes:
+          label: Phone and Android version
+          placeholder: Pixel 8 with Android 16, Fairphone 5 with /e/OS 3, Pixel 7 with GrapheneOS, ...
+      validations:
+          required: true
+
+    - type: checkboxes
+      id: settings
+      attributes:
+          label: Which of these are you using?
+          description: Tick everything that's turned on.
+          options:
+              - label: A work profile
+              - label: Double tap to sleep
+              - label: The Extra theme, or a Custom style
+              - label: Tasks, or Launch app, as a module
+
+    - type: textarea
+      id: extra
+      attributes:
+          label: Anything else?
+          description: Other launchers or apps that change gestures or the keyboard, your keyboard app, or anything else that seems related.

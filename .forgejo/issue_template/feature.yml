@@ -1,0 +1,29 @@
+name: Feature request
+about: An idea for something Last Launcher could do, or do better.
+labels: ['enhancement']
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for sharing your idea. Last Launcher is deliberately small: your apps as text, a search, and nothing in the way. So it helps most to hear what you're trying to get done, more than how you'd build it.
+
+    - type: textarea
+      id: goal
+      attributes:
+          label: What are you trying to do?
+          description: How you use your phone, and the moment this came up.
+      validations:
+          required: true
+
+    - type: textarea
+      id: problem
+      attributes:
+          label: What gets in the way today?
+      validations:
+          required: true
+
+    - type: textarea
+      id: idea
+      attributes:
+          label: What would help?
+          description: Optional. If you have a picture of how it could work, describe it here.
