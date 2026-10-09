@@ -34,7 +34,7 @@ nix flake check
 
 ## check
 
-> Run fmt, analyze, and tests — use before committing
+> Run fmt, analyze, and tests; use before committing
 
 ```sh
 nix fmt && flutter analyze --fatal-infos && flutter test
