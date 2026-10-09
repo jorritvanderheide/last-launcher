@@ -43,7 +43,22 @@
       };
     in
     {
-      checks.${system}.formatting = treefmtEval.config.build.check self;
+      checks.${system} = {
+        formatting = treefmtEval.config.build.check self;
+
+        # CI and F-Droid build with the Flutter in the workflows, against the
+        # pubspec.lock that the dev shell's Flutter made. They have to match.
+        flutter-version = pkgs.runCommand "flutter-version" { } ''
+          want=$(sed -n -E "s/.*flutter-version: '(.*)'/\1/p" \
+            ${./.github/workflows/ci.yml} ${./.github/workflows/release.yml} | sort -u)
+          if [ "$want" != "${pkgs.flutter.version}" ]; then
+            echo "The workflows build with Flutter $want, the dev shell has ${pkgs.flutter.version}."
+            exit 1
+          fi
+          touch $out
+        '';
+      };
+
       formatter.${system} = treefmtEval.config.build.wrapper;
 
       devShells.${system}.default = pkgs.mkShell {

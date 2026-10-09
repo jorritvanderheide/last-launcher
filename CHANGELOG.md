@@ -6,6 +6,8 @@ shorter version of the same notes, from `fastlane/metadata/android/`.
 
 ## Unreleased
 
+- On F-Droid, this is the first release since 1.2.1: F-Droid couldn't build
+  1.3.0, so everything listed under 1.3.0 is new there too.
 - Help, in settings, opens the answers to common questions instead of the
   project page.
 

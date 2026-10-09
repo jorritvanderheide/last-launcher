@@ -21,7 +21,7 @@ Android SDK with build tools 35 and NDK 28, and a JDK 17 or newer.
 nix fmt                         # format Dart and Nix
 flutter analyze --fatal-infos   # lints, including infos
 flutter test
-nix flake check                 # formatting only
+nix flake check                 # formatting, and the Flutter version below
 ```
 
 CI runs all of these on every push to `main` and every pull request
@@ -83,5 +83,10 @@ The upload key is in GitHub's secrets as `KEYSTORE_BASE64`,
 signed with the debug key.
 
 **F-Droid reads the Flutter version** from the `flutter-version: '…'` line in
-`release.yml`, with a `sed` in its build recipe. Keep that line, with single
-quotes, when changing the workflow.
+`release.yml`, with a `sed` in its build recipe, and runs `flutter pub get
+--enforce-lockfile`. So that line, and the ones in `ci.yml`, must be the dev
+shell's Flutter, which made `pubspec.lock`; otherwise F-Droid can't build the
+release, as happened with 1.3.0. `nix flake check` fails when they differ, and
+CI runs `pub get` with the lockfile enforced too. To move to a newer Flutter,
+update the flake, run `flutter pub get`, set the new version in both workflows,
+and commit them together. Keep the line in `release.yml`, with single quotes.

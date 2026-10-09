@@ -32,8 +32,8 @@ jobs:
           name: nix-community
         continue-on-error: true
 
-      - name: Check formatting
-        run: nix build .#checks.x86_64-linux.formatting
+      - name: Check formatting, and that the workflows use the dev shell's Flutter
+        run: nix build .#checks.x86_64-linux.formatting .#checks.x86_64-linux.flutter-version
 
   analyze:
     name: Static analysis
@@ -44,11 +44,11 @@ jobs:
 
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
-          flutter-version: '3.41.6'
+          flutter-version: '3.41.2'
           cache: true
 
       - name: Get dependencies
-        run: flutter pub get
+        run: flutter pub get --enforce-lockfile
 
       - name: Generate l10n
         run: flutter gen-l10n
@@ -65,11 +65,11 @@ jobs:
 
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
-          flutter-version: '3.41.6'
+          flutter-version: '3.41.2'
           cache: true
 
       - name: Get dependencies
-        run: flutter pub get
+        run: flutter pub get --enforce-lockfile
 
       - name: Generate l10n
         run: flutter gen-l10n

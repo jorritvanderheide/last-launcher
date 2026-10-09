@@ -51,10 +51,12 @@ jobs:
           java-version: 17
 
       # F-Droid's build recipe takes its Flutter version from the
-      # flutter-version line below, in single quotes: keep it that way.
+      # flutter-version line below, in single quotes: keep it that way. It
+      # must be the dev shell's Flutter, which made pubspec.lock, or F-Droid
+      # can't build; nix flake check makes sure.
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
-          flutter-version: '3.41.6'
+          flutter-version: '3.41.2'
           cache: true
 
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -83,7 +85,7 @@ jobs:
             > android/key.properties
 
       - name: Get dependencies
-        run: flutter pub get
+        run: flutter pub get --enforce-lockfile
 
       - name: Generate l10n
         run: flutter gen-l10n
