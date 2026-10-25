@@ -3,6 +3,7 @@ import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/shared/search_focus_controller.dart';
 import 'package:last_launcher/shared/widgets/search_field.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
+import 'package:last_launcher/features/modules/tasks/subtasks.dart';
 import 'package:last_launcher/features/modules/tasks/task.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
@@ -25,6 +26,12 @@ const _swipeDismissFraction = 0.3;
 
 /// Opacity a row can fade to while being swiped away.
 const _swipeMinOpacity = 0.3;
+
+/// Opacity of the subtasks of a row being dragged, which move along with it.
+const _draggedSubtaskOpacity = 0.3;
+
+/// How long a dragged row takes to slide to its new indent.
+const _indentDuration = Duration(milliseconds: 100);
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({
@@ -100,6 +107,7 @@ class TaskScreenState extends State<TaskScreen> {
     _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     _controller.dispose();
+    _dragIndent.dispose();
     _focus.dispose();
     super.dispose();
   }
@@ -167,10 +175,42 @@ class TaskScreenState extends State<TaskScreen> {
   int? _dragFrom;
   final _hold = HoldTracker();
 
-  void _onReorderStart(int index) {
+  /// Where the finger is across the screen, and where it was when the row
+  /// was lifted: how far it went sideways decides the indent.
+  double _pointerX = 0;
+  double _dragStartX = 0;
+
+  /// Whether the lifted row was a subtask, and whether it will be one where
+  /// it's dropped. The dragged row shows the difference as it goes.
+  bool _dragWasIndented = false;
+  final _dragIndent = ValueNotifier(false);
+
+  /// The lifted row's subtasks, dimmed while they wait to move along.
+  Set<String> _dragSubtasks = const {};
+
+  void _onReorderStart(List<Task> group, int index) {
     _isReordering = true;
     _dragFrom = index;
+    _dragStartX = _pointerX;
+    _dragWasIndented = group[index].indented;
+    _dragIndent.value = _dragWasIndented;
+    setState(() {
+      // From the whole list: a search may hide some of them.
+      _dragSubtasks = {
+        for (final t in subtasksOf(widget.taskState.tasks, group[index].id))
+          t.id,
+      };
+    });
     widget.onReorderStart();
+  }
+
+  void _onPointerMove(PointerMoveEvent event) {
+    _pointerX = event.position.dx;
+    if (_dragFrom == null) return;
+    _dragIndent.value = indentAfterDrag(
+      wasIndented: _dragWasIndented,
+      dx: _pointerX - _dragStartX,
+    );
   }
 
   /// Ends a drag within [group]. A hold let go without moving opens the
@@ -180,9 +220,56 @@ class TaskScreenState extends State<TaskScreen> {
     widget.onReorderEnd();
     final from = _dragFrom;
     _dragFrom = null;
-    if (from != null && !_hold.moved) {
+    setState(() => _dragSubtasks = const {});
+    if (from == null) return;
+    if (!_hold.moved) {
       setState(() => _activeTaskId = group[from].id);
+    } else if (index == from || index == from + 1) {
+      // Dropped where it was lifted: only the indent may have changed. Not a
+      // move, since a search may hide the rows around it.
+      if (_dragIndent.value != _dragWasIndented) {
+        widget.taskState.indentTask(group[from].id, indent: _dragIndent.value);
+      }
     }
+  }
+
+  /// A reorder Flutter reports once the drop has settled. Back where it was,
+  /// from below, is `from + 1`, which [_onReorderEnd] already handled.
+  void _onReorder(List<Task> group, int from, int to) {
+    if (to == from + 1) return;
+    _move(group, from, to);
+  }
+
+  /// Moves the row at [from] in [group] to the gap at [to], with the indent
+  /// it was dropped with.
+  void _move(List<Task> group, int from, int to) {
+    widget.taskState.moveTask(
+      group[from].id,
+      after: rowAbove(group, from, to),
+      indent: _dragIndent.value,
+    );
+  }
+
+  /// The lifted row, shifted to the indent it will be dropped with.
+  Widget _dragProxy(Widget child, int index, Animation<double> animation) {
+    return dragProxyDecorator(
+      ValueListenableBuilder<bool>(
+        valueListenable: _dragIndent,
+        builder: (context, indent, child) {
+          final steps = (indent ? 1 : 0) - (_dragWasIndented ? 1 : 0);
+          return TweenAnimationBuilder<double>(
+            tween: Tween(end: steps * subtaskIndent),
+            duration: _indentDuration,
+            builder: (context, dx, child) =>
+                Transform.translate(offset: Offset(dx, 0), child: child),
+            child: child,
+          );
+        },
+        child: child,
+      ),
+      index,
+      animation,
+    );
   }
 
   Widget _buildTaskItem(BuildContext context, Task task, int index) {
@@ -201,17 +288,21 @@ class TaskScreenState extends State<TaskScreen> {
       ),
     );
 
+    final indent = EdgeInsets.only(left: task.indented ? subtaskIndent : 0);
     if (_activeTaskId == task.id) {
       return KeyedSubtree(
         key: ValueKey(task.id),
-        child: ActionRow(
-          label: task.title,
-          actions: _taskActions(context, task),
-          onClose: () => setState(() => _activeTaskId = null),
-          textDecoration: task.done ? TextDecoration.lineThrough : null,
-          decorationThickness: task.done ? 1.5 : null,
-          opacity: task.done ? _doneOpacity : 1.0,
-          leading: leading,
+        child: Padding(
+          padding: indent,
+          child: ActionRow(
+            label: task.title,
+            actions: _taskActions(context, task),
+            onClose: () => setState(() => _activeTaskId = null),
+            textDecoration: task.done ? TextDecoration.lineThrough : null,
+            decorationThickness: task.done ? 1.5 : null,
+            opacity: task.done ? _doneOpacity : 1.0,
+            leading: leading,
+          ),
         ),
       );
     }
@@ -219,18 +310,24 @@ class TaskScreenState extends State<TaskScreen> {
     return ReorderableDelayedDragStartListener(
       key: ValueKey(task.id),
       index: index,
-      child: _SwipeToDismiss(
-        swipeRight: widget.swipeRight,
-        // A row being dragged to a new place isn't being swiped away.
-        blocked: () => _isReordering,
-        onDismissed: () => widget.taskState.removeTask(task.id),
-        child: AppLabel(
-          label: task.title,
-          onTap: task.done ? null : () => _renameTask(context, task),
-          opacity: task.done ? _doneOpacity : 1.0,
-          textDecoration: task.done ? TextDecoration.lineThrough : null,
-          decorationThickness: task.done ? 1.5 : null,
-          leading: leading,
+      child: Opacity(
+        opacity: _dragSubtasks.contains(task.id) ? _draggedSubtaskOpacity : 1,
+        child: Padding(
+          padding: indent,
+          child: _SwipeToDismiss(
+            swipeRight: widget.swipeRight,
+            // A row being dragged to a new place isn't being swiped away.
+            blocked: () => _isReordering,
+            onDismissed: () => widget.taskState.removeTask(task.id),
+            child: AppLabel(
+              label: task.title,
+              onTap: task.done ? null : () => _renameTask(context, task),
+              opacity: task.done ? _doneOpacity : 1.0,
+              textDecoration: task.done ? TextDecoration.lineThrough : null,
+              decorationThickness: task.done ? 1.5 : null,
+              leading: leading,
+            ),
+          ),
         ),
       ),
     );
@@ -259,13 +356,11 @@ class TaskScreenState extends State<TaskScreen> {
               listenable: _mergedState,
               builder: (context, _) {
                 final filter = _controller.text.trim().toLowerCase();
-                final filtered = filter.isEmpty
-                    ? widget.taskState.tasks
-                    : widget.taskState.tasks
-                          .where((t) => t.title.toLowerCase().contains(filter))
-                          .toList();
-                final incomplete = filtered.where((t) => !t.done).toList();
-                final complete = filtered.where((t) => t.done).toList();
+                bool matches(Task t) =>
+                    filter.isEmpty || t.title.toLowerCase().contains(filter);
+                final groups = taskGroups(widget.taskState.tasks);
+                final incomplete = groups.todo.where(matches).toList();
+                final complete = groups.done.where(matches).toList();
 
                 if (incomplete.isEmpty && complete.isEmpty) {
                   if (!widget.settingsState.showHints.value) {
@@ -308,47 +403,58 @@ class TaskScreenState extends State<TaskScreen> {
                     return false;
                   },
                   child: FadeOverflow(
-                    child: _hold.listener(
-                      child: CustomScrollView(
-                        controller: _scrollController,
-                        physics: widget.scrollLocked
-                            ? const NeverScrollableScrollPhysics()
-                            : const AlwaysScrollableScrollPhysics(),
-                        slivers: [
-                          SliverPadding(
-                            padding: const EdgeInsets.only(top: 32),
-                            sliver: SliverReorderableList(
-                              itemCount: incomplete.length,
-                              proxyDecorator: dragProxyDecorator,
-                              onReorderStart: _onReorderStart,
+                    child: Listener(
+                      onPointerDown: (event) => _pointerX = event.position.dx,
+                      onPointerMove: _onPointerMove,
+                      child: _hold.listener(
+                        child: CustomScrollView(
+                          controller: _scrollController,
+                          physics: widget.scrollLocked
+                              ? const NeverScrollableScrollPhysics()
+                              : const AlwaysScrollableScrollPhysics(),
+                          slivers: [
+                            SliverPadding(
+                              padding: const EdgeInsets.only(top: 32),
+                              sliver: SliverReorderableList(
+                                itemCount: incomplete.length,
+                                proxyDecorator: _dragProxy,
+                                onReorderStart: (index) =>
+                                    _onReorderStart(incomplete, index),
+                                onReorderEnd: (index) =>
+                                    _onReorderEnd(incomplete, index),
+                                onReorder: (from, to) =>
+                                    _onReorder(incomplete, from, to),
+                                itemBuilder: (context, index) => _buildTaskItem(
+                                  context,
+                                  incomplete[index],
+                                  index,
+                                ),
+                              ),
+                            ),
+                            if (incomplete.isNotEmpty && complete.isNotEmpty)
+                              const SliverToBoxAdapter(
+                                child: SizedBox(height: 24),
+                              ),
+                            SliverReorderableList(
+                              itemCount: complete.length,
+                              proxyDecorator: _dragProxy,
+                              onReorderStart: (index) =>
+                                  _onReorderStart(complete, index),
                               onReorderEnd: (index) =>
-                                  _onReorderEnd(incomplete, index),
-                              onReorder: (o, n) => widget.taskState
-                                  .reorderInGroup(o, n, done: false),
+                                  _onReorderEnd(complete, index),
+                              onReorder: (from, to) =>
+                                  _onReorder(complete, from, to),
                               itemBuilder: (context, index) => _buildTaskItem(
                                 context,
-                                incomplete[index],
+                                complete[index],
                                 index,
                               ),
                             ),
-                          ),
-                          if (incomplete.isNotEmpty && complete.isNotEmpty)
                             const SliverToBoxAdapter(
-                              child: SizedBox(height: 24),
+                              child: SizedBox(height: 80),
                             ),
-                          SliverReorderableList(
-                            itemCount: complete.length,
-                            proxyDecorator: dragProxyDecorator,
-                            onReorderStart: _onReorderStart,
-                            onReorderEnd: (index) =>
-                                _onReorderEnd(complete, index),
-                            onReorder: (o, n) => widget.taskState
-                                .reorderInGroup(o, n, done: true),
-                            itemBuilder: (context, index) =>
-                                _buildTaskItem(context, complete[index], index),
-                          ),
-                          const SliverToBoxAdapter(child: SizedBox(height: 80)),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

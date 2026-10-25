@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:last_launcher/features/modules/tasks/subtasks.dart' as subtasks;
 import 'package:last_launcher/features/modules/tasks/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,13 +53,7 @@ class TaskState extends ChangeNotifier {
     await _save();
   }
 
-  Future<void> toggleTask(String id) async {
-    final index = _tasks.indexWhere((t) => t.id == id);
-    if (index == -1) return;
-    _tasks[index] = _tasks[index].copyWith(done: !_tasks[index].done);
-    notifyListeners();
-    await _save();
-  }
+  Future<void> toggleTask(String id) => _apply(subtasks.toggleTask(_tasks, id));
 
   Future<void> renameTask(String id, String title) async {
     final index = _tasks.indexWhere((t) => t.id == id);
@@ -68,11 +63,8 @@ class TaskState extends ChangeNotifier {
     await _save();
   }
 
-  Future<void> removeTask(String id) async {
-    _tasks.removeWhere((t) => t.id == id);
-    notifyListeners();
-    await _save();
-  }
+  /// Removes [id], and its subtasks if it has any.
+  Future<void> removeTask(String id) => _apply(subtasks.removeTask(_tasks, id));
 
   Future<void> clearCompletedIfNewDay() async {
     final today = _todayKey();
@@ -92,21 +84,22 @@ class TaskState extends ChangeNotifier {
         '${now.day.toString().padLeft(2, '0')}';
   }
 
-  Future<void> reorderInGroup(
-    int oldIndex,
-    int newIndex, {
-    required bool done,
-  }) async {
-    final incompletes = _tasks.where((t) => !t.done).toList();
-    final dones = _tasks.where((t) => t.done).toList();
-    final group = done ? dones : incompletes;
-    if (oldIndex < 0 || oldIndex >= group.length) return;
-    if (newIndex > group.length) newIndex = group.length;
-    if (newIndex > oldIndex) newIndex--;
-    if (oldIndex == newIndex) return;
-    final task = group.removeAt(oldIndex);
-    group.insert(newIndex, task);
-    _tasks = [...incompletes, ...dones];
+  /// Moves [id] to just below [after] in its group, or to the top of it, and
+  /// makes it a subtask when [indent] is set; see [subtasks.moveTask].
+  Future<void> moveTask(
+    String id, {
+    required String? after,
+    required bool indent,
+  }) => _apply(subtasks.moveTask(_tasks, id, after: after, indent: indent));
+
+  /// Makes [id] a subtask of the task above it, or a task of its own, where
+  /// it is; see [subtasks.indentTask].
+  Future<void> indentTask(String id, {required bool indent}) =>
+      _apply(subtasks.indentTask(_tasks, id, indent: indent));
+
+  Future<void> _apply(List<Task> tasks) async {
+    if (identical(tasks, _tasks)) return;
+    _tasks = tasks;
     notifyListeners();
     await _save();
   }

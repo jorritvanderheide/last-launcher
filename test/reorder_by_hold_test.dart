@@ -6,6 +6,7 @@ import 'package:last_launcher/features/home/home_state.dart';
 import 'package:last_launcher/features/home/screens/home_screen.dart';
 import 'package:last_launcher/features/modules/launcher_module.dart';
 import 'package:last_launcher/features/modules/tasks/screens/task_screen.dart';
+import 'package:last_launcher/features/modules/tasks/subtasks.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
@@ -179,13 +180,22 @@ void main() {
   group('tasks', () {
     late TaskState tasks;
 
-    Future<void> pump(WidgetTester tester) async {
+    /// Shows the task list with [titles], a leading `- ` making a subtask.
+    Future<void> pump(
+      WidgetTester tester, {
+      List<String> titles = _names,
+    }) async {
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
       tasks = TaskState(prefs);
       // Added newest first, so they end up in this order.
-      for (final name in _names.reversed) {
-        await tasks.addTask(name);
+      for (final title in titles.reversed) {
+        await tasks.addTask(title.replaceFirst('- ', ''));
+      }
+      for (var i = 1; i < titles.length; i++) {
+        if (!titles[i].startsWith('- ')) continue;
+        final rows = tasks.tasks;
+        await tasks.moveTask(rows[i].id, after: rows[i - 1].id, indent: true);
       }
       final settings = SettingsState(prefs)..autoKeyboardTasks.value = false;
       await tester.pumpWidget(
@@ -217,6 +227,126 @@ void main() {
       expect(tasks.tasks.first.title, isNot('Alpha'));
       expect(tasks.tasks, hasLength(3));
       expect(find.byType(ActionRow), findsNothing);
+    });
+
+    List<String> sketch() => [
+      for (final t in tasks.tasks) '${t.indented ? '- ' : ''}${t.title}',
+    ];
+
+    testWidgets('dragging a task right makes it a subtask', (tester) async {
+      await pump(tester);
+      await _hold(tester, 'Bravo', move: const Offset(60, 0));
+      expect(sketch(), ['Alpha', '- Bravo', 'Charlie']);
+      expect(find.byType(ActionRow), findsNothing);
+
+      final alpha = tester.getTopLeft(find.text('Alpha')).dx;
+      final bravo = tester.getTopLeft(find.text('Bravo')).dx;
+      expect(bravo - alpha, subtaskIndent);
+    });
+
+    testWidgets('a short sideways drag leaves the indent alone', (
+      tester,
+    ) async {
+      await pump(tester);
+      await _hold(tester, 'Bravo', move: const Offset(15, 0));
+      expect(sketch(), ['Alpha', 'Bravo', 'Charlie']);
+    });
+
+    testWidgets('dragging a subtask left makes it a task again', (
+      tester,
+    ) async {
+      await pump(tester);
+      await _hold(tester, 'Bravo', move: const Offset(60, 0));
+      await _hold(tester, 'Bravo', move: const Offset(-60, 0));
+      expect(sketch(), ['Alpha', 'Bravo', 'Charlie']);
+    });
+
+    testWidgets('a task takes its subtasks along when dragged', (tester) async {
+      await pump(tester);
+      await _hold(tester, 'Bravo', move: const Offset(60, 0));
+      await _hold(tester, 'Alpha', move: const Offset(0, 150));
+      expect(sketch(), ['Charlie', 'Alpha', '- Bravo']);
+    });
+
+    testWidgets('a drop just below where it was lifted moves it once', (
+      tester,
+    ) async {
+      await pump(tester, titles: ['A', '- a1', '- a2', 'B']);
+      final gesture = await tester.startGesture(
+        tester.getCenter(find.text('a1')),
+      );
+      await tester.pump(kLongPressTimeout + const Duration(milliseconds: 100));
+      for (final step in [const Offset(-60, 30), const Offset(0, -15)]) {
+        for (var i = 0; i < 10; i++) {
+          await gesture.moveBy(step / 10);
+          await tester.pump(const Duration(milliseconds: 16));
+        }
+      }
+      await gesture.up();
+      await tester.pumpAndSettle();
+      expect(sketch(), ['A', '- a2', 'a1', 'B']);
+    });
+
+    group('while searching', () {
+      /// Holds [title], drags it down and back, and lets go where it was.
+      Future<void> wiggle(WidgetTester tester, String title) async {
+        final gesture = await tester.startGesture(
+          tester.getCenter(find.text(title)),
+        );
+        await tester.pump(
+          kLongPressTimeout + const Duration(milliseconds: 100),
+        );
+        for (final step in [const Offset(0, 30), const Offset(0, -30)]) {
+          for (var i = 0; i < 10; i++) {
+            await gesture.moveBy(step / 10);
+            await tester.pump(const Duration(milliseconds: 16));
+          }
+        }
+        await gesture.up();
+        await tester.pumpAndSettle();
+      }
+
+      testWidgets('a task held and let go where it was stays there', (
+        tester,
+      ) async {
+        await pump(tester, titles: ['Xfoo', 'Y', 'Z', 'Wfoo']);
+        await tester.enterText(find.byType(TextField), 'foo');
+        await tester.pumpAndSettle();
+        await wiggle(tester, 'Wfoo');
+        expect(sketch(), ['Xfoo', 'Y', 'Z', 'Wfoo']);
+      });
+
+      testWidgets('a subtask held and let go where it was stays one', (
+        tester,
+      ) async {
+        await pump(tester, titles: ['A', '- afoo', 'B']);
+        await tester.enterText(find.byType(TextField), 'foo');
+        await tester.pumpAndSettle();
+        await wiggle(tester, 'afoo');
+        expect(sketch(), ['A', '- afoo', 'B']);
+      });
+
+      testWidgets(
+        'dragged sideways, a task is indented under the one above it',
+        (tester) async {
+          await pump(tester, titles: ['Afoo', 'B', 'Cfoo']);
+          await tester.enterText(find.byType(TextField), 'foo');
+          await tester.pumpAndSettle();
+          await _hold(tester, 'Cfoo', move: const Offset(60, 0));
+          expect(sketch(), ['Afoo', 'B', '- Cfoo']);
+        },
+      );
+    });
+
+    testWidgets('ticking off a task ticks off its subtasks', (tester) async {
+      await pump(tester);
+      await _hold(tester, 'Bravo', move: const Offset(60, 0));
+      await tester.tap(find.byIcon(Icons.check_box_outline_blank).first);
+      await tester.pumpAndSettle();
+      expect(tasks.tasks.where((t) => t.done).map((t) => t.title), [
+        'Alpha',
+        'Bravo',
+      ]);
     });
   });
 }

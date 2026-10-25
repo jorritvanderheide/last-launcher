@@ -192,11 +192,41 @@ void main() {
         'com.example.notes|false',
         'com.example.mail|true',
       ]);
-      expect(TaskState(prefs).tasks.single.title, 'Buy coffee beans');
+      final task = TaskState(prefs).tasks.single;
+      expect(task.title, 'Buy coffee beans');
+      expect(task.indented, isFalse);
       expect(prefs.getString('custom_labels'), contains('Jot'));
       expect(
         prefs.getString('hidden_apps'),
         contains('com.example.games|false'),
+      );
+    });
+    // Subtasks came after 1.3.1: tasks gained `indented`.
+    test('a backup with subtasks restores', () async {
+      const withSubtasks = r'''
+{
+  "format": "last-launcher-backup",
+  "version": 1,
+  "modules": ["tasks"],
+  "prefs": {
+    "label_alignment": {"type": "string", "value": "center"},
+    "left_panel": {"type": "string", "value": "tasks"},
+    "tasks": {"type": "string", "value": "[{\"id\":\"1\",\"title\":\"Groceries\",\"done\":false,\"indented\":false},{\"id\":\"2\",\"title\":\"Milk\",\"done\":true,\"indented\":true},{\"id\":\"3\",\"title\":\"Call the plumber\",\"done\":false,\"indented\":false}]"}
+  }
+}
+''';
+      final prefs = await _prefs({});
+      await _restore(prefs, Backup.decode(withSubtasks));
+
+      expect(SettingsState(prefs).labelAlignment.value, LabelAlignment.center);
+      final tasks = TaskState(prefs).tasks;
+      expect(
+        [for (final t in tasks) (t.title, t.done, t.indented)],
+        [
+          ('Groceries', false, false),
+          ('Milk', true, true),
+          ('Call the plumber', false, false),
+        ],
       );
     });
   });

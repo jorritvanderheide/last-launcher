@@ -146,8 +146,10 @@ settings, and double tap to lock your phone.
 The left and right of home can each hold a module:
 
 - **Tasks:** a plain task list. Type to add a task, or to find one. Tap to
-  rename it, tick it off, and hold it to drag it. Done tasks can be removed
-  right away, or at the end of the day.
+  rename it, tick it off, and hold it to drag it. Drag it to the right as you
+  do, and it's a subtask of the task above, which takes it along when it's
+  moved, ticked off or removed. Done tasks can be removed right away, or at
+  the end of the day.
 - **Launch app:** opens an app of your choice when you swipe that way, such as
   your camera or your notes.
 
@@ -221,6 +223,7 @@ for Google, typing `g` for Gmail searches the web. End the prefix with a space
 | Press and hold an empty spot on home | Settings |
 | Press and hold an app | Its actions: **Rename**, **Pin** or **Unpin**, **Hide**, **App info** |
 | Press and hold a row, then drag | Moves it, on home and in the task list |
+| Press and hold a task, then drag right or left | Makes it a subtask of the task above, or a task again |
 | Enter in the search field | Opens the first result, or runs the prefix |
 | Home button | Back to the home screen, from anywhere |
 

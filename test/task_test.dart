@@ -28,6 +28,21 @@ void main() {
       expect(task.done, false);
     });
 
+    test('a task stored before subtasks is top level', () {
+      final task = Task.fromJson({'id': '1', 'title': 'Test', 'done': false});
+      expect(task.indented, false);
+    });
+
+    test('an indent of the wrong type reads as top level', () {
+      final task = Task.fromJson({'id': '1', 'title': 'Test', 'indented': 1});
+      expect(task.indented, false);
+    });
+
+    test('a subtask survives a roundtrip', () {
+      const task = Task(id: '1', title: 'Milk', indented: true);
+      expect(Task.fromJson(task.toJson()).indented, true);
+    });
+
     test('copyWith updates title', () {
       const task = Task(id: '1', title: 'Old');
       final updated = task.copyWith(title: 'New');

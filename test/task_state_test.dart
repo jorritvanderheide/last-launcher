@@ -74,14 +74,15 @@ void main() {
       state.addTask('A');
       expect(state.tasks.map((t) => t.title).toList(), ['A', 'B', 'C']);
 
-      state.reorderInGroup(0, 2, done: false);
+      final a = state.tasks.first.id;
+      state.moveTask(a, after: state.tasks[1].id, indent: false);
       expect(state.tasks.map((t) => t.title).toList(), ['B', 'A', 'C']);
     });
 
     test('reorder same index does nothing', () {
       state.addTask('B');
       state.addTask('A');
-      state.reorderInGroup(0, 0, done: false);
+      state.moveTask(state.tasks.first.id, after: null, indent: false);
       expect(state.tasks.map((t) => t.title).toList(), ['A', 'B']);
     });
 
@@ -112,6 +113,17 @@ void main() {
       expect(restored.tasks.length, 1);
       expect(restored.tasks.first.title, 'Persisted');
       expect(restored.tasks.first.done, true);
+    });
+
+    test('persists subtasks', () async {
+      await state.addTask('Milk');
+      await state.addTask('Groceries');
+      final milk = state.tasks[1].id;
+      await state.moveTask(milk, after: state.tasks.first.id, indent: true);
+
+      final prefs = await SharedPreferences.getInstance();
+      final restored = TaskState(prefs);
+      expect(restored.tasks.map((t) => t.indented), [false, true]);
     });
   });
 }

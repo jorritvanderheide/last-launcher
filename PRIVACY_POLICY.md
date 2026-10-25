@@ -13,7 +13,7 @@ I hereby state, to the best of my knowledge and belief, that I have not programm
 ## Data stored on your device
 
 - **Pinned apps**: app package names, custom labels, and display order are stored locally via SharedPreferences.
-- **Tasks**: task titles, completion state, and display order are stored locally via SharedPreferences.
+- **Tasks**: task titles, completion state, display order, and which tasks are subtasks are stored locally via SharedPreferences.
 - **Hidden apps**: package names of apps you have chosen to hide are stored locally via SharedPreferences.
 - **Preferences**: theme, keyboard behavior, and other settings are stored locally via SharedPreferences.
 - **Backups**: only when you export one, to a file and a place you choose. Restoring reads a file you pick.

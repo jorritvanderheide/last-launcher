@@ -92,6 +92,13 @@ little smaller under **Appearance**.
 Press and hold a row, and drag it to its new place. With **Lock layout** on,
 that's turned off on the home screen.
 
+### How do I make a subtask?
+
+Press and hold a task, and drag it to the right before you let go. It's now a
+subtask of the task above it. Drag it back to the left to make it a task
+again. A task takes its subtasks along when you move it, tick it off or remove
+it, and ticking a subtask back on puts its task back on too.
+
 ### What's on the left and right of home?
 
 A module each, if you want one: **Tasks**, a simple task list, or **Launch

@@ -75,6 +75,10 @@ The decisions are in plain Dart without widgets, and each has a test:
   version added is skipped, not an error.
 - **Shell gestures** (`home/shell_gestures.dart`): what a drag becomes, where
   it follows the finger and where it settles.
+- **Subtasks** (`modules/tasks/subtasks.dart`): the task list is stored flat,
+  and a task marked `indented` belongs to the top-level task above it. Which
+  group a task is in, what ticking off, removing and moving one does to its
+  family, and which way a sideways drag goes.
 - **Backup** (`settings/backup.dart`): the file format, see
   [Compatibility](compatibility.md).
 
