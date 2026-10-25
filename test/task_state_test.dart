@@ -126,4 +126,25 @@ void main() {
       expect(restored.tasks.map((t) => t.indented), [false, true]);
     });
   });
+  group('from another version', () {
+    Future<TaskState> load(String stored) async {
+      SharedPreferences.setMockInitialValues({'tasks': stored});
+      return TaskState(await SharedPreferences.getInstance());
+    }
+
+    test('tasks are read as far as they can be', () async {
+      final state = await load(
+        '[{"id":1,"title":"Call"},{"title":"no id"},"odd",'
+        '{"id":"2","title":5,"done":"yes"}]',
+      );
+      expect(
+        [for (final t in state.tasks) (t.id, t.title, t.done)],
+        [('1', 'Call', false), ('2', '', false)],
+      );
+    });
+
+    test('anything but a list reads as no tasks', () async {
+      expect((await load('{"tasks":[]}')).tasks, isEmpty);
+    });
+  });
 }

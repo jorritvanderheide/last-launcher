@@ -325,12 +325,15 @@ class AppListState extends ChangeNotifier {
     final json = _prefs.getString(_labelsKey);
     if (json == null) return;
     try {
-      final map = jsonDecode(json) as Map<String, dynamic>;
+      final map = jsonDecode(json);
+      if (map is! Map) throw const FormatException('Not an object');
       for (final entry in map.entries) {
-        final key = entry.key;
+        final (key, label) = (entry.key, entry.value);
+        // A name of another type, from another version, is no name.
+        if (key is! String || label is! String) continue;
         // Legacy: plain packageName → compound key with false
         final compoundKey = key.contains('|') ? key : '$key|false';
-        _customLabels[compoundKey] = entry.value as String;
+        _customLabels[compoundKey] = label;
       }
     } on FormatException {
       debugPrint('Corrupt custom labels JSON, resetting');
@@ -346,7 +349,8 @@ class AppListState extends ChangeNotifier {
     final json = _prefs.getString(_hiddenKey);
     if (json == null) return;
     try {
-      final list = jsonDecode(json) as List<dynamic>;
+      final list = jsonDecode(json);
+      if (list is! List) throw const FormatException('Not a list');
       for (final item in list) {
         if (item is! String) continue;
         // Legacy format: packageName only, assume personal profile

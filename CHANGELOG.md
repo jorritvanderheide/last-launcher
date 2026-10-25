@@ -9,11 +9,13 @@ shorter version of the same notes, from `fastlane/metadata/android/`.
 - Alignment is now under Home, and only lines up the apps on the home screen.
   The app drawer, the task list and the settings are always on the left.
 - Drag a task to the right as you move it to make it a subtask of the task
-  above, and back to the left to undo it. Or choose Make subtask, or Make main
-  task, from its actions. A task takes its subtasks along
-  when it moves, is ticked off or is removed.
+  above, and back to the left to undo it, or choose Make subtask or Make main
+  task from its actions. A task takes its subtasks along when it moves, is
+  ticked off or is removed.
 - Last Launcher is now in English and Dutch only. On a phone set to another
   language, it's in English.
+- Pinned apps, custom names and tasks stored by another version of Last
+  Launcher can't make it crash any more; what it can't read is left out.
 - The task list can be a list from Tasks.org or OpenTasks, under Tasks from,
   so you can sync it with your own CalDAV server through DAVx⁵. Changes go
   both ways, and Last Launcher still connects to nothing itself.

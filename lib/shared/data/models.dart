@@ -53,12 +53,23 @@ class PinnedApp {
     this.shortcutId,
   });
 
-  factory PinnedApp.fromJson(Map<String, dynamic> json) {
+  factory PinnedApp.fromJson(Map<String, dynamic> json) =>
+      tryFromJson(json) ?? (throw const FormatException('Not a pinned app'));
+
+  /// Null for anything that isn't a pinned app with a package, such as one
+  /// in a shape another version stored. Other values that aren't what they
+  /// should be read as unset.
+  static PinnedApp? tryFromJson(Object? json) {
+    if (json is! Map) return null;
+    final packageName = json['packageName'];
+    if (packageName is! String) return null;
+    final label = json['label'];
+    final shortcutId = json['shortcutId'];
     return PinnedApp(
-      packageName: json['packageName'] as String,
-      label: json['label'] as String,
-      isWorkApp: json['isWorkApp'] as bool? ?? false,
-      shortcutId: json['shortcutId'] as String?,
+      packageName: packageName,
+      label: label is String ? label : packageName,
+      isWorkApp: json['isWorkApp'] == true,
+      shortcutId: shortcutId is String ? shortcutId : null,
     );
   }
 
@@ -82,11 +93,12 @@ class PinnedApp {
     };
   }
 
+  /// The pinned apps in [json], leaving out what isn't one. Throws
+  /// [FormatException] when it isn't a list at all.
   static List<PinnedApp> decodeList(String json) {
-    final list = jsonDecode(json) as List<dynamic>;
-    return list
-        .map((e) => PinnedApp.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final list = jsonDecode(json);
+    if (list is! List) throw const FormatException('Not a list');
+    return [for (final entry in list) ?PinnedApp.tryFromJson(entry)];
   }
 
   static String encodeList(List<PinnedApp> apps) {

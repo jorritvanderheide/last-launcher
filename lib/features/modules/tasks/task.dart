@@ -9,11 +9,21 @@ class Task {
     this.repeats = false,
   });
 
-  factory Task.fromJson(Map<String, dynamic> json) {
+  factory Task.fromJson(Map<String, dynamic> json) =>
+      tryFromJson(json) ?? (throw const FormatException('Not a task'));
+
+  /// Null for anything that isn't a task with an id, such as one in a
+  /// shape another version stored. Other values that aren't what they
+  /// should be read as unset.
+  static Task? tryFromJson(Object? json) {
+    if (json is! Map) return null;
+    final id = json['id'];
+    if (id is! String && id is! num) return null;
+    final title = json['title'];
     return Task(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      done: json['done'] as bool? ?? false,
+      id: '$id',
+      title: title is String ? title : '',
+      done: json['done'] == true,
       // Older versions never stored it: anything but true is top level.
       indented: json['indented'] == true,
     );
@@ -45,9 +55,12 @@ class Task {
     'indented': indented,
   };
 
+  /// The tasks in [json], leaving out what isn't one. Throws
+  /// [FormatException] when it isn't a list at all.
   static List<Task> decodeList(String json) {
-    final list = jsonDecode(json) as List<dynamic>;
-    return list.map((e) => Task.fromJson(e as Map<String, dynamic>)).toList();
+    final list = jsonDecode(json);
+    if (list is! List) throw const FormatException('Not a list');
+    return [for (final entry in list) ?Task.tryFromJson(entry)];
   }
 
   static String encodeList(List<Task> tasks) {

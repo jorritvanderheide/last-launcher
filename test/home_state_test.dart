@@ -182,4 +182,25 @@ void main() {
       },
     );
   });
+  group('from another version', () {
+    Future<HomeState> load(String stored) async {
+      SharedPreferences.setMockInitialValues({'pinned_apps': stored});
+      return HomeState(await SharedPreferences.getInstance());
+    }
+
+    test('pinned apps are read as far as they can be', () async {
+      final home = await load(
+        '[{"packageName":"com.a","label":"A"},{"label":"no package"},7,'
+        '{"packageName":"com.b","label":5,"isWorkApp":"yes"}]',
+      );
+      expect(
+        [for (final a in home.pinnedApps) (a.key, a.label)],
+        [('com.a|false', 'A'), ('com.b|false', 'com.b')],
+      );
+    });
+
+    test('anything but a list reads as no pinned apps', () async {
+      expect((await load('"com.a"')).pinnedApps, isEmpty);
+    });
+  });
 }

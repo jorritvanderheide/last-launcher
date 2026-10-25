@@ -27,7 +27,8 @@ Every key in [Data model](data-model.md), declared in `SettingsState`,
 - **Adding** a key, or a key inside a JSON value, is not breaking. An older
   version ignores it.
 - **A value of the wrong type**, stored by another version, reads as unset and
-  gets its default; it never crashes the launcher.
+  gets its default; it never crashes the launcher. In a stored list, an entry
+  that can't be read is left out.
 
 ## Backups
 

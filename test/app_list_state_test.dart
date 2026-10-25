@@ -635,4 +635,41 @@ void main() {
       },
     );
   });
+  group('custom names from another version', () {
+    Future<AppListState> load(String stored) async {
+      SharedPreferences.setMockInitialValues({'custom_labels': stored});
+      final state = AppListState(
+        _FakeAppChannel([
+          const AppInfo(packageName: 'com.a', label: 'A'),
+          const AppInfo(packageName: 'com.b', label: 'B'),
+        ]),
+        await SharedPreferences.getInstance(),
+      );
+      await state.loadApps();
+      return state;
+    }
+
+    test('are read as far as they can be', () async {
+      final state = await load('{"com.a|false":"Mine","com.b|false":5}');
+      expect(state.displayLabelFor(AppInfo.keyFor('com.a'), 'A'), 'Mine');
+      expect(state.displayLabelFor(AppInfo.keyFor('com.b'), 'B'), 'B');
+    });
+
+    test('anything but an object reads as none', () async {
+      final state = await load('["Mine"]');
+      expect(state.displayLabelFor(AppInfo.keyFor('com.a'), 'A'), 'A');
+    });
+
+    test('hidden apps that aren\'t a list read as none', () async {
+      SharedPreferences.setMockInitialValues({
+        'hidden_apps': '{"com.a|false":1}',
+      });
+      final state = AppListState(
+        _FakeAppChannel([const AppInfo(packageName: 'com.a', label: 'A')]),
+        await SharedPreferences.getInstance(),
+      );
+      await state.loadApps();
+      expect(state.isHidden(AppInfo.keyFor('com.a')), isFalse);
+    });
+  });
 }

@@ -73,10 +73,12 @@ One key each, declared in `SettingsState` with its type and default.
 
 Choices are stored by name. A key that's missing, or holds a value of another
 type or a name this release doesn't know, reads as its default. A number
-outside its range is read as the nearest one inside it. Some settings
-only apply while another allows them, such as Extra character with
-Auto-launch on match; those rules are worked out when read, and never change
-what's stored.
+outside its range is read as the nearest one inside it. In the JSON of pinned
+apps, custom names, hidden apps, search prefixes and tasks, an entry that
+can't be read is left out, and a value that isn't JSON of the right shape
+reads as unset. Some settings only apply while another allows them, such as
+Extra character with Auto-launch on match; those rules are worked out when
+read, and never change what's stored.
 
 ## Pinned apps
 
