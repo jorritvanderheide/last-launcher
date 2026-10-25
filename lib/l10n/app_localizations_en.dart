@@ -541,4 +541,67 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeScreenFull => 'Home screen is full';
+
+  @override
+  String get taskSourceTitle => 'Tasks from';
+
+  @override
+  String get taskSourcePhone => 'This phone';
+
+  @override
+  String taskSourceList(String list, String app) {
+    return '$list in $app';
+  }
+
+  @override
+  String get taskSourceNoApp =>
+      'To use a task list that syncs with DAVx⁵, install Tasks.org first.';
+
+  @override
+  String taskSourceNoLists(String app) {
+    return 'There are no lists in $app yet. Add one there first.';
+  }
+
+  @override
+  String get deleteSyncedDone => 'Delete done tasks everywhere';
+
+  @override
+  String deleteSyncedDoneSubtitle(String app) {
+    return 'Remove on complete and Clear completed daily delete them from $app, and every device it syncs with. When this is off, they\'re only hidden here.';
+  }
+
+  @override
+  String taskSyncNoPermission(String app) {
+    return 'Last Launcher may not read your tasks in $app. Tap to allow it.';
+  }
+
+  @override
+  String taskSyncAppMissing(String app) {
+    return '$app isn\'t installed. Tap to choose where your tasks come from.';
+  }
+
+  @override
+  String taskSyncListGone(String app) {
+    return 'This list isn\'t in $app any more. Tap to choose another.';
+  }
+
+  @override
+  String taskSyncFailed(String app) {
+    return 'Couldn\'t read your tasks from $app. Tap to try again.';
+  }
+
+  @override
+  String taskSyncNotSaved(String app) {
+    return '$app didn\'t take your last change. Tap to see your tasks as they are there.';
+  }
+
+  @override
+  String taskSourceApp(String app) {
+    return 'Lists in $app';
+  }
+
+  @override
+  String taskRepeats(String app) {
+    return 'Repeats. Tick it off in $app.';
+  }
 }

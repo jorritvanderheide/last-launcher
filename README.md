@@ -30,7 +30,8 @@ few letters: as soon as one app is left, it opens, and after a week your
 fingers know the way by themselves. Pin the handful you use most to the home
 screen, give them the names you think of them by, and keep a task list, or
 one more app, a swipe to the side. It has no internet permission, so
-everything you set up stays on your phone.
+everything you set up stays on your phone, unless you choose to sync your
+tasks through another app.
 
 <br/>
 
@@ -75,9 +76,10 @@ The hints on the home screen tell you where things are. Once you know, turn off
 
 Last Launcher has no internet permission and connects to nothing. Your
 settings, pinned apps and tasks are kept on your phone, and only leave it in a
-backup you export yourself. The accessibility service, the one permission
-that could see more, does a single thing: lock the screen when you double tap,
-and only if you turn it on. [Section 9](#9-permissions-and-data-disclosure)
+backup you export yourself, or when you choose a task list in Tasks.org or
+OpenTasks that syncs it. The accessibility service, the one permission that
+could see more, does a single thing: lock the screen when you double tap, and
+only if you turn it on. [Section 9](#9-permissions-and-data-disclosure)
 lists exactly what it reads, stores and opens.
 
 Every push is checked: formatting, static analysis with every lint turned on,
@@ -150,6 +152,9 @@ The left and right of home can each hold a module:
   do, and it's a subtask of the task above, which takes it along when it's
   moved, ticked off or removed. Done tasks can be removed right away, or at
   the end of the day.
+  Under **Tasks from**, it can show a list from Tasks.org or OpenTasks
+  instead, such as one that DAVx⁵ syncs with your own CalDAV server. What you
+  change in either place shows up in the other.
 - **Launch app:** opens an app of your choice when you swipe that way, such as
   your camera or your notes.
 
@@ -256,7 +261,9 @@ Press and hold an empty spot on the home screen to open the settings.
 | | **Auto-launch on match** | Open an app when it's the only match. |
 | | **Extra character** | Wait for one more letter before opening it. |
 | | **Quick launch hints** | Mark the fewest letters that open each app. |
-| Tasks | **Show keyboard**, **Remove on complete**, **Clear completed daily** | How the task list behaves. |
+| Tasks | **Tasks from** | This phone, or a list in Tasks.org or OpenTasks. See [the FAQ](FAQ.md#can-i-sync-my-tasks). |
+| | **Show keyboard**, **Remove on complete**, **Clear completed daily** | How the task list behaves. |
+| | **Delete done tasks everywhere** | For a list from another app: whether Remove on complete and Clear completed daily delete done tasks there too, or only hide them here. |
 | Launch app | **Left app**, **Right app** | Which app each side opens. |
 | Work profile | **Don't show non-work apps**, **Show work app dot**, **Show work dot on home screen** | How work apps show. Only there with a work profile. |
 | Backup & restore | **Export backup**, **Restore backup** | See [Backups](#56-backups). |
@@ -277,6 +284,13 @@ ads and no Google Play Services.
 - **Accessibility service**, off until you turn it on: to lock the screen when
   you double tap. It can't read what's on the screen or what you type, and
   does nothing else.
+- **Read and write tasks** in Tasks.org or OpenTasks
+  (`org.tasks.permission.READ_TASKS` and `WRITE_TASKS`, or the same from
+  `org.dmfs.permission`), only asked for when you choose a list from one under
+  **Tasks from**: to show that list and change it as you do. Last Launcher
+  reads the names of the app's lists, so you can choose one, and the tasks in
+  the list you chose, and changes only those. Syncing them is up to that app
+  and DAVx⁵; Last Launcher connects to nothing.
 
 ### 9.2 What it stores
 
@@ -284,6 +298,10 @@ On your phone only, in the app's own storage: your settings, pinned apps,
 custom names, hidden apps, search prefixes and tasks. Android's backup to the
 cloud is turned off for it. A backup is written only when you export one, to a
 file and a place you pick. Uninstalling removes everything.
+
+A task list you choose from Tasks.org or OpenTasks stays in that app. Last
+Launcher only keeps its order, and which done tasks it hides, and leaves both
+out of backups.
 
 ### 9.3 What it opens
 

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:last_launcher/features/modules/tasks/synced_tasks.dart';
 import 'package:last_launcher/shared/data/models.dart';
 
 /// An app offered in a picker: its package and its name.
@@ -9,6 +10,26 @@ typedef AppChoice = ({String packageName, String label});
 /// record, so two reads of the same accent compare equal.
 typedef AccentColors = ({Color onDark, Color onLight, Color tint});
 
+/// A tasks app the launcher can read lists from, and whether it may.
+typedef TaskApp = ({String authority, String label, bool granted});
+
+/// A list in a tasks app, with the account (the CalDAV server) it syncs to.
+typedef TaskList = ({String id, String name, String? account});
+
+/// What asking for a tasks app's permission came to: [blocked] when it was
+/// denied for good, so Android doesn't ask any more.
+enum TaskPermission { granted, denied, blocked }
+
+/// The tasks app is gone, or the launcher may no longer use it.
+class TasksUnavailable implements Exception {
+  const TasksUnavailable(this.message);
+
+  final String? message;
+
+  @override
+  String toString() => 'TasksUnavailable: $message';
+}
+
 class AppChannel {
   AppChannel();
 
@@ -16,6 +37,9 @@ class AppChannel {
 
   VoidCallback? onOpenSettings;
   VoidCallback? onGoHome;
+
+  /// The tasks in a watched tasks app changed, here or elsewhere.
+  VoidCallback? onTasksChanged;
 
   int _awaitingResults = 0;
 
@@ -39,6 +63,8 @@ class AppChannel {
         onOpenSettings?.call();
       } else if (call.method == 'goHome') {
         onGoHome?.call();
+      } else if (call.method == 'tasksChanged') {
+        onTasksChanged?.call();
       }
       return null;
     });
@@ -277,6 +303,121 @@ class AppChannel {
       await _channel.invokeMethod<void>('requestDefaultLauncher');
     } on PlatformException catch (e) {
       debugPrint('Failed to request default launcher: $e');
+    }
+  }
+
+  // --- Synced tasks -----------------------------------------------------
+
+  /// The installed tasks apps with a list the launcher could use.
+  Future<List<TaskApp>> taskApps() async {
+    try {
+      final apps = await _channel.invokeListMethod<Map>('taskApps') ?? [];
+      return [
+        for (final app in apps)
+          (
+            authority: app['authority'] as String,
+            label: app['label'] as String,
+            granted: app['granted'] as bool,
+          ),
+      ];
+    } on PlatformException catch (e) {
+      debugPrint('Failed to list task apps: $e');
+      return [];
+    }
+  }
+
+  /// Asks for permission to read and write the tasks app at [authority].
+  /// True once granted.
+  Future<TaskPermission> requestTaskPermission(String authority) =>
+      _awaitResult(() async {
+        try {
+          final answer = await _channel.invokeMethod<String>(
+            'requestTaskPermission',
+            {'authority': authority},
+          );
+          return TaskPermission.values.asNameMap()[answer] ??
+              TaskPermission.denied;
+        } on PlatformException catch (e) {
+          debugPrint('Failed to ask for the task permission: $e');
+          return TaskPermission.denied;
+        }
+      });
+
+  /// Opens Last Launcher's own App info, where a permission Android no
+  /// longer asks for can still be allowed.
+  Future<void> openOwnAppInfo() async {
+    try {
+      await _channel.invokeMethod<void>('openOwnAppInfo');
+    } on PlatformException catch (e) {
+      debugPrint('Failed to open App info: $e');
+    }
+  }
+
+  /// Throws [TasksUnavailable].
+  Future<List<TaskList>> taskLists(String authority) async {
+    final lists = await _tasksCall<List<Object?>>('taskLists', {
+      'authority': authority,
+    });
+    return [
+      for (final list in lists.cast<Map>())
+        (
+          id: list['id'] as String,
+          name: list['name'] as String? ?? '',
+          account: list['account'] as String?,
+        ),
+    ];
+  }
+
+  /// Throws [TasksUnavailable].
+  Future<List<ProviderTask>> syncedTasks(TaskSource source) async {
+    final tasks = await _tasksCall<List<Object?>>('syncedTasks', {
+      'authority': source.authority,
+      'listId': source.listId,
+    });
+    return [
+      for (final task in tasks.cast<Map>())
+        (
+          id: task['id'] as String,
+          title: task['title'] as String,
+          status: task['status'] as int,
+          parentId: task['parentId'] as String?,
+          created: task['created'] as int,
+          repeats: task['repeats'] as bool? ?? false,
+        ),
+    ];
+  }
+
+  /// Makes [changes] in [source], in order. Returns the id each insert got,
+  /// by the id it was sent with. Throws [TasksUnavailable].
+  Future<Map<String, String>> applyTaskChanges(
+    TaskSource source,
+    List<TaskChange> changes,
+  ) async {
+    final ids = await _tasksCall<Map<Object?, Object?>>('applyTaskChanges', {
+      'authority': source.authority,
+      'listId': source.listId,
+      'changes': [for (final change in changes) change.toMap()],
+    });
+    return ids.cast<String, String>();
+  }
+
+  /// Calls [onTasksChanged] when the tasks at [authority] change; null
+  /// stops.
+  Future<void> watchTasks(String? authority) async {
+    try {
+      await _channel.invokeMethod<void>('watchTasks', {'authority': authority});
+    } on PlatformException catch (e) {
+      debugPrint('Failed to watch tasks: $e');
+    }
+  }
+
+  Future<T> _tasksCall<T>(String method, Map<String, Object?> arguments) async {
+    try {
+      final result = await _channel.invokeMethod<T>(method, arguments);
+      if (result == null) throw const TasksUnavailable('No answer');
+      return result;
+    } on PlatformException catch (e) {
+      throw TasksUnavailable(e.message);
     }
   }
 }

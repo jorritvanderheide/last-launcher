@@ -69,6 +69,27 @@ void main() {
     });
   });
 
+  group('clearing done tasks', () {
+    test('removes them with their subtasks', () {
+      final tasks = _tasks(['Shop x', '- Milk x', 'Call', '- Dial x']);
+      expect(_sketch(withoutDone(tasks)), ['Call']);
+    });
+
+    test('keeps a done task that still has open subtasks', () {
+      final tasks = _tasks(['Other', 'Move x', '- Cancel', '- Pack x']);
+      expect(_sketch(withoutDone(tasks)), ['Other', 'Move x', '- Cancel']);
+    });
+
+    test("keeps what it's told to, and the task that holds it", () {
+      final tasks = _tasks(['Old x', 'Move x', '- Pack x', 'Call x']);
+      final kept = withoutDone(
+        tasks,
+        keep: (t) => {'Old', 'Pack'}.contains(t.id),
+      );
+      expect(_sketch(kept), ['Old x', 'Move x', '- Pack x']);
+    });
+  });
+
   group('removing', () {
     final tasks = _tasks(['Shop', '- Milk', '- Eggs', 'Call']);
 
@@ -217,6 +238,16 @@ void main() {
     test('the first task of a group stays top level', () {
       expect(indent('Write', true), _sketch(tasks));
       expect(indent('Shop', true), _sketch(tasks));
+    });
+
+    test('when some are hidden, goes under the task shown above it', () {
+      final tasks = _tasks(['Shop x', 'Old x', 'Call x']);
+      final shown = _tasks(['Shop x', 'Call x']);
+      expect(_sketch(indentTask(tasks, 'Call', indent: true, shown: shown)), [
+        'Shop x',
+        '- Call x',
+        'Old x',
+      ]);
     });
 
     test('an indent it already has, or an unknown task, changes nothing', () {

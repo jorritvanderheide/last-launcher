@@ -1,6 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR"/>
+    <!-- Only asked for when you choose a synced task list: to read and write
+         that list in Tasks.org or OpenTasks, which DAVx⁵ syncs. -->
+    <uses-permission android:name="org.tasks.permission.READ_TASKS"/>
+    <uses-permission android:name="org.tasks.permission.WRITE_TASKS"/>
+    <uses-permission android:name="org.dmfs.permission.READ_TASKS"/>
+    <uses-permission android:name="org.dmfs.permission.WRITE_TASKS"/>
     <application
         android:label="Last Launcher"
         android:name="${applicationName}"

@@ -57,21 +57,22 @@ int _familyEnd(List<Task> tasks, int head) {
 
 /// [tasks] with [id] ticked off, or back on. A top-level task takes its
 /// subtasks along; a subtask put back on puts its top-level task back too.
-/// The same list when there's no such task.
+/// A repeating task is left alone, along or by itself: its own app ticks it
+/// off, and knows the next time. The same list when there's no such task.
 List<Task> toggleTask(List<Task> tasks, String id) {
   final index = tasks.indexWhere((t) => t.id == id);
-  if (index == -1) return tasks;
+  if (index == -1 || tasks[index].repeats) return tasks;
   final result = [...tasks];
   final done = !tasks[index].done;
   if (_isHead(tasks, index)) {
     final end = _familyEnd(tasks, index);
     for (var i = index; i < end; i++) {
-      result[i] = result[i].copyWith(done: done);
+      if (!result[i].repeats) result[i] = result[i].copyWith(done: done);
     }
   } else {
     result[index] = result[index].copyWith(done: done);
     final head = _headOf(tasks, index);
-    if (!done && tasks[head].done) {
+    if (!done && tasks[head].done && !tasks[head].repeats) {
       result[head] = result[head].copyWith(done: false);
     }
   }
@@ -128,6 +129,43 @@ List<Task> moveTask(
   return inTodo ? [...rows, ...groups.done] : [...groups.todo, ...rows];
 }
 
+/// [tasks] without the done ones, except those [keep] holds on to. A done
+/// task stays while any of its subtasks does (an open one, which only
+/// another app can leave behind, or one [keep] holds on to): without it
+/// they'd become subtasks of whatever is above.
+List<Task> withoutDone(List<Task> tasks, {bool Function(Task task)? keep}) {
+  bool stays(Task task) => !task.done || (keep?.call(task) ?? false);
+  final kept = <Task>[];
+  var head = 0;
+  while (head < tasks.length) {
+    final end = _familyEnd(tasks, head);
+    final subtasks = [
+      for (var i = head + 1; i < end; i++)
+        if (stays(tasks[i])) tasks[i],
+    ];
+    if (stays(tasks[head]) || subtasks.isNotEmpty) kept.add(tasks[head]);
+    kept.addAll(subtasks);
+    head = end;
+  }
+  return kept;
+}
+
+/// The parent of each task in [tasks]: the id of the task it's a subtask
+/// of, or null for a top-level task.
+Map<String, String?> parentsOf(List<Task> tasks) {
+  final parents = <String, String?>{};
+  String? head;
+  for (var i = 0; i < tasks.length; i++) {
+    if (_isHead(tasks, i)) {
+      head = tasks[i].id;
+      parents[head] = null;
+    } else {
+      parents[tasks[i].id] = head;
+    }
+  }
+  return parents;
+}
+
 /// The subtasks that move along when [id] is moved: none for a subtask.
 Iterable<Task> subtasksOf(List<Task> tasks, String id) {
   final index = tasks.indexWhere((t) => t.id == id);
@@ -138,9 +176,15 @@ Iterable<Task> subtasksOf(List<Task> tasks, String id) {
 /// [tasks] with [id] made a subtask of the task above it in its group, or a
 /// task of its own, without moving it otherwise; see [moveTask] for where a
 /// subtask that stops being one lands. The same list when its indent is
-/// already that, or there's no such task.
-List<Task> indentTask(List<Task> tasks, String id, {required bool indent}) {
-  final groups = taskGroups(tasks);
+/// already that, or there's no such task. When only some of [tasks] are
+/// [shown], the task above it is the one shown above it.
+List<Task> indentTask(
+  List<Task> tasks,
+  String id, {
+  required bool indent,
+  List<Task>? shown,
+}) {
+  final groups = taskGroups(shown ?? tasks);
   for (final rows in [groups.todo, groups.done]) {
     final index = rows.indexWhere((t) => t.id == id);
     if (index == -1) continue;

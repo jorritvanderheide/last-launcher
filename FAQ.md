@@ -99,6 +99,40 @@ subtask of the task above it. Drag it back to the left to make it a task
 again. A task takes its subtasks along when you move it, tick it off or remove
 it, and ticking a subtask back on puts its task back on too.
 
+### Can I sync my tasks?
+
+Yes, through another app. Last Launcher connects to nothing, but it can show a
+list from Tasks.org or OpenTasks, and those can be synced with a CalDAV server,
+such as Radicale or Nextcloud, by DAVx⁵.
+
+1. Install Tasks.org, and set up DAVx⁵ to sync your tasks with it.
+2. Put **Tasks** on one side of home, under **Home**. Then, in the settings,
+   open **Tasks** and choose the list under **Tasks from**. Android asks
+   whether Last Launcher may use your tasks.
+
+What you change in Last Launcher goes to Tasks.org, and DAVx⁵ takes it to your
+server; what changes there shows up in Last Launcher. The order of the list is
+kept on your phone, since other apps don't share one. **Remove on complete**
+and **Clear completed daily** only hide done tasks here, unless you turn on
+**Delete done tasks everywhere**.
+
+A list you choose starts without the tasks that were already done there, and
+**Delete done tasks everywhere** leaves those alone: it only deletes done tasks
+you could see. A task that repeats has a repeat mark instead of a checkbox: tap
+it to tick the task off in Tasks.org, which knows when it comes next.
+
+If something's wrong, the task list says so, and tapping it puts it right:
+
+- "Last Launcher may not read your tasks in Tasks.org. Tap to allow it."
+- "Tasks.org isn't installed. Tap to choose where your tasks come from."
+- "This list isn't in Tasks.org any more. Tap to choose another."
+- "Couldn't read your tasks from Tasks.org. Tap to try again."
+- "Tasks.org didn't take your last change. Tap to see your tasks as they are
+  there."
+
+If Android no longer asks for the permission, the first one opens Last
+Launcher's App info instead: allow it under **Permissions**.
+
 ### What's on the left and right of home?
 
 A module each, if you want one: **Tasks**, a simple task list, or **Launch

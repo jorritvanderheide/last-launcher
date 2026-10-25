@@ -15,7 +15,11 @@ void main() async {
   final homeState = HomeState(prefs);
   final appListState = AppListState(appChannel, prefs);
   final settingsState = SettingsState(prefs);
-  final taskState = TaskState(prefs);
+  final taskState = TaskState(
+    prefs,
+    channel: appChannel,
+    settings: settingsState,
+  );
   appListState.applyPrefs(settingsState.searchPrefs);
   settingsState.searchPrefsChanged.addListener(
     () => appListState.applyPrefs(settingsState.searchPrefs),

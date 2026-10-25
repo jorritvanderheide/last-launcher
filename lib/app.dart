@@ -68,6 +68,8 @@ class _LastLauncherAppState extends State<LastLauncherApp>
     if (state == AppLifecycleState.resumed) {
       _refreshApps();
       _refreshAccent();
+      // A synced list may have changed while the launcher was away.
+      widget.taskState.refresh();
       _maybeClearCompleted();
       _syncFullscreen();
     }

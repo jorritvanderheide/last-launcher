@@ -202,5 +202,71 @@
   "hidePersonalWhenWorkActive": "Don't show non-work apps",
   "hidePersonalWhenWorkActiveSubtitle": "Non-work apps reappear when work profile is paused",
 
-  "homeScreenFull": "Home screen is full"
+  "homeScreenFull": "Home screen is full",
+
+  "taskSourceTitle": "Tasks from",
+  "taskSourcePhone": "This phone",
+  "taskSourceList": "{list} in {app}",
+  "@taskSourceList": {
+    "placeholders": {
+      "list": {"type": "String"},
+      "app": {"type": "String"}
+    }
+  },
+  "taskSourceNoApp": "To use a task list that syncs with DAVx⁵, install Tasks.org first.",
+  "taskSourceNoLists": "There are no lists in {app} yet. Add one there first.",
+  "@taskSourceNoLists": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "deleteSyncedDone": "Delete done tasks everywhere",
+  "deleteSyncedDoneSubtitle": "Remove on complete and Clear completed daily delete them from {app}, and every device it syncs with. When this is off, they're only hidden here.",
+  "@deleteSyncedDoneSubtitle": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSyncNoPermission": "Last Launcher may not read your tasks in {app}. Tap to allow it.",
+  "@taskSyncNoPermission": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSyncAppMissing": "{app} isn't installed. Tap to choose where your tasks come from.",
+  "@taskSyncAppMissing": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSyncListGone": "This list isn't in {app} any more. Tap to choose another.",
+  "@taskSyncListGone": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSyncFailed": "Couldn't read your tasks from {app}. Tap to try again.",
+  "@taskSyncFailed": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSyncNotSaved": "{app} didn't take your last change. Tap to see your tasks as they are there.",
+  "@taskSyncNotSaved": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSourceApp": "Lists in {app}",
+  "@taskSourceApp": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskRepeats": "Repeats. Tick it off in {app}.",
+  "@taskRepeats": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  }
 }

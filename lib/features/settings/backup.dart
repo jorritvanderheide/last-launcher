@@ -21,8 +21,13 @@ class Backup {
   static const _version = 1;
 
   /// Keys that only matter to the install they're on: migrated-away
-  /// leftovers from older versions.
-  static const _neverBackedUp = {'tasks_enabled'};
+  /// leftovers from older versions, and the synced task list, whose ids are
+  /// the tasks app's on this phone.
+  static const _neverBackedUp = {
+    'tasks_enabled',
+    'task_source',
+    'synced_task_view',
+  };
 
   /// Stored key to value: a bool, int, double, String or `List<String>`.
   final Map<String, Object> entries;

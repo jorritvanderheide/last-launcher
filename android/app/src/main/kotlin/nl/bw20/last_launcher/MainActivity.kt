@@ -34,6 +34,11 @@ class MainActivity : FlutterActivity() {
     private var pendingBackupResult: MethodChannel.Result? = null
     private var pendingBackupContent: String? = null
 
+    // The tasks app's permission prompt answers through onRequestPermissionsResult.
+    private var pendingTaskPermission: MethodChannel.Result? = null
+    private val taskProviders by lazy { TaskProviders(this) }
+    private val taskExecutor = java.util.concurrent.Executors.newSingleThreadExecutor()
+
     // ------------------------------------------------------------------
     // Lifecycle
     // ------------------------------------------------------------------
@@ -72,6 +77,12 @@ class MainActivity : FlutterActivity() {
             }
             insets
         }
+    }
+
+    override fun onDestroy() {
+        taskProviders.watch(null) {}
+        taskExecutor.shutdown()
+        super.onDestroy()
     }
 
     override fun onResume() {
@@ -237,6 +248,29 @@ class MainActivity : FlutterActivity() {
                     }
                 }
                 "openBackup" -> openBackup(result)
+                "taskApps" -> result.success(taskProviders.installed())
+                "openOwnAppInfo" -> {
+                    openAppInfo(packageName)
+                    result.success(null)
+                }
+                "requestTaskPermission" -> requestTaskPermission(call.argument<String>("authority")!!, result)
+                "taskLists" -> tasksCall(result) { taskProviders.lists(call.argument<String>("authority")!!) }
+                "syncedTasks" -> tasksCall(result) {
+                    taskProviders.tasks(call.argument<String>("authority")!!, call.argument<String>("listId")!!)
+                }
+                "applyTaskChanges" -> tasksCall(result) {
+                    taskProviders.apply(
+                        call.argument<String>("authority")!!,
+                        call.argument<String>("listId")!!,
+                        call.argument<List<Map<String, Any?>>>("changes")!!,
+                    )
+                }
+                "watchTasks" -> {
+                    taskProviders.watch(call.argument<String>("authority")) {
+                        methodChannel?.invokeMethod("tasksChanged", null)
+                    }
+                    result.success(null)
+                }
                 "isDefaultLauncher" -> result.success(isDefaultLauncher())
                 "requestDefaultLauncher" -> {
                     requestDefaultLauncher()
@@ -519,6 +553,69 @@ class MainActivity : FlutterActivity() {
     }
 
     // ------------------------------------------------------------------
+    // Synced tasks
+    // ------------------------------------------------------------------
+
+    /** Runs [run] off the main thread, since the tasks app may have to start
+     * first, and answers [result] with its value on it: TASKS_UNAVAILABLE
+     * when the tasks app is gone or the permission was taken back. */
+    private fun tasksCall(result: MethodChannel.Result, run: () -> Any?) {
+        taskExecutor.execute {
+            val outcome = runCatching(run)
+            runOnUiThread {
+                outcome.fold(
+                    onSuccess = { result.success(it) },
+                    onFailure = { result.error("TASKS_UNAVAILABLE", it.message, null) },
+                )
+            }
+        }
+    }
+
+    /** Answers granted, denied, or blocked: denied for good, so Android no
+     * longer asks and only the app's settings can allow it. */
+    private fun requestTaskPermission(authority: String, result: MethodChannel.Result) {
+        val provider = taskProviders.provider(authority)
+        if (taskProviders.isGranted(provider)) {
+            result.success("granted")
+            return
+        }
+        if (pendingTaskPermission != null) {
+            result.error("BUSY", "A permission prompt is already open", null)
+            return
+        }
+        pendingTaskPermission = result
+        requestPermissions(provider.permissions, REQUEST_TASK_PERMISSION)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode != REQUEST_TASK_PERMISSION) return
+        val result = pendingTaskPermission ?: return
+        pendingTaskPermission = null
+        // Empty when the prompt was interrupted, such as by pressing home:
+        // nothing was decided, so it can be asked again.
+        if (grantResults.isEmpty()) {
+            result.success("denied")
+            return
+        }
+        val granted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
+        // After a denial Android says whether it would still ask: when it
+        // wouldn't, it answers at once from now on, without a prompt.
+        val asksAgain = permissions.any { shouldShowRequestPermissionRationale(it) }
+        result.success(
+            when {
+                granted -> "granted"
+                asksAgain -> "denied"
+                else -> "blocked"
+            },
+        )
+    }
+
+    // ------------------------------------------------------------------
     // Search prefix actions
     // ------------------------------------------------------------------
 
@@ -632,5 +729,6 @@ class MainActivity : FlutterActivity() {
     private companion object {
         const val REQUEST_SAVE_BACKUP = 4001
         const val REQUEST_OPEN_BACKUP = 4002
+        const val REQUEST_TASK_PERMISSION = 4003
     }
 }

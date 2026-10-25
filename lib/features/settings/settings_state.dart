@@ -162,6 +162,15 @@ class SettingsState extends ChangeNotifier {
   late final removeOnComplete = _bool('remove_on_complete', false);
   late final clearCompletedDaily = _bool('clear_completed_daily', false);
 
+  /// Where the tasks are: unset for this phone, or a list in a tasks app
+  /// (see parseTaskSource). Its ids only mean something on this phone, so
+  /// it isn't backed up.
+  late final taskSource = _optionalString('task_source');
+
+  /// Whether Remove on complete and Clear completed daily delete done tasks
+  /// from a synced list, and so from the server, rather than hide them.
+  late final deleteSyncedDone = _bool('delete_synced_done', false);
+
   // --- Derived: what is actually in effect -------------------------------
 
   ThemePreset get preset {

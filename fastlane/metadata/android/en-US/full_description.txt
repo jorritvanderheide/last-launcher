@@ -13,7 +13,7 @@ Features:
 * Fullscreen mode, hide status bar and navigation
 * In English and Dutch
 
-Last Launcher is free, open source (EUPL-1.2), and contains no ads, tracking, or telemetry. Your data stays on your device.
+Last Launcher is free, open source (EUPL-1.2), and contains no ads, tracking, or telemetry. Your data stays on your device, unless you sync your tasks through another app.
 
 ---
 Accessibility service disclosure:

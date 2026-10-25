@@ -37,6 +37,24 @@ void main() {
       expect(backup.entries.containsKey('tasks_enabled'), isFalse);
     });
 
+    test(
+      'leaves out the synced task list, which only this phone has',
+      () async {
+        final prefs = await _prefs({
+          'task_source': 'org.tasks.opentasks/7',
+          'synced_task_view': '{}',
+          'delete_synced_done': true,
+        });
+        final backup = _capture(prefs, include: {'tasks'});
+        expect(backup.entries.keys, ['delete_synced_done']);
+
+        // And a restore leaves them be.
+        final target = await _prefs({'task_source': 'org.dmfs.tasks/2'});
+        await _restore(target, backup);
+        expect(target.getString('task_source'), 'org.dmfs.tasks/2');
+      },
+    );
+
     test('leaves out module data unless asked', () async {
       final prefs = await _prefs({'locked': true, 'tasks': '[]'});
       expect(_capture(prefs).entries.containsKey('tasks'), isFalse);

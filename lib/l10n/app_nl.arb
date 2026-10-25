@@ -175,5 +175,20 @@
   "showWorkAppDotOnHome": "Werkstip op startscherm tonen",
   "showWorkAppDotOnHomeSubtitle": "Toon werkprofielstip bij vastgezette apps op het startscherm",
   "hidePersonalWhenWorkActive": "Toon geen niet-werk apps",
-  "hidePersonalWhenWorkActiveSubtitle": "Niet-werk apps verschijnen weer wanneer het werkprofiel wordt gepauzeerd"
+  "hidePersonalWhenWorkActiveSubtitle": "Niet-werk apps verschijnen weer wanneer het werkprofiel wordt gepauzeerd",
+
+  "taskSourceTitle": "Taken uit",
+  "taskSourcePhone": "Deze telefoon",
+  "taskSourceList": "{list} in {app}",
+  "taskSourceNoApp": "Installeer eerst Tasks.org om een takenlijst te gebruiken die met DAVx⁵ synchroniseert.",
+  "taskSourceNoLists": "Er staan nog geen lijsten in {app}. Maak er daar eerst een.",
+  "deleteSyncedDone": "Afgeronde taken overal verwijderen",
+  "deleteSyncedDoneSubtitle": "Verwijderen bij voltooiing en Voltooide dagelijks wissen verwijderen ze uit {app}, en van elk apparaat waarmee het synchroniseert. Staat dit uit, dan worden ze hier alleen verborgen.",
+  "taskSyncNoPermission": "Last Launcher mag je taken in {app} niet lezen. Tik om het toe te staan.",
+  "taskSyncAppMissing": "{app} is niet geïnstalleerd. Tik om te kiezen waar je taken vandaan komen.",
+  "taskSyncListGone": "Deze lijst staat niet meer in {app}. Tik om een andere te kiezen.",
+  "taskSyncFailed": "Je taken in {app} konden niet worden gelezen. Tik om het opnieuw te proberen.",
+  "taskSyncNotSaved": "{app} heeft je laatste wijziging niet overgenomen. Tik om je taken te zien zoals ze daar staan.",
+  "taskSourceApp": "Lijsten in {app}",
+  "taskRepeats": "Herhaalt. Vink deze af in {app}."
 }

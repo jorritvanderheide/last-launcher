@@ -6,6 +6,7 @@ class Task {
     required this.title,
     this.done = false,
     this.indented = false,
+    this.repeats = false,
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
@@ -25,11 +26,16 @@ class Task {
   /// Whether this is a subtask of the nearest top-level task above it.
   final bool indented;
 
+  /// Whether it repeats, which only a synced task can: it's ticked off in
+  /// its own app, which knows the next time. Never stored here.
+  final bool repeats;
+
   Task copyWith({String? title, bool? done, bool? indented}) => Task(
     id: id,
     title: title ?? this.title,
     done: done ?? this.done,
     indented: indented ?? this.indented,
+    repeats: repeats,
   );
 
   Map<String, dynamic> toJson() => {

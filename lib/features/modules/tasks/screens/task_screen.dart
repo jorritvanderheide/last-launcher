@@ -4,6 +4,7 @@ import 'package:last_launcher/shared/search_focus_controller.dart';
 import 'package:last_launcher/shared/widgets/search_field.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/modules/tasks/subtasks.dart';
+import 'package:last_launcher/features/modules/tasks/synced_tasks.dart';
 import 'package:last_launcher/features/modules/tasks/task.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/shared/widgets/app_label.dart';
@@ -42,6 +43,7 @@ class TaskScreen extends StatefulWidget {
     required this.onReorderEnd,
     this.scrollLocked = false,
     this.swipeRight = true,
+    this.onOpenSettings,
     super.key,
   });
 
@@ -52,6 +54,9 @@ class TaskScreen extends StatefulWidget {
   final VoidCallback onReorderEnd;
   final bool scrollLocked;
   final bool swipeRight;
+
+  /// Opens the task settings, to choose where the tasks come from.
+  final VoidCallback? onOpenSettings;
 
   @override
   State<TaskScreen> createState() => TaskScreenState();
@@ -122,6 +127,8 @@ class TaskScreenState extends State<TaskScreen> {
   void _onSubmit() {
     final query = _controller.text.trim();
     if (query.isEmpty) return;
+    // Kept in the field while a synced list can't take it: the list says why.
+    if (!widget.taskState.canChange) return;
 
     final tasks = widget.taskState.tasks;
     final match = tasks.where(
@@ -142,11 +149,15 @@ class TaskScreenState extends State<TaskScreen> {
   }
 
   void _completeTask(Task task) {
-    if (!task.done && widget.settingsState.removeOnComplete.value) {
-      widget.taskState.removeTask(task.id);
-    } else {
-      widget.taskState.toggleTask(task.id);
+    // Its own app knows when it comes next.
+    if (task.repeats) {
+      widget.taskState.openTasksApp();
+      return;
     }
+    widget.taskState.completeTask(
+      task.id,
+      remove: widget.settingsState.removeOnComplete.value,
+    );
   }
 
   Future<void> _renameTask(BuildContext context, Task task) async {
@@ -272,17 +283,77 @@ class TaskScreenState extends State<TaskScreen> {
     );
   }
 
-  Widget _buildTaskItem(BuildContext context, Task task, int index) {
-    final Widget leading = GestureDetector(
+  /// What's wrong with a synced list, and a tap to put it right; null when
+  /// nothing is.
+  Widget? _syncProblem(BuildContext context) {
+    final state = widget.taskState;
+    final source = state.source;
+    if (source == null) return null;
+    final l10n = AppLocalizations.of(context)!;
+    final app = taskAppNames[source.authority]!;
+    final (message, onTap) = switch (state.status) {
+      TaskSyncStatus.noPermission => (
+        l10n.taskSyncNoPermission(app),
+        state.requestPermission,
+      ),
+      TaskSyncStatus.appMissing => (
+        l10n.taskSyncAppMissing(app),
+        widget.onOpenSettings,
+      ),
+      TaskSyncStatus.listGone => (
+        l10n.taskSyncListGone(app),
+        widget.onOpenSettings,
+      ),
+      TaskSyncStatus.failed => (l10n.taskSyncFailed(app), state.refresh),
+      TaskSyncStatus.notSaved => (l10n.taskSyncNotSaved(app), state.refresh),
+      _ => (null, null),
+    };
+    if (message == null) return null;
+    return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => _completeTask(task),
-      child: SizedBox.square(
-        dimension: 48,
-        child: Center(
-          child: Icon(
-            task.done ? Icons.check_box : Icons.check_box_outline_blank,
-            size: 22,
-            color: Theme.of(context).colorScheme.onSurface,
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 32 + AppLabel.verticalPadding,
+        ),
+        child: Text(
+          message,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            fontSize: AppLabel.fontSizeOf(context),
+            color: Theme.of(
+              context,
+            ).colorScheme.onSurface.withAlpha(_emptyTextAlpha),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTaskItem(BuildContext context, Task task, int index) {
+    final source = widget.taskState.source;
+    final Widget leading = Semantics(
+      label: task.repeats && source != null
+          ? AppLocalizations.of(
+              context,
+            )!.taskRepeats(taskAppNames[source.authority]!)
+          : null,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => _completeTask(task),
+        child: SizedBox.square(
+          dimension: 48,
+          child: Center(
+            child: Icon(
+              task.repeats
+                  ? Icons.repeat
+                  : task.done
+                  ? Icons.check_box
+                  : Icons.check_box_outline_blank,
+              size: 22,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
           ),
         ),
       ),
@@ -362,6 +433,11 @@ class TaskScreenState extends State<TaskScreen> {
                 final incomplete = groups.todo.where(matches).toList();
                 final complete = groups.done.where(matches).toList();
 
+                final problem = _syncProblem(context);
+                if (problem != null) return problem;
+                if (widget.taskState.status == TaskSyncStatus.loading) {
+                  return const SizedBox.shrink();
+                }
                 if (incomplete.isEmpty && complete.isEmpty) {
                   if (!widget.settingsState.showHints.value) {
                     return const SizedBox.shrink();

@@ -45,7 +45,9 @@ A backup is a JSON file:
 ```
 
 `prefs` holds every stored key with its type, so a setting added later is
-backed up without anyone having to remember it. `modules` lists the modules
+backed up without anyone having to remember it. The exceptions only mean
+something on the phone they're on: the synced task list (`task_source`,
+`synced_task_view`), which a restore leaves alone too. `modules` lists the modules
 whose own data is in it. `Backup` in `lib/features/settings/backup.dart`
 reads and writes it.
 

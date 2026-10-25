@@ -1111,6 +1111,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home screen is full'**
   String get homeScreenFull;
+
+  /// No description provided for @taskSourceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks from'**
+  String get taskSourceTitle;
+
+  /// No description provided for @taskSourcePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'This phone'**
+  String get taskSourcePhone;
+
+  /// No description provided for @taskSourceList.
+  ///
+  /// In en, this message translates to:
+  /// **'{list} in {app}'**
+  String taskSourceList(String list, String app);
+
+  /// No description provided for @taskSourceNoApp.
+  ///
+  /// In en, this message translates to:
+  /// **'To use a task list that syncs with DAVx⁵, install Tasks.org first.'**
+  String get taskSourceNoApp;
+
+  /// No description provided for @taskSourceNoLists.
+  ///
+  /// In en, this message translates to:
+  /// **'There are no lists in {app} yet. Add one there first.'**
+  String taskSourceNoLists(String app);
+
+  /// No description provided for @deleteSyncedDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete done tasks everywhere'**
+  String get deleteSyncedDone;
+
+  /// No description provided for @deleteSyncedDoneSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove on complete and Clear completed daily delete them from {app}, and every device it syncs with. When this is off, they\'re only hidden here.'**
+  String deleteSyncedDoneSubtitle(String app);
+
+  /// No description provided for @taskSyncNoPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Launcher may not read your tasks in {app}. Tap to allow it.'**
+  String taskSyncNoPermission(String app);
+
+  /// No description provided for @taskSyncAppMissing.
+  ///
+  /// In en, this message translates to:
+  /// **'{app} isn\'t installed. Tap to choose where your tasks come from.'**
+  String taskSyncAppMissing(String app);
+
+  /// No description provided for @taskSyncListGone.
+  ///
+  /// In en, this message translates to:
+  /// **'This list isn\'t in {app} any more. Tap to choose another.'**
+  String taskSyncListGone(String app);
+
+  /// No description provided for @taskSyncFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t read your tasks from {app}. Tap to try again.'**
+  String taskSyncFailed(String app);
+
+  /// No description provided for @taskSyncNotSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'{app} didn\'t take your last change. Tap to see your tasks as they are there.'**
+  String taskSyncNotSaved(String app);
+
+  /// No description provided for @taskSourceApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Lists in {app}'**
+  String taskSourceApp(String app);
+
+  /// No description provided for @taskRepeats.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeats. Tick it off in {app}.'**
+  String taskRepeats(String app);
 }
 
 class _AppLocalizationsDelegate

@@ -167,6 +167,26 @@ void main() {
     expect(find.byType(TaskSettingsScreen), findsOneWidget);
   });
 
+  testWidgets(
+    'deleting done tasks everywhere is only there for a synced list',
+    (tester) async {
+      final settings = await _pumpSettings(
+        tester,
+        stored: {'left_panel': 'tasks'},
+      );
+      await tester.tap(find.text(l10n.sectionTasks));
+      await tester.pumpAndSettle();
+      expect(find.text(l10n.taskSourceTitle), findsOneWidget);
+      expect(find.text(l10n.taskSourcePhone), findsOneWidget);
+      expect(find.text(l10n.deleteSyncedDone), findsNothing);
+
+      settings.taskSource.value = 'org.tasks.opentasks/7';
+      await tester.pumpAndSettle();
+      expect(find.text(l10n.deleteSyncedDone), findsOneWidget);
+      expect(find.text('Tasks.org'), findsOneWidget);
+    },
+  );
+
   testWidgets('drawer mode decides which search rows apply', (tester) async {
     final settings = await _pumpSettings(tester);
     settings.extraChar.value = true;

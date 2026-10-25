@@ -547,4 +547,67 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get homeScreenFull => 'Startscherm is vol';
+
+  @override
+  String get taskSourceTitle => 'Taken uit';
+
+  @override
+  String get taskSourcePhone => 'Deze telefoon';
+
+  @override
+  String taskSourceList(String list, String app) {
+    return '$list in $app';
+  }
+
+  @override
+  String get taskSourceNoApp =>
+      'Installeer eerst Tasks.org om een takenlijst te gebruiken die met DAVx⁵ synchroniseert.';
+
+  @override
+  String taskSourceNoLists(String app) {
+    return 'Er staan nog geen lijsten in $app. Maak er daar eerst een.';
+  }
+
+  @override
+  String get deleteSyncedDone => 'Afgeronde taken overal verwijderen';
+
+  @override
+  String deleteSyncedDoneSubtitle(String app) {
+    return 'Verwijderen bij voltooiing en Voltooide dagelijks wissen verwijderen ze uit $app, en van elk apparaat waarmee het synchroniseert. Staat dit uit, dan worden ze hier alleen verborgen.';
+  }
+
+  @override
+  String taskSyncNoPermission(String app) {
+    return 'Last Launcher mag je taken in $app niet lezen. Tik om het toe te staan.';
+  }
+
+  @override
+  String taskSyncAppMissing(String app) {
+    return '$app is niet geïnstalleerd. Tik om te kiezen waar je taken vandaan komen.';
+  }
+
+  @override
+  String taskSyncListGone(String app) {
+    return 'Deze lijst staat niet meer in $app. Tik om een andere te kiezen.';
+  }
+
+  @override
+  String taskSyncFailed(String app) {
+    return 'Je taken in $app konden niet worden gelezen. Tik om het opnieuw te proberen.';
+  }
+
+  @override
+  String taskSyncNotSaved(String app) {
+    return '$app heeft je laatste wijziging niet overgenomen. Tik om je taken te zien zoals ze daar staan.';
+  }
+
+  @override
+  String taskSourceApp(String app) {
+    return 'Lijsten in $app';
+  }
+
+  @override
+  String taskRepeats(String app) {
+    return 'Herhaalt. Vink deze af in $app.';
+  }
 }

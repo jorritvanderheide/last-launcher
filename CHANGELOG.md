@@ -13,6 +13,9 @@ shorter version of the same notes, from `fastlane/metadata/android/`.
   when it moves, is ticked off or is removed.
 - Last Launcher is now in English and Dutch only. On a phone set to another
   language, it's in English.
+- The task list can be a list from Tasks.org or OpenTasks, under Tasks from,
+  so you can sync it with your own CalDAV server through DAVx⁵. Changes go
+  both ways, and Last Launcher still connects to nothing itself.
 
 ## 1.3.1
 

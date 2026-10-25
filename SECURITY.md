@@ -21,21 +21,25 @@ anything about them is made public.
 ## What counts
 
 Last Launcher has no internet permission and connects to nothing. It lists
-and opens your apps, keeps its settings and tasks on your phone, and uses an
-accessibility service for one thing only: locking the screen when you double
-tap. See
+and opens your apps, keeps its settings and tasks on your phone (or, if you
+choose, in a task list in Tasks.org or OpenTasks), and uses an accessibility
+service for one thing only: locking the screen when you double tap. See
 [section 9 of the README](README.md#9-permissions-and-data-disclosure).
 
 So these are security problems:
 
 - Last Launcher connecting to anything, or anything you stored in it leaving
-  your phone without you exporting it.
+  your phone without you exporting it, or choosing a task list in another
+  app that syncs it.
 - The accessibility service doing anything besides locking the screen, such
   as reading what's on the screen or what you type.
 - A backup file that does more than set the settings, labels, apps and tasks
   in it, such as making the launcher open an app or a link by itself.
 - Another app reading what Last Launcher stores, or making it do something
   you didn't ask for.
+- Last Launcher reading anything from Tasks.org or OpenTasks besides the
+  names of its lists and the tasks in the list you chose, or changing anything
+  besides those tasks.
 
 A bug that loses your pinned apps, labels or tasks is serious too, but it isn't
 secret: please report that as a normal issue, so others can see it.
