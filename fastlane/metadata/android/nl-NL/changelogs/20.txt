@@ -1,0 +1,8 @@
+## Wijzigingen
+
+- New: synchroniseer je taken via Tasks.org en DAVx⁵, onder Taken uit
+- New: subtaken: sleep een taak naar rechts, of kies Subtaak maken
+- New: Uitlijning staat onder Startscherm, en geldt alleen voor het startscherm
+- New: vraagt het eerst als een andere app een snelkoppeling toevoegt
+- Change: alleen nog Nederlands en Engels
+- Fix: een waarde van een andere versie laat de launcher niet meer vastlopen

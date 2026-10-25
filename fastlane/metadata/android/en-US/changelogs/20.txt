@@ -1,0 +1,8 @@
+## Changes
+
+- New: sync your tasks through Tasks.org and DAVx⁵, under Tasks from
+- New: subtasks: drag a task to the right, or choose Make subtask
+- New: Alignment moves under Home, and only lines up the home screen
+- New: asks before another app adds a shortcut
+- Change: English and Dutch only
+- Fix: a value stored by another version can't crash the launcher
