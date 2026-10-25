@@ -23,7 +23,7 @@
   "fontStandard": "Vakio",
   "fontMono": "Tasavälinen",
   "textSizeTitle": "Tekstin koko",
-  "textAlignTitle": "Tekstin tasaus",
+  "alignmentTitle": "Tasaus",
   "alignLeft": "Vasen",
   "alignCenter": "Keskitetty",
   "alignRight": "Oikea",

@@ -25,7 +25,7 @@
   "fontStandard": "Standard",
   "fontMono": "Monospace",
   "textSizeTitle": "Text size",
-  "textAlignTitle": "Text alignment",
+  "alignmentTitle": "Alignment",
   "alignLeft": "Left",
   "alignCenter": "Center",
   "alignRight": "Right",

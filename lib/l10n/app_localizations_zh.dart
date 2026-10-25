@@ -78,7 +78,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get textSizeTitle => '文字大小';
 
   @override
-  String get textAlignTitle => '文字對齊';
+  String get alignmentTitle => '對齊';
 
   @override
   String get alignLeft => '靠左';

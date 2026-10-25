@@ -78,7 +78,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get textSizeTitle => 'Text size';
 
   @override
-  String get textAlignTitle => 'Text alignment';
+  String get alignmentTitle => 'Alignment';
 
   @override
   String get alignLeft => 'Left';

@@ -106,7 +106,9 @@ The look is a set of separate options in `SettingsState`; Standard and Extra
 are presets of them, worked out from the options rather than stored.
 `app_theme.dart` turns them into a `ThemeData` per brightness, and
 `AppearanceScope` hands the rest (text size, alignment, effects) to the
-widgets. Glow and scanlines only show in dark mode.
+widgets. Alignment is left everywhere but on home: `LauncherShell` wraps
+`HomeScreen` in a scope with the Alignment setting's own. Glow and scanlines
+only show in dark mode.
 
 ## Translations
 

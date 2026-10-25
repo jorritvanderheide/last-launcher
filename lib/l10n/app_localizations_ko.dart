@@ -78,7 +78,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get textSizeTitle => '글자 크기';
 
   @override
-  String get textAlignTitle => '텍스트 정렬';
+  String get alignmentTitle => '정렬';
 
   @override
   String get alignLeft => '왼쪽';

@@ -78,7 +78,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get textSizeTitle => 'Tekstgrootte';
 
   @override
-  String get textAlignTitle => 'Tekstuitlijning';
+  String get alignmentTitle => 'Uitlijning';
 
   @override
   String get alignLeft => 'Links';

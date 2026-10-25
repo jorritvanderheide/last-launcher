@@ -23,7 +23,7 @@
   "fontStandard": "標準",
   "fontMono": "等幅",
   "textSizeTitle": "文字サイズ",
-  "textAlignTitle": "文字の配置",
+  "alignmentTitle": "配置",
   "alignLeft": "左",
   "alignCenter": "中央",
   "alignRight": "右",

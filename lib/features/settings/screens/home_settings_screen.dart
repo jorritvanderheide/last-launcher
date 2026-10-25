@@ -4,6 +4,15 @@ import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/features/settings/widgets/settings_tiles.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 
+String _alignmentLabel(BuildContext context, LabelAlignment alignment) {
+  final l10n = AppLocalizations.of(context)!;
+  return switch (alignment) {
+    LabelAlignment.left => l10n.alignLeft,
+    LabelAlignment.center => l10n.alignCenter,
+    LabelAlignment.right => l10n.alignRight,
+  };
+}
+
 class HomeSettingsScreen extends StatelessWidget {
   const HomeSettingsScreen({required this.settingsState, super.key});
 
@@ -27,6 +36,13 @@ class HomeSettingsScreen extends StatelessWidget {
           setting: s.doubleTapToSleep,
           title: l10n.doubleTapToSleep,
           subtitle: l10n.doubleTapToSleepSubtitle,
+        ),
+        ChoiceTile<LabelAlignment>(
+          title: l10n.alignmentTitle,
+          value: s.labelAlignment.value,
+          options: LabelAlignment.values,
+          label: _alignmentLabel,
+          onChanged: (alignment) => s.labelAlignment.value = alignment,
         ),
         _PanelTile(
           title: l10n.leftOfHome,

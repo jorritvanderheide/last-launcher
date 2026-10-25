@@ -260,11 +260,11 @@ abstract class AppLocalizations {
   /// **'Text size'**
   String get textSizeTitle;
 
-  /// No description provided for @textAlignTitle.
+  /// No description provided for @alignmentTitle.
   ///
   /// In en, this message translates to:
-  /// **'Text alignment'**
-  String get textAlignTitle;
+  /// **'Alignment'**
+  String get alignmentTitle;
 
   /// No description provided for @alignLeft.
   ///

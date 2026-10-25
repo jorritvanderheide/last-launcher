@@ -23,7 +23,7 @@
   "fontStandard": "標準",
   "fontMono": "等寬",
   "textSizeTitle": "文字大小",
-  "textAlignTitle": "文字對齊",
+  "alignmentTitle": "對齊",
   "alignLeft": "靠左",
   "alignCenter": "置中",
   "alignRight": "靠右",

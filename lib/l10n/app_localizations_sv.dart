@@ -78,7 +78,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get textSizeTitle => 'Textstorlek';
 
   @override
-  String get textAlignTitle => 'Textjustering';
+  String get alignmentTitle => 'Justering';
 
   @override
   String get alignLeft => 'Vänster';

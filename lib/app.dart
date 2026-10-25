@@ -135,11 +135,6 @@ class _LastLauncherAppState extends State<LastLauncherApp>
             data: themeFor(Theme.of(context).brightness, spec, settings: true),
             child: AppearanceScope(
               labelFontSize: settings.textSize.value,
-              labelAlign: switch (settings.labelAlignment.value) {
-                LabelAlignment.left => TextAlign.left,
-                LabelAlignment.center => TextAlign.center,
-                LabelAlignment.right => TextAlign.right,
-              },
               accentAvailable: _accent != null,
               terminalPrompt: settings.terminalPrompt.value,
               animate:

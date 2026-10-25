@@ -78,7 +78,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get textSizeTitle => 'Velikost textu';
 
   @override
-  String get textAlignTitle => 'Zarovnání textu';
+  String get alignmentTitle => 'Zarovnání';
 
   @override
   String get alignLeft => 'Vlevo';

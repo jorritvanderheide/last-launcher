@@ -30,15 +30,6 @@ String _fontLabel(BuildContext context, FontChoice font) {
   };
 }
 
-String _alignmentLabel(BuildContext context, LabelAlignment alignment) {
-  final l10n = AppLocalizations.of(context)!;
-  return switch (alignment) {
-    LabelAlignment.left => l10n.alignLeft,
-    LabelAlignment.center => l10n.alignCenter,
-    LabelAlignment.right => l10n.alignRight,
-  };
-}
-
 String _scanlineLabel(BuildContext context, ScanlineLevel level) {
   final l10n = AppLocalizations.of(context)!;
   return switch (level) {
@@ -96,13 +87,6 @@ class AppearanceSettingsScreen extends StatelessWidget {
           min: SettingsState.textSizeMin,
           max: SettingsState.textSizeMax,
           step: SettingsState.textSizeStep,
-        ),
-        ChoiceTile<LabelAlignment>(
-          title: l10n.textAlignTitle,
-          value: s.labelAlignment.value,
-          options: LabelAlignment.values,
-          label: _alignmentLabel,
-          onChanged: (alignment) => s.labelAlignment.value = alignment,
         ),
         if (AppearanceScope.of(context).accentAvailable)
           SettingSwitch(

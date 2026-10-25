@@ -78,7 +78,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get textSizeTitle => 'Tekstin koko';
 
   @override
-  String get textAlignTitle => 'Tekstin tasaus';
+  String get alignmentTitle => 'Tasaus';
 
   @override
   String get alignLeft => 'Vasen';

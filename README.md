@@ -64,7 +64,7 @@ To build it yourself, see [Development](docs/development.md).
    settings. Under **Home**, set the **Left module** or **Right module** to
    **Tasks**, and swipe that way for your task list.
 5. **Make it yours.** Under **Appearance**, pick light or dark, the text size
-   and alignment, or the retro **Extra** style.
+   or the retro **Extra** style.
 
 The hints on the home screen tell you where things are. Once you know, turn off
 **Show hints** under **Appearance**.
@@ -137,7 +137,8 @@ first, and opens an app once it's the only match.
 
 Up to 10 pinned apps, as large or small as you like, under the names you give
 them. Press and hold one to rename or unpin it, or hold it and drag it to a new
-place. **Lock layout** keeps everything where it is. Pull down for quick
+place. **Alignment** puts them on the left, in the middle or on the right, and
+**Lock layout** keeps everything where it is. Pull down for quick
 settings, and double tap to lock your phone.
 
 ### 5.3 Modules
@@ -159,7 +160,7 @@ The left and right of home can each hold a module:
 </p>
 
 System, light or dark, with a pure black dark mode for OLED screens. Choose
-the font, text size and alignment, and let **Accent color** tint it all in your
+the font and text size, and let **Accent color** tint it all in your
 system's colours. The **Extra** style turns on a retro terminal: a monospace
 font, scanlines, a glow and a blinking cursor, each of which you can also turn
 on by itself.
@@ -233,7 +234,7 @@ Press and hold an empty spot on the home screen to open the settings.
 | --- | --- | --- |
 | Appearance | **Theme** | System, Light or Dark. |
 | | **Style** | Standard, Extra (the retro terminal look), or Custom once you change one of the options below. |
-| | **Font**, **Text size**, **Text alignment** | How the app names look. |
+| | **Font**, **Text size** | How the app names look. |
 | | **Accent color** | Tint text and background with your system accent. |
 | | **Terminal prompt** | Show search as a command line. |
 | | **Glow**, **Scanlines**, **Animations** | The retro effects, in dark mode only. |
@@ -241,6 +242,7 @@ Press and hold an empty spot on the home screen to open the settings.
 | | **Show hints** | Show usage hints throughout the app. |
 | Home | **Lock layout** | Turn off pinning and long press on the home screen. |
 | | **Double tap to sleep** | Lock the screen with a double tap. Needs the accessibility service. |
+| | **Alignment** | Left, Center or Right: where the apps on the home screen line up. Everything else stays on the left. |
 | | **Left module**, **Right module** | What a swipe to either side shows: none, Tasks or Launch app. |
 | App drawer | **Drawer mode** | List, or Search only. |
 | | **Hidden apps** | The apps you hid, to unhide or rename them. |

@@ -215,7 +215,15 @@ class HomeScreenState extends State<HomeScreen> {
                     shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     buildDefaultDragHandles: false,
-                    proxyDecorator: dragProxyDecorator,
+                    // The lifted row is drawn in the app's overlay, above
+                    // home's own alignment; it takes that along.
+                    proxyDecorator: (child, index, animation) {
+                      final appearance = AppearanceScope.of(context);
+                      return appearance.withLabelAlign(
+                        appearance.labelAlign,
+                        child: dragProxyDecorator(child, index, animation),
+                      );
+                    },
                     onReorderStart: (index) {
                       _dragFrom = index;
                       widget.onReorderStart();

@@ -258,7 +258,6 @@ class SettingsState extends ChangeNotifier {
     themeMode,
     font,
     textSize,
-    labelAlignment,
     accentColor,
     terminalPrompt,
     glow,

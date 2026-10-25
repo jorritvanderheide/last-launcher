@@ -14,6 +14,7 @@ import 'package:last_launcher/features/settings/widgets/settings_tiles.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/data/models.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
 
 const _maxSheetFraction = 0.9;
@@ -589,16 +590,29 @@ class _LauncherShellState extends State<LauncherShell>
                       child: GestureDetector(
                         behavior: HitTestBehavior.deferToChild,
                         onLongPress: _openSettings,
-                        child: HomeScreen(
-                          key: _homeKey,
-                          homeState: widget.homeState,
-                          appListState: widget.appListState,
-                          settingsState: widget.settingsState,
-                          moduleDeps: _moduleDeps,
-                          onLaunch: _launchApp,
-                          onReorderStart: () => _isReorderingHome = true,
-                          onReorderEnd: () => _isReorderingHome = false,
-                          isActive: _onHomePage && !_drawerOpen,
+                        // Alignment is for home only; the rest stays left.
+                        child: ValueListenableBuilder(
+                          valueListenable: widget.settingsState.labelAlignment,
+                          builder: (context, alignment, child) =>
+                              AppearanceScope.of(context).withLabelAlign(
+                                switch (alignment) {
+                                  LabelAlignment.left => TextAlign.left,
+                                  LabelAlignment.center => TextAlign.center,
+                                  LabelAlignment.right => TextAlign.right,
+                                },
+                                child: child!,
+                              ),
+                          child: HomeScreen(
+                            key: _homeKey,
+                            homeState: widget.homeState,
+                            appListState: widget.appListState,
+                            settingsState: widget.settingsState,
+                            moduleDeps: _moduleDeps,
+                            onLaunch: _launchApp,
+                            onReorderStart: () => _isReorderingHome = true,
+                            onReorderEnd: () => _isReorderingHome = false,
+                            isActive: _onHomePage && !_drawerOpen,
+                          ),
                         ),
                       ),
                     ),

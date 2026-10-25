@@ -383,4 +383,24 @@ void main() {
 
     expect(settings.leftPanel.value, isA<TasksModule>());
   });
+
+  testWidgets('alignment is a home setting, not an appearance one', (
+    tester,
+  ) async {
+    final settings = await _pumpSettings(tester);
+    await tester.tap(find.text(l10n.sectionAppearance));
+    await tester.pumpAndSettle();
+    expect(find.text(l10n.alignmentTitle), findsNothing);
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(l10n.sectionHome));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(l10n.alignmentTitle));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(l10n.alignRight).last);
+    await tester.pumpAndSettle();
+
+    expect(settings.labelAlignment.value, LabelAlignment.right);
+  });
 }

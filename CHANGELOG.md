@@ -4,6 +4,11 @@ What changed in each release of Last Launcher, newest first. What counts as
 breaking is in [Compatibility](docs/compatibility.md). The stores show a
 shorter version of the same notes, from `fastlane/metadata/android/`.
 
+## Unreleased
+
+- Alignment is now under Home, and only lines up the apps on the home screen.
+  The app drawer, the task list and the settings are always on the left.
+
 ## 1.3.1
 
 - On F-Droid, this is the first release since 1.2.1: F-Droid couldn't build

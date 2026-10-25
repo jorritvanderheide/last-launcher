@@ -23,7 +23,7 @@
   "fontStandard": "Standaard",
   "fontMono": "Monospace",
   "textSizeTitle": "Tekstgrootte",
-  "textAlignTitle": "Tekstuitlijning",
+  "alignmentTitle": "Uitlijning",
   "alignLeft": "Links",
   "alignCenter": "Midden",
   "alignRight": "Rechts",

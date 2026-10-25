@@ -143,5 +143,26 @@ void main() {
       expect(scope(TextAlign.center).markersOnRight, isFalse);
       expect(scope(TextAlign.right).markersOnRight, isTrue);
     });
+
+    test('home can take its own alignment and keep the rest of the look', () {
+      const look = AppearanceScope(
+        labelFontSize: 30,
+        accentAvailable: true,
+        terminalPrompt: true,
+        animate: false,
+        child: SizedBox.shrink(),
+      );
+      expect(look.labelAlign, TextAlign.left);
+
+      final home = look.withLabelAlign(
+        TextAlign.center,
+        child: const SizedBox.shrink(),
+      );
+      expect(home.labelAlign, TextAlign.center);
+      expect(home.labelFontSize, 30);
+      expect(home.accentAvailable, isTrue);
+      expect(home.terminalPrompt, isTrue);
+      expect(home.animate, isFalse);
+    });
   });
 }

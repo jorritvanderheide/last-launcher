@@ -12,6 +12,7 @@ import 'package:last_launcher/l10n/app_localizations.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
+import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const _names = ['Alpha', 'Bravo', 'Charlie'];
@@ -58,7 +59,11 @@ void main() {
     var settingsOpened = false;
     var reorders = 0;
 
-    Future<void> pump(WidgetTester tester, {bool locked = false}) async {
+    Future<void> pump(
+      WidgetTester tester, {
+      bool locked = false,
+      TextAlign align = TextAlign.left,
+    }) async {
       SharedPreferences.setMockInitialValues({});
       final prefs = await SharedPreferences.getInstance();
       settings = SettingsState(prefs)..locked.value = locked;
@@ -74,21 +79,28 @@ void main() {
         _app(
           // Stands in for the shell, where a long press on home opens
           // settings.
-          GestureDetector(
-            behavior: HitTestBehavior.deferToChild,
-            onLongPress: () => settingsOpened = true,
-            child: HomeScreen(
-              homeState: home,
-              appListState: apps,
-              settingsState: settings,
-              moduleDeps: ModuleDeps(
-                settingsState: settings,
+          AppearanceScope(
+            labelFontSize: 28,
+            labelAlign: align,
+            accentAvailable: false,
+            terminalPrompt: false,
+            animate: false,
+            child: GestureDetector(
+              behavior: HitTestBehavior.deferToChild,
+              onLongPress: () => settingsOpened = true,
+              child: HomeScreen(
+                homeState: home,
                 appListState: apps,
-                taskState: TaskState(prefs),
+                settingsState: settings,
+                moduleDeps: ModuleDeps(
+                  settingsState: settings,
+                  appListState: apps,
+                  taskState: TaskState(prefs),
+                ),
+                onLaunch: (_, {isWorkApp = false, shortcutId}) {},
+                onReorderStart: () => reorders++,
+                onReorderEnd: () {},
               ),
-              onLaunch: (_, {isWorkApp = false, shortcutId}) {},
-              onReorderStart: () => reorders++,
-              onReorderEnd: () {},
             ),
           ),
         ),
@@ -133,6 +145,25 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(ActionRow), findsNothing);
       expect(home.pinnedApps.map((a) => a.label), _names);
+    });
+
+    testWidgets('a lifted row keeps home'
+        's alignment', (tester) async {
+      await pump(tester, align: TextAlign.right);
+      final screen = tester.getTopRight(find.byType(Scaffold).first).dx;
+      final before = tester.getTopRight(find.text('Alpha')).dx;
+      expect(screen - before, lessThanOrEqualTo(20));
+
+      final gesture = await tester.startGesture(
+        tester.getCenter(find.text('Alpha')),
+      );
+      await tester.pump(kLongPressTimeout + const Duration(milliseconds: 100));
+      await gesture.moveBy(const Offset(0, 20));
+      await tester.pump(const Duration(milliseconds: 16));
+      final lifted = tester.getTopRight(find.text('Alpha').last).dx;
+      expect(lifted, closeTo(before, 1));
+      await gesture.up();
+      await tester.pumpAndSettle();
     });
 
     testWidgets('a locked layout neither moves nor opens rows', (tester) async {

@@ -23,7 +23,7 @@
   "fontStandard": "Standardní",
   "fontMono": "Neproporcionální",
   "textSizeTitle": "Velikost textu",
-  "textAlignTitle": "Zarovnání textu",
+  "alignmentTitle": "Zarovnání",
   "alignLeft": "Vlevo",
   "alignCenter": "Na střed",
   "alignRight": "Vpravo",

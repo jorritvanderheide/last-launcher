@@ -21,8 +21,22 @@ class AppearanceScope extends InheritedWidget {
   final double labelFontSize;
 
   /// How app labels, and everything that lines up with them, are aligned:
-  /// left, center or right.
+  /// left, center or right. Left everywhere but on home, which follows the
+  /// Alignment setting through [withLabelAlign].
   final TextAlign labelAlign;
+
+  /// This look with [labelAlign] in place of its own, for [child].
+  AppearanceScope withLabelAlign(
+    TextAlign labelAlign, {
+    required Widget child,
+  }) => AppearanceScope(
+    labelFontSize: labelFontSize,
+    labelAlign: labelAlign,
+    accentAvailable: accentAvailable,
+    terminalPrompt: terminalPrompt,
+    animate: animate,
+    child: child,
+  );
 
   /// [labelAlign] as a horizontal [Alignment] x: -1, 0 or 1.
   double get labelAlignX => switch (labelAlign) {
