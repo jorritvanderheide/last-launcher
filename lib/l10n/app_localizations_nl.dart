@@ -507,6 +507,12 @@ class AppLocalizationsNl extends AppLocalizations {
   String get actionRemove => 'Verwijderen';
 
   @override
+  String get actionMakeSubtask => 'Subtaak maken';
+
+  @override
+  String get actionMakeMainTask => 'Hoofdtaak maken';
+
+  @override
   String get actionClose => 'Sluiten';
 
   @override

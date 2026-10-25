@@ -166,6 +166,17 @@ Map<String, String?> parentsOf(List<Task> tasks) {
   return parents;
 }
 
+/// Whether [id] can be made a subtask where it is: a top-level task that
+/// isn't the first of its group, so there's a task above it.
+bool canIndent(List<Task> tasks, String id) {
+  final groups = taskGroups(tasks);
+  for (final rows in [groups.todo, groups.done]) {
+    final index = rows.indexWhere((t) => t.id == id);
+    if (index != -1) return index > 0 && !rows[index].indented;
+  }
+  return false;
+}
+
 /// The subtasks that move along when [id] is moved: none for a subtask.
 Iterable<Task> subtasksOf(List<Task> tasks, String id) {
   final index = tasks.indexWhere((t) => t.id == id);

@@ -1034,6 +1034,18 @@ abstract class AppLocalizations {
   /// **'Remove'**
   String get actionRemove;
 
+  /// No description provided for @actionMakeSubtask.
+  ///
+  /// In en, this message translates to:
+  /// **'Make subtask'**
+  String get actionMakeSubtask;
+
+  /// No description provided for @actionMakeMainTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Make main task'**
+  String get actionMakeMainTask;
+
   /// No description provided for @actionClose.
   ///
   /// In en, this message translates to:

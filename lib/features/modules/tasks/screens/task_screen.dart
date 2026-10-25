@@ -173,7 +173,21 @@ class TaskScreenState extends State<TaskScreen> {
 
   List<ActionItem> _taskActions(BuildContext context, Task task) {
     final l10n = AppLocalizations.of(context)!;
+    final state = widget.taskState;
     return [
+      // Dragging sideways does the same, for those who can drag.
+      if (canIndent(state.tasks, task.id))
+        ActionItem(
+          icon: Icons.format_indent_increase,
+          label: l10n.actionMakeSubtask,
+          onTap: () => state.indentTask(task.id, indent: true),
+        ),
+      if (task.indented)
+        ActionItem(
+          icon: Icons.format_indent_decrease,
+          label: l10n.actionMakeMainTask,
+          onTap: () => state.indentTask(task.id, indent: false),
+        ),
       ActionItem(
         icon: Icons.delete_outline,
         label: l10n.actionRemove,

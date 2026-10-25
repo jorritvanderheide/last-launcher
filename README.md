@@ -228,6 +228,7 @@ for Google, typing `g` for Gmail searches the web. End the prefix with a space
 | Press and hold an app | Its actions: **Rename**, **Pin** or **Unpin**, **Hide**, **App info** |
 | Press and hold a row, then drag | Moves it, on home and in the task list |
 | Press and hold a task, then drag right or left | Makes it a subtask of the task above, or a task again |
+| Press and hold a task, and let go | Its actions: **Make subtask** or **Make main task**, **Remove** |
 | Enter in the search field | Opens the first result, or runs the prefix |
 | Home button | Back to the home screen, from anywhere |
 

@@ -209,6 +209,15 @@ void main() {
     expect(subtasksOf(tasks, 'Nope'), isEmpty);
   });
 
+  test("a task can be made a subtask when there's a task above it", () {
+    final tasks = _tasks(['Shop', '- Milk', 'Call', 'Write x']);
+    expect(canIndent(tasks, 'Call'), isTrue);
+    expect(canIndent(tasks, 'Shop'), isFalse, reason: 'first of its group');
+    expect(canIndent(tasks, 'Write'), isFalse, reason: 'first of its group');
+    expect(canIndent(tasks, 'Milk'), isFalse, reason: 'already one');
+    expect(canIndent(tasks, 'Nope'), isFalse);
+  });
+
   group('indenting in place', () {
     final tasks = _tasks(['Shop', '- Milk', '- Eggs', 'Call', 'Write x']);
 

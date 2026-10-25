@@ -159,6 +159,8 @@
   "actionHide": "Verbergen",
   "actionUnhide": "Zichtbaar maken",
   "actionRemove": "Verwijderen",
+  "actionMakeSubtask": "Subtaak maken",
+  "actionMakeMainTask": "Hoofdtaak maken",
   "actionClose": "Sluiten",
   "actionAppInfo": "App-info",
   "actionEnable": "Inschakelen",

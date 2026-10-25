@@ -10,11 +10,14 @@ import 'package:last_launcher/features/modules/tasks/subtasks.dart';
 import 'package:last_launcher/features/modules/tasks/task_state.dart';
 import 'package:last_launcher/features/settings/settings_state.dart';
 import 'package:last_launcher/l10n/app_localizations.dart';
+import 'package:last_launcher/l10n/app_localizations_en.dart';
 import 'package:last_launcher/shared/data/app_channel.dart';
 import 'package:last_launcher/shared/data/models.dart';
 import 'package:last_launcher/shared/widgets/action_row.dart';
 import 'package:last_launcher/shared/widgets/appearance_scope.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+final l10n = AppLocalizationsEn();
 
 const _names = ['Alpha', 'Bravo', 'Charlie'];
 
@@ -336,6 +339,26 @@ void main() {
           expect(sketch(), ['Afoo', 'B', '- Cfoo']);
         },
       );
+    });
+
+    testWidgets("a task's actions make it a subtask and back, without a drag", (
+      tester,
+    ) async {
+      await pump(tester);
+      await _hold(tester, 'Alpha');
+      expect(find.bySemanticsLabel(l10n.actionMakeSubtask), findsNothing);
+      await tester.longPress(find.text('Alpha'));
+      await tester.pumpAndSettle();
+
+      await _hold(tester, 'Bravo');
+      await tester.tap(find.bySemanticsLabel(l10n.actionMakeSubtask));
+      await tester.pumpAndSettle();
+      expect(sketch(), ['Alpha', '- Bravo', 'Charlie']);
+
+      await _hold(tester, 'Bravo');
+      await tester.tap(find.bySemanticsLabel(l10n.actionMakeMainTask));
+      await tester.pumpAndSettle();
+      expect(sketch(), ['Alpha', 'Bravo', 'Charlie']);
     });
 
     testWidgets('ticking off a task ticks off its subtasks', (tester) async {

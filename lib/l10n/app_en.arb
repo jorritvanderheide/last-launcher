@@ -186,6 +186,8 @@
   "actionHide": "Hide",
   "actionUnhide": "Unhide",
   "actionRemove": "Remove",
+  "actionMakeSubtask": "Make subtask",
+  "actionMakeMainTask": "Make main task",
   "actionClose": "Close",
   "actionAppInfo": "App info",
   "actionEnable": "Enable",

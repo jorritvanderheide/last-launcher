@@ -99,6 +99,9 @@ subtask of the task above it. Drag it back to the left to make it a task
 again. A task takes its subtasks along when you move it, tick it off or remove
 it, and ticking a subtask back on puts its task back on too.
 
+Without dragging, press and hold a task and let go: its actions have **Make
+subtask**, or **Make main task** for a subtask.
+
 ### Can I sync my tasks?
 
 Yes, through another app. Last Launcher connects to nothing, but it can show a

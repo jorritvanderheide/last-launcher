@@ -501,6 +501,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get actionRemove => 'Remove';
 
   @override
+  String get actionMakeSubtask => 'Make subtask';
+
+  @override
+  String get actionMakeMainTask => 'Make main task';
+
+  @override
   String get actionClose => 'Close';
 
   @override
