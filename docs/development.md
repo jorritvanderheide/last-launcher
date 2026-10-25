@@ -69,6 +69,9 @@ A language takes:
 3. `fastlane/metadata/android/<locale>/` with `title.txt`,
    `short_description.txt`, `full_description.txt` and the changelogs, for
    the store listings.
+4. `android/app/src/main/res/values-<code>/strings.xml`, for the few words
+   Android shows itself: the accessibility service's description, and the
+   question before adding a shortcut.
 
 Ask a native speaker to read it over.
 

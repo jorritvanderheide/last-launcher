@@ -312,8 +312,8 @@ out of backups.
   you to: default apps, accessibility.
 - **Links and app searches** from your search prefixes, in another app.
 - **Shortcuts** that another app asks to add, such as a website you add to the
-  home screen from your browser. They're kept by Android, and listed with your
-  apps.
+  home screen from your browser, once you say yes. They're kept by Android,
+  and listed with your apps.
 - **From the settings:** Help opens the [FAQ](FAQ.md), Send feedback your
   email app, and Rate or Donate the Play Store or Liberapay, each in your
   browser or the app that handles it.

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="accessibility_service_description">Allows Last Launcher to lock the screen on double tap.</string>
+    <string name="pin_shortcut_title">Add to your apps?</string>
+    <string name="pin_shortcut_message">%1$s, from %2$s, will be listed with your apps.</string>
+    <string name="pin_shortcut_add">Add</string>
 </resources>

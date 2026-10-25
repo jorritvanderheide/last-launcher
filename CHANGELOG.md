@@ -16,6 +16,8 @@ shorter version of the same notes, from `fastlane/metadata/android/`.
   language, it's in English.
 - Pinned apps, custom names and tasks stored by another version of Last
   Launcher can't make it crash any more; what it can't read is left out.
+- When another app wants to add a shortcut, such as a website from your
+  browser, Last Launcher asks you first.
 - The task list can be a list from Tasks.org or OpenTasks, under Tasks from,
   so you can sync it with your own CalDAV server through DAVx⁵. Changes go
   both ways, and Last Launcher still connects to nothing itself.

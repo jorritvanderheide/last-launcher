@@ -16,8 +16,8 @@ write a tasks app's list, and open the system's file pickers and settings.
   and every time the launcher comes back to the front, and anything pinned,
   labelled or hidden for an app that's gone is dropped then.
 - **Shortcuts stay with Android.** A shortcut another app asks to pin is
-  accepted by `PinShortcutActivity` and kept by Android; the launcher lists
-  them with the apps.
+  accepted by `PinShortcutActivity`, once you say yes, and kept by Android;
+  the launcher lists them with the apps.
 - **A synced task list stays in its tasks app.** The launcher reads it from
   Tasks.org or OpenTasks, and keeps only its order and which done tasks it
   hides.
@@ -70,7 +70,7 @@ flowchart TD
 | `lib/l10n/` | The interface in English and Dutch: `.arb` files and the Dart generated from them, which is committed |
 | **`android/app/src/main/kotlin/nl/bw20/last_launcher/`** | **The Kotlin side** |
 | `MainActivity.kt` | Answers the method channel: the apps of every profile (skipping a paused work profile) and their shortcuts, launching, App info, quick settings, fullscreen, the system accent, links and app searches for prefixes, the file pickers, the task permission, and whether this is the default launcher. Tells the Dart side when home is pressed (`goHome`), the system asks for the settings (`openSettings`) or the synced tasks changed (`tasksChanged`) |
-| `PinShortcutActivity.kt` | Accepts "Add to home screen" requests |
+| `PinShortcutActivity.kt` | Asks you about an "Add to home screen" request, and accepts it if you say yes. Its words are Android strings, in `res/values` and `res/values-nl` |
 | `TaskProviders.kt` | Reads and writes one list in Tasks.org or OpenTasks, through their OpenTasks provider, and watches it for changes. `MainActivity` runs its calls off the main thread, since the tasks app may have to start first |
 | `LockAccessibilityService.kt` | Locks the screen |
 | `test/` | Tests, named after what they test |

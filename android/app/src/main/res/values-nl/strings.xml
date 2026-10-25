@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_service_description">Hiermee kan Last Launcher het scherm vergrendelen als je twee keer tikt.</string>
+    <string name="pin_shortcut_title">Toevoegen aan je apps?</string>
+    <string name="pin_shortcut_message">%1$s, van %2$s, komt bij je apps te staan.</string>
+    <string name="pin_shortcut_add">Toevoegen</string>
+</resources>
