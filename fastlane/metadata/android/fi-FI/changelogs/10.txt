@@ -1,7 +1,0 @@
-• Uutta: kehote asettaa Last Launcher oletuskotisovellukseksi
-• Korjattu: ”Aseta oletuskotisovellukseksi” avaa nyt järjestelmän valitsimen
-• Korjattu: tilapalkki piiloutuu luotettavasti koko näytön tilassa
-• Korjattu: sivupaneelien vihjeet vastaavat kunkin moduulin sijaintia
-• Korjattu: haku ja lajittelu ohittavat nyt korkomerkit
-• Korjattu: vanhentuneet kiinnitykset ja nimet poistetaan, kun sovelluksia poistetaan
-• Vakauden ja suorituskyvyn parannuksia

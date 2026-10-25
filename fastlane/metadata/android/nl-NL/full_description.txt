@@ -11,7 +11,7 @@ Functies:
 * Apps verbergen die u niet wilt zien
 * Automatisch starten wanneer een enkele app overeenkomt met uw zoekopdracht
 * Volledig scherm, verberg statusbalk en navigatie
-* Ondersteuning voor meerdere talen
+* In het Nederlands en Engels
 
 Last Launcher is gratis, open source (EUPL-1.2) en bevat geen advertenties, tracking of telemetrie. Uw gegevens blijven op uw apparaat.
 

@@ -1,6 +1,0 @@
-## Zmiany
-
-- New: obsługa profilu pracy z konfigurowalnymi opcjami wyświetlania
-- New: podpowiedzi szybkiego uruchamiania pojawiają się podczas pisania
-- New: wyniki wyszukiwania sortowane według nazwy i długości podpowiedzi
-- Fix: ulepszone wyszukiwanie, podpowiedzi i interakcje z aplikacjami

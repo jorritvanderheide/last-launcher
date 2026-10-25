@@ -1,6 +1,0 @@
-## Alterações
-
-- New: suporte para perfil de trabalho com opções de exibição configuráveis
-- New: sugestões de início rápido aparecem enquanto digita
-- New: resultados de pesquisa ordenados por nome e comprimento da sugestão
-- Fix: pesquisa, sugestões e interações melhoradas

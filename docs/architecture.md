@@ -116,7 +116,7 @@ only show in dark mode.
 
 ## Translations
 
-The interface is in 14 languages: `lib/l10n/app_<code>.arb`, with English
+The interface is in English and Dutch: `lib/l10n/app_<code>.arb`, with English
 (`app_en.arb`) as the template. `flutter gen-l10n` turns them into the
 `app_localizations*.dart` files next to them, which are committed. The store
 listings are in `fastlane/metadata/android/<locale>/`.

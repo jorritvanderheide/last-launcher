@@ -1,5 +1,0 @@
-## Changes
-
-- Nowa: szybkie podpowiedzi uruchamiania pokazuja najkrotsze unikalne znaki do uruchomienia aplikacji
-- Nowa: podwojne dotkniecie, aby uspic na ekranie glownym
-- Poprawka: nazewnictwo ikon fastlane

@@ -1,1 +1,0 @@
-• Behoben: Hinweise zu Seitenpanelen passen jetzt zur konfigurierten Seite jedes Moduls

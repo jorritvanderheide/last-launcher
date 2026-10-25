@@ -1,3 +1,0 @@
-- New: dubbeltryck för att låsa är aktiverat som standard
-- Fix: information om tillgänglighetstjänsten visas nu vid första dubbeltrycket istället för i inställningar
-- Fix: informationsdialog förenklad med tydligare text

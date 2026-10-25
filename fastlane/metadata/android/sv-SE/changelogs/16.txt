@@ -1,6 +1,0 @@
-## Ändringar
-
-- New: stöd för arbetsprofil med konfigurerbara visningsalternativ
-- New: snabbstarttips visas medan du skriver
-- New: sökresultat sorteras efter namn och tipslängd
-- Fix: förbättrad sökning, tips och appinteraktioner

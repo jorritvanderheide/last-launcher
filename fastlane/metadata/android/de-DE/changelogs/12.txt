@@ -1,2 +1,0 @@
-- Fix: double-tap to sleep dialog now explains the accessibility service is only used to lock the screen
-- Fix: double-tap to sleep does not show the dialog if the accessibility service is already enabled

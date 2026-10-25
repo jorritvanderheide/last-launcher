@@ -1,6 +1,0 @@
-## Cambios
-
-- New: soporte de perfil de trabajo con opciones de visualización configurables
-- New: sugerencias de inicio rápido aparecen al escribir
-- New: resultados de búsqueda ordenados por nombre y longitud de sugerencia
-- Fix: búsqueda, sugerencias e interacciones mejoradas

@@ -1,3 +1,0 @@
-- New: kaksoisnapautus sammuttaaksesi näytön on oletuksena päällä
-- Fix: esteettömyyspalvelun tietosuoja näkyy nyt ensimmäisellä kaksoisnapautuksella eikä asetuksissa
-- Fix: tietosuojavalintaikkuna yksinkertaistettu selkeämmällä tekstillä

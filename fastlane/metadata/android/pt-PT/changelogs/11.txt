@@ -1,5 +1,0 @@
-## Changes
-
-- Novo: dicas de abertura rapida mostram os caracteres unicos mais curtos para abrir uma app
-- Novo: toque duplo para suspender no ecra inicial
-- Correcao: nomenclatura dos icones do fastlane

@@ -1,5 +1,0 @@
-## Changes
-
-- Ny: snabbstartledtradar visar kortaste unika tecken for att starta en app
-- Ny: dubbeltryck for att lassa pa hemskar-men
-- Fix: fastlane ikonnamngivning

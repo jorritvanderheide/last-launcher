@@ -1,4 +1,0 @@
-## Změny
-
-- New: přepínač pro vyžadování dalšího znaku před automatickým spuštěním
-- Fix: vylepšené vyhledávání, stabilita tipů a řazení

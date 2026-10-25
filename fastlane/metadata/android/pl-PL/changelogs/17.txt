@@ -1,4 +1,0 @@
-## Zmiany
-
-- New: przełącznik wymagający dodatkowego znaku przed automatycznym uruchomieniem
-- Fix: ulepszone wyszukiwanie, stabilność podpowiedzi i sortowanie

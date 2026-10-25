@@ -1,5 +1,0 @@
-## Changes
-
-- Neu: Schnellstarthinweise zeigen kürzeste eindeutige Zeichen zum Starten einer App
-- Neu: Doppeltippen zum Sperren auf dem Startbildschirm
-- Fix: fastlane Symbolbenennung

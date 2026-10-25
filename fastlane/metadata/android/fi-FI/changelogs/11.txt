@@ -1,5 +1,0 @@
-## Changes
-
-- Uusi: pikakaynnistysvinkit nayttavat lyhimmat ainutlaatuiset merkit sovelluksen kaynnistamiseen
-- Uusi: kaksoisnapautus sammuttaaksesi nayton aloitusnaytolla
-- Korjaus: fastlane-ikonien nimeaminen

@@ -1,5 +1,0 @@
-## Changes
-
-- Nouveau : indicateurs de lancement rapide montrant les caracteres uniques les plus courts
-- Nouveau : double appui pour verrouiller l'ecran d'accueil
-- Correction : nommage des icones fastlane

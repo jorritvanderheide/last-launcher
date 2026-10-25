@@ -1,7 +1,0 @@
-• Nové: výzva nastavit Last Launcher jako výchozí domovskou aplikaci
-• Opraveno: „Nastavit jako výchozí domovskou aplikaci“ v nastavení nyní otevře systémový výběr
-• Opraveno: stavový řádek se v režimu celé obrazovky spolehlivě skrývá
-• Opraveno: nápovědy bočních panelů odpovídají straně, na které je každý modul
-• Opraveno: vyhledávání a třídění nyní ignoruje diakritiku
-• Opraveno: zastaralá připnutí a popisky se vymažou po odinstalaci aplikací
-• Zlepšení stability a výkonu

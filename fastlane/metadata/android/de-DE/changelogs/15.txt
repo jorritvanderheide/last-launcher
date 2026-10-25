@@ -1,3 +1,0 @@
-- New: Doppeltippen zum Sperren ist standardmäßig aktiviert
-- Fix: Accessibility-Service-Hinweis erscheint jetzt beim ersten Doppeltippen statt in den Einstellungen
-- Fix: Hinweis-Dialog vereinfacht mit klarerem Text

@@ -1,4 +1,0 @@
-## Änderungen
-
-- New: zusätzliches Zeichen vor dem automatischen Start erforderlich
-- Fix: verbesserte Suche, Hinweisstabilität und Sortierung

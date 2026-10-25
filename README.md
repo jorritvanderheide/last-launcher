@@ -183,9 +183,8 @@ way to move.
 
 ### 5.7 Languages
 
-English, Czech, Dutch, Finnish, French, German, Hindi, Japanese, Korean,
-Polish, Portuguese, Spanish, Swedish and Traditional Chinese, following your
-phone's language.
+English and Dutch, following your phone's language. In any other language,
+it's in English.
 
 <br/>
 

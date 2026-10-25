@@ -1,4 +1,0 @@
-## Changements
-
-- New: option pour exiger un caractère supplémentaire avant le lancement automatique
-- Fix: recherche, stabilité des suggestions et tri améliorés

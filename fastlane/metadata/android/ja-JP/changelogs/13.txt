@@ -1,4 +1,0 @@
-- New: quick launch hints are alphabetical only (skip spaces and symbols)
-- Fix: left/right of home renamed to left/right module
-- Fix: hidden apps no longer block hints for visible apps with the same name
-- Fix: hints now respect the "match original name" search setting

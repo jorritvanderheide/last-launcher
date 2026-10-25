@@ -1,7 +1,0 @@
-• Nuevo: aviso para establecer Last Launcher como app de inicio predeterminada
-• Corregido: «Establecer como app de inicio predeterminada» abre el selector del sistema
-• Corregido: la barra de estado se oculta en pantalla completa
-• Corregido: las pistas de los paneles reflejan el lado de cada módulo
-• Corregido: la búsqueda y la ordenación ignoran los acentos
-• Corregido: anclajes y etiquetas obsoletas se eliminan al desinstalar apps
-• Mejoras de estabilidad y rendimiento

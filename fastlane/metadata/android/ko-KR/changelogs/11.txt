@@ -1,5 +1,0 @@
-## Changes
-
-- Sae: ppareun silhaeng hinteuga aeb-eul silhaenghagi wihan gajang jjalbeun goyu munja-reul boyeojumnida
-- Sae: homscreen-eseo do beon tabhamyeo jeoljeon
-- Sujeong: fastlane aikon myeongmyeong

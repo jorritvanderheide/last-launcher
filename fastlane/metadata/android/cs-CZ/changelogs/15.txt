@@ -1,3 +1,0 @@
-- New: dvojité klepnutí pro uspání je ve výchozím nastavení zapnuté
-- Fix: informace o službě usnadnění se nyní zobrazí při prvním dvojitém klepnutí místo v nastavení
-- Fix: informační dialog zjednodušen s jasnějším textem

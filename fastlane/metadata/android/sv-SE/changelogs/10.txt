@@ -1,7 +1,0 @@
-• Nytt: uppmaning att ställa in Last Launcher som standard hem-app
-• Korrigerat: ”Ange som standard hem-app” öppnar nu systemets väljare
-• Korrigerat: statusfältet döljs tillförlitligt i helskärmsläge
-• Korrigerat: sidopanelernas tips speglar vilken sida varje modul ligger på
-• Korrigerat: sökning och sortering ignorerar nu accenter
-• Korrigerat: föråldrade fästningar och etiketter rensas vid avinstallation
-• Stabilitets- och prestandaförbättringar

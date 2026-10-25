@@ -1,6 +1,0 @@
-## Änderungen
-
-- New: Arbeitsprofil-Unterstützung mit konfigurierbaren Anzeigeoptionen
-- New: Schnellstart-Tipps erscheinen während der Eingabe
-- New: Suchergebnisse werden nach Name und Hinweislänge sortiert
-- Fix: verbesserte Suche, Tipps und App-Interaktionen

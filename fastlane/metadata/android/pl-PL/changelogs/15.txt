@@ -1,3 +1,0 @@
-- New: podwójne dotknięcie do uśpienia jest domyślnie włączone
-- Fix: informacja o usłudze dostępności pojawia się teraz przy pierwszym podwójnym dotknięciu zamiast w ustawieniach
-- Fix: okno informacyjne uproszczone z jaśniejszym tekstem

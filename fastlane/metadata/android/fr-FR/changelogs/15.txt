@@ -1,3 +1,0 @@
-- New: le double appui pour verrouiller est activé par défaut
-- Fix: l'information sur le service d'accessibilité s'affiche maintenant au premier double appui au lieu des paramètres
-- Fix: dialogue d'information simplifié avec un texte plus clair

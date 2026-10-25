@@ -1,7 +1,0 @@
-• Nouveau : invitation à définir Last Launcher comme app d'accueil par défaut
-• Correction : « Définir comme app d'accueil par défaut » ouvre le sélecteur système
-• Correction : la barre d'état se masque en mode plein écran
-• Correction : les indications des panneaux latéraux reflètent le côté de chaque module
-• Correction : la recherche et le tri ignorent les accents
-• Correction : les épingles et libellés obsolètes sont supprimés à la désinstallation
-• Stabilité et performance améliorées

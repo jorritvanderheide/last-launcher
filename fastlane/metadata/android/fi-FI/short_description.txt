@@ -1,1 +1,0 @@
-Minimaalinen tekstipohjainen laukaisija, nopea ja yksinkertainen

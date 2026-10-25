@@ -1,6 +1,0 @@
-## Změny
-
-- New: podpora pracovního profilu s nastavitelnými možnostmi zobrazení
-- New: tipy pro rychlé spuštění se zobrazují při psaní
-- New: výsledky hledání se řadí podle názvu a délky tipu
-- Fix: vylepšené vyhledávání, tipy a interakce s aplikacemi

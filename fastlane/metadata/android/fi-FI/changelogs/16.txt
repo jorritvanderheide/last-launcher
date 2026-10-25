@@ -1,6 +1,0 @@
-## Muutokset
-
-- New: työprofiilin tuki säädettävillä näyttövaihtoehdoilla
-- New: pikalatausvihjeet näkyvät kirjoittaessa
-- New: hakutulokset lajitellaan nimen ja vihjeen pituuden mukaan
-- Fix: parannettu haku, vihjeet ja sovellusvuorovaikutukset

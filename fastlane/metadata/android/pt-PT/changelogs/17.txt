@@ -1,4 +1,0 @@
-## Alterações
-
-- New: opção para exigir um carácter extra antes do início automático
-- Fix: pesquisa, estabilidade de sugestões e ordenação melhorados

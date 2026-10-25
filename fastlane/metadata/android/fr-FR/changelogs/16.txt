@@ -1,6 +1,0 @@
-## Changements
-
-- New: prise en charge du profil professionnel avec options d'affichage configurables
-- New: suggestions de lancement rapide apparaissent pendant la saisie
-- New: résultats de recherche triés par nom et par longueur d'indice
-- Fix: recherche, suggestions et interactions améliorées

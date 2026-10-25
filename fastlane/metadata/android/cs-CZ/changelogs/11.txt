@@ -1,5 +1,0 @@
-## Changes
-
-- Nova: rychle napovedy zobrazuji nejkratsi jedinecne znaky pro spusteni aplikace
-- Nova: dvojitym klepnutim uspat na domovske obrazovce
-- Oprava: pojmenovani ikon fastlane

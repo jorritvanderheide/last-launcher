@@ -1,7 +1,0 @@
-• Nowość: monit, aby ustawić Last Launcher jako domyślną aplikację domową
-• Poprawka: „Ustaw jako domyślną aplikację domową” otwiera selektor systemowy
-• Poprawka: pasek stanu ukrywa się w trybie pełnoekranowym
-• Poprawka: wskazówki paneli bocznych odzwierciedlają stronę każdego modułu
-• Poprawka: wyszukiwanie i sortowanie ignorują znaki diakrytyczne
-• Poprawka: nieaktualne przypinania i etykiety usuwane po odinstalowaniu aplikacji
-• Poprawa stabilności i wydajności

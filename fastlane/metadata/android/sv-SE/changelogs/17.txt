@@ -1,4 +1,0 @@
-## Ändringar
-
-- New: växla för att kräva ett extra tecken före automatisk start
-- Fix: förbättrad sökning, tipsstabilitet och sorteringsordning

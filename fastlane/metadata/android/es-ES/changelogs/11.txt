@@ -1,5 +1,0 @@
-## Changes
-
-- Nuevo: indicadores rapidos muestran los caracteres unicos mas cortos para abrir una app
-- Nuevo: doble toque para suspender en la pantalla de inicio
-- Correccion: nomenclatura de iconos de fastlane

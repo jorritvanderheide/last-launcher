@@ -1,3 +1,0 @@
-- New: el doble toque para suspender está activado por defecto
-- Fix: la divulgación del servicio de accesibilidad ahora aparece al primer doble toque en lugar de en ajustes
-- Fix: diálogo de divulgación simplificado con texto más claro

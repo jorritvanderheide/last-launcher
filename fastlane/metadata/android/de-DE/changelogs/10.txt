@@ -1,7 +1,0 @@
-• Neu: Aufforderung, Last Launcher als Standard-Home-App festzulegen
-• Behoben: „Als Standard-Home-App festlegen“ in den Einstellungen öffnet jetzt die Systemauswahl
-• Behoben: Statusleiste wird im Vollbildmodus zuverlässig ausgeblendet
-• Behoben: Hinweise zu Seitenpanelen passen zur konfigurierten Seite jedes Moduls
-• Behoben: Suche und Sortierung ignorieren jetzt Akzente
-• Behoben: veraltete Pins und Bezeichnungen werden bei Deinstallation entfernt
-• Stabilität und Leistung verbessert
