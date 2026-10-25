@@ -69,9 +69,11 @@ plus 1, 2 or 3), in `android/app/build.gradle.kts`.
 3. **Tag it** `v<MAJOR.MINOR.PATCH>` and push the commit and the tag to
    Codeberg. The push mirror brings both to GitHub.
 4. **GitHub Actions** (`.github/workflows/release.yml`) checks that the tag
-   matches `pubspec.yaml` and that the store notes exist, runs CI, builds the
-   App Bundle and the APKs, signs and attests them, and makes a draft release
-   with the version's part of `CHANGELOG.md` as its notes.
+   matches `pubspec.yaml` and that the store notes and the version's part of
+   `CHANGELOG.md` exist, and stops if not. Then it runs CI, builds the App
+   Bundle and the APKs, signs and attests them, and makes a draft release with
+   that part of `CHANGELOG.md` as its notes. A pre-release, tagged like
+   `v1.2.0-rc.1`, gets the notes for `1.2.0`.
 5. **Publish** the draft on GitHub, and upload `app-release.aab` to Google
    Play.
 6. **F-Droid** finds the new tag by itself, and builds and signs its own copy

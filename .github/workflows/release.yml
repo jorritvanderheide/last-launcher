@@ -35,8 +35,10 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
 
       # The tag is v plus the version in pubspec.yaml, and the stores need
-      # release notes for its version code.
-      - name: Tag matches the version
+      # release notes for its version code. The GitHub release's notes are
+      # the version's part of CHANGELOG.md, so that has to be there too; a
+      # pre-release like v1.2.0-rc.1 takes the part for 1.2.0.
+      - name: Tag matches the version, with release notes
         run: |
           version=$(sed -n 's/^version: *//p' pubspec.yaml)
           if [ "${GITHUB_REF_NAME#v}" != "${version%%+*}" ]; then
@@ -44,6 +46,12 @@ jobs:
           fi
           notes="fastlane/metadata/android/en-US/changelogs/${version##*+}.txt"
           if [ ! -f "$notes" ]; then echo "missing $notes"; exit 1; fi
+          release="${GITHUB_REF_NAME#v}"
+          awk -v v="## ${release%%-*}" '$0 == v { on = 1; next } /^## / { on = 0 } on' CHANGELOG.md > notes.md
+          if ! grep -q '[^[:space:]]' notes.md; then
+            echo "CHANGELOG.md has nothing under '## ${release%%-*}'"; exit 1
+          fi
+          cat notes.md
 
       - uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
@@ -129,12 +137,9 @@ jobs:
           # Tags like v1.2.0-rc.1 are pre-releases.
           prerelease=()
           case "$GITHUB_REF_NAME" in *-*) prerelease=(--prerelease) ;; esac
-          # The notes are the version's part of CHANGELOG.md, if it has one.
-          awk -v v="## ${GITHUB_REF_NAME#v}" '$0 == v { on = 1; next } /^## / { on = 0 } on' CHANGELOG.md > notes.md
-          notes=(--generate-notes)
-          if grep -q '[^[:space:]]' notes.md; then notes=(--notes-file notes.md); fi
+          # notes.md is the version's part of CHANGELOG.md, from the first step.
           gh release create "$GITHUB_REF_NAME" \
             build/app/outputs/bundle/release/app-release.aab \
             build/app/outputs/flutter-apk/last-launcher-*.apk \
             SHA256SUMS \
-            --verify-tag --draft "${prerelease[@]}" --title "Last Launcher ${GITHUB_REF_NAME#v}" "${notes[@]}"
+            --verify-tag --draft "${prerelease[@]}" --title "Last Launcher ${GITHUB_REF_NAME#v}" --notes-file notes.md
