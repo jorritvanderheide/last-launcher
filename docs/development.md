@@ -27,25 +27,42 @@ nix flake check                 # formatting, and the Flutter version below
 CI runs all of these on every push to `main` and every pull request
 (`.github/workflows/ci.yml`), and again before every release.
 
+Nix flakes only see files git tracks, so a new file needs `jj` or `git add`
+to have seen it before `nix flake check` will.
+
 ## Tests
 
 Tests are in `test/`, named after what they test: `backup_test.dart`,
-`shell_gestures_test.dart`. Most test the pure rules (search, ranking, hints,
-prefixes, gestures, backups and settings) without a device. Widget tests
-cover the settings screens and the drawer. Tests use made-up apps and tasks
-only.
+`shell_gestures_test.dart`.
+
+- **The rules** are tested in plain Dart, without a phone: search, ranking,
+  hints, prefixes, shell gestures, subtasks, synced task lists, backups and
+  the rules between settings.
+- **The states** are tested against SharedPreferences' in-memory mock, and
+  a synced task list against a fake tasks app that keeps its tasks the way
+  the provider does (`synced_task_state_test.dart`).
+- **Widget tests** pump the settings pages, the drawer, home and the task
+  list, and press, hold and drag rows the way a finger does
+  (`reorder_by_hold_test.dart`).
+- **The Kotlin side** has no tests of its own. `flutter build apk --debug`
+  checks that it compiles; what it does needs a phone or an emulator.
+
+Tests and screenshots use made-up apps and tasks only. Anything that could
+lose someone's settings, pins or tasks wants a test before it wants a
+feature.
 
 A setting renamed or changed in meaning needs a step in
 `SettingsState._migrate` and a test that loads the old value; see
 [Compatibility](compatibility.md).
 
-## Translations
+## Adding a language
 
-The interface strings are in `lib/l10n/app_<code>.arb`, with English
-(`app_en.arb`) as the template. After changing one, run `flutter gen-l10n` and
-commit the generated `app_localizations*.dart` files with it.
+The interface is in English and Dutch, in `lib/l10n/app_<code>.arb`, with
+English (`app_en.arb`) as the template. A new string goes into both; then run
+`flutter gen-l10n`, and commit the generated `app_localizations*.dart` files
+with it.
 
-Adding a language takes:
+A language takes:
 
 1. `lib/l10n/app_<code>.arb` with every key from `app_en.arb`.
 2. `flutter gen-l10n`, which adds it to the supported languages.
@@ -55,7 +72,7 @@ Adding a language takes:
 
 Ask a native speaker to read it over.
 
-## Releases
+## Releasing
 
 Versions are `MAJOR.MINOR.PATCH+CODE` in `pubspec.yaml`. The code goes up by
 one with every release. F-Droid turns it into one code per ABI (`CODE * 10`

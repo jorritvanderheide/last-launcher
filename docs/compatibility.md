@@ -10,8 +10,8 @@ changed and what to do.
 
 ## Stored data
 
-Everything is in SharedPreferences, under the keys declared in
-`SettingsState`, `HomeState`, `AppListState` and `TaskState`.
+Every key in [Data model](data-model.md), declared in `SettingsState`,
+`HomeState`, `AppListState` and `TaskState`.
 
 - **Renaming or removing a key** is breaking: it's where existing users'
   choices are. Don't.
@@ -19,48 +19,60 @@ Everything is in SharedPreferences, under the keys declared in
   value, needs a step in `SettingsState._migrate` that rewrites the old value
   before anything reads it, and a test that loads the old one. That's how the
   old Extra theme became a set of look options in 1.3.0.
-- **Enums are stored by name.** Reordering an enum's values is safe; renaming
-  one is breaking.
+- **Choices are stored by name.** Reordering an enum's values is safe;
+  renaming one is breaking.
 - **App keys** are `<package>|<work>`, plus `|<shortcut id>` for a shortcut
   (`AppInfo.keyFor`). Pins, labels and hidden apps are stored under them, so
   changing the format loses them all.
-- **Adding** a key is not breaking. An older version ignores it.
+- **Adding** a key, or a key inside a JSON value, is not breaking. An older
+  version ignores it.
 - **A value of the wrong type**, stored by another version, reads as unset and
   gets its default; it never crashes the launcher.
 
 ## Backups
 
-A backup is a JSON file:
-
-```json
-{
-  "format": "last-launcher-backup",
-  "version": 1,
-  "modules": ["tasks"],
-  "prefs": {
-    "locked": { "type": "bool", "value": false },
-    "pinned_apps": { "type": "string", "value": "[...]" }
-  }
-}
-```
-
-`prefs` holds every stored key with its type, so a setting added later is
-backed up without anyone having to remember it. The exceptions only mean
-something on the phone they're on: the synced task list (`task_source`,
-`synced_task_view`), which a restore leaves alone too. `modules` lists the modules
-whose own data is in it. `Backup` in `lib/features/settings/backup.dart`
-reads and writes it.
+The file is described in [Data model](data-model.md#backups).
 
 - **Every backup restores** in every later release, through the same
-  migrations as stored data.
+  migrations as stored data. The "older backups" tests in
+  `test/backup_test.dart` restore backups from earlier releases; a change to
+  the format or to a stored value adds one.
 - **`version`** goes up when a backup can't be read the old way. A release
   refuses a backup with a newer version than it knows, rather than restoring
   part of it.
 - **A search prefix of a type** this release doesn't know, from a newer one,
   is skipped; the rest still work.
 
+Going back to an older release isn't something Android allows: it won't
+install a lower version over a higher one, so you'd have to uninstall first,
+which removes everything. Export a backup before you do. An older release
+restores it, ignoring keys it doesn't know, unless the backup's `version` is
+newer than it reads.
+
+## A synced task list
+
+- **The tasks app's provider**: the OpenTasks contract that Tasks.org and
+  OpenTasks share, with the authorities and permissions DAVx⁵ uses. Reading
+  or writing more of it than [Data model](data-model.md#the-synced-task-list)
+  lists needs saying in the README's disclosure section, `SECURITY.md` and
+  `PRIVACY_POLICY.md` first.
+- **`task_source` and `synced_task_view`** mean something on this phone only,
+  so they're never backed up. Each list keeps its own order and hidden tasks.
+
 ## Store listing
 
 - **The package name** `nl.bw20.last_launcher` and **the signing keys** never
   change: Android would treat it as another app, and updates would stop.
 - **The version code** only goes up.
+
+## Not covered
+
+These can change in any release:
+
+- How the screens look, and the words on them.
+- The method channel between Dart and Kotlin: it's only for the launcher
+  itself.
+- The Dart and Kotlin code, and how it's laid out.
+- The order of a synced task list after its tasks change elsewhere: tasks the
+  launcher hasn't seen yet come first.
+- The store listings and their screenshots.

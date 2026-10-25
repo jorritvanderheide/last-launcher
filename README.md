@@ -83,9 +83,9 @@ only if you turn it on. [Section 9](#9-permissions-and-data-disclosure)
 lists exactly what it reads, stores and opens.
 
 Every push is checked: formatting, static analysis with every lint turned on,
-and over 250 tests of search, hints, gestures, settings and backups. Releases
-are built in the open with a signed attestation, so you can check that the APK
-you downloaded is the one that was built.
+and over 300 tests of search, hints, gestures, tasks, settings and backups.
+Releases are built in the open with a signed attestation, so you can check
+that the APK you downloaded is the one that was built.
 [Section 9.4](#94-how-releases-are-built) says how.
 
 <br/>
@@ -108,15 +108,15 @@ you downloaded is the one that was built.
 
 If you want to work on Last Launcher, or know how it keeps your data:
 
-- [**FAQ**](FAQ.md) - Answers to the most common questions, such as an app
-  that's missing from the drawer or moving to a new phone.
+- [**Data model**](docs/data-model.md) - Every key Last Launcher stores, what
+  is in it, and the backup file.
 - [**Compatibility**](docs/compatibility.md) - What a release may change:
-  stored settings and backups. Changes are in [CHANGELOG.md](CHANGELOG.md).
-- [**Architecture**](docs/architecture.md) - How the code is laid out, and
-  where the state lives.
-- [**Development**](docs/development.md) - Setup, tests, translations and
+  stored settings, backups and a synced task list. Changes are in
+  [CHANGELOG.md](CHANGELOG.md).
+- [**Architecture**](docs/architecture.md) - How the code is laid out, and how
+  a few letters become an open app.
+- [**Development**](docs/development.md) - Setup, checks, tests, languages and
   releases.
-- [**Privacy policy**](PRIVACY_POLICY.md) and [**security policy**](SECURITY.md).
 
 <br/>
 
@@ -273,7 +273,8 @@ Press and hold an empty spot on the home screen to open the settings.
 ## 9 Permissions and data disclosure
 
 Last Launcher has no internet permission, no analytics, no crash reporting, no
-ads and no Google Play Services.
+ads and no Google Play Services. The [privacy policy](PRIVACY_POLICY.md) says
+the same for the stores.
 
 ### 9.1 Permissions
 
@@ -297,7 +298,8 @@ ads and no Google Play Services.
 On your phone only, in the app's own storage: your settings, pinned apps,
 custom names, hidden apps, search prefixes and tasks. Android's backup to the
 cloud is turned off for it. A backup is written only when you export one, to a
-file and a place you pick. Uninstalling removes everything.
+file and a place you pick. Uninstalling removes everything. Every key is
+listed in [Data model](docs/data-model.md).
 
 A task list you choose from Tasks.org or OpenTasks stays in that app. Last
 Launcher only keeps its order, and which done tasks it hides, and leaves both
