@@ -67,8 +67,8 @@ A language takes:
 1. `lib/l10n/app_<code>.arb` with every key from `app_en.arb`.
 2. `flutter gen-l10n`, which adds it to the supported languages.
 3. `fastlane/metadata/android/<locale>/` with `title.txt`,
-   `short_description.txt`, `full_description.txt` and the changelogs, for
-   the store listings.
+   `short_description.txt` and `full_description.txt`, for the store
+   listings. Changelogs don't need to be translated.
 4. `android/app/src/main/res/values-<code>/strings.xml`, for the few words
    Android shows itself: the accessibility service's description, and the
    question before adding a shortcut.
@@ -82,9 +82,9 @@ one with every release. F-Droid turns it into one code per ABI (`CODE * 10`
 plus 1, 2 or 3), in `android/app/build.gradle.kts`.
 
 1. **Write the notes.** Rename `## Unreleased` in `CHANGELOG.md` to the new
-   version, and write `fastlane/metadata/android/<locale>/changelogs/<CODE>.txt`
-   for every locale: a short version of the same notes, at most 500
-   characters, which F-Droid and Google Play show.
+   version, and write `fastlane/metadata/android/en-US/changelogs/<CODE>.txt`:
+   a short version of the same notes, at most 500 characters, which F-Droid
+   and Google Play show. Other languages are optional.
 2. **Bump the version** in `pubspec.yaml`, and commit.
 3. **Tag it** `v<MAJOR.MINOR.PATCH>` and push the commit and the tag to
    Codeberg. The push mirror brings both to GitHub.
