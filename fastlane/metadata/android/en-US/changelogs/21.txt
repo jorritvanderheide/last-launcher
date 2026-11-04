@@ -1,0 +1,3 @@
+## Changes
+
+- New: Last Launcher is now in Simplified Chinese too

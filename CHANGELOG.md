@@ -4,7 +4,7 @@ What changed in each release of Last Launcher, newest first. What counts as
 breaking is in [Compatibility](docs/compatibility.md). The stores show a
 shorter version of the same notes, from `fastlane/metadata/android/`.
 
-## Unreleased
+## 1.5.0
 
 - Last Launcher is now in Simplified Chinese too, following your phone's
   language.
