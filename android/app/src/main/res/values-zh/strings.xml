@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="accessibility_service_description">允许 Last Launcher 在双击时锁定屏幕。</string>
+    <string name="pin_shortcut_title">添加到你的应用？</string>
+    <string name="pin_shortcut_message">来自 %2$s 的 %1$s 将显示在你的应用列表中</string>
+    <string name="pin_shortcut_add">添加</string>
+</resources>
