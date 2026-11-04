@@ -67,7 +67,7 @@ flowchart TD
 | `data/hints.dart`, `data/fold_for_search.dart` | Quick launch hints, and names with accents folded away |
 | `search_focus_controller.dart` | When a search field opens and closes the keyboard |
 | `widgets/` | Rows, the search field, the look (`appearance_scope.dart`) and the scanlines |
-| `lib/l10n/` | The interface in English and Dutch: `.arb` files and the Dart generated from them, which is committed |
+| `lib/l10n/` | The interface in English, Dutch and Simplified Chinese: `.arb` files and the Dart generated from them, which is committed |
 | **`android/app/src/main/kotlin/nl/bw20/last_launcher/`** | **The Kotlin side** |
 | `MainActivity.kt` | Answers the method channel: the apps of every profile (skipping a paused work profile) and their shortcuts, launching, App info, quick settings, fullscreen, the system accent, links and app searches for prefixes, the file pickers, the task permission, and whether this is the default launcher. Tells the Dart side when home is pressed (`goHome`), the system asks for the settings (`openSettings`) or the synced tasks changed (`tasksChanged`) |
 | `PinShortcutActivity.kt` | Asks you about an "Add to home screen" request, and accepts it if you say yes. Its words are Android strings, in `res/values` and `res/values-nl` |

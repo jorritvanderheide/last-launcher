@@ -188,7 +188,8 @@ way to move.
 
 ### 5.7 Languages
 
-English and Dutch, following your phone's language. In any other language,
+English, Dutch and Simplified Chinese, following your phone's language. A phone
+set to Traditional Chinese gets Simplified Chinese too. In any other language,
 it's in English.
 
 <br/>

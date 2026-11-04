@@ -4,6 +4,11 @@ What changed in each release of Last Launcher, newest first. What counts as
 breaking is in [Compatibility](docs/compatibility.md). The stores show a
 shorter version of the same notes, from `fastlane/metadata/android/`.
 
+## Unreleased
+
+- Last Launcher is now in Simplified Chinese too, following your phone's
+  language.
+
 ## 1.4.0
 
 - The task list can be a list from Tasks.org or OpenTasks, under Tasks from,

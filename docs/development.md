@@ -57,10 +57,11 @@ A setting renamed or changed in meaning needs a step in
 
 ## Adding a language
 
-The interface is in English and Dutch, in `lib/l10n/app_<code>.arb`, with
-English (`app_en.arb`) as the template. A new string goes into both; then run
-`flutter gen-l10n`, and commit the generated `app_localizations*.dart` files
-with it.
+The interface is in English, Dutch and Simplified Chinese, in
+`lib/l10n/app_<code>.arb`, with English (`app_en.arb`) as the template. A new
+string goes into English and Dutch; Chinese shows the English until someone
+translates it. Then run `flutter gen-l10n`, and commit the generated
+`app_localizations*.dart` files with it.
 
 Only the interface takes other languages. New store listings and changelogs
 are in English only, so a release doesn't need translating. The Dutch files in

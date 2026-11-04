@@ -11,7 +11,7 @@ Features:
 * Hide apps you don't want to see
 * Auto-launch when a single app matches your search
 * Fullscreen mode, hide status bar and navigation
-* In English and Dutch
+* In English, Dutch and Simplified Chinese
 
 Last Launcher is free, open source (EUPL-1.2), and contains no ads, tracking, or telemetry. Your data stays on your device, unless you sync your tasks through another app.
 
