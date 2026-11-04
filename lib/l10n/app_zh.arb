@@ -1,0 +1,274 @@
+{
+  "@@locale": "zh",
+  "appTitle": "Last Launcher",
+  "appTagline": "你需要的最后一个启动器",
+
+  "settings": "设置",
+  "sectionAppearance": "外观",
+  "sectionHome": "主屏幕",
+  "sectionAppDrawer": "应用抽屉",
+  "sectionTasks": "任务",
+  "sectionSupport": "支持",
+  "sectionAbout": "关于",
+  "sectionSearch": "搜索",
+  "sectionWork": "工作资料",
+
+  "themeTitle": "主题",
+  "themeSystem": "跟随系统",
+  "themeLight": "浅色",
+  "themeDark": "深色",
+  "themeExtra": "扩展",
+  "themeStyleTitle": "样式",
+  "themeStyleStandard": "标准",
+  "themeStyleCustom": "自定义",
+  "fontTitle": "字体",
+  "fontStandard": "标准",
+  "fontMono": "等宽",
+  "textSizeTitle": "文字大小",
+  "alignmentTitle": "对齐方式",
+  "alignLeft": "左对齐",
+  "alignCenter": "居中",
+  "alignRight": "右对齐",
+  "accentColor": "强调色",
+  "accentColorSubtitle": "用系统强调色为文字和背景着色",
+  "terminalPrompt": "终端提示符",
+  "terminalPromptSubtitle": "将搜索显示为命令行",
+  "sectionEffects": "效果",
+  "effectsDarkOnly": "仅限深色模式",
+  "glow": "发光",
+  "scanlines": "扫描线",
+  "scanlinesOff": "关闭",
+  "scanlinesLight": "轻",
+  "scanlinesMedium": "中",
+  "scanlinesStrong": "强",
+  "animations": "动画",
+  "animationsSubtitle": "移动的扫描线、故障效果和闪烁的光标",
+
+  "hideStatusBar": "全屏",
+  "hideStatusBarSubtitle": "隐藏状态栏和导航栏",
+  "showHints": "显示提示",
+  "showHintsSubtitle": "在应用各处显示使用提示",
+
+  "hidePinnedApps": "隐藏已固定的应用",
+  "hidePinnedAppsSubtitle": "在应用抽屉中隐藏已固定的应用",
+  "includeHiddenInSearch": "搜索包含隐藏应用",
+  "includeHiddenInSearchSubtitle": "让搜索也能匹配隐藏的应用",
+  "matchOriginalName": "匹配原始名称",
+  "matchOriginalNameSubtitle": "用原始名称查找已重命名的应用",
+
+  "hiddenApps": "隐藏的应用",
+  "hiddenAppsNone": "无",
+  "hiddenAppsCount": "已隐藏 {count} 个",
+  "@hiddenAppsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "noHiddenApps": "没有隐藏的应用",
+
+  "leftOfHome": "左侧模块",
+  "rightOfHome": "右侧模块",
+  "panelNone": "无",
+  "lockLayout": "锁定布局",
+  "lockLayoutSubtitle": "禁用主屏幕上的固定和长按",
+  "doubleTapToSleep": "双击休眠",
+  "doubleTapToSleepSubtitle": "需要在系统设置中启用无障碍服务",
+  "doubleTapToSleepDialogTitle": "开启无障碍服务",
+  "doubleTapToSleepDialog": "这会使用 AccessibilityService API，在你双击时锁定屏幕，不做任何其他事情。你将被带到系统设置中开启它。",
+  "setAsDefault": "设为默认主屏幕应用",
+  "setAsDefaultSubtitle": "打开系统选择器",
+  "drawerMode": "抽屉模式",
+  "drawerModeList": "列表",
+  "searchOnlyMode": "仅搜索",
+  "prefixNoApp": "没有应用可以打开它",
+  "prefixTypeWork": "工作应用",
+  "prefixTypePersonal": "个人应用",
+  "searchPrefixes": "搜索前缀",
+  "searchPrefixesSubtitle": "从搜索栏搜索网页或应用",
+  "prefixAdd": "添加前缀",
+  "prefixRestoreDefaults": "恢复工作和个人前缀",
+  "prefixTrigger": "前缀",
+  "prefixTriggerShownAs": "显示为 {trigger}",
+  "@prefixTriggerShownAs": {
+    "placeholders": {
+      "trigger": {"type": "String"}
+    }
+  },
+  "prefixShadowWarning": "开启此项时，以这些字母开头的应用将无法被找到。请以空格结尾，或以符号开头。",
+  "prefixName": "名称",
+  "prefixType": "操作",
+  "prefixTypeLink": "打开链接",
+  "prefixTypeSearchInApp": "在应用中搜索",
+  "prefixTemplates": "从模板开始",
+  "prefixLink": "链接",
+  "prefixLinkHelp": "%s 是搜索内容的位置",
+  "prefixOpenWith": "打开方式",
+  "prefixAnyApp": "任意应用",
+  "prefixApp": "应用",
+  "prefixNoSearchApps": "没有应用提供自己的搜索",
+  "prefixPersonalAppsOnly": "此处不能使用工作资料中的应用",
+  "prefixErrorEmpty": "请输入前缀",
+  "prefixErrorTaken": "已有其他前缀在使用它",
+  "prefixErrorNoPlaceholder": "请把 %s 放在搜索内容的位置",
+  "prefixTemplateMaps": "地图",
+  "autoShowKeyboard": "显示键盘",
+  "autoShowKeyboardAppsSubtitle": "打开抽屉时弹出键盘",
+  "autoShowKeyboardTasksSubtitle": "打开任务时弹出键盘",
+  "autoLaunchOnMatch": "匹配时自动启动",
+  "autoLaunchOnMatchSubtitle": "只有一个应用匹配时直接启动",
+  "quickLaunchHints": "快速启动提示",
+  "quickLaunchHintsSubtitle": "高亮可唯一确定应用的最短字符",
+  "extraChar": "额外字符",
+  "extraCharSubtitle": "自动启动前需要多输入一个字符",
+  "panelTasks": "任务",
+  "panelLaunchApp": "启动应用",
+  "panelLaunchAppHint": "一个应用",
+  "launchAppLeft": "左侧应用",
+  "launchAppRight": "右侧应用",
+  "launchAppChoose": "选择一个应用",
+  "launchAppOnlyLeft": "仅当此项为左侧模块时",
+  "launchAppOnlyRight": "仅当此项为右侧模块时",
+  "removeOnComplete": "完成后移除",
+  "removeOnCompleteSubtitle": "标记为完成时移除任务",
+  "clearCompletedDaily": "每日清除已完成",
+  "clearCompletedDailySubtitle": "在每天结束时移除已完成的任务",
+
+  "donate": "捐赠",
+  "donateSubtitle": "支持 Last Launcher 的开发",
+  "rateApp": "为 Last Launcher 评分",
+  "rateAppSubtitle": "在 Play 商店留下评价",
+  "sendFeedback": "发送反馈",
+  "sendFeedbackSubtitle": "给开发者发送邮件",
+  "help": "帮助",
+  "helpSubtitle": "常见问题解答",
+  "version": "版本",
+  "license": "许可证",
+  "openSourceLicenses": "开源许可",
+  "aboutSubtitle": "版本和许可证",
+  "backupTitle": "备份与恢复",
+  "backupExport": "导出备份",
+  "backupExportSubtitle": "将设置、标签、隐藏和固定的应用保存到文件",
+  "backupRestore": "恢复备份",
+  "backupRestoreSubtitle": "用已保存的备份替换所有内容",
+  "backupAlsoInclude": "同时包含",
+  "backupRestoreConfirm": "这将替换当前的设置、标签、隐藏和固定的应用。",
+  "backupExportAction": "导出",
+  "backupRestoreAction": "恢复",
+  "backupSaved": "备份已保存",
+  "backupRestored": "备份已恢复",
+  "backupInvalid": "此文件不是 Last Launcher 备份",
+  "backupTooNew": "此备份来自更新版本的 Last Launcher",
+  "backupFailed": "无法读取或写入文件",
+
+  "hintSwipeUp": "上滑打开应用",
+  "hintSwipeRightFor": "向右滑动进入{module}",
+  "@hintSwipeRightFor": {
+    "placeholders": {
+      "module": {"type": "String"}
+    }
+  },
+  "hintSwipeLeftFor": "向左滑动进入{module}",
+  "@hintSwipeLeftFor": {
+    "placeholders": {
+      "module": {"type": "String"}
+    }
+  },
+  "hintLongPress": "长按打开设置",
+
+  "noResults": "无结果",
+  "emptyTaskList": "输入文字以添加任务",
+  "returnToAddTask": "按回车键添加任务",
+
+  "actionRename": "重命名",
+  "actionUnpin": "取消固定",
+  "actionPin": "固定",
+  "actionPinFull": "已满",
+  "actionHide": "隐藏",
+  "actionUnhide": "取消隐藏",
+  "actionRemove": "移除",
+  "actionMakeSubtask": "设为子任务",
+  "actionMakeMainTask": "设为主任务",
+  "actionClose": "关闭",
+  "actionAppInfo": "应用信息",
+  "actionEnable": "启用",
+
+  "renameDialogTitle": "重命名",
+  "renameDialogCancel": "取消",
+  "renameDialogSave": "保存",
+
+  "showWorkAppDot": "显示工作应用圆点",
+  "showWorkAppDotSubtitle": "在工作资料应用前显示一个小圆点",
+  "showWorkAppDotOnHome": "在主屏幕显示工作圆点",
+  "showWorkAppDotOnHomeSubtitle": "在主屏幕已固定的应用上显示工作资料圆点",
+
+  "hidePersonalWhenWorkActive": "不显示非工作应用",
+  "hidePersonalWhenWorkActiveSubtitle": "工作资料暂停时，非工作应用会重新出现",
+
+  "homeScreenFull": "主屏幕已满",
+
+  "taskSourceTitle": "任务来源",
+  "taskSourcePhone": "此手机",
+  "taskSourceList": "{app} 中的 {list}",
+  "@taskSourceList": {
+    "placeholders": {
+      "list": {"type": "String"},
+      "app": {"type": "String"}
+    }
+  },
+  "taskSourceNoApp": "要使用与 DAVx⁵ 同步的任务列表，请先安装 Tasks.org。",
+  "taskSourceNoLists": "{app} 中还没有列表，请先在那里添加一个。",
+  "@taskSourceNoLists": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "deleteSyncedDone": "在所有位置删除已完成任务",
+  "deleteSyncedDoneSubtitle": "“完成后移除”和“每日清除已完成”会将它们从 {app} 以及与其同步的所有设备中删除。关闭此项时，它们只在此处被隐藏。",
+  "@deleteSyncedDoneSubtitle": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSyncNoPermission": "Last Launcher 可能无法读取你在 {app} 中的任务。点按以允许。",
+  "@taskSyncNoPermission": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSyncAppMissing": "未安装 {app}。点按以选择任务的来源。",
+  "@taskSyncAppMissing": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSyncListGone": "此列表已不在 {app} 中。点按以选择另一个。",
+  "@taskSyncListGone": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSyncFailed": "无法从 {app} 读取你的任务。点按重试。",
+  "@taskSyncFailed": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSyncNotSaved": "{app} 没有接受你最近的更改。点按查看任务在那里的当前状态。",
+  "@taskSyncNotSaved": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskSourceApp": "{app} 中的列表",
+  "@taskSourceApp": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  },
+  "taskRepeats": "重复任务。请在 {app} 中勾选完成。",
+  "@taskRepeats": {
+    "placeholders": {
+      "app": {"type": "String"}
+    }
+  }
+}
